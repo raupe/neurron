@@ -1,0 +1,22 @@
+Controller - Server
+
+    [channel] [controllerId] [aktionen]
+
+    channel: id vom zugehörigen spiel 0 - 1023 || 10 bit || max 1023 Channels
+
+    controllerId: 0 - 31 || 5 bit || max 31 Spieler
+
+    aktionen: 0 - 131 072 || restliche bit || max 131072 aktionen
+
+        1 - Spieler erstellen vom Controller || Farbe und Nummer wird vom Server geschickt
+        2 - Spieler wird entfernt
+        3 - rechts
+        4 - links
+        5 - vorne
+        6 - hinten
+    
+Server - Display
+
+    [aktion] [daten]
+    
+    
