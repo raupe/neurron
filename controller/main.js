@@ -11,18 +11,22 @@
 			height: config.canvas.height
 		}),
 
-		// handling input
-		input = new controller.Input({
-
-			canvas: screen.cvs
-		}),
 
 		// delegating commands
 		action = new controller.Action({
 
-			url: 'http://neurron.dev/controller/',
+			url: 'http//:' + config.server + ':' + config.port,
 			channel: channel
+		}),
+
+
+		// handling input
+		input = new controller.Input({
+
+			action: action,
+			screen: screen
 		});
+
 
 })();
 
