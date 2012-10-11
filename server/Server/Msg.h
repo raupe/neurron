@@ -1,7 +1,6 @@
 #ifndef Msg_h__
 #define Msg_h__
 
-#include <WinSock2.h>
 #include <string>
 
 namespace sv

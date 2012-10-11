@@ -1,8 +1,6 @@
 #ifndef Game_h__
 #define Game_h__
 
-#include <WinSock2.h>
-
 namespace sv
 {
 	class Game
@@ -11,7 +9,7 @@ namespace sv
 	public:
 		unsigned int		GetId() { return m_Id; }
 
-		void				SetSocket(SOCKET s) { m_Socket = s; }
+		void				SetSocket(int s) { m_Socket = s; }
 		int				GetSocket() { return m_Socket; }
 
 	private:

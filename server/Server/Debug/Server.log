@@ -1,10 +1,12 @@
-﻿Der Buildvorgang wurde am 11.10.2012 18:19:00 gestartet.
+﻿Der Buildvorgang wurde am 11.10.2012 18:23:13 gestartet.
      1>Projekt "D:\Dateien\Projekte\Raupe\neurron\Projekt\Neurron\Server\Server.vcxproj" auf Knoten "2", build Ziel(e).
      1>InitializeBuildStatus:
-         "Debug\Server.unsuccessfulbuild" wird erstellt, da "AlwaysCreate" angegeben wurde.
+         Aktualisieren des Timestamps von "Debug\Server.unsuccessfulbuild".
        ClCompile:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Server.cpp
-         Server.cpp
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Game.cpp GameFactory.cpp
+         GameFactory.cpp
+         Game.cpp
+         Code wird generiert...
        ResourceCompile:
          Alle Ausgaben sind aktuell.
        ManifestResourceCompile:
@@ -34,4 +36,4 @@
 
 Das Erstellen war erfolgreich.
 
-Verstrichene Zeit 00:00:01.42
+Verstrichene Zeit 00:00:01.06

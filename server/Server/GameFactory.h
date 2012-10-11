@@ -4,7 +4,6 @@
 #include "Singleton.h"
 #include "Game.h"
 
-#include <WinSock2.h>
 #include <vector>
 
 namespace sv
