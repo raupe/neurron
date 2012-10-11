@@ -31,5 +31,4 @@
 		this.cvs.height = window.innerHeight - window.innerHeight/100;
 	};
 
-
 })();
