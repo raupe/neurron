@@ -20,17 +20,15 @@
 
 		document.body.appendChild( this.cvs );
 
-
-		document.addEventListener('resize', this.scale.bind(this) );
-		// document.addEventListener('deviceorientation', this.scale.bind(this) );
+		window.addEventListener('resize', this.scale.bind(this) );
+		window.addEventListener('orientationchange', this.scale.bind(this) );
 	};
 
 
 	Screen.prototype.scale = function() {
 
-		this.cvs.width = this.width;
-		this.cvs.height = this.height;
-
+		this.cvs.width = window.innerWidth - window.innerWidth/100;
+		this.cvs.height = window.innerHeight - window.innerHeight/100;
 	};
 
 
