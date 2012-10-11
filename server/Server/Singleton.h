@@ -26,7 +26,7 @@ namespace sv
 		static T* s_Instance;
 	};
 
-	template <class T> T* Singleton<T>::s_Instance = NULL;
+	template <class T> T* Singleton<T>::s_Instance = 0;
 }
 
 #endif
