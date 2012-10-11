@@ -3,8 +3,6 @@
 #include "ServerPCH.h"
 #include "Server.h"
 
-#include <Windows.h>
-
 #include "Output.h"
 
 sv::Server::Server()
@@ -17,15 +15,17 @@ sv::Server::~Server()
 
 void sv::Server::Run()
 {
+#ifdef WIN32
 	long answer;
 	WSAData winData;
 	WORD dllVersion = MAKEWORD(2,1);
 	answer = WSAStartup(dllVersion, &winData);
+#endif
 
 	SOCKADDR_IN addr;
 	int addrLen = sizeof(addr);
-	SOCKET sListen;
-	SOCKET sConnect;
+	int sListen;
+	int sConnect;
 
 	sConnect = socket(AF_INET, SOCK_STREAM, NULL);
 	addr.sin_addr.s_addr = INADDR_ANY;
@@ -44,9 +44,13 @@ void sv::Server::Run()
 			HandleConnection(sConnect);
 		}
 	}
+
+#ifdef WIN32
+	WSACleanup();
+#endif
 }
 
-void sv::Server::HandleConnection(SOCKET connection)
+void sv::Server::HandleConnection(int connection)
 {
 	Output::Print("Connection found");
 	Output::Print("");
@@ -61,7 +65,7 @@ void sv::Server::HandleConnection(SOCKET connection)
 
 	//std::string response = "HTTP/1.1 200 OK\nContent-Type: text/html; charset=UTF-8\n\nHallo\n";
 
-	std::string response = "HTTP/1.1 200 OK\nAccess-Control-Allow-Origin: *\n\n";
+	std::string response = "HTTP/1.1 200 OK\nAccess-Control-Allow-Origin: *\nAccess-Control-Allow-Methods:\"GET, POST, PUT, DELETE, OPTIONS\"\nAccess-Control-Allow-Header:\"content-type, accept\"\n\nHallo\n";
 /*Keep-Alive: timeout=2, max=100
 Connection: Keep-Alive
 Transfer-Encoding: chunked

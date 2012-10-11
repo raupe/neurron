@@ -1,7 +1,15 @@
 #ifndef Server_h__
 #define Server_h__
 
-#include <winsock2.h>
+#ifdef WIN32
+#include <winsock.h>
+#else
+#include <netdb .h>
+#include <arpa /inet.h>
+#include <netinet /in.h>
+#include <sys /socket.h>
+#include <sys /types.h>
+#endif
 
 namespace sv
 {
@@ -13,7 +21,7 @@ namespace sv
 
 		void Run();
 	private:
-		void HandleConnection(SOCKET );
+		void HandleConnection(int socket);
 	};
 }
 

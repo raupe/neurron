@@ -17,8 +17,8 @@ namespace sv
 		Msg();
 		~Msg();
 
-		void SendMsg(SOCKET connection);
-		std::string GetMsg(SOCKET connection);
+		void SendMsg(int connection);
+		std::string GetMsg(int connection);
 
 	protected:
 		virtual void Visit() = 0;

@@ -12,13 +12,13 @@ namespace sv
 		unsigned int		GetId() { return m_Id; }
 
 		void				SetSocket(SOCKET s) { m_Socket = s; }
-		SOCKET				GetSocket() { return m_Socket; }
+		int				GetSocket() { return m_Socket; }
 
 	private:
 		Game(unsigned int id);
 		~Game();
 
-		SOCKET m_Socket;
+		int m_Socket;
 		unsigned int m_Id;
 	};
 }

@@ -1,17 +1,32 @@
-﻿Der Buildvorgang wurde am 11.10.2012 17:43:30 gestartet.
+﻿Der Buildvorgang wurde am 11.10.2012 18:19:00 gestartet.
      1>Projekt "D:\Dateien\Projekte\Raupe\neurron\Projekt\Neurron\Server\Server.vcxproj" auf Knoten "2", build Ziel(e).
      1>InitializeBuildStatus:
          "Debug\Server.unsuccessfulbuild" wird erstellt, da "AlwaysCreate" angegeben wurde.
        ClCompile:
-         Alle Ausgaben sind aktuell.
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Server.cpp
+         Server.cpp
        ResourceCompile:
          Alle Ausgaben sind aktuell.
        ManifestResourceCompile:
          Alle Ausgaben sind aktuell.
        Link:
-         Alle Ausgaben sind aktuell.
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Dateien\Projekte\Raupe\neurron\Projekt\Neurron\Debug\Server.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Server.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Dateien\Projekte\Raupe\neurron\Projekt\Neurron\Debug\Server.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Dateien\Projekte\Raupe\neurron\Projekt\Neurron\Debug\Server.lib" /MACHINE:X86 Debug\Server.res
+         Debug\Server.exe.embed.manifest.res
+         Debug\Game.obj
+         Debug\GameFactory.obj
+         Debug\LeakDetector.obj
+         Debug\Main.obj
+         Debug\Msg.obj
+         Debug\Output.obj
+         Debug\Server.obj
+         Debug\ServerPCH.obj
+         Debug\Singleton.obj
        Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\Server.exe.embed.manifest" /manifest Debug\Server.exe.intermediate.manifest
          Alle Ausgaben sind aktuell.
+       LinkEmbedManifest:
+         Alle Ausgaben sind aktuell.
+         Server.vcxproj -> D:\Dateien\Projekte\Raupe\neurron\Projekt\Neurron\Debug\Server.exe
        FinalizeBuildStatus:
          Die Datei "Debug\Server.unsuccessfulbuild" wird gelöscht.
          Aktualisieren des Timestamps von "Debug\Server.lastbuildstate".
@@ -19,4 +34,4 @@
 
 Das Erstellen war erfolgreich.
 
-Verstrichene Zeit 00:00:00.06
+Verstrichene Zeit 00:00:01.42

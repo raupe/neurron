@@ -10,12 +10,12 @@ sv::Msg::~Msg()
 {
 }
 
-void sv::Msg::SendMsg(SOCKET connection)
+void sv::Msg::SendMsg(int connection)
 {
 	Visit();
 }
 
-std::string sv::Msg::GetMsg(SOCKET connection)
+std::string sv::Msg::GetMsg(int connection)
 {
 	return "";
 }
