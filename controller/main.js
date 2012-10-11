@@ -3,7 +3,6 @@
 	// reference for display
 	var channel = window.location.hash.substr(1),
 
-
 		// showing element
 		screen = new controller.Screen({
 
@@ -15,7 +14,7 @@
 		// delegating commands
 		action = new controller.Action({
 
-			url: 'http//:' + config.server + ':' + config.port,
+			url: 'http://' + config.server + ':' + config.port,
 			channel: channel
 		}),
 
@@ -26,7 +25,6 @@
 			action: action,
 			screen: screen
 		});
-
 
 })();
 

@@ -41,7 +41,6 @@
 	Action.prototype.send = function ( data ) {
 
 		this.req.open( 'POST', this.url , true );
-
 		this.req.send( data );
 	};
 
