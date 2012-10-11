@@ -1,6 +1,6 @@
 (function(){
 
-	var Action = controller.Action = function( config ) {
+	var Action = controller.Action = function ( config ) {
 
 		this.req = new XMLHttpRequest();
 		this.url = config.url;
@@ -16,28 +16,34 @@
 		this.req.onload = function ( t ) {
 
 			var res = t.responseText;
-
-			console.log('error', t);
+			console.log(res);
+			// console.log('error', t);
 			// this.controllerId = t.id;
 			// this.color = 'blue';
 		};
 
-		/* on remove */
-		this.onbeforeunload = function(){
+		// /* on remove */
+		// document.onbeforeunload = function(){
 
-		};
+		// };
 
 		this.send( this.channel + 0 );
 	};
 
 
-	Action.prototype.send = function ( data, check ) {
+	//
+	Action.prototype.delegate = function(){
 
-		this.req.open('POST', this.url, true );
+
+	};
+
+
+	Action.prototype.send = function ( data ) {
+
+		this.req.open( 'POST', this.url , true );
 
 		this.req.send( data );
 	};
-
 
 
 })();
