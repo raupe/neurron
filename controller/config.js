@@ -1,11 +1,18 @@
 /* configuraitons */
 var config = {
 
-	namespace: 'controller'
+	namespace: 'controller',
+
+
+	// basic resolution
+	canvas: {
+
+		width: 320,
+		height: 240
+	}
 };
 
 
 
-
-/* create global namespace */
+/* global namespace */
 window[config.namespace] = {};
