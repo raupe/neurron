@@ -14,9 +14,9 @@ Controller - Server
         4 - links
         5 - vorne
         6 - hinten
-    
+
 Server - Display
 
     [aktion] [daten]
-    
-    
+
+
