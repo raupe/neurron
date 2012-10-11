@@ -1,0 +1,22 @@
+﻿Der Buildvorgang wurde am 11.10.2012 17:43:30 gestartet.
+     1>Projekt "D:\Dateien\Projekte\Raupe\neurron\Projekt\Neurron\Server\Server.vcxproj" auf Knoten "2", build Ziel(e).
+     1>InitializeBuildStatus:
+         "Debug\Server.unsuccessfulbuild" wird erstellt, da "AlwaysCreate" angegeben wurde.
+       ClCompile:
+         Alle Ausgaben sind aktuell.
+       ResourceCompile:
+         Alle Ausgaben sind aktuell.
+       ManifestResourceCompile:
+         Alle Ausgaben sind aktuell.
+       Link:
+         Alle Ausgaben sind aktuell.
+       Manifest:
+         Alle Ausgaben sind aktuell.
+       FinalizeBuildStatus:
+         Die Datei "Debug\Server.unsuccessfulbuild" wird gelöscht.
+         Aktualisieren des Timestamps von "Debug\Server.lastbuildstate".
+     1>Die Erstellung des Projekts "D:\Dateien\Projekte\Raupe\neurron\Projekt\Neurron\Server\Server.vcxproj" ist abgeschlossen, build Ziel(e).
+
+Das Erstellen war erfolgreich.
+
+Verstrichene Zeit 00:00:00.06
