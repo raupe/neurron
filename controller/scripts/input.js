@@ -39,7 +39,8 @@
 
 			action = this.action,
 
-			starts = [];
+            origins = [],
+            starts = [];
 
 		cvs.addEventListener('touchstart', function ( e ) {
 
@@ -51,6 +52,8 @@
 			for ( var i = 0, l = touches.length; i < l; i++ ) {
 
 				starts.push(touches[i]);
+                origins.push(touches[i]);
+
 			}
 		});
 
@@ -64,19 +67,17 @@
 
 				end,
 
-                startTemp = starts,
-
 				current;
 
 			for ( var i = 0, l = touches.length; i < l; i++ ) {
 
 				end =  touches[i];
-				current = startTemp[i];
+				current = starts[i];
 
                 ctx.moveTo( current.clientX, current.clientY );
                 ctx.lineTo( end.clientX, end.clientY );
 
-                startTemp[i] = end;
+                starts[i] = end;
 			}
 
 			ctx.stroke();
@@ -98,10 +99,10 @@
 
                 ends.push(touches[i]);
             }
-            console.log(starts,ends);
-            action.delegate(starts ,ends);
+            console.log(origins, ends);
+            action.delegate(origins ,ends);
 
-            starts.length = 0;
+            origins.length = starts.length =  0;
 
 			ctx.save();
 
