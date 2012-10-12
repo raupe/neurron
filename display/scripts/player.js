@@ -2,16 +2,25 @@
 	
 	var Player = display.Player = function( config ){
 		
+		this.id = config.id;
 		console.log(config);
 		this.register();
 	};
 	
 	Player.prototype.register = function(){
+
+		display.players[this.id] = this; // add themselve to pool of players 
 		
-		var length = Object.keys(display.players).length; // object has no length attribute, use keys method to add them to an array from which you can get the length
+	};
+	
+	Player.prototype.move = function( direction ){
 		
-		display.players[length] = this; // add themselve to pool of players 
+		console.log(direction);
+	};
+	
+	Player.prototype.remove = function( direction ){
 		
+		delete display.players[this.id];
 	};
 	
 })();

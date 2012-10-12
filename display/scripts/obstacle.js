@@ -2,15 +2,24 @@
 	
 	var Obstacle = display.Obstacle = function( config ){
 		
+		this.id = config.id;
 		this.register();
 	};
 	
 	Obstacle.prototype.register = function(){
 		
-		var length = Object.keys(display.obstacles).length; // object has no length attribute, use keys method to add them to an array from which you can get the length
+		display.obstacles[this.id] = this; // add themselve to pool of obstacles 
 		
-		display.obstacles[length] = this; // add themselve to pool of obstacles 
+	};
+	
+	Obstacle.prototype.move = function( direction ){
 		
+		console.log(direction);
+	};
+	
+	Obstacle.prototype.remove = function( direction ){
+		
+		delete display.obstacles[this.id];
 	};
 	
 })();
