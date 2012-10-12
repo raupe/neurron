@@ -3,7 +3,7 @@ var config = {
 
 	namespace: 'controller',
 
-	server: '192.168.1.51',
+	server: 'neurron.com',
 	port: '2020',
 
 	// basic resolution

@@ -53,7 +53,6 @@
 
 				starts.push(touches[i]);
                 origins.push(touches[i]);
-
 			}
 		});
 
@@ -82,12 +81,9 @@
 
 			ctx.stroke();
             ctx.beginPath();
-
-
 		});
 
 		cvs.addEventListener('touchend', function ( e ) {
-
 
 			e.preventDefault();
 			e.stopPropagation();
@@ -99,7 +95,7 @@
 
                 ends.push(touches[i]);
             }
-            console.log(origins, ends);
+
             action.delegate(origins ,ends);
 
             origins.length = starts.length =  0;
@@ -109,7 +105,6 @@
 			ctx.clearRect( 0 , 0 ,cvs.width, cvs.height);
 
 			ctx.restore();
-
 		});
 
 
