@@ -11,12 +11,12 @@
 	Player.prototype.register = function(){
 
 		display.players[this.id] = this; // add themselve to pool of players 
-		
+		console.log(display.players);
 	};
 	
 	Player.prototype.move = function( direction ){
 		
-		console.log(direction);
+		console.log(this.cvs);
 	};
 	
 	Player.prototype.remove = function( direction ){
