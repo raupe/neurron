@@ -8,7 +8,7 @@
 		width: config.canvas.width,
 		height: config.canvas.height		
 	});
-	
+
 	var action = new display.Action({
 		
 		screen: screen
@@ -23,7 +23,7 @@
 	
 	// setTimeout(function(){
 // 		
-		// var data = [2, 1, 1020]; // command, type, options
+		// var data = ["move", "players", 0]; // command, type, options
 // 			
 		// action.handle( data );
 	// }, 2000);
