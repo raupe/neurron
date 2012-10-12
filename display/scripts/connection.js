@@ -26,7 +26,7 @@
 			
 			// message need to be shifted before passing to action
 			
-			var data = [1, 1, 1020]; // command, type, options
+			var data = ["create", "player", 0]; // command, type, options
 			
 			action.handle( data );
 		// };
