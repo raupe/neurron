@@ -22,6 +22,14 @@
 		
 		console.log("create" + options);
 		
+		var element = {
+			
+			1: display.Player,
+			2: display.Obstacle
+		};
+		
+		// create new Object
+		new element[options]("geboren");
 	};
 	
 	Action.prototype.move = function ( options ){
