@@ -91,6 +91,15 @@
 			e.preventDefault();
 			e.stopPropagation();
 
+            var touches = e.changedTouches,
+                ends = [];
+
+            for ( var i = 0, l = touches.length; i < l; i++ ) {
+
+                ends.push(touches[i]);
+            }
+            console.log(starts,ends);
+            action.delegate(starts ,ends);
 
             starts.length = 0;
 
@@ -99,6 +108,7 @@
 			ctx.clearRect( 0 , 0 ,cvs.width, cvs.height);
 
 			ctx.restore();
+
 		});
 
 

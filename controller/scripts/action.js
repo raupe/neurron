@@ -32,7 +32,37 @@
 
 
 	//
-	Action.prototype.delegate = function(){
+	Action.prototype.delegate = function( starts, ends ){
+
+        var start = { x: starts[0].clientX, y: starts[0].clientY},
+            end = { x: ends[0].clientX, y: ends[0].clientY},
+            diffX = Math.abs(end.x - start.x),
+            diffY = Math.abs(end.y - start.y),
+            direction;
+
+        console.log("ends[0].clientX: "+ends[0].clientX+" starts[0].clientX: "+starts[0].clientX);
+        if (diffX > diffY){
+            if (start.x > end.x){
+
+                direction = 4;//links
+
+            } else {
+
+                direction = 3;//rechts
+            }
+        }else{
+            if (start.y > end.y){
+
+                direction = 5;//hoch
+
+            } else {
+
+                direction = 6;//unten
+            }
+        }
+
+        alert(direction);
+
 
 
 	};
