@@ -1,7 +1,8 @@
+#include "ServerPCH.h"
 #include "GameFactory.h"
 
 sv::GameFactory::GameFactory()
-: m_Games(10,0)
+//: m_Games(10,0)
 {
 
 }
@@ -37,7 +38,7 @@ sv::Game* sv::GameFactory::CreateGame()
 		m_Games.resize(id * 2, 0);
 	}
 	
-	Game* game = new Game(id);
+	Game* game = S_NEW Game(id);
 	m_Games[id - 1] = game;
 
 	return game;
