@@ -40,7 +40,6 @@
             diffY = Math.abs(end.y - start.y),
             direction;
 
-        console.log("ends[0].clientX: "+ends[0].clientX+" starts[0].clientX: "+starts[0].clientX);
         if (diffX > diffY){
             if (start.x > end.x){
 
@@ -61,9 +60,7 @@
             }
         }
 
-        alert(direction);
-
-
+        this.send(direction);
 
 	};
 
