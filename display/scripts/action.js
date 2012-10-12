@@ -1,8 +1,8 @@
 (function(){
 	
-	var Action = display.Action = function(){
+	var Action = display.Action = function( config ){
 		
-		
+		this.screen = config.screen;
 	};
 	
 	Action.prototype.handle = function( data ){
@@ -30,7 +30,10 @@
 		};
 		
 		// create new Object
-		new element[type]( options );
+		new element[type]({
+			id: options,
+			cvs: this.screen.cvs
+		});
 	};
 	
 	Action.prototype.move = function ( type, options ){
