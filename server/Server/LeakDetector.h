@@ -1,7 +1,9 @@
 #ifndef LeakDetector_h__
 #define LeakDetector_h__
 
-/*#ifdef _DEBUG
+#include "Defines.h"
+
+#ifdef DEBUG
 
 #include <Windows.h>
 #include <list>
@@ -10,7 +12,7 @@ struct AllocInfo
 {
 	DWORD	address;
 	DWORD	size;
-	char	file[64];
+	char	file[128];
 	DWORD	line;
 };
 
@@ -31,17 +33,12 @@ inline void __cdecl operator delete(void *p)
 	free(p);
 };
 
-#define DEBUGNEW new(__FILE__, __LINE__)
+#define S_NEW new(__FILE__, __LINE__)
 
 #else
 
-#define DEBUGNEW new
-
-
+#define S_NEW new
 
 #endif
-
-
-#define new DEBUGNEW*/
 
 #endif // LeakDetector_h__

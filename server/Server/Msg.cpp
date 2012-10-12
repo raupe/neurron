@@ -20,7 +20,7 @@ std::string sv::Msg::GetMsg(int connection)
 	return "";
 }
 
-void sv::Msg::Visit(uint i)
+void sv::Msg::Visit(unsigned int i)
 {
 
 }

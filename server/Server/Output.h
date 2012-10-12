@@ -9,6 +9,7 @@ namespace sv
 	{
 	public:
 		static void Print(std::string msg);
+		static void Error(std::string msg);
 	};
 }
 

@@ -9,7 +9,8 @@ namespace sv
 	public:
 		static T* Create()
 		{
-			s_Instance = new T();
+			s_Instance = S_NEW T();
+			return s_Instance;
 		}
 
 		static void Destroy()
