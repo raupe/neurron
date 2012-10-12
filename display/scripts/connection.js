@@ -5,6 +5,7 @@
 		this.action = config.action;
 		this.url = "ws://" + config.server + ":" + config.port;
 		
+		
 		this.initializeSocket();
 	};
 	

@@ -3,7 +3,8 @@
 	var Player = display.Player = function( config ){
 		
 		this.id = config.id;
-		console.log(config);
+		this.cvs = config.cvs;
+		
 		this.register();
 	};
 	

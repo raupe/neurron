@@ -3,6 +3,8 @@
 	var Obstacle = display.Obstacle = function( config ){
 		
 		this.id = config.id;
+		this.cvs = config.cvs;
+		
 		this.register();
 	};
 	
