@@ -64,19 +64,25 @@
 
 				end,
 
+                startTemp = starts,
+
 				current;
 
 			for ( var i = 0, l = touches.length; i < l; i++ ) {
 
 				end =  touches[i];
-				current = starts[i];
+				current = startTemp[i];
 
-				ctx.lineTo( current.clientX, current.clientY, end.clientX, end.clientY );
+                ctx.moveTo( current.clientX, current.clientY );
+                ctx.lineTo( end.clientX, end.clientY );
 
-				starts[i] = end;
+                startTemp[i] = end;
 			}
 
 			ctx.stroke();
+            ctx.beginPath();
+
+
 		});
 
 		cvs.addEventListener('touchend', function ( e ) {
@@ -85,16 +91,8 @@
 			e.preventDefault();
 			e.stopPropagation();
 
-			// console.log('end',e);
 
-// ctx.fillRect( 0, 0, cvs.width, cvs.height );
-
-
-// 			ctx.save();
-
-// 			ctx.clearRect( 0, 0, cvs.width, cvs.height );
-
-// 			ctx.restore();
+            starts.length = 0;
 
 			ctx.save();
 
