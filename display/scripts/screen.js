@@ -30,7 +30,7 @@
 		this.cvs.width = window.innerWidth - window.innerWidth/100;
 		this.cvs.height = window.innerHeight - window.innerHeight/100;
 	};
-	
-	
+
+
 
 })();
