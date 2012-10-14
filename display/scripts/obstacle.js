@@ -1,7 +1,8 @@
 (function(){
 
-	var Obstacle = display.Obstacle = function( config ){
+	var Obstacle = display.Obstacle = function ( config ) {
 
+		this.pool = config.pool;
 		this.id = config.id;
 		this.cvs = config.cvs;
 
@@ -10,18 +11,17 @@
 
 	Obstacle.prototype.register = function(){
 
-		display.obstacles[this.id] = this; // add themselve to pool of obstacles
-
+		this.pool[this.id] = this; // add themselve to pool of obstacles
 	};
 
-	Obstacle.prototype.move = function( direction ){
+	Obstacle.prototype.move = function ( direction ) {
 
 		console.log(direction);
 	};
 
-	Obstacle.prototype.remove = function( direction ){
+	Obstacle.prototype.remove = function ( direction ) {
 
-		delete display.obstacles[this.id];
+		delete this.pool[this.id];
 	};
 
 })();

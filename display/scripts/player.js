@@ -1,7 +1,8 @@
 (function(){
 
-	var Player = display.Player = function( config ){
+	var Player = display.Player = function ( config ) {
 
+		this.pool = config.pool;
 		this.id = config.id;
 		this.cvs = config.cvs;
 
@@ -10,18 +11,18 @@
 
 	Player.prototype.register = function(){
 
-		display.players[this.id] = this; // add themselve to pool of players
-		console.log(display.players);
+		this.pool[this.id] = this; // add themselve to pool of players
+		console.log(this.pool);
 	};
 
-	Player.prototype.move = function( direction ){
+	Player.prototype.move = function ( direction ) {
 
 		console.log(this.cvs);
 	};
 
-	Player.prototype.remove = function( direction ){
+	Player.prototype.remove = function ( direction ) {
 
-		delete display.players[this.id];
+		delete this.pool[this.id];
 	};
 
 })();

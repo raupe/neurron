@@ -31,8 +31,7 @@
 	};
 
 
-	//
-	Action.prototype.delegate = function( starts, ends ){
+	Action.prototype.delegate = function ( starts, ends ) {
 
         var start = { x: starts[0].clientX, y: starts[0].clientY},
             end = { x: ends[0].clientX, y: ends[0].clientY},
@@ -40,8 +39,9 @@
             diffY = Math.abs(end.y - start.y),
             direction;
 
-        if (diffX > diffY){
-            if (start.x > end.x){
+        if ( diffX > diffY ) {
+
+            if ( start.x > end.x ) {
 
                 direction = 4;//links
 
@@ -49,8 +49,10 @@
 
                 direction = 3;//rechts
             }
-        }else{
-            if (start.y > end.y){
+
+        } else {
+
+            if ( start.y > end.y ) {
 
                 direction = 5;//hoch
 
@@ -61,7 +63,6 @@
         }
 
         this.send(direction);
-
 	};
 
 

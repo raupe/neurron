@@ -19,17 +19,14 @@
 
 			this.handleKeyboard();
 		}
-
 	};
 
 	Input.prototype.handleKeyboard = function() {
-
 
 		document.addEventListener('keydown', function ( e ) {
 
 			console.log(e);
 		});
-
 	};
 
 	Input.prototype.handleTouch = function() {
