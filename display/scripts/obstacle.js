@@ -16,7 +16,7 @@
 
 	Obstacle.prototype.move = function ( direction ) {
 
-		console.log(direction);
+		// console.log(direction);
 	};
 
 	Obstacle.prototype.remove = function ( direction ) {
