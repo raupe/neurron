@@ -16,16 +16,36 @@ namespace sv
 		Msg();
 		~Msg();
 
-		void SendMsg(int connection);
-		std::string GetMsg(int connection);
+		void			SendMsg(int connection);
+		std::string		GetMsg(int connection);
 
 	protected:
-		virtual void Visit() = 0;
+		virtual void	Visit() = 0;
 
-		void Visit(uint i);
+		void			Visit(unsigned int i);
 
 	private:
-		uint m_Type;
+		unsigned int	m_Type;
+		int				m_Socket;
+	};
+
+	class ControllerMsg : public Msg
+	{
+	public:
+		enum EAction
+		{
+			eAction_Start = 1,
+			eAction_End,
+			eAction_Right,
+			eAction_Left,
+			eAction_Front,
+			eAction_Back,
+		};
+
+	private:
+		unsigned int	m_Channel;
+		unsigned int	m_ControllerId;
+		unsigned int	m_Action;
 	};
 }
 

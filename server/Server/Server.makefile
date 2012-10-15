@@ -32,8 +32,8 @@ build_all_configurations: Debug Release
 
 # Builds the Debug configuration...
 .PHONY: Debug
-Debug: create_folders gccDebug/LeakDetector.o gccDebug/Singleton.o gccDebug/Game.o gccDebug/GameFactory.o gccDebug/Msg.o gccDebug/Server.o gccDebug/Main.o gccDebug/ServerPCH.o gccDebug/Output.o 
-	g++ gccDebug/LeakDetector.o gccDebug/Singleton.o gccDebug/Game.o gccDebug/GameFactory.o gccDebug/Msg.o gccDebug/Server.o gccDebug/Main.o gccDebug/ServerPCH.o gccDebug/Output.o  $(Debug_Library_Path) $(Debug_Libraries) -Wl,-rpath,./ -o ../gccDebug/Server.exe
+Debug: create_folders gccDebug/LeakDetector.o gccDebug/Singleton.o gccDebug/Game.o gccDebug/GameFactory.o gccDebug/Msg.o gccDebug/hl_sha1.o gccDebug/HttpProtocol.o gccDebug/Server.o gccDebug/Main.o gccDebug/ServerPCH.o gccDebug/Output.o 
+	g++ gccDebug/LeakDetector.o gccDebug/Singleton.o gccDebug/Game.o gccDebug/GameFactory.o gccDebug/Msg.o gccDebug/hl_sha1.o gccDebug/HttpProtocol.o gccDebug/Server.o gccDebug/Main.o gccDebug/ServerPCH.o gccDebug/Output.o  $(Debug_Library_Path) $(Debug_Libraries) -Wl,-rpath,./ -o ../gccDebug/Server.exe
 
 # Compiles file LeakDetector.cpp for the Debug configuration...
 -include gccDebug/LeakDetector.d
@@ -65,6 +65,18 @@ gccDebug/Msg.o: Msg.cpp
 	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c Msg.cpp $(Debug_Include_Path) -o gccDebug/Msg.o
 	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM Msg.cpp $(Debug_Include_Path) > gccDebug/Msg.d
 
+# Compiles file hl_sha1.cpp for the Debug configuration...
+-include gccDebug/hl_sha1.d
+gccDebug/hl_sha1.o: hl_sha1.cpp
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c hl_sha1.cpp $(Debug_Include_Path) -o gccDebug/hl_sha1.o
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM hl_sha1.cpp $(Debug_Include_Path) > gccDebug/hl_sha1.d
+
+# Compiles file HttpProtocol.cpp for the Debug configuration...
+-include gccDebug/HttpProtocol.d
+gccDebug/HttpProtocol.o: HttpProtocol.cpp
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c HttpProtocol.cpp $(Debug_Include_Path) -o gccDebug/HttpProtocol.o
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM HttpProtocol.cpp $(Debug_Include_Path) > gccDebug/HttpProtocol.d
+
 # Compiles file Server.cpp for the Debug configuration...
 -include gccDebug/Server.d
 gccDebug/Server.o: Server.cpp
@@ -91,8 +103,8 @@ gccDebug/Output.o: Output.cpp
 
 # Builds the Release configuration...
 .PHONY: Release
-Release: create_folders gccRelease/LeakDetector.o gccRelease/Singleton.o gccRelease/Game.o gccRelease/GameFactory.o gccRelease/Msg.o gccRelease/Server.o gccRelease/Main.o gccRelease/ServerPCH.o gccRelease/Output.o 
-	g++ gccRelease/LeakDetector.o gccRelease/Singleton.o gccRelease/Game.o gccRelease/GameFactory.o gccRelease/Msg.o gccRelease/Server.o gccRelease/Main.o gccRelease/ServerPCH.o gccRelease/Output.o  $(Release_Library_Path) $(Release_Libraries) -Wl,-rpath,./ -o ../gccRelease/Server.exe
+Release: create_folders gccRelease/LeakDetector.o gccRelease/Singleton.o gccRelease/Game.o gccRelease/GameFactory.o gccRelease/Msg.o gccRelease/hl_sha1.o gccRelease/HttpProtocol.o gccRelease/Server.o gccRelease/Main.o gccRelease/ServerPCH.o gccRelease/Output.o 
+	g++ gccRelease/LeakDetector.o gccRelease/Singleton.o gccRelease/Game.o gccRelease/GameFactory.o gccRelease/Msg.o gccRelease/hl_sha1.o gccRelease/HttpProtocol.o gccRelease/Server.o gccRelease/Main.o gccRelease/ServerPCH.o gccRelease/Output.o  $(Release_Library_Path) $(Release_Libraries) -Wl,-rpath,./ -o ../gccRelease/Server.exe
 
 # Compiles file LeakDetector.cpp for the Release configuration...
 -include gccRelease/LeakDetector.d
@@ -123,6 +135,18 @@ gccRelease/GameFactory.o: GameFactory.cpp
 gccRelease/Msg.o: Msg.cpp
 	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c Msg.cpp $(Release_Include_Path) -o gccRelease/Msg.o
 	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM Msg.cpp $(Release_Include_Path) > gccRelease/Msg.d
+
+# Compiles file hl_sha1.cpp for the Release configuration...
+-include gccRelease/hl_sha1.d
+gccRelease/hl_sha1.o: hl_sha1.cpp
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c hl_sha1.cpp $(Release_Include_Path) -o gccRelease/hl_sha1.o
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM hl_sha1.cpp $(Release_Include_Path) > gccRelease/hl_sha1.d
+
+# Compiles file HttpProtocol.cpp for the Release configuration...
+-include gccRelease/HttpProtocol.d
+gccRelease/HttpProtocol.o: HttpProtocol.cpp
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c HttpProtocol.cpp $(Release_Include_Path) -o gccRelease/HttpProtocol.o
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM HttpProtocol.cpp $(Release_Include_Path) > gccRelease/HttpProtocol.d
 
 # Compiles file Server.cpp for the Release configuration...
 -include gccRelease/Server.d

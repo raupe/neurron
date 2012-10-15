@@ -4,8 +4,11 @@
 #include "Server.h"
 
 #include "Output.h"
+#include "HttpProtocol.h"
 
+#ifndef WIN32
 #include <string.h>
+#endif
 
 sv::Server::Server()
 {
@@ -17,6 +20,15 @@ sv::Server::~Server()
 
 void sv::Server::Run()
 {
+	// test
+	unsigned int h[5];
+	std::string msg = "Franz jagt im komplett verwahrlosten Taxi quer durch Bayern";
+	HttpProtocol::SHA1own((unsigned char *)msg.c_str(), msg.length(), h);
+
+	//
+
+
+
 #ifdef WIN32
 	long answer;
 	WSAData winData;
@@ -31,10 +43,6 @@ void sv::Server::Run()
 	int addrLen = sizeof(addr);
 	int sListen;
 	int sConnect;
-
-/*	sConnect = socket(AF_INET, SOCK_STREAM, NULL);
-	if(sConnect == -1)
-		Output::Error("Couldn't create a socket."); */
 
 	addr.sin_addr.s_addr = INADDR_ANY;
 	addr.sin_family = AF_INET;
@@ -78,17 +86,20 @@ void sv::Server::HandleConnection(int connection)
 	memset(message, 0, sizeof(message));
 
 	recv(connection, message, sizeof(message), NULL);
-	Output::Print(message);
+	std::string msg = message;
+	Output::Print(msg);
 
+	sv::RequestInfo headerInfo = HttpProtocol::GetInfo(msg);
 
-
-	std::string response = "HTTP/1.1 200 OK\nContent-Type: text/html; charset=UTF-8\n\nHallo\n";
-
-	//std::string response = "HTTP/1.1 200 OK\nAccess-Control-Allow-Origin: *\nAccess-Control-Allow-Methods:\"GET, POST, PUT, DELETE, OPTIONS\"\nAccess-Control-Allow-Header:\"content-type, accept\"\n\nHallo\n";
-/*Keep-Alive: timeout=2, max=100
-Connection: Keep-Alive
-Transfer-Encoding: chunked
-Content-Type: application/xml*/
+	std::string response;
+	if(HttpProtocol::IsSocketRequest(headerInfo))
+	{
+		response = HttpProtocol::GetSocketResponse(headerInfo);
+	}
+	else
+	{
+		response = HttpProtocol::GetHeader();
+	}
 
 	send(connection, response.c_str(), response.length() + 1, NULL);
 
