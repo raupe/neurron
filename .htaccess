@@ -1,5 +1,5 @@
 # index
-DirectoryIndex /display/index
+DirectoryIndex /display/index.html
 
 # rewrite
 Options +FollowSymlinks
