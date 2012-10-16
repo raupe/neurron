@@ -1,3 +1,5 @@
 # compiled C++
-*.o
-*.d
+/server/gccRelease
+/server/gccDebug
+/server/Server/gccRelease
+/server/Server/gccDebug
