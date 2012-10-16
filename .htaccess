@@ -1,0 +1,11 @@
+# index
+DirectoryIndex /display/index
+
+# rewrite
+Options +FollowSymlinks
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^(.*)$ /display/$1 [R=301,L]
