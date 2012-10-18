@@ -2,8 +2,8 @@
 
 	var Action = display.Action = function ( config ) {
 
-		this.players = config.players;
-		this.obstacles = config.obstacles;
+		this.players = {}; // player pool
+		this.obstacles = {}; // obstacle pool
 		this.screen = config.screen;
 	};
 

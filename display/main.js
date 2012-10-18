@@ -8,9 +8,7 @@
 
 		action = new display.Action({
 
-			screen: screen,
-			obstacles: {}, // pool of obstacles
-			players: {} // pool of players
+			screen: screen
 		});
 
 		connection = new display.Connection({
