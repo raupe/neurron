@@ -9,7 +9,7 @@
 		action = new display.Action({
 
 			screen: screen
-		});
+		}),
 
 		connection = new display.Connection({
 
