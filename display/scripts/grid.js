@@ -21,82 +21,92 @@
 
 	Grid.prototype.definePositions = function(){
 
-		var ctx = this.ctx,
+		// var ctx = this.ctx,
 
-			distanceToUser = this.distanceToUser,
+			/* constants */
+		var distanceToUser = this.distanceToUser,
 			circleOffset = this.circleOffset,
 			outerCircleRadius = this.outerCircleRadius,
-
-			circles = this.circles + 3,
-			lanes = this.players * 2,
 			frame = this.frames,
 
+			/* pre-calculations */
+			circles = this.circles + 3,
+			lanes = this.players * 2,
 			steps = lanes * frame,
-
 			rotation = ( 2 * Math.PI ) / lanes,
+			factor = 1/frame,
 
 			centerX = this.width/2,
 			centerY = this.height/2,
 
-			pos = [], // elements
-			radius, rad2, x, y,x2,y2;
+			/* declarations */
+			fields = [],
 
+			ringPos = [],
+			distPos = [],
 
-		var tempClock = [],
-			tempFront = [],
-			counter = 0,
-			factor = 1/frame;
+			// outer loop
+			radiusA,
+			x1, y1,
 
+			// 3rd loop
+			radiusB,
+			x2, y2,
 
-		// right
+			// iterators
+			circle,
+			step,
+			dist;
+
+		//
 		for ( circle = 0; circle < circles; circle++ ) {
 
-			radius = ( distanceToUser * outerCircleRadius ) / ( distanceToUser + circleOffset * circle);
+			radiusA =	( distanceToUser * outerCircleRadius ) /
+						( distanceToUser + circleOffset * circle);
 
+			//
 			for ( step = 0; step < steps; step++ ) {
 
-				x = Math.cos( rotation * step ) * radius + centerX;
-				y = Math.sin( rotation * step ) * radius + centerY;
+				x1 = Math.cos( rotation * step ) * radiusA + centerX;
+				y1 = Math.sin( rotation * step ) * radiusA + centerY;
 
-				tempClock.push({ x: x, y:y });
+				ringPos.push({ x: x1, y: y1 });
 
-				if ( step%frame === 0 ) {
+				if ( step%frame === 0 ) { // first time just one value ?
 
+					for ( dist = 1; dist < frame; dist++ ) {
 
-					for ( var turn = 1; turn < frame; turn++ ) {
+						radiusB =	( distanceToUser * outerCircleRadius ) /
+									( distanceToUser + circleOffset * ( circle + factor * dist ) );
 
-						rad2 = ( distanceToUser * outerCircleRadius ) / ( distanceToUser + circleOffset * ( circle + factor * turn ) );
+						x2 = Math.cos( rotation * step ) * radiusB + centerX;
+						y2 = Math.sin( rotation * step ) * radiusB + centerY;
 
-						x2 = Math.cos( rotation * step ) * rad2 + centerX;
-						y2 = Math.sin( rotation * step ) * rad2 + centerY;
+						distPos.push({ x:x2, y: y2 });
 
-						tempFront.push({x:x2,y:y2});
-
-						ctx.fillStyle ='red';
-						ctx.fillRect(x2 - 2.5,y2 -2.5, 5,5);
+						// ctx.fillStyle ='red';
+						// ctx.fillRect( x2 - 2.5, y2 -2.5, 5, 5 );
 					}
 
-					pos.push({
+					fields.push({
 
-						field: counter,
-						x: x,
-						y: y,
-						anticlock: tempClock,
-						front: tempFront
+						dir: '',
+						x: x1,
+						y: y1,
+						ring: ringPos.slice(),
+						dist: distPos.slice()
 					});
 
-					tempClock.length = 0;
-					// tempFront.length = 0; -> doesnt save
+					distPos.length = ringPos.length = 0;
 
-					counter++;
-
-					ctx.fillStyle ='blue';
-					ctx.fillRect(x - 2.5,y -2.5, 5,5);
+					// ctx.fillStyle ='blue';
+					// ctx.fillRect( x1 - 2.5, y1 -2.5, 5, 5 );
 				}
 			}
 		}
 
-		console.log(pos);
+		// console.log(fields, fields.length);
+		this.fields = fields;
 	};
 
 
