@@ -12,7 +12,60 @@
 		this.circleOffset = config.circleOffset;
 		this.outerCircleRadius = this.height/2;
 
+		this.definePositions();
+
 		this.draw();
+	};
+
+
+	Grid.prototype.definePositions = function(){
+
+		var ctx = this.ctx,
+
+			distanceToUser = this.distanceToUser,
+			circleOffset = this.circleOffset,
+			outerCircleRadius = this.outerCircleRadius,
+
+			circles = this.circles + 3,
+
+			lanes = this.players * 2,
+
+			rotation = ( 2 * Math.PI ) / lanes,
+
+			centerX = this.width/2,
+			centerY = this.height/2,
+
+			pos = [], // elements
+			radius,	x, y;
+
+
+		for ( circle = 0; circle < circles; circle++ ) {
+
+			radius = ( distanceToUser * outerCircleRadius ) / ( distanceToUser + circleOffset * circle);
+
+			for ( lane = 0; lane < lanes; lane++ ) {
+
+				x = Math.cos( rotation * lane ) * radius + centerX;
+				y = Math.sin( rotation * lane ) * radius + centerY;
+
+				pos.push({
+
+					field: 1,
+					x: x,
+					y: y,
+
+					left: [
+							{ x:1,y:2 },
+							{x:2, y:1 }
+						]
+					});
+
+				ctx.fillStyle ='red';
+				ctx.fillRect( x - 2.5,y -2.5, 5,5 );
+			}
+		}
+
+		// console.log(pos);
 	};
 
 	Grid.prototype.draw = function(){
@@ -21,6 +74,7 @@
 
 		this.drawGrid();
 	};
+
 
 	Grid.prototype.drawCircles = function(){
 

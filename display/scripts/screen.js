@@ -18,10 +18,10 @@
 		this.grid = new display.Grid({
 
 			ctx: this.ctx,
-			players: 6,
+			players: 3,
 			distanceToUser: 350,
 			circleOffset: 100,
-			circles: 7
+			circles: 2
 		});
 	};
 
