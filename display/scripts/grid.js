@@ -7,6 +7,7 @@
 		this.height = config.ctx.canvas.height;
 		this.players = config.players;
 		this.circles = config.circles;
+		this.frames = config.frames;
 
 		this.distanceToUser = config.distanceToUser;
 		this.circleOffset = config.circleOffset;
@@ -14,7 +15,7 @@
 
 		this.definePositions();
 
-		this.draw();
+		// this.draw();
 	};
 
 
@@ -27,8 +28,10 @@
 			outerCircleRadius = this.outerCircleRadius,
 
 			circles = this.circles + 3,
-
 			lanes = this.players * 2,
+			frame = this.frames,
+
+			steps = lanes * frame,
 
 			rotation = ( 2 * Math.PI ) / lanes,
 
@@ -36,37 +39,67 @@
 			centerY = this.height/2,
 
 			pos = [], // elements
-			radius,	x, y;
+			radius, rad2, x, y,x2,y2;
 
 
+		var tempClock = [],
+			tempFront = [],
+			counter = 0,
+			factor = 1/frame;
+
+
+		// right
 		for ( circle = 0; circle < circles; circle++ ) {
 
 			radius = ( distanceToUser * outerCircleRadius ) / ( distanceToUser + circleOffset * circle);
 
-			for ( lane = 0; lane < lanes; lane++ ) {
+			for ( step = 0; step < steps; step++ ) {
 
-				x = Math.cos( rotation * lane ) * radius + centerX;
-				y = Math.sin( rotation * lane ) * radius + centerY;
+				x = Math.cos( rotation * step ) * radius + centerX;
+				y = Math.sin( rotation * step ) * radius + centerY;
 
-				pos.push({
+				tempClock.push({ x: x, y:y });
 
-					field: 1,
-					x: x,
-					y: y,
+				if ( step%frame === 0 ) {
 
-					left: [
-							{ x:1,y:2 },
-							{x:2, y:1 }
-						]
+
+					for ( var turn = 1; turn < frame; turn++ ) {
+
+						rad2 = ( distanceToUser * outerCircleRadius ) / ( distanceToUser + circleOffset * ( circle + factor * turn ) );
+
+						x2 = Math.cos( rotation * step ) * rad2 + centerX;
+						y2 = Math.sin( rotation * step ) * rad2 + centerY;
+
+						tempFront.push({x:x2,y:y2});
+
+						ctx.fillStyle ='red';
+						ctx.fillRect(x2 - 2.5,y2 -2.5, 5,5);
+					}
+
+					pos.push({
+
+						field: counter,
+						x: x,
+						y: y,
+						anticlock: tempClock,
+						front: tempFront
 					});
 
-				ctx.fillStyle ='red';
-				ctx.fillRect( x - 2.5,y -2.5, 5,5 );
+					tempClock.length = 0;
+					// tempFront.length = 0; -> doesnt save
+
+					counter++;
+
+					ctx.fillStyle ='blue';
+					ctx.fillRect(x - 2.5,y -2.5, 5,5);
+				}
 			}
 		}
 
-		// console.log(pos);
+		console.log(pos);
 	};
+
+
 
 	Grid.prototype.draw = function(){
 
