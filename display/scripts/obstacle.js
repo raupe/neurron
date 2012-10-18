@@ -4,7 +4,8 @@
 
 		this.pool = config.pool;
 		this.id = config.id;
-		this.cvs = config.cvs;
+		this.screen = config.screen;
+		this.grid = config.screen.grid;
 
 		this.register();
 	};

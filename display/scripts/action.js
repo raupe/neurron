@@ -38,7 +38,7 @@
 			};
 
 		// create new Object
-		new element[type]({	id: options, cvs: this.screen.cvs, pool: pools[type] });
+		new element[type]({	id: options, screen: this.screen, pool: pools[type] });
 	};
 
 	Action.prototype.move = function ( type, options ) {

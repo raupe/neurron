@@ -4,7 +4,8 @@
 
 		this.pool = config.pool;
 		this.id = config.id;
-		this.cvs = config.cvs;
+		this.screen = config.screen;
+		this.grid = config.screen.grid;
 
 		this.register();
 	};
@@ -17,6 +18,7 @@
 
 	Player.prototype.move = function ( direction ) {
 
+		// var xy = this.grid.coordinates[ this.position ];
 		// console.log(this.cvs);
 	};
 
