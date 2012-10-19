@@ -10,19 +10,6 @@
 		this.register();
 	};
 
-	Obstacle.prototype.register = function(){
-
-		this.pool[this.id] = this; // add themselve to pool of obstacles
-	};
-
-	Obstacle.prototype.move = function ( direction ) {
-
-		// console.log(direction);
-	};
-
-	Obstacle.prototype.remove = function ( direction ) {
-
-		delete this.pool[this.id];
-	};
+    Obstacle.prototype = display.Element;
 
 })();
