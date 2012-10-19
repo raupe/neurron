@@ -1,15 +1,35 @@
 (function(){
 
-
 	var Screen = display.Screen = function ( config ) {
 
 		this.width = config.width;
 		this.height = config.height;
 
+		this.elements = [];
+
 		this.createCanvas();
 		this.createGrid();
 
-		// this.render();
+		this.render();
+	};
+
+	Screen.prototype.render = function(){
+
+		var elements = this.elements,
+			ctx = this.ctx;
+
+		(function loop(){
+
+			requestAnimationFrame( loop );
+
+			ctx.clearRect( 0,0, ctx.canvas.width, ctx.canvas.height );
+
+			elements.forEach(function ( element ) {
+
+				element.draw();
+			});
+
+		})();
 	};
 
 
@@ -24,6 +44,8 @@
 			frames: 30,
 			circles: 0
 		});
+
+		this.elements.push( this.grid );
 	};
 
 
