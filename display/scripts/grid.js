@@ -56,7 +56,6 @@
 			step,
 			dist;
 
-		circles = 1;
 		//
 		for ( circle = 0; circle < circles; circle++ ) { // 3
 
@@ -64,7 +63,7 @@
 						( distanceToUser + circleOffset * circle);
 
 			//
-			for ( step = 1; step < steps; step++ ) { // 240
+			for ( step = 1; step <= steps; step++ ) { // 240
 
 				x1 = Math.cos( rotation * step ) * radiusA + centerX;
 				y1 = Math.sin( rotation * step ) * radiusA + centerY;
@@ -98,13 +97,23 @@
 			}
 		}
 
-		// var ctx = this.ctx;
+		 var ctx = this.ctx;
 
-		// fields[1].ring.forEach(function ( field ) {
-		// 	// console.log(field.x);
-		// 	ctx.fillRect( field.x-10,field.y-10,20,20);
-		// });
+		 fields.forEach(function ( field,counter ) {
+		 	ctx.fillText( counter,field.x,field.y);
+		 });
 
+       /* var a = 23;
+        fields[a].ring.forEach(function ( field) {
+            ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
+        });
+
+        fields[a].dist.forEach(function ( field) {
+            ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
+        });
+        */
+
+        console.log(fields.length);
 		this.fields = fields;
 	};
 
