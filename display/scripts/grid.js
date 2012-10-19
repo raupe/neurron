@@ -54,7 +54,9 @@
 			// iterators
 			circle,
 			step,
-			dist;
+			dist,
+
+			temp;
 
 		//
 		for ( circle = 0; circle < circles; circle++ ) { // 3
@@ -83,16 +85,18 @@
 						distPos.push({ x:x2, y: y2 });
 					}
 
-                    if (fields.length){
-                        var temp = (fields.length -1);
+                    if ( fields.length ) {
 
-                        /*if(temp%lanes === -1){
+                        temp = ( fields.length - 1 );
 
-                            temp = fields.length - lanes;
-                            console.log(temp);
-                        }*/
                         fields[temp].antiRing = ringPos.slice().reverse();
+
+						if ( temp && temp % lanes === 0 ) {
+
+                            fields[temp-1].antiRing = fields[ temp -lanes ].ring;
+                        }
                     }
+
 					fields.push({
 
 						dir: '',
@@ -107,13 +111,17 @@
 			}
 		}
 
-		 var ctx = this.ctx;
+		fields[fields.length-1].antiRing = fields[fields.length -lanes].ring;
 
-		 fields.forEach(function ( field,counter ) {
-		 	ctx.fillText( counter,field.x,field.y);
-		 });
+
+		var ctx = this.ctx;
+
+			fields.forEach(function ( field,counter ) {
+				ctx.fillText( counter,field.x,field.y);
+			});
 
         var a = 7;
+
         fields[a].antiRing.forEach(function ( field) {
             ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
         });
