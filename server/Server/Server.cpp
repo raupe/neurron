@@ -4,28 +4,53 @@
 #include "Server.h"
 
 #include "Output.h"
-#include "HttpProtocol.h"
+#include "GameFactory.h"
+#include "Game.h"
+#include "Msg.h"
 
-#ifndef WIN32
+#ifdef WIN32
+#include <winsock.h>
+#define CLOSE_SOCKET(s) closesocket(s);
+#else
+#include <netdb.h>
+#include <arpa/inet.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <sys/types.h>
 #include <string.h>
+#define CLOSE_SOCKET(s) close(s);
 #endif
+
 
 sv::Server::Server()
 {
+	Init();
 }
 
 sv::Server::~Server()
 {
+	Exit();
+}
+
+void sv::Server::Init()
+{
+	GameFactory::Create();
+}
+
+void sv::Server::Exit()
+{
+	GameFactory::Destroy();
 }
 
 void sv::Server::Run()
 {
-	// test
+	/*// test
 	unsigned int h[5];
 	std::string msg = "Franz jagt im komplett verwahrlosten Taxi quer durch Bayern";
 	HttpProtocol::SHA1own((unsigned char *)msg.c_str(), msg.length(), h);
 
-	//
+	std::cout << std::hex << h[0] << std::endl;
+	//*/
 
 
 
@@ -89,23 +114,60 @@ void sv::Server::HandleConnection(int connection)
 	std::string msg = message;
 	Output::Print(msg);
 
-	sv::RequestInfo headerInfo = HttpProtocol::GetInfo(msg);
+	sv::RequestInfo headerInfo = http.GetInfo(msg);
 
-	std::string response;
-	if(HttpProtocol::IsSocketRequest(headerInfo))
+	if(http.IsSocketRequest(headerInfo))
 	{
-		response = HttpProtocol::GetSocketResponse(headerInfo);
+		Game* game = GameFactory::Instance()->CreateGame();
+		game->SetSocket(connection);
+		std::string response;
+		response = http.GetSocketHeader(headerInfo);
+		send(connection, response.c_str(), response.length() + 1, NULL);
 	}
 	else
 	{
-		response = HttpProtocol::GetHeader();
+		ControllerMsg* msg = S_NEW ControllerMsg();
+		uchar buffer[1024];
+		uint length = sizeof(buffer);
+		http.DecodeBase64(headerInfo.m_Body, length, buffer);
+		uint pos = 0;
+		msg->Visit(buffer, true, pos, length);
+
+		if(msg->GetChannel())
+		{
+			Game* game = GameFactory::Instance()->GetGame(msg->GetChannel());
+			game->AddMsg(msg);
+		}
+		else
+		{
+			std::string response;
+			response = http.GetErrorHeader();
+			send(connection, response.c_str(), response.length() + 1, NULL);
+			CLOSE_SOCKET(connection);
+		}
 	}
+}
 
-	send(connection, response.c_str(), response.length() + 1, NULL);
+void sv::Server::SendMsg(Msg* msg, uint socket)
+{
+	uchar buffer[1024];
+	uint pos = 0;
+	msg->Visit(buffer,false, pos, sizeof(buffer));
+	std::string str = http.GetSocketMsg(buffer, pos);
+	
+	send(socket, str.c_str(), str.length() + 1, NULL);
+}
 
-#ifdef WIN32
-	closesocket(connection);
-#else
-	close(connection);
-#endif
+void sv::Server::Response(Msg* msg, uint socket)
+{
+	std::string str = http.GetHeader();
+	
+	uchar buffer[1024];
+	uint pos = 0;
+	msg->Visit(buffer, false, pos, sizeof(buffer));
+	str += http.GetMsg(buffer, pos);
+	
+	send(socket, str.c_str(), str.length() + 1, NULL);
+
+	CLOSE_SOCKET(socket);
 }

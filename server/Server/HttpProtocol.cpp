@@ -53,10 +53,19 @@ std::string	sv::HttpProtocol::GetHeader()
 	return "HTTP/1.1 200 OK\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Allow-Methods:\"GET, POST, PUT, DELETE, OPTIONS\"\r\nAccess-Control-Allow-Header:\"content-type, accept\"\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n";
 }
 
-std::string	sv::HttpProtocol::GetSocketResponse(const sv::RequestInfo& info)
+std::string	sv::HttpProtocol::GetErrorHeader()
+{
+	return "HTTP/1.1 400 Error\r\nContent-Type: text/html; charset=UTF-8\r\n\r\nError";
+}
+
+std::string sv::HttpProtocol::GetMsg(const uchar* msg, uint length)
+{
+	return EncodeBase64(msg, length);
+}
+
+std::string	sv::HttpProtocol::GetSocketHeader(const sv::RequestInfo& info)
 {
 	// add "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
-	//std::string step1 = "The quick brown fox jumps over the lazy dog"; //info.m_SecWebSocketKey + "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
 	std::string step1 = info.m_SecWebSocketKey + "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
 
 	// hash SHA-1
@@ -74,7 +83,19 @@ std::string	sv::HttpProtocol::GetSocketResponse(const sv::RequestInfo& info)
 	return "HTTP/1.1 101 Switching Protocols\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Accept: " + acceptKey + "\r\n\r\n";
 }
 
-char GetChar(char val)
+std::string sv::HttpProtocol::GetSocketMsg(const uchar* msg, uint length)
+{
+	uchar start = 0x00;
+	uchar end = 0xFF;
+
+	std::string retVal;
+	retVal += start;
+	retVal += EncodeBase64(msg, length);
+	retVal += end;
+	return retVal;
+}
+
+char GetChar(uchar val)
 {
 	if(val <= 25)
 		return 'A' + val;
@@ -92,11 +113,11 @@ char GetChar(char val)
 std::string	sv::HttpProtocol::EncodeBase64(const unsigned char* msg, unsigned int length)
 {
 	std::string retVal = "";
+	unsigned char parts[4];
+	unsigned char src[3];
 	unsigned int pos = 0;
 	while(pos < length)
 	{
-		unsigned char parts[4];
-		unsigned char src[3];
 		src[0] = msg[pos];
 		src[1] = pos+1 < length? msg[pos+1] : 0;
 		src[2] = pos+2 < length? msg[pos+2] : 0;
@@ -118,7 +139,64 @@ std::string	sv::HttpProtocol::EncodeBase64(const unsigned char* msg, unsigned in
 	return retVal;
 }
 
-void sv::HttpProtocol::SHA1own(const unsigned char* msgIn, int length, unsigned int* h)
+uchar GetVal(char c)
+{
+	if(c >= 'A' && c <= 'Z')
+		return c - 'A';
+	if(c >= 'a' && c <= 'z')
+		return c -'a' + 26;
+	if(c >= '0' && c <= '9')
+		return c - '0' + 52;
+	if(c == '+')
+		return 62;
+	if(c == '/')
+		return 63;
+	return 0;
+}
+
+void sv::HttpProtocol::DecodeBase64(std::string msg, unsigned int& length, unsigned char* out)
+{
+	unsigned char parts[3];
+	unsigned char src[4];
+	uint pos = 0;
+	uint posOut = 0;
+	while(pos < (uint)msg.length() && posOut+3 <= length)
+	{
+		src[0] = GetVal(msg[pos]);
+		src[1] = GetVal(msg[pos+1]);
+		src[2] = GetVal(msg[pos+2]);
+		src[3] = GetVal(msg[pos+3]);
+
+		parts[0] = (src[0] << 2) | (src[1] >> 4);
+		parts[1] = (src[1] << 4) | (src[2] >> 2);
+		parts[2] = (src[2] << 6) | src[3];
+		
+		out[posOut++] = parts[0];
+		if(msg[pos+2] == '=')
+			break;
+		out[posOut++] = parts[1];
+		if(msg[pos+3] == '=')
+			break;
+		out[posOut++] = parts[2];
+
+		pos+=4;
+	}
+	length = posOut;
+}
+
+
+
+
+
+
+
+
+uint leftrotate(uint in, uint steps)
+{
+	return (in << steps) | (in >> (32 - steps));
+}
+
+void sv::HttpProtocol::SHA1own(const unsigned char* msgIn, uint length, unsigned int* h)
 {
 	h[0] = 0x67452301;
 	h[1] = 0xEFCDAB89;
@@ -132,24 +210,26 @@ void sv::HttpProtocol::SHA1own(const unsigned char* msgIn, int length, unsigned 
 	unsigned int len = minLen + (512 - minLen % 512);
 	unsigned int arrayLen = len / 32;
 	unsigned int* msg = new unsigned int[arrayLen];
+	unsigned int* w = new unsigned int[80];
 
 	memset(msg, 0, arrayLen * 4);
-	memcpy(msg, msgIn, length);
-	msg[length/4] = 1 << 31;
-	msg[arrayLen - 2] = msgLen;
+	for(uint i=0; i<length; i++)
+	{
+		msg[i/4] |= msgIn[i] << (24 - 8*(i%4));
+	}
+
+	//memcpy(msg, msgIn, length);
+	uint mod = length % 4;
+	msg[length/4] |= 1 << (31 - 8*mod);
+	msg[arrayLen - 1] = msgLen;
 
 	for(unsigned int j=0; j<arrayLen; j+=16) //for 526bit blocks: 512 / 32 = 16
 	{
-		unsigned int* block = new unsigned int[80];
 
-		for(unsigned int i=0; i<16; i+=1) //for 32bit words
-			block[i] = msg[j+i];
-
+		memcpy(w, &msg[j], 64);
 		for(unsigned int i=16; i<80; i++)
 		{
-			block[i] = (block[i-3] ^ block[i-8] ^ block[i-14] ^ block[i-16]);
-			unsigned int tempBit = block[i] >> 31;
-			block[i] = block[i] << 1 | tempBit;
+			w[i] = leftrotate(w[i-3] ^ w[i-8] ^ w[i-14] ^ w[i-16], 1);
 		}
 		
 		unsigned int a = h[0];
@@ -184,19 +264,21 @@ void sv::HttpProtocol::SHA1own(const unsigned char* msgIn, int length, unsigned 
 				k = 0xCA62C1D6;
 			}
 
-			// ...
-
-
+			uint temp = leftrotate(a,5) + f + e + k + w[i];
+			e = d;
+			d = c;
+			c = leftrotate(b, 30);
+			b = a;
+			a = temp;
 		}
 
-
-
-
-
-		delete[](block);
+		h[0] += a;
+		h[1] += b;
+		h[2] += c;
+		h[3] += d;
+		h[4] += e;
 	}
 	
-
-
+	delete[](w);
 	delete[](msg);
 }

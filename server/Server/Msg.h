@@ -7,40 +7,49 @@ namespace sv
 {
 	enum EMsgType
 	{
-
+		eMsgType_ControllerMsg,
 	};
 
 	class Msg
 	{
 	public:
-		Msg();
-		~Msg();
+		Msg(uint type);
+		virtual ~Msg();
 
-		void			SendMsg(int connection);
-		std::string		GetMsg(int connection);
+		void Visit(uchar* buffer, bool read, uint& pos, const uint& length);
+		virtual void VisitInt(uchar* buffer, uint& pos, const uint& length) = 0;
 
 	protected:
-		virtual void	Visit() = 0;
-
-		void			Visit(unsigned int i);
+		void			Visit(unsigned int& i, uchar* buffer, uint& pos, const uint& length);
+		void			Visit(uchar& i, uchar* buffer, uint& pos, const uint& length);
 
 	private:
 		unsigned int	m_Type;
-		int				m_Socket;
+		bool			m_Read;
 	};
 
 	class ControllerMsg : public Msg
 	{
 	public:
+		ControllerMsg();
+		~ControllerMsg();
+
 		enum EAction
 		{
-			eAction_Start = 1,
+			eAction_Undifined,
+			eAction_Start,
 			eAction_End,
 			eAction_Right,
 			eAction_Left,
 			eAction_Front,
 			eAction_Back,
 		};
+
+		virtual void VisitInt(uchar* buffer, uint& pos, const uint& length);
+
+		uint			GetChannel() { return m_Channel; }
+		uint			GetControllerId() { return m_ControllerId; }
+		uint			GetAction() { return m_Action; }
 
 	private:
 		unsigned int	m_Channel;
