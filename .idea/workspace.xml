@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/display/scripts/grid.js" line="99" mnemonic="7" />
+    <bookmark url="file://$PROJECT_DIR$/display/scripts/grid.js" line="109" mnemonic="7" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9b1ac6e2-9649-4006-84a1-21b667623a92" name="Default" comment="" />
@@ -26,7 +26,7 @@
       <file leaf-file-name="grid.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/display/scripts/grid.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="113" column="10" selection-start="2470" selection-end="2470" vertical-scroll-proportion="0.6928214">
+            <state line="92" column="27" selection-start="2168" selection-end="2168" vertical-scroll-proportion="0.769616">
               <folding />
             </state>
           </provider>
@@ -332,7 +332,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/display/scripts/grid.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="113" column="10" selection-start="2470" selection-end="2470" vertical-scroll-proportion="0.6928214">
+        <state line="92" column="27" selection-start="2168" selection-end="2168" vertical-scroll-proportion="0.769616">
           <folding />
         </state>
       </provider>
