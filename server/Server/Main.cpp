@@ -4,7 +4,7 @@
 #include "Engine.h"
 
 #include "Output.h"
-#include <boost\thread.hpp>
+#include <boost/thread.hpp>
 
 void End()
 {

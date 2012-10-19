@@ -44,4 +44,4 @@ namespace sv
 	};
 }
 
-#endif HttpProtocol_h__
+#endif
