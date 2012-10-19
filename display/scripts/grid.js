@@ -104,7 +104,9 @@
 
                         temp = ( fields.length - 1 );
 
+                        // console.log(ringPos[0].x);
                         fields[temp].antiRing = ringPos.slice().reverse();
+                        // console.log(fields[temp].antiRing[ 29 ] );
 
                         if ( temp - lanes >= 0 ) {
 
@@ -118,7 +120,10 @@
 
 						if ( temp && temp % lanes === 0 ) {
 
+                            // fields[temp-1].antiRing = fields[ temp - lanes ].ring.slice().reverse();
+                            // console.log(fields[ temp - lanes ].ring[1].x);
                             fields[temp-1].antiRing = fields[ temp - lanes ].ring.slice().reverse();
+
                         }
                     }
 
@@ -138,36 +143,13 @@
 			}
 		}
 
+		// last point
 		fields[fields.length-1].antiRing = fields[fields.length - lanes ].ring.slice().reverse();
 		fields[fields.length-1].antiDist = fields[fields.length - lanes - 1].dist.slice().reverse();
-		// console.timeEnd(1);
-
-		var ctx = this.ctx;
-
-			fields.forEach(function ( field,counter ) {
-				ctx.fillText( counter,field.x,field.y);
-			});
-
-        var a=15;
-
-        fields[a].ring.forEach(function ( field) {
-            ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
-        });
-
-        fields[a].antiRing.forEach(function ( field) {
-            ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
-        });
-
-        fields[a].dist.forEach(function ( field) {
-            ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
-        });
-
-        fields[a].antiDist.forEach(function ( field) {
-            ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
-        });
-
 
 		this.fields = fields;
+
+
 	};
 
 
@@ -177,6 +159,35 @@
 		this.drawCircles();
 
 		this.drawGrid();
+
+
+		var fields = this.fields;
+		var ctx = this.ctx;
+
+		fields.forEach(function ( field,counter ) {
+			ctx.fillText( counter,field.x,field.y);
+		});
+
+
+        var a=10;
+
+
+        // fields[a].ring.forEach(function ( field) {
+        //     ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
+        // });
+
+        fields[a].antiRing.forEach(function ( field) {
+            ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
+        });
+
+        // fields[a].dist.forEach(function ( field) {
+        //     ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
+        // });
+
+        // fields[a].antiDist.forEach(function ( field) {
+        //     ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
+        // });
+		// console.timeEnd(1);
 	};
 
 
