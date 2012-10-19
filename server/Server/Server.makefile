@@ -68,8 +68,8 @@ gccDebug/Server.o: Server.cpp
 # Compiles file Main.cpp for the Debug configuration...
 -include gccDebug/Main.d
 gccDebug/Main.o: Main.cpp
-	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c Main.cpp $(Debug_Include_Path) -o gccDebug/Main.o
-	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM Main.cpp $(Debug_Include_Path) > gccDebug/Main.d
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c Main.cpp $(Debug_Include_Path) -o gccDebug/Main.o $(Debug_Library_Path)
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM Main.cpp $(Debug_Include_Path) > gccDebug/Main.d $(Debug_Library_Path)
 
 # Compiles file ServerPCH.cpp for the Debug configuration...
 -include gccDebug/ServerPCH.d
