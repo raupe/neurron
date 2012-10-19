@@ -3,12 +3,12 @@ CPP_COMPILER = g++
 C_COMPILER = gcc
 
 # Include paths...
-Debug_Include_Path=-I"/home/neurron/neurron/boost_1_51_0/" 
-Release_Include_Path=-I"/home/neurron/neurron/boost_1_51_0" 
+Debug_Include_Path=-I"~/home/neurron/neurron/boost_1_51_0/" 
+Release_Include_Path=-I"~/home/neurron/neurron/boost_1_51_0" 
 
 # Library paths...
-Debug_Library_Path=-L"/home/neurron/neurron/boost_1_51_0/stage/lib" 
-Release_Library_Path=-L"/home/neurron/neurron/boost_1_51_0/stage/lib" 
+Debug_Library_Path=-L"~/home/neurron/neurron/boost_1_51_0/stage/lib" 
+Release_Library_Path=-L"~/home/neurron/neurron/boost_1_51_0/stage/lib" 
 
 # Additional libraries...
 Debug_Libraries=
