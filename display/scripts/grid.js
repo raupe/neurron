@@ -15,26 +15,24 @@
 
 		this.definePositions();
 
-		// this.draw();
+		this.draw();
 	};
 
 
 	Grid.prototype.definePositions = function(){
 
-		// var ctx = this.ctx,
-
-			/* constants */
+		/* constants */
 		var distanceToUser = this.distanceToUser,
 			circleOffset = this.circleOffset,
 			outerCircleRadius = this.outerCircleRadius,
 			frame = this.frames,
 
 			/* pre-calculations */
-			circles = this.circles + 3,
-			lanes = this.players * 2,
-			steps = lanes * frame,
-			rotation = ( 2 * Math.PI ) / lanes,
-			factor = 1/frame,
+			circles = this.circles + 3, // = 3
+			lanes = this.players * 2, // 8
+			steps = lanes * frame, // 240
+			rotation = ( 2 * Math.PI ) / steps,
+			factor = 1/frame, // 1/30
 
 			centerX = this.width/2,
 			centerY = this.height/2,
@@ -58,21 +56,22 @@
 			step,
 			dist;
 
+		circles = 1;
 		//
-		for ( circle = 0; circle < circles; circle++ ) {
+		for ( circle = 0; circle < circles; circle++ ) { // 3
 
 			radiusA =	( distanceToUser * outerCircleRadius ) /
 						( distanceToUser + circleOffset * circle);
 
 			//
-			for ( step = 0; step < steps; step++ ) {
+			for ( step = 1; step < steps; step++ ) { // 240
 
 				x1 = Math.cos( rotation * step ) * radiusA + centerX;
 				y1 = Math.sin( rotation * step ) * radiusA + centerY;
 
 				ringPos.push({ x: x1, y: y1 });
 
-				if ( step%frame === 0 ) { // first time just one value ?
+				if ( step%frame === 0 ) { // mod 0 ..
 
 					for ( dist = 1; dist < frame; dist++ ) {
 
@@ -83,9 +82,6 @@
 						y2 = Math.sin( rotation * step ) * radiusB + centerY;
 
 						distPos.push({ x:x2, y: y2 });
-
-						// ctx.fillStyle ='red';
-						// ctx.fillRect( x2 - 2.5, y2 -2.5, 5, 5 );
 					}
 
 					fields.push({
@@ -98,14 +94,17 @@
 					});
 
 					distPos.length = ringPos.length = 0;
-
-					// ctx.fillStyle ='blue';
-					// ctx.fillRect( x1 - 2.5, y1 -2.5, 5, 5 );
 				}
 			}
 		}
 
-		// console.log(fields, fields.length);
+		// var ctx = this.ctx;
+
+		// fields[1].ring.forEach(function ( field ) {
+		// 	// console.log(field.x);
+		// 	ctx.fillRect( field.x-10,field.y-10,20,20);
+		// });
+
 		this.fields = fields;
 	};
 
