@@ -8,9 +8,24 @@
 
 		var players = this.players;
 
-		document.addEventListener('click', function(){
+		document.addEventListener('click', function(e){
 
-			players[0].move( 1 );
+			var change = e.ctrlKey ?  1 : -1;
+
+			if ( e.shiftKey ) {
+
+				players[0].move( 'shift',  1 );
+
+			} else if ( e.which === 2 ){
+
+				players[0].move( 'shift', -1 );
+
+			} else {
+
+				players[0].move( 'ctrl', change );
+			}
+
+
 		});
 	};
 

@@ -94,7 +94,7 @@
 
 					} else {
 
-						distPost = [];
+						distPost = [{x: x1, y: y1}];
 					}
 
 
@@ -104,9 +104,10 @@
 
                         temp = ( fields.length - 1 );
 
-                        // console.log(ringPos[0].x);
-                        fields[temp].antiRing = ringPos.slice().reverse();
-                        // console.log(fields[temp].antiRing[ 29 ] );
+                        // if ( !fields[temp].antiRing ) {
+
+							fields[temp].antiRing = ringPos.slice(); // reverse
+                        // }
 
                         if ( temp - lanes >= 0 ) {
 
@@ -114,27 +115,22 @@
 
                         } else {
 
-							fields[temp].antiDist = [];
+							fields[temp].antiDist = [{x: x1,y: y1}];
                         }
 
 
 						if ( temp && temp % lanes === 0 ) {
-
-                            // fields[temp-1].antiRing = fields[ temp - lanes ].ring.slice().reverse();
-                            // console.log(fields[ temp - lanes ].ring[1].x);
-                            fields[temp-1].antiRing = fields[ temp - lanes ].ring.slice().reverse();
-
+							// console.log(temp); // 8, 15
+                            fields[temp-1].antiRing = fields[ temp - lanes ].ring.slice();
                         }
                     }
-
-
 
 					fields.push({
 
 						dir: '',
 						x: x1,
 						y: y1,
-						ring: ringPos.slice(),
+						ring: ringPos.slice().reverse(),
 						dist: distPos.slice()
 					});
 
@@ -148,8 +144,7 @@
 		fields[fields.length-1].antiDist = fields[fields.length - lanes - 1].dist.slice().reverse();
 
 		this.fields = fields;
-
-
+		this.lanes = lanes;
 	};
 
 
@@ -160,6 +155,12 @@
 
 		this.drawGrid();
 
+		// this.drawLines();
+	};
+
+
+	Grid.prototype.drawLines = function(){
+
 
 		var fields = this.fields;
 		var ctx = this.ctx;
@@ -169,25 +170,24 @@
 		});
 
 
-        var a=10;
+        var a = fields.length/2;
 
-
-        // fields[a].ring.forEach(function ( field) {
-        //     ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
-        // });
+        fields[a].ring.forEach(function ( field) {
+            ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
+        });
 
         fields[a].antiRing.forEach(function ( field) {
             ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
         });
 
-        // fields[a].dist.forEach(function ( field) {
-        //     ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
-        // });
+        fields[a].dist.forEach(function ( field) {
+            ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
+        });
 
-        // fields[a].antiDist.forEach(function ( field) {
-        //     ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
-        // });
-		// console.timeEnd(1);
+        fields[a].antiDist.forEach(function ( field) {
+            ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
+        });
+		console.timeEnd(1);
 	};
 
 

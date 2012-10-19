@@ -38,11 +38,11 @@
 		this.grid = new display.Grid({
 
 			ctx: this.ctx,
-			players: 4,
+			players: 10,
 			distanceToUser: 350,
 			circleOffset: 100,
 			frames: 30,
-			circles: 0
+			circles: 7
 		});
 
 		this.elements.push( this.grid );

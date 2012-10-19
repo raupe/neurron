@@ -6,7 +6,7 @@
 
             this.pool[this.id] = this; // add themselve to pool of players
 
-            this.nextPos = this.pos = 10;
+            this.nextPos = this.pos = 20;
 
             this.counter = 0;
 
@@ -28,31 +28,52 @@
 
             if ( this.nextPos === this.pos ) {
                 // console.log(this.nextPos, this.pos);
+
                 ctx.fillRect( field.x - this.size/2, field.y - this.size/2, this.size, this.size);
 
             } else {
 
-                this.animate( field );
+                this.animate();
             }
         },
 
-        move: function ( direction ) {
+        move: function ( direction, change ) {
 
-            this.nextPos += direction;
+            if ( direction === 'ctrl' ) {
+
+                this.dir = ( change > 0 ) ? 'antiRing' : 'ring';
+
+                if ( (this.pos+change) % (this.grid.lanes-1) === 0 ) {
+                    console.log(this.pos);
+                    // change = ( change > 0 ) ?   -(change + this.grid.lanes) :
+                                                // change - this.grid.lanes;
+                }
+            }
+
+            if ( direction === 'shift' ) {
+
+                this.dir = ( change > 0 ) ? 'dist' : 'antiDist';
+                change = ( change > 0 ) ?   change + this.grid.lanes - 1 :
+                                            change - this.grid.lanes + 1;
+            }
+
+
+            this.nextPos += change;
         },
 
-        animate: function( field ) {
+        animate: function() {
 
             var ctx = this.ctx,
 
-                step = field.antiRing[this.counter];
+                field = this.grid.fields[ this.pos ],
+
+                step = field[this.dir][ this.counter ];
 
             ctx.fillRect( step.x - this.size/2, step.y - this.size/2, this.size, this.size);
 
             this.counter++;
 
-
-            if ( this.counter === field.antiRing.length ){
+            if ( this.counter === field[this.dir].length ){
 
                 this.pos = this.nextPos;
                 this.counter = 0;
