@@ -5,6 +5,13 @@
 		this.players = {}; // player pool
 		this.obstacles = {}; // obstacle pool
 		this.screen = config.screen;
+
+		var players = this.players;
+
+		document.addEventListener('click', function(){
+
+			players[0].move( 1 );
+		});
 	};
 
 	Action.prototype.handle = function ( data ) {
