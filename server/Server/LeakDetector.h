@@ -27,6 +27,12 @@ inline void * __cdecl operator new(unsigned int size, const char *file, int line
 	return(ptr);
 };
 
+inline void __cdecl operator delete(void* p, const char *file, int line)
+{
+	RemoveTrack((DWORD)p);
+	free(p);
+}
+
 inline void __cdecl operator delete(void *p)
 {
 	RemoveTrack((DWORD)p);

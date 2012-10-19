@@ -24,16 +24,23 @@ namespace sv
 	class HttpProtocol
 	{
 	public:
-		static RequestInfo	GetInfo(const std::string msg);
-		static bool			IsSocketRequest(const RequestInfo& info);
-		static std::string	GetHeader();
-		static std::string	GetSocketResponse(const RequestInfo& info);
+		RequestInfo	GetInfo(const std::string msg);
+		bool		IsSocketRequest(const RequestInfo& info);
 		
-		static void SHA1own(const unsigned char* msg, int length, unsigned int* h);
+		std::string	GetHeader();
+		std::string GetErrorHeader();
+		std::string	GetMsg(const uchar* msg, uint length);
+
+		std::string	GetSocketHeader(const RequestInfo& info);
+		std::string GetSocketMsg(const uchar* msg, uint length);
+		
+		std::string	EncodeBase64(const unsigned char* msg, unsigned int length);
+		void		DecodeBase64(std::string msg, unsigned int& length, unsigned char* out);
+		
+		void SHA1own(const unsigned char* msg, uint length, unsigned int* h);
 
 	private:
-		static std::string	GetValue(const std::string key, const std::string msg);
-		static std::string	EncodeBase64(const unsigned char* msg, unsigned int length);
+		std::string	GetValue(const std::string key, const std::string msg);
 	};
 }
 

@@ -35,7 +35,8 @@ sv::Game* sv::GameFactory::CreateGame()
 	if(id == 0)
 	{
 		id = m_Games.size();
-		m_Games.resize(id * 2, 0);
+		uint size = id == 0 ? 1 : 2*id;
+		m_Games.resize(size, 0);
 	}
 	
 	Game* game = S_NEW Game(id);
@@ -50,4 +51,24 @@ void sv::GameFactory::EndGame(unsigned int id)
 	if(game)
 		delete(game);
 	m_Games[id - 1] = 0;
+}
+
+
+sv::Game* sv::GameFactory::GetGame(uint id)
+{
+	Game* retVal = m_Games[id - 1];
+	if(retVal && retVal->GetId() == id)
+		return retVal;
+	return 0;
+}
+
+void sv::GameFactory::Update()
+{
+	for (unsigned int i=0; i < m_Games.size(); ++i)
+	{
+		if (m_Games[i])
+		{
+			m_Games[i]->Update();
+		}
+	}
 }

@@ -3,12 +3,12 @@ CPP_COMPILER = g++
 C_COMPILER = gcc
 
 # Include paths...
-Debug_Include_Path=
-Release_Include_Path=
+Debug_Include_Path=-I"C:/Program Files (x86)/boost/boost_1_51_0/" 
+Release_Include_Path=-I"C:/Program Files (x86)/boost/boost_1_51_0" 
 
 # Library paths...
-Debug_Library_Path=
-Release_Library_Path=
+Debug_Library_Path=-L"C:/Program Files (x86)/boost/boost_1_51_0/stage/gcclib" 
+Release_Library_Path=-L"C:/Program Files (x86)/boost/boost_1_51_0/stage/gcclib" 
 
 # Additional libraries...
 Debug_Libraries=
@@ -32,8 +32,8 @@ build_all_configurations: Debug Release
 
 # Builds the Debug configuration...
 .PHONY: Debug
-Debug: create_folders gccDebug/LeakDetector.o gccDebug/Singleton.o gccDebug/Game.o gccDebug/GameFactory.o gccDebug/Msg.o gccDebug/hl_sha1.o gccDebug/HttpProtocol.o gccDebug/Server.o gccDebug/Main.o gccDebug/ServerPCH.o gccDebug/Output.o 
-	g++ gccDebug/LeakDetector.o gccDebug/Singleton.o gccDebug/Game.o gccDebug/GameFactory.o gccDebug/Msg.o gccDebug/hl_sha1.o gccDebug/HttpProtocol.o gccDebug/Server.o gccDebug/Main.o gccDebug/ServerPCH.o gccDebug/Output.o  $(Debug_Library_Path) $(Debug_Libraries) -Wl,-rpath,./ -o ../gccDebug/Server.exe
+Debug: create_folders gccDebug/LeakDetector.o gccDebug/Singleton.o gccDebug/hl_sha1.o gccDebug/HttpProtocol.o gccDebug/Server.o gccDebug/Main.o gccDebug/ServerPCH.o gccDebug/Output.o gccDebug/Engine.o gccDebug/Game.o gccDebug/GameFactory.o gccDebug/Msg.o 
+	g++ gccDebug/LeakDetector.o gccDebug/Singleton.o gccDebug/hl_sha1.o gccDebug/HttpProtocol.o gccDebug/Server.o gccDebug/Main.o gccDebug/ServerPCH.o gccDebug/Output.o gccDebug/Engine.o gccDebug/Game.o gccDebug/GameFactory.o gccDebug/Msg.o  $(Debug_Library_Path) $(Debug_Libraries) -Wl,-rpath,./ -o ../gccDebug/Server.exe
 
 # Compiles file LeakDetector.cpp for the Debug configuration...
 -include gccDebug/LeakDetector.d
@@ -46,24 +46,6 @@ gccDebug/LeakDetector.o: LeakDetector.cpp
 gccDebug/Singleton.o: Singleton.cpp
 	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c Singleton.cpp $(Debug_Include_Path) -o gccDebug/Singleton.o
 	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM Singleton.cpp $(Debug_Include_Path) > gccDebug/Singleton.d
-
-# Compiles file Game.cpp for the Debug configuration...
--include gccDebug/Game.d
-gccDebug/Game.o: Game.cpp
-	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c Game.cpp $(Debug_Include_Path) -o gccDebug/Game.o
-	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM Game.cpp $(Debug_Include_Path) > gccDebug/Game.d
-
-# Compiles file GameFactory.cpp for the Debug configuration...
--include gccDebug/GameFactory.d
-gccDebug/GameFactory.o: GameFactory.cpp
-	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c GameFactory.cpp $(Debug_Include_Path) -o gccDebug/GameFactory.o
-	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM GameFactory.cpp $(Debug_Include_Path) > gccDebug/GameFactory.d
-
-# Compiles file Msg.cpp for the Debug configuration...
--include gccDebug/Msg.d
-gccDebug/Msg.o: Msg.cpp
-	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c Msg.cpp $(Debug_Include_Path) -o gccDebug/Msg.o
-	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM Msg.cpp $(Debug_Include_Path) > gccDebug/Msg.d
 
 # Compiles file hl_sha1.cpp for the Debug configuration...
 -include gccDebug/hl_sha1.d
@@ -101,10 +83,34 @@ gccDebug/Output.o: Output.cpp
 	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c Output.cpp $(Debug_Include_Path) -o gccDebug/Output.o
 	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM Output.cpp $(Debug_Include_Path) > gccDebug/Output.d
 
+# Compiles file Engine.cpp for the Debug configuration...
+-include gccDebug/Engine.d
+gccDebug/Engine.o: Engine.cpp
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c Engine.cpp $(Debug_Include_Path) -o gccDebug/Engine.o
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM Engine.cpp $(Debug_Include_Path) > gccDebug/Engine.d
+
+# Compiles file Game.cpp for the Debug configuration...
+-include gccDebug/Game.d
+gccDebug/Game.o: Game.cpp
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c Game.cpp $(Debug_Include_Path) -o gccDebug/Game.o
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM Game.cpp $(Debug_Include_Path) > gccDebug/Game.d
+
+# Compiles file GameFactory.cpp for the Debug configuration...
+-include gccDebug/GameFactory.d
+gccDebug/GameFactory.o: GameFactory.cpp
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c GameFactory.cpp $(Debug_Include_Path) -o gccDebug/GameFactory.o
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM GameFactory.cpp $(Debug_Include_Path) > gccDebug/GameFactory.d
+
+# Compiles file Msg.cpp for the Debug configuration...
+-include gccDebug/Msg.d
+gccDebug/Msg.o: Msg.cpp
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c Msg.cpp $(Debug_Include_Path) -o gccDebug/Msg.o
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM Msg.cpp $(Debug_Include_Path) > gccDebug/Msg.d
+
 # Builds the Release configuration...
 .PHONY: Release
-Release: create_folders gccRelease/LeakDetector.o gccRelease/Singleton.o gccRelease/Game.o gccRelease/GameFactory.o gccRelease/Msg.o gccRelease/hl_sha1.o gccRelease/HttpProtocol.o gccRelease/Server.o gccRelease/Main.o gccRelease/ServerPCH.o gccRelease/Output.o 
-	g++ gccRelease/LeakDetector.o gccRelease/Singleton.o gccRelease/Game.o gccRelease/GameFactory.o gccRelease/Msg.o gccRelease/hl_sha1.o gccRelease/HttpProtocol.o gccRelease/Server.o gccRelease/Main.o gccRelease/ServerPCH.o gccRelease/Output.o  $(Release_Library_Path) $(Release_Libraries) -Wl,-rpath,./ -o ../gccRelease/Server.exe
+Release: create_folders gccRelease/LeakDetector.o gccRelease/Singleton.o gccRelease/hl_sha1.o gccRelease/HttpProtocol.o gccRelease/Server.o gccRelease/Main.o gccRelease/ServerPCH.o gccRelease/Output.o gccRelease/Engine.o gccRelease/Game.o gccRelease/GameFactory.o gccRelease/Msg.o 
+	g++ gccRelease/LeakDetector.o gccRelease/Singleton.o gccRelease/hl_sha1.o gccRelease/HttpProtocol.o gccRelease/Server.o gccRelease/Main.o gccRelease/ServerPCH.o gccRelease/Output.o gccRelease/Engine.o gccRelease/Game.o gccRelease/GameFactory.o gccRelease/Msg.o  $(Release_Library_Path) $(Release_Libraries) -Wl,-rpath,./ -o ../gccRelease/Server.exe
 
 # Compiles file LeakDetector.cpp for the Release configuration...
 -include gccRelease/LeakDetector.d
@@ -117,24 +123,6 @@ gccRelease/LeakDetector.o: LeakDetector.cpp
 gccRelease/Singleton.o: Singleton.cpp
 	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c Singleton.cpp $(Release_Include_Path) -o gccRelease/Singleton.o
 	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM Singleton.cpp $(Release_Include_Path) > gccRelease/Singleton.d
-
-# Compiles file Game.cpp for the Release configuration...
--include gccRelease/Game.d
-gccRelease/Game.o: Game.cpp
-	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c Game.cpp $(Release_Include_Path) -o gccRelease/Game.o
-	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM Game.cpp $(Release_Include_Path) > gccRelease/Game.d
-
-# Compiles file GameFactory.cpp for the Release configuration...
--include gccRelease/GameFactory.d
-gccRelease/GameFactory.o: GameFactory.cpp
-	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c GameFactory.cpp $(Release_Include_Path) -o gccRelease/GameFactory.o
-	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM GameFactory.cpp $(Release_Include_Path) > gccRelease/GameFactory.d
-
-# Compiles file Msg.cpp for the Release configuration...
--include gccRelease/Msg.d
-gccRelease/Msg.o: Msg.cpp
-	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c Msg.cpp $(Release_Include_Path) -o gccRelease/Msg.o
-	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM Msg.cpp $(Release_Include_Path) > gccRelease/Msg.d
 
 # Compiles file hl_sha1.cpp for the Release configuration...
 -include gccRelease/hl_sha1.d
@@ -171,6 +159,30 @@ gccRelease/ServerPCH.o: ServerPCH.cpp
 gccRelease/Output.o: Output.cpp
 	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c Output.cpp $(Release_Include_Path) -o gccRelease/Output.o
 	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM Output.cpp $(Release_Include_Path) > gccRelease/Output.d
+
+# Compiles file Engine.cpp for the Release configuration...
+-include gccRelease/Engine.d
+gccRelease/Engine.o: Engine.cpp
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c Engine.cpp $(Release_Include_Path) -o gccRelease/Engine.o
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM Engine.cpp $(Release_Include_Path) > gccRelease/Engine.d
+
+# Compiles file Game.cpp for the Release configuration...
+-include gccRelease/Game.d
+gccRelease/Game.o: Game.cpp
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c Game.cpp $(Release_Include_Path) -o gccRelease/Game.o
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM Game.cpp $(Release_Include_Path) > gccRelease/Game.d
+
+# Compiles file GameFactory.cpp for the Release configuration...
+-include gccRelease/GameFactory.d
+gccRelease/GameFactory.o: GameFactory.cpp
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c GameFactory.cpp $(Release_Include_Path) -o gccRelease/GameFactory.o
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM GameFactory.cpp $(Release_Include_Path) > gccRelease/GameFactory.d
+
+# Compiles file Msg.cpp for the Release configuration...
+-include gccRelease/Msg.d
+gccRelease/Msg.o: Msg.cpp
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c Msg.cpp $(Release_Include_Path) -o gccRelease/Msg.o
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM Msg.cpp $(Release_Include_Path) > gccRelease/Msg.d
 
 # Creates the intermediate and output folders for each configuration...
 .PHONY: create_folders

@@ -2,28 +2,27 @@
 #define Server_h__
 
 #include "Singleton.h"
-
-#ifdef WIN32
-#include <winsock.h>
-#else
-#include <netdb.h>
-#include <arpa/inet.h>
-#include <netinet/in.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#endif
+#include "HttpProtocol.h"
 
 namespace sv
 {
+	class Msg;
+
 	class Server : public Singleton<Server>
 	{
 	public:
 		Server();
 		~Server();
 
+		void Init();
+		void Exit();
 		void Run();
+
+		void SendMsg(Msg* msg, uint socket);
+		void Response(Msg* msg, uint socket);
 	private:
 		void HandleConnection(int socket);
+		HttpProtocol http;
 	};
 }
 

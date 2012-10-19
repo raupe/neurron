@@ -13,9 +13,12 @@ namespace sv
 	public:
 		GameFactory();
 		~GameFactory();
-
+		
 		Game*	CreateGame();
+		Game*	GetGame(uint id);
 		void	EndGame(unsigned int id);
+
+		void	Update();
 
 	private:
 		bool m_Lock;
