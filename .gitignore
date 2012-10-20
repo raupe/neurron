@@ -5,3 +5,5 @@
 /server/Server/gccDebug
 
 
+# prevent workspace push
+.idea
