@@ -59,8 +59,6 @@
 
 			temp;
 
-		//
-		console.time(1);
 
 		for ( circle = 0; circle < circles; circle++ ) { // 3
 
@@ -104,10 +102,14 @@
 
                         temp = ( fields.length - 1 );
 
-                        // if ( !fields[temp].antiRing ) {
 
-							fields[temp].antiRing = ringPos.slice(); // reverse
-                        // }
+						fields[temp].antiRing = ringPos.slice();
+
+						// ToDo: reverse animation fix - 39 -> 20 || where else reverse ?
+						// if ( (temp+1) % lanes === 0 ) {
+
+						//	fields[temp].antiRing.reverse();
+						// }
 
                         if ( temp - lanes >= 0 ) {
 
@@ -120,14 +122,14 @@
 
 
 						if ( temp && temp % lanes === 0 ) {
-							// console.log(temp); // 8, 15
+
                             fields[temp-1].antiRing = fields[ temp - lanes ].ring.slice();
                         }
                     }
 
 					fields.push({
 
-						dir: '',
+						id: step * circle,
 						x: x1,
 						y: y1,
 						ring: ringPos.slice().reverse(),
@@ -143,6 +145,12 @@
 		fields[fields.length-1].antiRing = fields[fields.length - lanes ].ring.slice().reverse();
 		fields[fields.length-1].antiDist = fields[fields.length - lanes - 1].dist.slice().reverse();
 
+		// temporary fix for reverse edge case
+		for ( step = lanes-1; step < fields.length; step += lanes ) {
+
+			fields[step].antiRing.reverse();
+		}
+
 		this.fields = fields;
 		this.lanes = lanes;
 	};
@@ -153,14 +161,11 @@
 
 		this.drawCircles();
 
-		this.drawGrid();
-
-		// this.drawLines();
+		// this.drawGrid();
 	};
 
 
 	Grid.prototype.drawLines = function(){
-
 
 		var fields = this.fields;
 		var ctx = this.ctx;
@@ -170,24 +175,24 @@
 		});
 
 
-        var a = fields.length/2;
+        // var a = fields.length/2;
 
-        fields[a].ring.forEach(function ( field) {
-            ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
-        });
+        // fields[a].ring.forEach(function ( field) {
+        //     ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
+        // });
 
-        fields[a].antiRing.forEach(function ( field) {
-            ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
-        });
+        // fields[a].antiRing.forEach(function ( field) {
+        //     ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
+        // });
 
-        fields[a].dist.forEach(function ( field) {
-            ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
-        });
+        // fields[a].dist.forEach(function ( field) {
+        //     ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
+        // });
 
-        fields[a].antiDist.forEach(function ( field) {
-            ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
-        });
-		console.timeEnd(1);
+        // fields[a].antiDist.forEach(function ( field) {
+        //     ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
+        // });
+		// console.timeEnd(1);
 	};
 
 
@@ -202,6 +207,11 @@
 			distanceToUser = this.distanceToUser,
 			outerCircleRadius = this.outerCircleRadius,
 			circleOffset = this.circleOffset;
+
+
+			// check color influence
+			ctx.strokeStyle = 'white';
+
 
 		for ( i = 0; i < circles; i++ ) {
 
