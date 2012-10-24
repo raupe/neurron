@@ -27,7 +27,7 @@
 
 		// };
 
-		this.send( this.channel + 0 );
+		// this.send( this.channel + 0 );
 	};
 
 
