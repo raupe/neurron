@@ -28,4 +28,9 @@
 	//	action.handle( data );
 	// }, 2000);
 
+
+	/* debug */
+
+	debug( screen, action, connection );
+
 })();
