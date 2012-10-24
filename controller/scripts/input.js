@@ -39,6 +39,13 @@
             origins = [],
             starts = [];
 
+
+        // style settings
+		ctx.lineWidth = 4;
+		ctx.lineCap = 'round';
+		ctx.strokeStyle = 'blue';
+
+
 		cvs.addEventListener('touchstart', function ( e ) {
 
 			e.preventDefault();
@@ -51,6 +58,8 @@
 				starts.push(touches[i]);
                 origins.push(touches[i]);
 			}
+
+			ctx.beginPath();
 		});
 
 
@@ -62,22 +71,22 @@
 			var touches = e.changedTouches,
 
 				end,
-
 				current;
 
 			for ( var i = 0, l = touches.length; i < l; i++ ) {
 
-				end =  touches[i];
+				end = touches[i];
 				current = starts[i];
 
-                ctx.moveTo( current.clientX, current.clientY );
-                ctx.lineTo( end.clientX, end.clientY );
+                // ctx.moveTo( current.clientX, current.clientY );
+                // ctx.lineTo( end.clientX, end.clientY );
+                // ctx.lineTo( current.clientX, current.clientY );
+                ctx.lineTo( current.clientX, current.clientY, end.clientX, end.clientY );
 
                 starts[i] = end;
 			}
 
 			ctx.stroke();
-            ctx.beginPath();
 		});
 
 		cvs.addEventListener('touchend', function ( e ) {
@@ -122,6 +131,7 @@
 
 			// console.log(e);
 		});
+
 
 	};
 
