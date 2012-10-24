@@ -5,28 +5,6 @@
 		this.players = {}; // player pool
 		this.obstacles = {}; // obstacle pool
 		this.screen = config.screen;
-
-		var players = this.players;
-
-		document.addEventListener('click', function(e){
-
-			var change = e.ctrlKey ?  1 : -1;
-
-			if ( e.shiftKey ) {
-
-				players[0].move( 'shift',  1 );
-
-			} else if ( e.which === 2 ){
-
-				players[0].move( 'shift', -1 );
-
-			} else {
-
-				players[0].move( 'ctrl', change );
-			}
-
-
-		});
 	};
 
 	Action.prototype.handle = function ( data ) {
