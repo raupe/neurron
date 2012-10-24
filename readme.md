@@ -1,13 +1,12 @@
-The code of "neurron" - a local multiplayer racing game.
+neurron
+=======
 
+A web based multiplayer game which is displayed on a common screen and controlled by smartphones.
+The players are running through a tunnel and have to avoid emerging obstacles.
 
-Parts
-=====
+*Work in Progress*
+------------------
 
 - client: controller
 - client: display
 - server
-
-
-Work in Progress
-----------------
