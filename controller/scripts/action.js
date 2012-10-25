@@ -17,6 +17,8 @@
 
 			var res = t.responseText;
 			console.log(res);
+			//atob(this.channel + 0) );
+
 			// console.log('error', t);
 			// this.controllerId = t.id;
 			// this.color = 'blue';
@@ -25,9 +27,16 @@
 		// /* on remove */
 		// document.onbeforeunload = function(){
 
-		// };
+		// };//EQAAQ==
 
-		// this.send( this.channel + 0 );
+		// 0x00440001//this.channel + ',' + 0) ;
+
+		// console.log(this.channel + ',' + 0 );
+		var base64 = btoa( String.fromCharCode(0,68,0,1) );
+
+
+		// console.log(base64);
+		this.send( base64 );
 	};
 
 
