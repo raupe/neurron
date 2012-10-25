@@ -20,8 +20,8 @@
 
 		document.body.appendChild( this.cvs );
 
-		window.addEventListener('resize', this.scale.bind( this ) );
-		window.addEventListener('orientationchange', this.scale.bind( this ) );
+		window.addEventListener('resize', this.scale.bind( scale ) );
+		window.addEventListener('orientationchange', this.scale.bind( scale ) );
 	};
 
 	Screen.prototype.scale = function() {
