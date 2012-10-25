@@ -20,14 +20,14 @@
 
 		document.body.appendChild( this.cvs );
 
-		window.onresize = this.scale;
-		window.onorientationchange = this.scale;
+		window.addEventListener('resize', this.scale.bind( scale ) );
+		window.addEventListener('orientationchange', this.scale.bind( scale ) );
 	};
 
 	Screen.prototype.scale = function() {
 
-		this.cvs.width = window.innerWidth - window.innerWidth/100;
-		this.cvs.height = window.innerHeight - window.innerHeight/100;
+		this.cvs.width = window.innerWidth;
+		this.cvs.height = window.innerHeight;
 	};
 
 })();
