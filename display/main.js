@@ -1,36 +1,44 @@
 (function(){
 
-	var screen = new display.Screen({
+	new display.Loader( config.assets, function ( assets ) {
 
-			width: config.canvas.width,
-			height: config.canvas.height
-		}),
+		display.Element.prototype.assets = assets;
 
-		action = new display.Action({
+		var screen = new display.Screen({
 
-			screen: screen
-		}),
+				width: config.canvas.width,
+				height: config.canvas.height
+			}),
 
-		connection = new display.Connection({
+			action = new display.Action({
 
-			action: action,
-			server: config.server,
-			port: config.port
-		});
+				screen: screen
+			}),
 
+			connection = new display.Connection({
 
-	/* delayed call for tests */
-
-	// setTimeout(function(){
-	//
-	//	var data = ["move", "players", 0]; // command, type, options
-	//
-	//	action.handle( data );
-	// }, 2000);
+				action: action,
+				server: config.server,
+				port: config.port
+			});
 
 
-	/* debug */
+		/* delayed call for tests */
 
-	debug( screen, action, connection );
+		// setTimeout(function(){
+		//
+		//	var data = ["move", "players", 0]; // command, type, options
+		//
+		//	action.handle( data );
+		// }, 2000);
+
+
+		/* debug */
+
+		debug( screen, action, connection );
+
+	});
+
+
 
 })();
