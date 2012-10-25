@@ -37,8 +37,15 @@
 				"obstacle": this.obstacles
 			};
 
-		// create new Object
-		new element[type]({	id: options, screen: this.screen, pool: pools[type] });
+		// create new Object - player/obstacle
+		new element[type]({
+
+			pos: 20,
+			id: options,
+			screen: this.screen,
+			pool: pools[type],
+			size: config.elements.size
+		});
 	};
 
 	Action.prototype.move = function ( type, options ) {
