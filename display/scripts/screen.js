@@ -42,7 +42,7 @@
 			distanceToUser: 350,
 			circleOffset: 100,
 			frames: 30,
-			circles: 7
+			circles: 0
 		});
 
 		this.elements.push( this.grid );
@@ -67,8 +67,8 @@
 
 	Screen.prototype.scale = function() {
 
-		this.cvs.width = window.innerWidth - window.innerWidth/20;
-		this.cvs.height = window.innerHeight - window.innerHeight/20;
+		this.cvs.width = window.innerWidth;
+		this.cvs.height = window.innerHeight;
 	};
 
 
