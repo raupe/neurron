@@ -8,9 +8,14 @@
 		this.ctx = this.screen.ctx;
 		this.grid = config.screen.grid;
 
+		this.size = config.size;
+		this.pos = config.pos;
+
 		this.register();
 	};
 
-    Obstacle.prototype = display.Element;
+    Obstacle.prototype = new display.Element();
+
+
 
 })();

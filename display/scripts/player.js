@@ -8,9 +8,12 @@
 		this.ctx = this.screen.ctx;
 		this.grid = config.screen.grid;
 
-		this.register();
+		this.size = config.size;
+		this.pos = config.pos;
+
+		this.register( config.size );
 	};
 
-    Player.prototype = display.Element;
+    Player.prototype = new display.Element();
 
 })();
