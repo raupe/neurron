@@ -141,15 +141,17 @@
 			}
 		}
 
+
+		// temporary fix for reverse edge case
+		for ( step = lanes-1; step < fields.length-1; step += lanes ) { // excludes the last field
+
+			fields[step].antiRing.reverse();
+		}
+
 		// last point
 		fields[fields.length-1].antiRing = fields[fields.length - lanes ].ring.slice().reverse();
 		fields[fields.length-1].antiDist = fields[fields.length - lanes - 1].dist.slice().reverse();
 
-		// temporary fix for reverse edge case
-		for ( step = lanes-1; step < fields.length; step += lanes ) {
-
-			fields[step].antiRing.reverse();
-		}
 
 		this.fields = fields;
 		this.lanes = lanes;
@@ -210,7 +212,7 @@
 
 
 			// check color influence
-			ctx.strokeStyle = 'white';
+			// ctx.strokeStyle = 'white';
 
 
 		for ( i = 0; i < circles; i++ ) {
