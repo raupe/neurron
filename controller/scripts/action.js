@@ -25,15 +25,12 @@
 			// results
 			this.id = msg.charCodeAt( 0 );
 			this.color = msg.charCodeAt( 1 );
-
-			console.log(this.id);
-			console.log( this.color);
 		};
 
 		// /* on remove */
 		// document.onbeforeunload = function(){
 
-		// };//EQAAQ==
+		// };
 
 
 		this.send( 1 );
@@ -80,7 +77,7 @@
 
 		this.req.open( 'POST', this.url , true );
 
-		// encode into base64, avoid special characters like "0"
+		// encode into base64, avoiding special characters like '0'
 		var data = btoa( String.fromCharCode(  this.channel, this.id, action ) );
 
 		this.req.setRequestHeader( 'Content-Type', 'text/plain; charset=UTF-8' );
