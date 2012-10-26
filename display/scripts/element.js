@@ -1,6 +1,19 @@
 (function(){
 
-    var Element = display.Element = function() {};
+    var Element = display.Element = function(){ };
+
+
+    Element.prototype.setup = function ( config ) {
+
+        for ( var prop in config ) {
+
+            this[prop] = config[prop];
+        }
+
+        this.ctx = this.screen.ctx;
+        this.grid = config.screen.grid;
+    };
+
 
 
     Element.prototype.register = function() {
@@ -14,6 +27,7 @@
 
         this.screen.elements.push( this );
     };
+
 
     Element.prototype.draw = function(){
 
