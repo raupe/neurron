@@ -1,3 +1,6 @@
+// bind polyfill
+// (https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function/bind)
+
 (function(){
 
 	if (!Function.prototype.bind) {
