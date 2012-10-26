@@ -13,6 +13,18 @@
 
         this.size = config.size;
         this.pos = config.pos;
+
+
+        // subcanvas
+        var cvs = document.createElement('canvas'),
+            ctx = cvs.getContext('2d');
+
+        cvs.width = this.size;
+        cvs.height = this.size;
+
+        ctx.drawImage( this.assets.images[ this.type ] , 0,0, this.size, this.size );
+
+        this.img = cvs;
     };
 
 
@@ -42,15 +54,15 @@
 
         if ( this.nextPos === this.pos ) {
 
-            var image = this.assets.images;
+            // this.img.rotate( this.angle );
 
-            // ctx.fillRect( field.x - this.size/2, field.y - this.size/2, this.size, this.size );
-            ctx.drawImage(  image.fabian,
+            ctx.drawImage(
+                            this.img,
                             field.x - this.size/2,
                             field.y - this.size/2,
                             this.size,
                             this.size
-                    );
+                        );
 
         } else {
 
@@ -116,14 +128,15 @@
             step = field[this.dir][ this.counter ];
 
 
-        var image = this.assets.images;
+        // this.img.rotate( 360 );
 
-        ctx.drawImage(  image.fabian,
+        ctx.drawImage(
+                        this.img,
                         step.x - this.size/2,
                         step.y - this.size/2,
                         this.size,
                         this.size
-                );
+                    );
 
 
         this.counter++;
