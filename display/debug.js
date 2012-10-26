@@ -10,7 +10,7 @@
 
 			addVariableFrames( screen, action );
 
-			drawNums( screen );
+			// drawNums( screen );
 			// drawLine( screen, 39 );
 		}
 
