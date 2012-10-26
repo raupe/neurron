@@ -22,12 +22,8 @@
         cvs.width = this.size;
         cvs.height = this.size;
 
-
         this.sub = ctx;
         this.src = this.assets.images[ this.type ]; // image src
-        ctx.drawImage( this.src, 0,0, this.size, this.size );
-
-        this.img = this.sub.canvas;
     };
 
 
@@ -127,7 +123,12 @@
         }
     };
 
+
     Element.prototype.draw = function( field ) {
+
+        field.angle = this.counter;
+
+        this.rotate( field.angle );
 
         this.ctx.drawImage(
 
@@ -139,6 +140,26 @@
                     );
     };
 
+
+    Element.prototype.rotate = function ( angle ) {
+
+        var rad = angle * Math.PI / 180;
+
+        this.sub.save();
+
+            this.sub.translate( this.sub.canvas.width/2 - this.size/2,
+                                this.sub.canvas.height/2 - this.size/2 );
+
+            this.sub.rotate( rad );
+
+            this.sub.clearRect( 0, 0, this.size, this.size ); // prevent over draw
+
+            this.sub.drawImage( this.src, 0,0, this.size, this.size );
+
+        this.sub.restore();
+
+        this.img = this.sub.canvas;
+    };
 
 
     Element.prototype.remove = function () {
