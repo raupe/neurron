@@ -19,6 +19,14 @@
 	};
 
 
+
+	Grid.prototype.update = function(){
+
+		this.draw();
+	};
+
+
+
 	Grid.prototype.definePositions = function(){
 
 		/* constants */

@@ -26,7 +26,7 @@
 
 			elements.forEach(function ( element ) {
 
-				element.draw();
+				element.update(); // !=draw
 			});
 
 		})();

@@ -22,9 +22,12 @@
         cvs.width = this.size;
         cvs.height = this.size;
 
-        ctx.drawImage( this.assets.images[ this.type ] , 0,0, this.size, this.size );
 
-        this.img = cvs;
+        this.sub = ctx;
+        this.src = this.assets.images[ this.type ]; // image src
+        ctx.drawImage( this.src, 0,0, this.size, this.size );
+
+        this.img = this.sub.canvas;
     };
 
 
@@ -39,35 +42,6 @@
         this.counter = 0;
 
         this.screen.elements.push( this );
-    };
-
-
-    Element.prototype.draw = function(){
-
-        var ctx = this.ctx,
-
-            field = this.grid.fields[ this.pos ];
-
-        ctx.fillStyle = this.color;
-
-
-
-        if ( this.nextPos === this.pos ) {
-
-            // this.img.rotate( this.angle );
-
-            ctx.drawImage(
-                            this.img,
-                            field.x - this.size/2,
-                            field.y - this.size/2,
-                            this.size,
-                            this.size
-                        );
-
-        } else {
-
-            this.animate();
-        }
     };
 
 
@@ -121,23 +95,27 @@
 
     };
 
-    Element.prototype.animate = function() {
 
-        var ctx = this.ctx,
-            field = this.grid.fields[ this.pos ],
-            step = field[this.dir][ this.counter ];
+    Element.prototype.update = function(){
+
+        var field = this.grid.fields[ this.pos ];
+
+        if ( this.nextPos === this.pos ) {
+
+            this.draw( field );
+
+        } else {
+
+            this.animate( field );
+        }
+    };
 
 
-        // this.img.rotate( 360 );
+    Element.prototype.animate = function ( field ) {
 
-        ctx.drawImage(
-                        this.img,
-                        step.x - this.size/2,
-                        step.y - this.size/2,
-                        this.size,
-                        this.size
-                    );
+        var step = field[this.dir][ this.counter ];
 
+        this.draw( step );
 
         this.counter++;
 
@@ -148,6 +126,19 @@
             this.counter = 0;
         }
     };
+
+    Element.prototype.draw = function( field ) {
+
+        this.ctx.drawImage(
+
+                        this.img,
+                        field.x - this.size/2,
+                        field.y - this.size/2,
+                        this.size,
+                        this.size
+                    );
+    };
+
 
 
     Element.prototype.remove = function () {
