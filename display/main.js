@@ -23,16 +23,6 @@
 			});
 
 
-		/* delayed call for tests */
-
-		// setTimeout(function(){
-		//
-		//	var data = ["move", "players", 0]; // command, type, options
-		//
-		//	action.handle( data );
-		// }, 2000);
-
-
 		/* debug */
 
 		debug( screen, action, connection );
