@@ -15,11 +15,10 @@
 		/* serve response  */
 		this.req.onload = function ( t ) {
 
-			var res = t.responseText;
-			console.log(res);
-			//atob(this.channel + 0) );
+			var res = t.currentTarget.responseText;
 
-			// console.log('error', t);
+			console.log( atob( res ) );
+
 			// this.controllerId = t.id;
 			// this.color = 'blue';
 		};
@@ -29,13 +28,9 @@
 
 		// };//EQAAQ==
 
-		// 0x00440001//this.channel + ',' + 0) ;
 
-		// console.log(this.channel + ',' + 0 );
 		var base64 = btoa( String.fromCharCode(0,68,0,1) );
 
-
-		// console.log(base64);
 		this.send( base64 );
 	};
 
@@ -71,13 +66,17 @@
             }
         }
 
+
         this.send(direction);
 	};
 
 
-	Action.prototype.send = function ( data ) {
+	Action.prototype.send = function ( data )  {
 
 		this.req.open( 'POST', this.url , true );
+
+		// data = btoa( String.fromCharCode(  0,68,0,1 ) );
+
 		this.req.send( data );
 	};
 
