@@ -18,13 +18,16 @@
 		this.req.onload = function ( t ) {
 
 			// console.log(t);
-			var res = t.currentTarget.responseText,
+			var res = t.currentTarget.responseText;
 
-				msg = atob( res );
+				msg = atob( res.substr( 0, res.length -1 ) );
 
 			// results
 			this.id = msg.charCodeAt( 0 );
 			this.color = msg.charCodeAt( 1 );
+
+			console.log(this.id);
+			console.log( this.color);
 		};
 
 		// /* on remove */
