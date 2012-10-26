@@ -5,13 +5,14 @@
 
     Element.prototype.setup = function ( config ) {
 
-        for ( var prop in config ) {
-
-            this[prop] = config[prop];
-        }
-
+        this.pool = config.pool;
+        this.id = config.id;
+        this.screen = config.screen;
         this.ctx = this.screen.ctx;
         this.grid = config.screen.grid;
+
+        this.size = config.size;
+        this.pos = config.pos;
     };
 
 
