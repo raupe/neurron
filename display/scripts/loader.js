@@ -1,6 +1,6 @@
 (function(){
 
-	var Loader = display.Loader = function ( assets, callback ) {
+	var Loader = display.Loader = function ( assets, main ) {
 
 		this.images = assets.images;
 		this.sounds = assets.images;
@@ -8,7 +8,7 @@
 
 		// this.assets = assets;
 
-		this.callback = callback;
+		this.main = main;
 
 		this.load();
 	};
@@ -47,7 +47,7 @@
 
 			if ( this.images.length === 0 ) {
 
-				this.callback( this );
+				this.main( this );
 
 			} else {
 
