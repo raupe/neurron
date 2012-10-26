@@ -4,6 +4,8 @@
 
 		this.req = new XMLHttpRequest();
 		this.url = config.url;
+
+		this.id = 0; // default
 		this.channel = config.channel;
 
 		this.register();
@@ -15,12 +17,14 @@
 		/* serve response  */
 		this.req.onload = function ( t ) {
 
-			var res = t.currentTarget.responseText;
+			// console.log(t);
+			var res = t.currentTarget.responseText,
 
-			console.log( atob( res ) );
+				msg = atob( res );
 
-			// this.controllerId = t.id;
-			// this.color = 'blue';
+			// results
+			this.id = msg.charCodeAt( 0 );
+			this.color = msg.charCodeAt( 1 );
 		};
 
 		// /* on remove */
@@ -29,9 +33,7 @@
 		// };//EQAAQ==
 
 
-		var base64 = btoa( String.fromCharCode(0,68,0,1) );
-
-		this.send( base64 );
+		this.send( 1 );
 	};
 
 
@@ -67,15 +69,18 @@
         }
 
 
-        this.send(direction);
+        this.send( direction );
 	};
 
 
-	Action.prototype.send = function ( data )  {
+	Action.prototype.send = function ( action )  {
 
 		this.req.open( 'POST', this.url , true );
 
-		// data = btoa( String.fromCharCode(  0,68,0,1 ) );
+		// encode into base64, avoid special characters like "0"
+		var data = btoa( String.fromCharCode(  this.channel, this.id, action ) );
+
+		this.req.setRequestHeader( 'Content-Type', 'text/plain; charset=UTF-8' );
 
 		this.req.send( data );
 	};
