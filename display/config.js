@@ -17,9 +17,10 @@ var config = {
 
 		images: {
 
+			player: 'assets/alpha-test.png',
 			test: 'assets/alpha-test.png',
 			julia: 'assets/tux-test.png',
-			fabian: 'assets/alpha-test.png',
+			fabian: 'assets/tux-test.png',
 			duc: 'assets/tux-test.png',
 			stefan: 'assets/tux-test.png'
 		},
@@ -31,7 +32,7 @@ var config = {
 
 	elements: {
 
-		size: 50
+		size: 40
 	}
 };
 
