@@ -2,6 +2,8 @@
 
 	var Obstacle = display.Obstacle = function ( config ) {
 
+		this.type = 'fabian';
+
 		this.setup( config );
 
 		this.register();
