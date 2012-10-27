@@ -7,7 +7,8 @@
 		var screen = new display.Screen({
 
 				width: config.canvas.width,
-				height: config.canvas.height
+				height: config.canvas.height,
+				frames: 30
 			}),
 
 			action = new display.Action({
