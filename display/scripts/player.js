@@ -4,9 +4,9 @@
 
 		this.type = 'player';
 
-		this.setup( config );
+		config.color = [ 50, 100, 20 ];
 
-		this.register();
+		this.init( config );
 	};
 
     Player.prototype = new display.Element();

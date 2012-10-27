@@ -3,7 +3,23 @@
     var Element = display.Element = function(){ };
 
 
+    Element.prototype.init = function ( config ) {
+
+        this.setup( config );
+
+        this.createCanvas();
+
+        this.colorize();
+
+        this.register();
+
+        this.update();
+    };
+
+
     Element.prototype.setup = function ( config ) {
+
+        this.color = config.color;
 
         this.pool = config.pool;
         this.id = config.id;
@@ -16,9 +32,7 @@
         this.grid = this.screen.grid;
         this.origin = this.screen.ctx;
 
-        this.src = this.assets.images[ this.type ]; // image src
-
-        this.createCanvas();
+        this.src = this.assets.images[ this.type ];
     };
 
 
@@ -31,6 +45,42 @@
         cvs.height = this.size;
 
         this.ctx = ctx;
+    };
+
+
+    Element.prototype.colorize = function(){
+
+        if ( this.color ) {
+
+            this.ctx.drawImage( this.src, 0,0, this.size, this.size );
+
+
+            var image = this.ctx.getImageData( 0, 0, this.size, this.size ),
+
+                size = image.width * image.height + 1,
+
+                pixels = image.data,
+
+                i; // incrementor
+
+            while ( --size ) {
+
+                i = size << 2;
+
+                pixels[   i ] = this.color[0];
+                pixels[ ++i ] = this.color[1];
+                pixels[ ++i ] = this.color[2];
+                // pixels[ i * 4 + 3 ] = this.color[3];
+            }
+
+            this.ctx.putImageData( image, 0, 0 );
+
+
+            image = new Image();
+            image.src = this.ctx.canvas.toDataURL('img/png');
+
+            this.src = image;
+        }
     };
 
 

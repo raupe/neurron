@@ -4,9 +4,7 @@
 
 		this.type = 'fabian';
 
-		this.setup( config );
-
-		this.register();
+		this.init( config );
 	};
 
     Obstacle.prototype = new display.Element();
