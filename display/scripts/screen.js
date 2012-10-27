@@ -4,48 +4,15 @@
 
 		this.width = config.width;
 		this.height = config.height;
+		this.frames = config.frames;
 
 		this.elements = [];
 
 		this.createCanvas();
+
 		this.createGrid();
 
 		this.render();
-	};
-
-	Screen.prototype.render = function(){
-
-		var elements = this.elements,
-			ctx = this.ctx;
-
-		(function loop(){
-
-			requestAnimationFrame( loop );
-
-			ctx.clearRect( 0,0, ctx.canvas.width, ctx.canvas.height );
-
-			elements.forEach(function ( element ) {
-
-				element.update(); // !=draw
-			});
-
-		})();
-	};
-
-
-	Screen.prototype.createGrid = function(){
-
-		this.grid = new display.Grid({
-
-			ctx: this.ctx,
-			players: 10,
-			distanceToUser: 350,
-			circleOffset: 100,
-			frames: 30,
-			circles: 0
-		});
-
-		this.elements.push( this.grid );
 	};
 
 
@@ -72,5 +39,39 @@
 	};
 
 
+	Screen.prototype.createGrid = function(){
+
+		this.grid = new display.Grid({
+
+			origin: this.ctx,
+			players: 10,
+			distanceToUser: 350,
+			circleOffset: 100,
+			frames: this.frames,
+			circles: 0
+		});
+
+		this.elements.push( this.grid );
+	};
+
+
+	Screen.prototype.render = function(){
+
+		var elements = this.elements,
+			ctx = this.ctx;
+
+		(function loop(){
+
+			requestAnimationFrame( loop );
+
+			ctx.clearRect( 0,0, ctx.canvas.width, ctx.canvas.height );
+
+			elements.forEach(function ( element ) {
+
+				element.update(); // former ".draw()"
+			});
+
+		})();
+	};
 
 })();

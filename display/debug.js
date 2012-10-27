@@ -23,6 +23,9 @@
 				this.drawGrid();
 
 				this.drawLines();
+
+
+				this.origin.drawImage( this.ctx.canvas, 0, 0, this.width, this.height );
 			};
 		}
 

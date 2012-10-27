@@ -2,30 +2,33 @@
 
 	var Grid = display.Grid = function ( config ) {
 
-		this.ctx = config.ctx;
-		this.width = config.ctx.canvas.width;
-		this.height = config.ctx.canvas.height;
+		this.setup( config );
+
+		this.definePositions();
+
+		this.createCanvas();
+
+		this.update();
+	};
+
+
+	Grid.prototype.setup = function ( config ) {
+
+		this.origin = config.origin;
+
+		this.width = this.origin.canvas.width;
+		this.height = this.origin.canvas.height;
+
+
 		this.players = config.players;
 		this.circles = config.circles;
 		this.frames = config.frames;
 
+
 		this.distanceToUser = config.distanceToUser;
 		this.circleOffset = config.circleOffset;
 		this.outerCircleRadius = this.height/2;
-
-		this.definePositions();
-
-		this.draw();
 	};
-
-
-
-	Grid.prototype.update = function(){
-
-		this.draw();
-	};
-
-
 
 	Grid.prototype.definePositions = function(){
 
@@ -166,19 +169,38 @@
 	};
 
 
+	Grid.prototype.createCanvas = function(){
+
+        var cvs = document.createElement('canvas'),
+            ctx = cvs.getContext('2d');
+
+        cvs.width = this.width;
+        cvs.height = this.height;
+
+        this.ctx = ctx;
+	};
+
+
+	Grid.prototype.update = function(){
+
+		this.draw();
+	};
+
 
 	Grid.prototype.draw = function(){
 
 		this.drawCircles();
 
 		// this.drawGrid();
+
+		this.origin.drawImage( this.ctx.canvas, 0, 0, this.width, this.height );
 	};
 
 
 	Grid.prototype.drawLines = function(){
 
-		var fields = this.fields;
-		var ctx = this.ctx;
+		var fields = this.fields,
+			ctx = this.ctx;
 
 		fields.forEach(function ( field,counter ) {
 			ctx.fillText( counter,field.x,field.y);
