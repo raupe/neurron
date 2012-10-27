@@ -70,7 +70,7 @@
                 pixels[   i ] = this.color[0];
                 pixels[ ++i ] = this.color[1];
                 pixels[ ++i ] = this.color[2];
-                // pixels[ i * 4 + 3 ] = this.color[3];
+                // pixels[ i * 4 + 3 ] = pixels[ i * 4 + 3 ];
             }
 
             this.ctx.putImageData( image, 0, 0 );
