@@ -7,25 +7,31 @@
 
         this.pool = config.pool;
         this.id = config.id;
+
         this.screen = config.screen;
-        this.ctx = this.screen.ctx;
-        this.grid = config.screen.grid;
 
         this.size = config.size;
         this.pos = config.pos;
 
+        this.grid = this.screen.grid;
+        this.origin = this.screen.ctx;
 
-        // subcanvas
+        this.src = this.assets.images[ this.type ]; // image src
+
+        this.createCanvas();
+    };
+
+
+    Element.prototype.createCanvas = function(){
+
         var cvs = document.createElement('canvas'),
             ctx = cvs.getContext('2d');
 
         cvs.width = this.size;
         cvs.height = this.size;
 
-        this.sub = ctx;
-        this.src = this.assets.images[ this.type ]; // image src
+        this.ctx = ctx;
     };
-
 
 
     Element.prototype.register = function() {
@@ -131,7 +137,7 @@
 
         this.rotate( field.deg );
 
-        this.ctx.drawImage(
+        this.origin.drawImage(
 
                         this.img,
                         field.x - this.size/2,
@@ -144,22 +150,22 @@
 
     Element.prototype.rotate = function ( deg ) {
 
-        var rad = deg * Math.PI / 180;
+        var ctx = this.ctx;
 
-        this.sub.save();
+        ctx.save();
 
-            this.sub.translate( this.sub.canvas.width/2 - this.size/2,
-                                this.sub.canvas.height/2 - this.size/2 );
+            ctx.translate( ctx.canvas.width/2 - this.size/2,
+                           ctx.canvas.height/2 - this.size/2 );
 
-            this.sub.rotate( rad );
+            ctx.rotate( deg * Math.PI / 180 ); // rad
 
-            this.sub.clearRect( 0, 0, this.size, this.size ); // prevent over draw
+            ctx.clearRect( 0, 0, this.size, this.size ); // keep alpha != overdraw
 
-            this.sub.drawImage( this.src, 0,0, this.size, this.size );
+            ctx.drawImage( this.src, 0,0, this.size, this.size );
 
-        this.sub.restore();
+        ctx.restore();
 
-        this.img = this.sub.canvas;
+        this.img = ctx.canvas;
     };
 
 
