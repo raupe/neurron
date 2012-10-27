@@ -4,7 +4,7 @@
 
 		this.type = 'player';
 
-		config.color = [ 50, 100, 20 ];
+		config.color = [ 220, 100, 20 ];
 
 		this.init( config );
 	};
