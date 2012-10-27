@@ -126,9 +126,10 @@
 
     Element.prototype.draw = function( field ) {
 
-        field.angle = this.counter;
+        // degree is saved per field
+        field.deg = this.counter;
 
-        this.rotate( field.angle );
+        this.rotate( field.deg );
 
         this.ctx.drawImage(
 
@@ -141,9 +142,9 @@
     };
 
 
-    Element.prototype.rotate = function ( angle ) {
+    Element.prototype.rotate = function ( deg ) {
 
-        var rad = angle * Math.PI / 180;
+        var rad = deg * Math.PI / 180;
 
         this.sub.save();
 
