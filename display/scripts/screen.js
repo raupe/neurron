@@ -2,17 +2,24 @@
 
 	var Screen = display.Screen = function ( config ) {
 
+		this.setup( config );
+
+		this.createCanvas();
+
+		this.createBackground();
+
+		this.createGrid();
+
+		this.render();
+	};
+
+	Screen.prototype.setup = function ( config ) {
+
 		this.width = config.width;
 		this.height = config.height;
 		this.frames = config.frames;
 
 		this.elements = [];
-
-		this.createCanvas();
-
-		this.createGrid();
-
-		this.render();
 	};
 
 
@@ -36,6 +43,22 @@
 
 		this.cvs.width = window.innerWidth;
 		this.cvs.height = window.innerHeight;
+	};
+
+
+	Screen.prototype.createBackground = function(){
+
+		this.background = new display.Background({
+
+			lanes: 40,						// this.grid.lanes - ? (default: 20)
+
+			circles: 80,					// this.grid.circles * 2 ? (default: 25) // 10
+
+			origin: this.ctx,
+			framerate: this.frames/10		// current => 3
+		});
+
+		this.elements.push( this.background );
 	};
 
 

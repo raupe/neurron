@@ -10,9 +10,53 @@
 
 			addVariableFrames( screen, action );
 
+			activateTunnel( screen.background );
+
 			// drawNums( screen );
-			// drawLine( screen, 39 );
 		}
+
+
+		function activateTunnel ( tunnel ) {
+
+			var active = false;
+
+			document.addEventListener('keyup', function ( e ) {
+
+				var key = e.which;
+
+				// show - 0
+				if ( key === 48 ) {
+
+					if ( !active ) {
+
+						active = true;
+
+						tunnel.update = function(){
+
+							this.change();
+
+							this.draw();
+						};
+
+					} else {
+
+						active = false;
+
+						tunnel.update =function(){};
+					}
+
+				}
+
+				// moving - wasd
+				if ( key === 65 ) tunnel.sequence('left');
+				if ( key === 68 ) tunnel.sequence('right');
+				if ( key === 87 ) tunnel.sequence('top');
+				if ( key === 83 ) tunnel.sequence('bottom');
+
+			});
+
+		}
+
 
 		function drawNums( screen ) {
 
