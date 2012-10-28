@@ -20,12 +20,12 @@
 		this.width = this.origin.canvas.width;
 		this.height = this.origin.canvas.height;
 
-		this.lanes = config.lanes;			// possible 3-10...40
-		this.circles = config.circles;
+		this.edges = config.edges;			// possible 3-10...40
+		this.depth = config.depth;
 
 
-		// framerate
-		this.framerate = config.framerate;
+		// frames
+		this.frames = config.frames;
 
 		// animation step
 		this.step = 0;
@@ -41,17 +41,17 @@
 		this.x = 0;
 		this.y = 0;
 
-		// velocity - 1/frames
-		this.vX = 6;						// default: -14
-		this.vY = 6;						// default: 12
+		// velocity
+		this.vX = this.frames;						// default: -14
+		this.vY = this.frames;						// default: 12
 
 		// center
 		this.centerX = this.width/2;
 		this.centerY = this.height/2;
 
 
-		this.offset = 10;					// tile size, distance - default: 20
-		this.multiply = 360 / this.lanes;	// parts
+		this.offset = 20;					// tile size - distance/radius
+		this.multiply = 360 / this.edges;	// parts
 
 		// pre-define
 		var points = [],
@@ -61,7 +61,7 @@
 
 			i, l;
 
-		for ( i = 0, l = this.circles * this.lanes; i < l ; i++ ) {
+		for ( i = 0, l = this.depth * this.edges; i < l ; i++ ) {
 
 			points[i] = { x: 0, y: 0 };
 		}
@@ -152,8 +152,8 @@
 			sin = this.sin,
 
 			multiply = this.multiply,	// multiply, spin looking factor - default: 5
-			circles = this.circles,
-			lanes = this.lanes,
+			circles = this.depth,
+			lanes = this.edges,
 
 			offset = this.offset,		// radius increment
 			centerX = this.centerX,
@@ -200,78 +200,74 @@
 
 	Background.prototype.draw = function(){
 
-		var ctx = this.ctx;
+		var ctx = this.ctx,
 
-		if ( ++this.step === this.framerate ) {
+			points = this.points,
+			circles = this.depth,
+			lanes = this.edges,
 
-			this.step = 0;
-
-			var points = this.points,
-				circles = this.circles,
-				lanes = this.lanes,
-
-				offset = this.offset,
-				multiply = this.multiply;
+			offset = this.offset,
+			multiply = this.multiply;
 
 
-			for ( i = 0; i < circles - 1; i++ ) {
+		for ( i = 0; i < circles - 1; i++ ) {
 
-				for ( j = 0; j < lanes; j++ ) {
+			for ( j = 0; j < lanes; j++ ) {
 
-					// forward
-					// if ( !this.queue.length ) {
+				// forward
+				// if ( !this.queue.length ) {
 
-						// if ( this.forward >= this.circles  ) {
+					// if ( this.forward >= this.depth  ) {
 
-							// this.forward = 0;
+						// this.forward = 0;
 
-						// } else {
+					// } else {
 
-							// this.forward++;
-						// }
+						// this.forward++;
 					// }
+				// }
 
-					// blue tones
-					var r = 10,
-						g = 10 + ~~( Math.sin( ( j * multiply / 2 ) * Math.PI / 180 )  * 255 * i / circles ),
-						b = 10 + i * ( offset - 2 );
-
-
-					ctx.fillStyle = 'rgb(' + r + ', ' + g + ', ' + b + ')';
-
-					ctx.beginPath();
-
-					ctx.moveTo(
-								points[ i * lanes + j ].x,
-								points[ i * lanes + j ].y
-					);
+				// blue tones
+				var r =  0,
+					g =			i * ( offset - 10 ),//+ ~~( Math.sin( ( j * multiply / 2 ) * Math.PI / 180 )  * 255 * i / circles ),
+					b = 90 +	i * ( offset - 10 );
 
 
-					ctx.lineTo(
-								points[ i * lanes + (j+1) % lanes ].x,
-								points[ i * lanes + (j+1) % lanes ].y
-					);
+				ctx.fillStyle = 'rgb(' + r + ', ' + g + ', ' + b + ')';
+
+				ctx.beginPath();
+
+				ctx.moveTo(
+							points[ i * lanes + j ].x,
+							points[ i * lanes + j ].y
+				);
 
 
-					ctx.lineTo(
-								points[ (i+1) * lanes + (j+1) % lanes ].x,
-								points[ (i+1) * lanes + (j+1) % lanes ].y
-					);
+				ctx.lineTo(
+							points[ i * lanes + (j+1) % lanes ].x,
+							points[ i * lanes + (j+1) % lanes ].y
+				);
 
-					ctx.lineTo(
-								points[ (i+1) * lanes + j ].x,
-								points[ (i+1) * lanes + j ].y
-					);
 
-					// draw in texture map
-					ctx.fill();
-				}
+				ctx.lineTo(
+							points[ (i+1) * lanes + (j+1) % lanes ].x,
+							points[ (i+1) * lanes + (j+1) % lanes ].y
+				);
+
+				ctx.lineTo(
+							points[ (i+1) * lanes + j ].x,
+							points[ (i+1) * lanes + j ].y
+				);
+
+				// draw in texture map
+				ctx.fill();
 			}
-
-			// update position
-			this.x = ( this.x + this.vX ) % 360;
-			this.y = ( this.y + this.vY ) % 360;
 		}
+
+		// update position
+		this.x = ( this.x + this.vX ) % 360;
+		this.y = ( this.y + this.vY ) % 360;
+
 
 		// positiong afterwards...
 		this.origin.drawImage(
