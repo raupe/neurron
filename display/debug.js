@@ -20,6 +20,14 @@
 
 			var active = false;
 
+				tunnel.update = function(){
+
+							this.change();
+
+							this.draw();
+						};
+
+			tunnel.sequence('bottom');
 			document.addEventListener('keyup', function ( e ) {
 
 				var key = e.which;
@@ -27,23 +35,24 @@
 				// show - 0
 				if ( key === 48 ) {
 
-					if ( !active ) {
+					tunnel.step++;
+					// if ( !active ) {
 
-						active = true;
+					// 	active = true;
 
-						tunnel.update = function(){
+					// 	tunnel.update = function(){
 
-							this.change();
+					// 		this.change();
 
-							this.draw();
-						};
+					// 		this.draw();
+					// 	};
 
-					} else {
+					// } else {
 
-						active = false;
+					// 	active = false;
 
-						tunnel.update =function(){};
-					}
+					// 	tunnel.update =function(){};
+					// }
 
 				}
 
