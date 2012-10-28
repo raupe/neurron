@@ -29,6 +29,7 @@
 
 		// animation step
 		this.step = 0;
+		this.rate = 5;
 
 		// sequence list
 		this.queue = [{ x: 0, y: 0 }];
@@ -63,7 +64,7 @@
 
 		for ( i = 0, l = this.depth * this.edges; i < l ; i++ ) {
 
-			points[i] = { x: 0, y: 0 };
+			points[i] = { x: 0, y: 0, preX: 0, preY: 0 };
 		}
 
 		this.points = points;
@@ -107,13 +108,13 @@
 
 		var options = { // need data for sub-frames
 
-				left:	{ x: -50,	y:   0 },
+				left:	{ x: -50,	y:   0,		dir: 4 },
 
-				right:	{ x:  50,	y:   0 },
+				right:	{ x:  50,	y:   0,		dir: 3 },
 
-				top:	{ x:   0,	y: -50 },
+				top:	{ x:   0,	y: -50,		dir: 5 },
 
-				bottom: { x:   0,	y:  50 }
+				bottom: { x:   0,	y:  50,		dir: 6 }
 			},
 
 			last = this.queue[this.queue.length-1];
@@ -122,7 +123,8 @@
 		this.queue.push({
 
 			x: last.x + options[dir].x,
-			y: last.y + options[dir].y
+			y: last.y + options[dir].y,
+			dir: options[dir].dir
 		});
 	};
 
@@ -175,13 +177,17 @@
 			for ( j = 0; j < lanes; j++ ) {
 
 
-				points[ i * lanes + j ].x = ~~(
+				points[ i * lanes + j ].x =
+
+											~~(
 												radius * cos[ ( multiply * j ) % 360 ] + // form
 
 												raiseX * cos[ ( x - radius ) % 360 ] + // amplitude
 
 												centerX // center - positioning
 											);
+
+
 
 				points[ i * lanes + j ].y = ~~(
 												radius * sin[ ( multiply * j ) % 360 ] + // form
@@ -190,6 +196,62 @@
 
 												centerY // center - positioning
 											);
+
+
+				// if ( diff.dir === 4 ) {
+
+				//	if ( points[ i * lanes + j ].x > points[ i * lanes + j].preX ) {
+
+				//		points[ i * lanes + j ].x = points[ i * lanes + j ].preX;
+
+				//	} else {
+
+				//		points[ i * lanes + j ].preX = points[ i * lanes + j ].x;
+				//	}
+				// }
+
+
+
+				// if ( diff.dir === 3 ) {
+
+				//	if ( points[ i * lanes + j ].x < points[ i * lanes + j].preX ) {
+
+				//		points[ i * lanes + j ].x = points[ i * lanes + j ].preX;
+
+				//	} else {
+
+				//		points[ i * lanes + j ].preX = points[ i * lanes + j ].x;
+				//	}
+				// }
+
+
+
+				// if ( diff.dir === 5 ) {
+
+				//  if ( points[ i * lanes + j ].y > points[ i * lanes + j].preY ) {
+
+				//		points[ i * lanes + j ].y = points[ i * lanes + j ].preY;
+
+				//	} else {
+
+				//		points[ i * lanes + j ].preY = points[ i * lanes + j ].y;
+				//	}
+				// }
+
+
+
+				// if ( diff.dir === 6 ) {
+
+				//	if ( points[ i * lanes + j ].y < points[ i * lanes + j].preY ) {
+
+				//		points[ i * lanes + j ].y = points[ i * lanes + j ].preY;
+
+				//	} else {
+
+				//		points[ i * lanes + j ].preY = points[ i * lanes + j ].y;
+				//	}
+				// }
+
 			}
 
 			radius += offset;
@@ -207,7 +269,15 @@
 			lanes = this.edges,
 
 			offset = this.offset,
-			multiply = this.multiply;
+			multiply = this.multiply,
+
+			step = this.step;
+
+
+		if ( step > this.rate ) {
+
+			this.step = 0;
+		}
 
 
 		for ( i = 0; i < circles - 1; i++ ) {
@@ -227,9 +297,10 @@
 					// }
 				// }
 
+
 				// blue tones
 				var r =  0,
-					g =			i * ( offset - 10 ),//+ ~~( Math.sin( ( j * multiply / 2 ) * Math.PI / 180 )  * 255 * i / circles ),
+					g =			i * ( offset - 10 ),
 					b = 90 +	i * ( offset - 10 );
 
 
@@ -237,27 +308,43 @@
 
 				ctx.beginPath();
 
-				ctx.moveTo(
-							points[ i * lanes + j ].x,
-							points[ i * lanes + j ].y
-				);
+
+				if ( points[ (i+step) * lanes + j ] ) {
+
+					ctx.moveTo(
+								points[ (i+step) * lanes + j ].x,
+								points[ (i+step) * lanes + j ].y
+					);
+				}
 
 
-				ctx.lineTo(
-							points[ i * lanes + (j+1) % lanes ].x,
-							points[ i * lanes + (j+1) % lanes ].y
-				);
+				if ( points[ (i+step) * lanes + (j+1) % lanes ] ){
+
+					ctx.lineTo(
+								points[ (i+step) * lanes + (j+1) % lanes ].x,
+								points[ (i+step) * lanes + (j+1) % lanes ].y
+					);
+				}
 
 
-				ctx.lineTo(
-							points[ (i+1) * lanes + (j+1) % lanes ].x,
-							points[ (i+1) * lanes + (j+1) % lanes ].y
-				);
+				if ( points[ (i+1+step) * lanes + (j+1) % lanes ] ) {
 
-				ctx.lineTo(
-							points[ (i+1) * lanes + j ].x,
-							points[ (i+1) * lanes + j ].y
-				);
+					ctx.lineTo(
+								points[ (i+1+step) * lanes + (j+1) % lanes ].x,
+								points[ (i+1+step) * lanes + (j+1) % lanes ].y
+					);
+
+				}
+
+				if ( points[ (i+1+step) * lanes + j ] ) {
+
+					ctx.lineTo(
+								points[ (i+1+step) * lanes + j ].x,
+								points[ (i+1+step) * lanes + j ].y
+					);
+				}
+
+
 
 				// draw in texture map
 				ctx.fill();
