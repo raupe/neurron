@@ -50,7 +50,7 @@
 
 		this.background = new display.Background({
 
-			edges: 40,					// curve
+			edges: 10,					// curve
 			depth: 25,					// amount of circles
 
 			frames: 2,
