@@ -28,6 +28,10 @@
 		this.distanceToUser = config.distanceToUser;
 		this.circleOffset = config.circleOffset;
 		this.outerCircleRadius = this.height/2;
+
+		// placement
+		this.posX = 0;
+		this.posY = 0;
 	};
 
 	Grid.prototype.definePositions = function(){
@@ -193,7 +197,7 @@
 
 		// this.drawGrid();
 
-		this.origin.drawImage( this.ctx.canvas, 0, 0, this.width, this.height );
+		this.origin.drawImage( this.ctx.canvas, this.posX, this.posY, this.width, this.height );
 	};
 
 
