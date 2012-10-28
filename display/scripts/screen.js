@@ -50,12 +50,11 @@
 
 		this.background = new display.Background({
 
-			lanes: 40,						// this.grid.lanes - ? (default: 20)
+			edges: 40,					// curve
+			depth: 25,					// amount of circles
 
-			circles: 80,					// this.grid.circles * 2 ? (default: 25) // 10
-
-			origin: this.ctx,
-			framerate: this.frames/10		// current => 3
+			frames: 2,
+			origin: this.ctx
 		});
 
 		this.elements.push( this.background );
