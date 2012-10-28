@@ -6,9 +6,12 @@
 
 		this.createCanvas();
 
+		this.createGrid();
+
 		this.createBackground();
 
-		this.createGrid();
+		this.elements.push( this.background );
+		this.elements.push( this.grid );
 
 		this.render();
 	};
@@ -46,21 +49,6 @@
 	};
 
 
-	Screen.prototype.createBackground = function(){
-
-		this.background = new display.Background({
-
-			edges: 10,					// curve
-			depth: 25,					// amount of circles
-
-			frames: 2,
-			origin: this.ctx
-		});
-
-		this.elements.push( this.background );
-	};
-
-
 	Screen.prototype.createGrid = function(){
 
 		this.grid = new display.Grid({
@@ -72,9 +60,23 @@
 			frames: this.frames,
 			circles: 0
 		});
-
-		this.elements.push( this.grid );
 	};
+
+
+	Screen.prototype.createBackground = function(){
+
+		this.background = new display.Background({
+
+			edges: 10,					// curve
+			depth: 25,					// amount of circles
+
+			frames: 2,
+			color: [ 0, 30, 90 ],
+			grid: this.grid,
+			origin: this.ctx
+		});
+	};
+
 
 
 	Screen.prototype.render = function(){
