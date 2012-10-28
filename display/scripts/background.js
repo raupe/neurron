@@ -16,6 +16,7 @@
 	Background.prototype.setup = function ( config ) {
 
 		this.origin = config.origin;
+		this.grid = config.grid;
 
 		this.width = this.origin.canvas.width;
 		this.height = this.origin.canvas.height;
@@ -23,6 +24,8 @@
 		this.edges = config.edges;			// possible 3-10...40
 		this.depth = config.depth;
 
+
+		this.color = config.color;
 
 		// frames
 		this.frames = config.frames;
@@ -52,7 +55,7 @@
 
 
 		this.offset = 20;					// tile size - distance/radius
-		this.multiply = 360 / this.edges;	// parts
+		this.multiply = 360 / this.edges;	// pies
 
 		// pre-define
 		var points = [],
@@ -133,7 +136,7 @@
 	Background.prototype.change = function(){
 
 		// straight path
-		if ( !this.queue.length ) {
+		if ( this.queue.length-1 === 0 ) {
 
 			this.diff = { x: 0, y: 0 };
 
@@ -169,7 +172,7 @@
 
 			radius = 0,
 
-			i, j;
+			i, j, pos;
 
 
 		for ( i = 0; i < circles; i++ ) {
@@ -177,87 +180,53 @@
 			for ( j = 0; j < lanes; j++ ) {
 
 
-				points[ i * lanes + j ].x =
+				pos = i * lanes + j;
 
-											~~(
-												radius * cos[ ( multiply * j ) % 360 ] + // form
+				points[ pos ].x =	~~(
+										radius * cos[ ( multiply * j ) % 360 ] + // form
 
-												raiseX * cos[ ( x - radius ) % 360 ] + // amplitude
+										raiseX * cos[ ( x - radius ) % 360 ] + // amplitude
 
-												centerX // center - positioning
-											);
-
-
-
-				points[ i * lanes + j ].y = ~~(
-												radius * sin[ ( multiply * j ) % 360 ] + // form
-
-												raiseY * sin[ ( y - radius ) % 360 ] + // amplitude
-
-												centerY // center - positioning
-											);
-
-
-				// if ( diff.dir === 4 ) {
-
-				//	if ( points[ i * lanes + j ].x > points[ i * lanes + j].preX ) {
-
-				//		points[ i * lanes + j ].x = points[ i * lanes + j ].preX;
-
-				//	} else {
-
-				//		points[ i * lanes + j ].preX = points[ i * lanes + j ].x;
-				//	}
-				// }
+										centerX // center - positioning
+									);
 
 
 
-				// if ( diff.dir === 3 ) {
+				points[ pos ].y =	~~(
+										radius * sin[ ( multiply * j ) % 360 ] + // form
 
-				//	if ( points[ i * lanes + j ].x < points[ i * lanes + j].preX ) {
+										raiseY * sin[ ( y - radius ) % 360 ] + // amplitude
 
-				//		points[ i * lanes + j ].x = points[ i * lanes + j ].preX;
+										centerY // center - positioning
+									);
 
-				//	} else {
+// part checks
+// if ( diff.dir === 3 && points[ pos ].x < points[ pos ].preX ){ points[ pos ].x = points[ pos ].preX; }
+// else  { points[ pos ].preX = points[ pos ].x; }
 
-				//		points[ i * lanes + j ].preX = points[ i * lanes + j ].x;
-				//	}
-				// }
+// if ( diff.dir === 4 && points[ pos ].x > points[ pos ].preX ){ points[ pos ].x = points[ pos ].preX; }
+// else { points[ pos ].preX = points[ pos ].x; }
 
+// if ( diff.dir === 5 && points[ pos ].y > points[ pos ].preY ){ points[ pos ].y = points[ pos ].preY; }
+// else { points[ pos ].preY = points[ pos ].y; }
 
-
-				// if ( diff.dir === 5 ) {
-
-				//  if ( points[ i * lanes + j ].y > points[ i * lanes + j].preY ) {
-
-				//		points[ i * lanes + j ].y = points[ i * lanes + j ].preY;
-
-				//	} else {
-
-				//		points[ i * lanes + j ].preY = points[ i * lanes + j ].y;
-				//	}
-				// }
-
-
-
-				// if ( diff.dir === 6 ) {
-
-				//	if ( points[ i * lanes + j ].y < points[ i * lanes + j].preY ) {
-
-				//		points[ i * lanes + j ].y = points[ i * lanes + j ].preY;
-
-				//	} else {
-
-				//		points[ i * lanes + j ].preY = points[ i * lanes + j ].y;
-				//	}
-				// }
+// if ( diff.dir === 6 && points[ pos ].y < points[ pos ].preY ){ points[ pos ].y = points[ pos ].preY; }
+// else { points[ pos ].preY = points[ pos ].y; }
 
 			}
 
 			radius += offset;
 		}
 
+
+		// adjust grid position
+		if ( this.queue.length-1 !== 0 ) {
+
+			// this.grid.posX = points[ ~~points.length/2 ].x/2 - this.grid.width/4;
+			// this.grid.posY = points[ ~~points.length/2 ].y/2 - this.grid.height/4;
+		}
 	};
+
 
 
 	Background.prototype.draw = function(){
@@ -271,37 +240,28 @@
 			offset = this.offset,
 			multiply = this.multiply,
 
+			color = this.color,
 			step = this.step;
 
 
-		if ( step > this.rate ) {
+		// if ( step > this.rate ) {
 
-			this.step = 0;
-		}
+		//	this.step = 0;
+		// }
 
 
 		for ( i = 0; i < circles - 1; i++ ) {
 
 			for ( j = 0; j < lanes; j++ ) {
 
-				// forward
-				// if ( !this.queue.length ) {
-
-					// if ( this.forward >= this.depth  ) {
-
-						// this.forward = 0;
-
-					// } else {
-
-						// this.forward++;
-					// }
-				// }
-
-
 				// blue tones
-				var r =  0,
-					g =			i * ( offset - 10 ),
-					b = 90 +	i * ( offset - 10 );
+				var r =	( color[0]  +	i * ( offset - 10 )	),
+					g =	( color[1]  +	i * ( offset - 10 ) ),
+					b =	( color[2]  +	i * ( offset - 10 ) );
+
+				if ( r > 255 ) r = 255;
+				if ( g > 255 ) g = 255;
+				if ( b > 255 ) b = 255;
 
 
 				ctx.fillStyle = 'rgb(' + r + ', ' + g + ', ' + b + ')';
@@ -345,11 +305,11 @@
 				}
 
 
-
 				// draw in texture map
 				ctx.fill();
 			}
 		}
+
 
 		// update position
 		this.x = ( this.x + this.vX ) % 360;
