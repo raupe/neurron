@@ -8,7 +8,7 @@
 
 			addPlayerInput( action );
 
-			// drawNums( screen );
+			drawNums( screen );
 
 			addVariableFrames( screen, action );
 
@@ -18,7 +18,18 @@
 
 		function activateTunnel ( tunnel ) {
 
-			var active = false;
+			var active = true;
+
+						tunnel.update = function(){
+
+							this.change();
+
+							this.draw();
+						};
+
+
+						tunnel.sequence('left');
+
 
 			document.addEventListener('keyup', function ( e ) {
 
