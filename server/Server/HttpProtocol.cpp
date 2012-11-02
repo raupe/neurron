@@ -34,7 +34,9 @@ std::string sv::HttpProtocol::GetValue(const std::string key, const std::string 
 	if(posStart != -1)
 	{
 		posStart += key.length();
-		unsigned int posEnd = msg.find("\r", posStart);
+		int posEnd = msg.find("\r", posStart);
+		int posEnd2 = msg.find("\n", posStart);
+		posEnd = (posEnd > 0) && (posEnd < posEnd2)? posEnd : posEnd2;
 		if(posEnd == -1)
 			posEnd = msg.length();
 		return msg.substr(posStart, posEnd - posStart);
@@ -44,18 +46,20 @@ std::string sv::HttpProtocol::GetValue(const std::string key, const std::string 
 
 bool sv::HttpProtocol::IsSocketRequest(const sv::RequestInfo& info)
 {
-	return info.m_Connection == "Upgrade"
+	return info.m_Connection.find("Upgrade") != -1
 		&& info.m_Upgrade == "websocket";
 }
 
 std::string	sv::HttpProtocol::GetHeader()
 {
-	return "HTTP/1.1 200 OK\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Allow-Methods:\"GET, POST, PUT, DELETE, OPTIONS\"\r\nAccess-Control-Allow-Header:\"content-type, accept\"\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n";
+	//return GetErrorHeader();
+	return "HTTP/1.1 200 OK\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Allow-Methods:\"GET, POST, PUT, DELETE, OPTIONS\"\r\nAccess-Control-Allow-Headers:\"content-type, accept\"\r\n\r\n";//Content-Type: text/html; charset=UTF-8\r\n\r\n";
 }
 
 std::string	sv::HttpProtocol::GetErrorHeader()
 {
-	return "HTTP/1.1 400 Error\r\nContent-Type: text/html; charset=UTF-8\r\n\r\nError";
+	return GetHeader();
+	//return "HTTP/1.1 200 OK\nAccess-Control-Allow-Origin: *\nAccess-Control-Allow-Methods:\"GET, POST, PUT, DELETE, OPTIONS\"\nAccess-Control-Allow-Headers:\"content-type, origin, accept\"\n\n";
 }
 
 std::string sv::HttpProtocol::GetMsg(const uchar* msg, uint length)
@@ -76,22 +80,31 @@ std::string	sv::HttpProtocol::GetSocketHeader(const sv::RequestInfo& info)
 
 	unsigned char step2[20];
 	sha1.SHA1Result(context, step2);
+	delete(context);
 
 	// encode Base64	
 	std::string acceptKey = EncodeBase64(step2, 20);
 
-	return "HTTP/1.1 101 Switching Protocols\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Accept: " + acceptKey + "\r\n\r\n";
+	return "HTTP/1.1 101 WebSocket Protocol Handshake\r\n"
+		   "Upgrade: websocket\r\n"
+		   "Connection: Upgrade\r\n"
+		   "Sec-WebSocket-Accept: " + acceptKey + "\r\n"
+		   "\r\n";
 }
 
-std::string sv::HttpProtocol::GetSocketMsg(const uchar* msg, uint length)
+std::string sv::HttpProtocol::GetSocketMsg(const uchar* msg, uint& length)
 {
-	uchar start = 0x00;
-	uchar end = 0xFF;
+	std::string encoded = EncodeBase64(msg, length);
+
+	ASSERT(encoded.length() < 127, "sv::HttpProtocol::GetSocketMsg :  msg too long");
+
 
 	std::string retVal;
-	retVal += start;
-	retVal += EncodeBase64(msg, length);
-	retVal += end;
+	retVal += '\x81';
+	retVal += (char) encoded.length();
+	retVal += encoded;
+
+	length = encoded.length() + 2;
 	return retVal;
 }
 
@@ -103,9 +116,9 @@ char GetChar(uchar val)
 		return 'a' + (val - 26);
 	if(val <= 61)
 		return '0' + (val - 52);
-	if(val = 62)
+	if(val == 62)
 		return '+';
-	if(val = 63)
+	if(val == 63)
 		return '/';
 	return '\0';
 }
@@ -160,7 +173,7 @@ void sv::HttpProtocol::DecodeBase64(std::string msg, unsigned int& length, unsig
 	unsigned char src[4];
 	uint pos = 0;
 	uint posOut = 0;
-	while(pos < (uint)msg.length() && posOut+3 <= length)
+	while(pos+3 < (uint)msg.length() && posOut+3 <= length)
 	{
 		src[0] = GetVal(msg[pos]);
 		src[1] = GetVal(msg[pos+1]);

@@ -1,8 +1,7 @@
 #ifndef Game_h__
 #define Game_h__
 
-#include "Msg.h"
-#include <queue>
+#include "ControllerMsgPool.h"
 
 namespace sv
 {
@@ -17,17 +16,18 @@ namespace sv
 		void				SetSocket(int s) { m_Socket = s; }
 		int					GetSocket() { return m_Socket; }
 
-		void				AddMsg(Msg* msg);
+		ControllerMsgPool*	GetMsgPool() { return m_Msgs; }
 
 	private:
 		Game(unsigned int id);
 		~Game();
 
 		void				HandleMsgs();
+		void				HandleMsg(ControllerMsg* msg);
 
 		int					m_Socket;
 		unsigned int		m_Id;
-		std::queue<Msg*>	m_Msgs;
+		ControllerMsgPool*	m_Msgs;
 	};
 }
 

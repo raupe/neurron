@@ -2,9 +2,9 @@
 #include "GameFactory.h"
 
 sv::GameFactory::GameFactory()
-//: m_Games(10,0)
 {
-
+	// TEST
+	CreateGame();
 }
 
 sv::GameFactory::~GameFactory()
@@ -37,6 +37,8 @@ sv::Game* sv::GameFactory::CreateGame()
 		id = m_Games.size();
 		uint size = id == 0 ? 1 : 2*id;
 		m_Games.resize(size, 0);
+
+		id++;
 	}
 	
 	Game* game = S_NEW Game(id);
@@ -56,9 +58,13 @@ void sv::GameFactory::EndGame(unsigned int id)
 
 sv::Game* sv::GameFactory::GetGame(uint id)
 {
-	Game* retVal = m_Games[id - 1];
-	if(retVal && retVal->GetId() == id)
-		return retVal;
+	if(id <= m_Games.size() && id > 0)
+	{
+		Game* retVal = m_Games[id - 1];
+		if(retVal && retVal->GetId() == id)
+			return retVal;
+	}
+	ASSERT(true, "Error: sv::GameFactory::GetGame : game doesn't exist");
 	return 0;
 }
 

@@ -68,8 +68,7 @@
 	<script>
 
 	// config
-
-	var server = 'neurron.com',
+	var server = '192.168.1.51',
 
 		port = 2020,
 
@@ -87,9 +86,8 @@
 
 	socket.onopen = function () {
 
-
 		console.log('[opened]');
-		// socket.send('C');
+		// socket.send('Client got connected');
 	};
 
 	socket.onclose = function ( msg ) {
@@ -128,8 +126,8 @@
 
 	document.addEventListener('keydown', function( e ){
 
-		// e.preventDefault();
-		// e.stopPropagation();
+		e.preventDefault();
+		e.stopPropagation();
 
 		var key = e.which;
 
@@ -143,7 +141,7 @@
 
 	function move() {
 
-		if ( dir === 'x2' ) x += speed;
+		if ( !dir || dir === 'x2' ) x += speed;
 		if ( dir === 'x1' ) x -= speed;
 		if ( dir === 'y1' ) y -= speed;
 		if ( dir === 'y2' ) y += speed;

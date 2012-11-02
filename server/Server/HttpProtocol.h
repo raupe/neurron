@@ -32,7 +32,7 @@ namespace sv
 		std::string	GetMsg(const uchar* msg, uint length);
 
 		std::string	GetSocketHeader(const RequestInfo& info);
-		std::string GetSocketMsg(const uchar* msg, uint length);
+		std::string GetSocketMsg(const uchar* msg, uint& length);
 		
 		std::string	EncodeBase64(const unsigned char* msg, unsigned int length);
 		void		DecodeBase64(std::string msg, unsigned int& length, unsigned char* out);
