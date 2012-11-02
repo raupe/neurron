@@ -74,8 +74,7 @@ void sv::Server::Run()
 	addr.sin_port = htons(2020);
 
 	sListen = socket(AF_INET, SOCK_STREAM, NULL);
-	if(sListen == -1)
-		Output::Error("Couldn't create a socket.");
+	ASSERT(sListen != -1, "Couldn't create a socket.");
 
 #ifdef WIN32
 	bind(sListen, (SOCKADDR*)&addr, sizeof(addr));
