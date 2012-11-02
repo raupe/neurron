@@ -34,7 +34,7 @@ void RemoveTrack(DWORD addr)
 		if(info->address == addr)
 		{
 			g_AllocList->remove(info);
-			delete(info);
+			//delete(info);
 			break;
 		}
 	}
