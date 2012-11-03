@@ -37,7 +37,7 @@ void sv::Game::HandleMsg(sv::InputMsg* msg)
 	default:
 		{
 			MoveMsg initMsg(msg->GetAction()); 
-			Server::Instance()->SendSocketMsg(&initMsg, msg->GetSocket());
+			Server::Instance()->SendSocketMsg(&initMsg, m_Socket);
 
 			Server::Instance()->Response(0, 0, msg->GetSocket());
 		} break;
