@@ -2,6 +2,7 @@
 
 #include "Server.h"
 #include "Engine.h"
+#include "InputMsgPool.h"
 
 #include "Output.h"
 #include <boost/thread.hpp>
@@ -10,6 +11,7 @@ void End()
 {
 	sv::Server::Destroy();
 	sv::Engine::Destroy();
+	sv::InputMsgPool::Destroy();
 #ifdef DEBUG
 	DumpUnfreed();
 #endif
@@ -44,6 +46,7 @@ int main()
 
 	sv::Server::Create();
 	sv::Engine::Create();
+	sv::InputMsgPool::Create();
 
 	boost::thread serverThread(RunServer);
 	boost::thread engineThread(RunEngine);

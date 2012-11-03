@@ -1,14 +1,14 @@
 #include "ServerPCH.h"
-#include "ControllerMsgPool.h"
+#include "InputMsgPool.h"
 
-#include "ControllerMsg.h"
+#include "InputMsg.h"
 
-sv::ControllerMsgPool::ControllerMsgPool()
+sv::InputMsgPool::InputMsgPool()
 {
 }
 
 
-sv::ControllerMsgPool::~ControllerMsgPool()
+sv::InputMsgPool::~InputMsgPool()
 {
 	for(uint i=0; i<m_Msgs.size(); ++i)
 	{
@@ -17,7 +17,7 @@ sv::ControllerMsgPool::~ControllerMsgPool()
 }
 
 
-sv::ControllerMsg* sv::ControllerMsgPool::GetFreeMsg(uint& index)
+sv::InputMsg* sv::InputMsgPool::GetFreeMsg(uint& index)
 {
 	boost::mutex::scoped_lock l(m_Mutex);
 	for(uint i=0; i<m_Msgs.size(); ++i)
@@ -34,14 +34,14 @@ sv::ControllerMsg* sv::ControllerMsgPool::GetFreeMsg(uint& index)
 	m_Msgs.resize(index == 0? 1 : index*2);
 	for(uint i=index; i<m_Msgs.size(); ++i)
 	{
-		m_Msgs[i].msg = S_NEW ControllerMsg();
+		m_Msgs[i].msg = S_NEW InputMsg();
 	}
 
 	m_Msgs[index].status = eMsgStatus_FreeInUse;
 	return m_Msgs[index].msg;
 }
 
-void sv::ControllerMsgPool::GetUnhandledMsgs(std::vector<ControllerMsg*>& msgs, std::vector<uint>& indecies)
+void sv::InputMsgPool::GetUnhandledMsgs(std::vector<InputMsg*>& msgs, std::vector<uint>& indecies)
 {
 	boost::mutex::scoped_lock l(m_Mutex);
 	for(uint i=0; i<m_Msgs.size(); ++i)
@@ -55,7 +55,7 @@ void sv::ControllerMsgPool::GetUnhandledMsgs(std::vector<ControllerMsg*>& msgs, 
 	}
 }
 
-void sv::ControllerMsgPool::GetHandledMsgs(std::vector<ControllerMsg*>& msgs, std::vector<uint>& indecies)
+void sv::InputMsgPool::GetHandledMsgs(std::vector<InputMsg*>& msgs, std::vector<uint>& indecies)
 {
 	boost::mutex::scoped_lock l(m_Mutex);
 	for(uint i=0; i<m_Msgs.size(); ++i)
@@ -69,30 +69,30 @@ void sv::ControllerMsgPool::GetHandledMsgs(std::vector<ControllerMsg*>& msgs, st
 	}
 }
 
-void sv::ControllerMsgPool::SetUnhandled(uint index)
+void sv::InputMsgPool::SetUnhandled(uint index)
 {
 	boost::mutex::scoped_lock l(m_Mutex);
-	ASSERT(m_Msgs[index].status == eMsgStatus_FreeInUse, "sv::ControllerMsgPool::SetUnhandled : invalid index");
+	ASSERT(m_Msgs[index].status == eMsgStatus_FreeInUse, "sv::InputMsgPool::SetUnhandled : invalid index");
 	m_Msgs[index].status = eMsgStatus_Unhandled;
 }
 
-void sv::ControllerMsgPool::SetHandled(std::vector<uint>& indecies)
+void sv::InputMsgPool::SetHandled(std::vector<uint>& indecies)
 {
 	boost::mutex::scoped_lock l(m_Mutex);
 	for(uint i=0; i<indecies.size(); ++i)
 	{
-		ASSERT(m_Msgs[indecies[i]].status == eMsgStatus_UnhandledInUse, "sv::ControllerMsgPool::SetUnhandled : invalid index");
+		ASSERT(m_Msgs[indecies[i]].status == eMsgStatus_UnhandledInUse, "sv::InputMsgPool::SetUnhandled : invalid index");
 		m_Msgs[indecies[i]].status = eMsgStatus_Handled;
 	}
 }
 
-void sv::ControllerMsgPool::Free(std::vector<uint>& indecies)
+void sv::InputMsgPool::Free(std::vector<uint>& indecies)
 {
 	boost::mutex::scoped_lock l(m_Mutex);
 	for(uint i=0; i<indecies.size(); ++i)
 	{
-		//ASSERT(m_Msgs[indecies[i]].status == eMsgStatus_HandledInUse, "sv::ControllerMsgPool::SetUnhandled : invalid index");
-		ASSERT(m_Msgs[indecies[i]].status == eMsgStatus_UnhandledInUse, "sv::ControllerMsgPool::SetUnhandled : invalid index");
+		//ASSERT(m_Msgs[indecies[i]].status == eMsgStatus_HandledInUse, "sv::InputMsgPool::SetUnhandled : invalid index");
+		ASSERT(m_Msgs[indecies[i]].status == eMsgStatus_UnhandledInUse, "sv::InputMsgPool::SetUnhandled : invalid index");
 		m_Msgs[indecies[i]].status = eMsgStatus_Free;
 	}
 }
@@ -100,7 +100,7 @@ void sv::ControllerMsgPool::Free(std::vector<uint>& indecies)
 sv::Entry::Entry()
 : status(eMsgStatus_Free)
 {
-	//msg = S_NEW ControllerMsg();
+	//msg = S_NEW InputMsg();
 }
 
 sv::Entry::~Entry()

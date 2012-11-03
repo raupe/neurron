@@ -11,8 +11,9 @@ namespace sv
 		Engine(void);
 		~Engine(void);
 
-	public:
 		void Run();
+	private:
+		void				HandleMsgs();
 	};
 }
 

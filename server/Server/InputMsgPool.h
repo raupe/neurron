@@ -1,11 +1,12 @@
 #ifndef MsgPool_h__
 #define MsgPool_h__
 
+#include "Singleton.h"
 #include <boost/thread.hpp>
 
 namespace sv
 {
-	class ControllerMsg;
+	class InputMsg;
 
 	enum EMsgStatus
 	{
@@ -21,19 +22,19 @@ namespace sv
 	{
 		Entry();
 		~Entry();
-		ControllerMsg* msg;
+		InputMsg* msg;
 		uint status;
 	};
 
-	class ControllerMsgPool
+	class InputMsgPool : public Singleton<InputMsgPool>
 	{
 	public:
-		ControllerMsgPool();
-		~ControllerMsgPool();
+		InputMsgPool();
+		~InputMsgPool();
 
-		sv::ControllerMsg*	GetFreeMsg(uint& index);
-		void				GetUnhandledMsgs(std::vector<ControllerMsg*>& msgs, std::vector<uint>& indecies);
-		void				GetHandledMsgs(std::vector<ControllerMsg*>& msgs, std::vector<uint>& indiecies);
+		sv::InputMsg*		GetFreeMsg(uint& index);
+		void				GetUnhandledMsgs(std::vector<InputMsg*>& msgs, std::vector<uint>& indecies);
+		void				GetHandledMsgs(std::vector<InputMsg*>& msgs, std::vector<uint>& indiecies);
 
 		void				SetUnhandled(uint index);
 		void				SetHandled(std::vector<uint>& indecies);

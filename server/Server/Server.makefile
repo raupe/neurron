@@ -32,8 +32,8 @@ build_all_configurations: Debug Release
 
 # Builds the Debug configuration...
 .PHONY: Debug
-Debug: create_folders gccDebug/LeakDetector.o gccDebug/Singleton.o gccDebug/ControllerMsg.o gccDebug/hl_sha1.o gccDebug/HttpProtocol.o gccDebug/Msg.o gccDebug/ControllerMsgPool.o gccDebug/Server.o gccDebug/Main.o gccDebug/ServerPCH.o gccDebug/Output.o gccDebug/Engine.o gccDebug/Game.o gccDebug/GameFactory.o 
-	g++ gccDebug/LeakDetector.o gccDebug/Singleton.o gccDebug/ControllerMsg.o gccDebug/hl_sha1.o gccDebug/HttpProtocol.o gccDebug/Msg.o gccDebug/ControllerMsgPool.o gccDebug/Server.o gccDebug/Main.o gccDebug/ServerPCH.o gccDebug/Output.o gccDebug/Engine.o gccDebug/Game.o gccDebug/GameFactory.o  $(Debug_Library_Path) $(Debug_Libraries) -Wl,-rpath,./ -o ../gccDebug/Server.exe
+Debug: create_folders gccDebug/LeakDetector.o gccDebug/Singleton.o gccDebug/InputMsg.o gccDebug/hl_sha1.o gccDebug/HttpProtocol.o gccDebug/Msg.o gccDebug/InputMsgPool.o gccDebug/Server.o gccDebug/Main.o gccDebug/ServerPCH.o gccDebug/Output.o gccDebug/Engine.o gccDebug/Game.o gccDebug/GameFactory.o 
+	g++ gccDebug/LeakDetector.o gccDebug/Singleton.o gccDebug/InputMsg.o gccDebug/hl_sha1.o gccDebug/HttpProtocol.o gccDebug/Msg.o gccDebug/InputMsgPool.o gccDebug/Server.o gccDebug/Main.o gccDebug/ServerPCH.o gccDebug/Output.o gccDebug/Engine.o gccDebug/Game.o gccDebug/GameFactory.o  $(Debug_Library_Path) $(Debug_Libraries) -Wl,-rpath,./ -o ../gccDebug/Server.exe
 
 # Compiles file LeakDetector.cpp for the Debug configuration...
 -include gccDebug/LeakDetector.d
@@ -47,11 +47,11 @@ gccDebug/Singleton.o: Singleton.cpp
 	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c Singleton.cpp $(Debug_Include_Path) -o gccDebug/Singleton.o
 	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM Singleton.cpp $(Debug_Include_Path) > gccDebug/Singleton.d
 
-# Compiles file ControllerMsg.cpp for the Debug configuration...
--include gccDebug/ControllerMsg.d
-gccDebug/ControllerMsg.o: ControllerMsg.cpp
-	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c ControllerMsg.cpp $(Debug_Include_Path) -o gccDebug/ControllerMsg.o
-	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM ControllerMsg.cpp $(Debug_Include_Path) > gccDebug/ControllerMsg.d
+# Compiles file InputMsg.cpp for the Debug configuration...
+-include gccDebug/InputMsg.d
+gccDebug/InputMsg.o: InputMsg.cpp
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c InputMsg.cpp $(Debug_Include_Path) -o gccDebug/InputMsg.o
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM InputMsg.cpp $(Debug_Include_Path) > gccDebug/InputMsg.d
 
 # Compiles file hl_sha1.cpp for the Debug configuration...
 -include gccDebug/hl_sha1.d
@@ -71,11 +71,11 @@ gccDebug/Msg.o: Msg.cpp
 	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c Msg.cpp $(Debug_Include_Path) -o gccDebug/Msg.o
 	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM Msg.cpp $(Debug_Include_Path) > gccDebug/Msg.d
 
-# Compiles file ControllerMsgPool.cpp for the Debug configuration...
--include gccDebug/ControllerMsgPool.d
-gccDebug/ControllerMsgPool.o: ControllerMsgPool.cpp
-	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c ControllerMsgPool.cpp $(Debug_Include_Path) -o gccDebug/ControllerMsgPool.o
-	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM ControllerMsgPool.cpp $(Debug_Include_Path) > gccDebug/ControllerMsgPool.d
+# Compiles file InputMsgPool.cpp for the Debug configuration...
+-include gccDebug/InputMsgPool.d
+gccDebug/InputMsgPool.o: InputMsgPool.cpp
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c InputMsgPool.cpp $(Debug_Include_Path) -o gccDebug/InputMsgPool.o
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM InputMsgPool.cpp $(Debug_Include_Path) > gccDebug/InputMsgPool.d
 
 # Compiles file Server.cpp for the Debug configuration...
 -include gccDebug/Server.d
@@ -121,8 +121,8 @@ gccDebug/GameFactory.o: GameFactory.cpp
 
 # Builds the Release configuration...
 .PHONY: Release
-Release: create_folders gccRelease/LeakDetector.o gccRelease/Singleton.o gccRelease/ControllerMsg.o gccRelease/hl_sha1.o gccRelease/HttpProtocol.o gccRelease/Msg.o gccRelease/ControllerMsgPool.o gccRelease/Server.o gccRelease/Main.o gccRelease/ServerPCH.o gccRelease/Output.o gccRelease/Engine.o gccRelease/Game.o gccRelease/GameFactory.o 
-	g++ gccRelease/LeakDetector.o gccRelease/Singleton.o gccRelease/ControllerMsg.o gccRelease/hl_sha1.o gccRelease/HttpProtocol.o gccRelease/Msg.o gccRelease/ControllerMsgPool.o gccRelease/Server.o gccRelease/Main.o gccRelease/ServerPCH.o gccRelease/Output.o gccRelease/Engine.o gccRelease/Game.o gccRelease/GameFactory.o  $(Release_Library_Path) $(Release_Libraries) -Wl,-rpath,./ -o ../gccRelease/Server.exe
+Release: create_folders gccRelease/LeakDetector.o gccRelease/Singleton.o gccRelease/InputMsg.o gccRelease/hl_sha1.o gccRelease/HttpProtocol.o gccRelease/Msg.o gccRelease/InputMsgPool.o gccRelease/Server.o gccRelease/Main.o gccRelease/ServerPCH.o gccRelease/Output.o gccRelease/Engine.o gccRelease/Game.o gccRelease/GameFactory.o 
+	g++ gccRelease/LeakDetector.o gccRelease/Singleton.o gccRelease/InputMsg.o gccRelease/hl_sha1.o gccRelease/HttpProtocol.o gccRelease/Msg.o gccRelease/InputMsgPool.o gccRelease/Server.o gccRelease/Main.o gccRelease/ServerPCH.o gccRelease/Output.o gccRelease/Engine.o gccRelease/Game.o gccRelease/GameFactory.o  $(Release_Library_Path) $(Release_Libraries) -Wl,-rpath,./ -o ../gccRelease/Server.exe
 
 # Compiles file LeakDetector.cpp for the Release configuration...
 -include gccRelease/LeakDetector.d
@@ -136,11 +136,11 @@ gccRelease/Singleton.o: Singleton.cpp
 	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c Singleton.cpp $(Release_Include_Path) -o gccRelease/Singleton.o
 	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM Singleton.cpp $(Release_Include_Path) > gccRelease/Singleton.d
 
-# Compiles file ControllerMsg.cpp for the Release configuration...
--include gccRelease/ControllerMsg.d
-gccRelease/ControllerMsg.o: ControllerMsg.cpp
-	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c ControllerMsg.cpp $(Release_Include_Path) -o gccRelease/ControllerMsg.o
-	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM ControllerMsg.cpp $(Release_Include_Path) > gccRelease/ControllerMsg.d
+# Compiles file InputMsg.cpp for the Release configuration...
+-include gccRelease/InputMsg.d
+gccRelease/InputMsg.o: InputMsg.cpp
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c InputMsg.cpp $(Release_Include_Path) -o gccRelease/InputMsg.o
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM InputMsg.cpp $(Release_Include_Path) > gccRelease/InputMsg.d
 
 # Compiles file hl_sha1.cpp for the Release configuration...
 -include gccRelease/hl_sha1.d
@@ -160,11 +160,11 @@ gccRelease/Msg.o: Msg.cpp
 	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c Msg.cpp $(Release_Include_Path) -o gccRelease/Msg.o
 	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM Msg.cpp $(Release_Include_Path) > gccRelease/Msg.d
 
-# Compiles file ControllerMsgPool.cpp for the Release configuration...
--include gccRelease/ControllerMsgPool.d
-gccRelease/ControllerMsgPool.o: ControllerMsgPool.cpp
-	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c ControllerMsgPool.cpp $(Release_Include_Path) -o gccRelease/ControllerMsgPool.o
-	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM ControllerMsgPool.cpp $(Release_Include_Path) > gccRelease/ControllerMsgPool.d
+# Compiles file InputMsgPool.cpp for the Release configuration...
+-include gccRelease/InputMsgPool.d
+gccRelease/InputMsgPool.o: InputMsgPool.cpp
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c InputMsgPool.cpp $(Release_Include_Path) -o gccRelease/InputMsgPool.o
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM InputMsgPool.cpp $(Release_Include_Path) > gccRelease/InputMsgPool.d
 
 # Compiles file Server.cpp for the Release configuration...
 -include gccRelease/Server.d

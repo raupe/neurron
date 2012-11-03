@@ -1,4 +1,4 @@
-#ifndef ControllerMsg_h__
+#ifndef InputMsg_h__
 #define ControllerMSg_h__
 
 namespace sv
@@ -13,26 +13,27 @@ namespace sv
 		eContrAction_Left,
 		eContrAction_Front,
 		eContrAction_Back,
+
+		eContrAction_CreateGame,
+		eContrAction_DeleteGame,
 	};
 
-	class ControllerMsg
+	class InputMsg
 	{
 	public:
-		ControllerMsg();
-		~ControllerMsg();
+		InputMsg();
+		~InputMsg();
 
-		static void		GetContent(uchar* buffer, const uint& length, uint& channel, uint& controllerId, uint& action);
+		void			SetContent(uchar* buffer, const uint& length, uint socket);
+		void			SetContent(uint channel, uint controllerId, uint action, uint socket);
 
+		uint			GetChannel() { return m_Channel; }
 		uint			GetControllerId() { return m_ControllerId; }
-		void			SetControllerId(uint controllerId) { m_ControllerId = controllerId; }
-
 		uint			GetAction() { return m_Action; }
-		void			setAction(uint action) { m_Action = action; }
-
 		uint			GetSocket() { return m_Socket; }
-		void			SetSocket(uint socket) { m_Socket = socket; }
 
 	private:
+		unsigned int	m_Channel;
 		unsigned int	m_ControllerId;
 		unsigned int	m_Action;
 		unsigned int	m_Socket;
