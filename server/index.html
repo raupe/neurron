@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
 
-	<title>socket test</title>
+	<title>Socket Test</title>
 	<meta charset="utf-8">
 
 	<meta http-equiv="X-UA-Compatible" content="chrome=1">
 	<meta name="title" content="neurron" />
-	<meta name="description" content="A local multiplayer game." />
+	<meta name="description" content="Socket Test" />
 
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -83,14 +83,20 @@
 
 	// connection
 	var	socket = new WebSocket( 'ws://' + server + ':' + port ),
-		dir;
+		dir,
+
+
+		time = 0;
+
 
 	socket.onopen = function () {
 
+		// console.log('[opened]');
+		socket.send('Connection-Test');
 
-		console.log('[opened]');
-		// socket.send('C');
+		time = (new Date()).getTime();
 	};
+
 
 	socket.onclose = function ( msg ) {
 
@@ -99,8 +105,16 @@
 
 	socket.onmessage = function ( msg ) {
 
-		console.log('[received]', msg);
-		dir = 'y1';
+		// console.log('[received]', msg);
+		// dir = 'y1';
+		// if ( msg ) {
+
+			var diff = (new Date()).getTime() - time;
+
+			alert( diff )
+			console.log('diff:',diff);
+			console.log('diff/1000:',diff/1000);
+		// }
 	};
 
 
@@ -110,6 +124,13 @@
 	};
 
 
+
+
+	function send(){
+
+		time = (new Date()).getTime();
+		socket.send('test');
+	};
 
 
 
@@ -133,11 +154,13 @@
 
 		var key = e.which;
 
-		if ( key === 37 ) dir='x1';//x -= size;
-		if ( key === 39 ) dir='x2';//x += size;
-		if ( key === 38 ) dir='y1';//y -= size;
-		if ( key === 40 ) dir='y2';//y += size;
+		if ( key === 37 ) send();//dir='x1';//x -= size;
+		if ( key === 39 ) send();//dir='x2';//x += size;
+		if ( key === 38 ) send();//dir='y1';//y -= size;
+		if ( key === 40 ) send();//dir='y2';//y += size;
 	});
+
+
 
 
 
@@ -160,15 +183,15 @@
 	}
 
 
-	(function loop(){
+	// (function loop(){
 
-		requestAnimationFrame( loop );
+	// 	requestAnimationFrame( loop );
 
-		// ctx.clearRect( 0,0, width, height )
+	// 	// ctx.clearRect( 0,0, width, height )
 
-		move();
+	// 	move();
 
-	})();
+	// })();
 
 
 
