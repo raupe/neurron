@@ -107,7 +107,7 @@
 
 	socket.onmessage = function ( msg ) {
 
-		console.log('[received]', msg);
+		// console.log('[received]', msg);
 
 		var data = msg.data;
 
@@ -124,10 +124,10 @@
 
 			var diff = (new Date()).getTime() - time;
 
-			console.log(diff);
+			console.log('time: ', diff);
 
-			id = data.charCodeAt(1);
-			dir = data.charCodeAt(2);
+			id = data.charCodeAt(0);
+			dir = data.charCodeAt(1);
 		}
 	};
 
@@ -180,15 +180,15 @@
 
 	document.addEventListener('keydown', function( e ){
 
-		// e.preventDefault();
-		// e.stopPropagation();
+		e.preventDefault();
+		e.stopPropagation();
 
 		var key = e.which;
 
-		if ( key === 37 ) send( 11 );//dir='x1';//x -= size;
-		if ( key === 39 ) send( 12 );//dir='x2';//x += size;
-		if ( key === 38 ) send( 13 );//dir='y1';//y -= size;
-		if ( key === 40 ) send( 14 );//dir='y2';//y += size;
+		if ( key === 37 ) send( 3 );//dir='x1';//x -= size;
+		if ( key === 39 ) send( 4 );//dir='x2';//x += size;
+		if ( key === 38 ) send( 5 );//dir='y1';//y -= size;
+		if ( key === 40 ) send( 6 );//dir='y2';//y += size;
 	});
 
 
@@ -197,10 +197,10 @@
 
 	function move() {
 
-		if ( dir === 11 ) x += speed;
-		if ( dir === 12 ) x -= speed;
-		if ( dir === 13 ) y -= speed;
-		if ( dir === 14 ) y += speed;
+		if ( dir === 3 ) x += speed;
+		if ( dir === 5 ) x -= speed;
+		if ( dir === 4 ) y -= speed;
+		if ( dir === 6 ) y += speed;
 
 
 		if ( x+size > width ) x = width-size;
