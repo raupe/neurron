@@ -107,7 +107,7 @@
 
 	socket.onmessage = function ( msg ) {
 
-		// console.log('[received]', msg);
+		console.log('[received]', msg);
 
 		var data = msg.data;
 
@@ -197,9 +197,9 @@
 
 	function move() {
 
-		if ( dir === 3 ) x += speed;
-		if ( dir === 5 ) x -= speed;
-		if ( dir === 4 ) y -= speed;
+		if ( dir === 4 ) x += speed;
+		if ( dir === 3 ) x -= speed;
+		if ( dir === 5 ) y -= speed;
 		if ( dir === 6 ) y += speed;
 
 
