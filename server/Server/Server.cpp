@@ -6,8 +6,8 @@
 #include "GameFactory.h"
 #include "Game.h"
 #include "Msg.h"
-#include "ControllerMsg.h"
-#include "ControllerMsgPool.h"
+#include "InputMsg.h"
+#include "InputMsgPool.h"
 
 #ifdef WIN32
 #include <winsock.h>
@@ -116,80 +116,34 @@ void sv::Server::HandleConnection(int connection)
 
 	if(http.IsSocketRequest(headerInfo))
 	{
-		Game* game = GameFactory::Instance()->CreateGame();
-		game->SetSocket(connection);
 		std::string response;
 		response = http.GetSocketHeader(headerInfo);
 		send(connection, response.c_str(), response.length(), NULL);
-
-		//char test[3] = {'\x81', 1, 'A'};
-		//send(connection, test, sizeof(test), NULL);
-
-		SendMsg("Hello", 5, connection);
 		
 		LOG1(DEBUG_MSG, "Incomming key:\n%s\n", headerInfo.m_SecWebSocketKey.c_str());
 		LOG1(DEBUG_MSG, "Socket header:\n%s\n", response.c_str());
-		LOG1(DEBUG_MSG, "Socket connection %i", game->GetId());
+
+		uint index = 0;
+		InputMsg* msg = InputMsgPool::Instance()->GetFreeMsg(index);
+		msg->SetContent(0, 0, eContrAction_CreateGame, connection);
+		InputMsgPool::Instance()->SetUnhandled(index);
 	}
 	else
 	{
-		uint channel = 0;
-		uint controllerId = 0;
-		uint action = 0;
-
 		uchar buffer[1024];
 		uint length = sizeof(buffer);
 		http.DecodeBase64(headerInfo.m_Body, length, buffer);
 		LOG1(DEBUG_MSG,"Body:\n%s\n", headerInfo.m_Body.c_str());
-
-		ControllerMsg::GetContent(buffer, length, channel, controllerId, action);
-
-/*		std::string response = "";
-		if(headerInfo.m_Method == "OPTIONS")
-		{
-			response = "HTTP/1.1 200 OK\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Allow-Methods:\"GET, POST, PUT, DELETE, OPTIONS\"\r\nAccess-Control-Allow-Headers:\"content-type, accept\"\r\n\r\n";			
-			send(connection, response.c_str(), response.length() + 1, NULL);
-
-			recv(connection, message, sizeof(message), NULL);
-			std::string msg = message;
-			LOG1(DEBUG_PROTOCOLL, "next: \n%s", msg);
-		}
-//		else
-		{
-			response += "HTTP/1.1 200 OK\r\nAccess-Control-Allow-Origin: *\r\n\r\nDaten";
-		} */
-
-		bool valid = false;
-		if(channel)
-		{
-			Game* game = GameFactory::Instance()->GetGame(channel);
-			if(game)
-			{
-				ControllerMsgPool* pool = game->GetMsgPool();
-				uint index;
-				ControllerMsg* msg = pool->GetFreeMsg(index);
-				msg->SetSocket(connection);
-				msg->SetControllerId(controllerId);
-				msg->setAction(action);
-
-				pool->SetUnhandled(index);
-
-				valid = true;
-			}
-		}
-		if(! valid)
-		{
-			std::string response;
-			response = http.GetErrorHeader();
-			LOG1(DEBUG_PROTOCOLL,"Outgoing Header:\n%s\n", response.c_str());
-			send(connection, response.c_str(), response.length() + 1, NULL);
-			CLOSE_SOCKET(connection);
-		}
+		
+		uint index;
+		InputMsg* msg = InputMsgPool::Instance()->GetFreeMsg(index);
+		msg->SetContent(buffer, length, connection);
+		InputMsgPool::Instance()->SetUnhandled(index);
 	}
 }
 
 
-void sv::Server::SendMsg(const char* msg, uint length, uint socket)
+void sv::Server::SendSocketMsg(const char* msg, uint length, uint socket)
 {
 	uchar bufferMsg[1024];
 	std::memcpy(bufferMsg, msg, length);
@@ -198,14 +152,14 @@ void sv::Server::SendMsg(const char* msg, uint length, uint socket)
 	send(socket, str.c_str(), length, NULL);
 }
 
-void sv::Server::SendMsg(Msg* msg, uint socket)
+void sv::Server::SendSocketMsg(Msg* msg, uint socket)
 {
-/*	uchar buffer[1024];
-	uint pos = 0;
-	msg->Visit(buffer,false, pos, sizeof(buffer));
-	std::string str = http.GetSocketMsg(buffer, pos);
+	uchar buffer[1024];
+	uint length = 0;
+	msg->GetBuffer(buffer, length, sizeof(buffer));
+	std::string str = http.GetSocketMsg(buffer, length);
 	
-	send(socket, str.c_str(), pos + 1, NULL);*/
+	send(socket, str.c_str(), length, NULL);
 }
 
 void sv::Server::Response(uchar* msg, uint length, uint socket)

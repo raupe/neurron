@@ -1,49 +1,28 @@
 #include "ServerPCH.h"
 #include "Game.h"
 
-#include "ControllerMsg.h"
+#include "InputMsg.h"
 #include "Server.h"
 
 sv::Game::Game(unsigned int id)
 : m_Id(id)
 {
-	m_Msgs = S_NEW ControllerMsgPool();
 }
 
 sv::Game::~Game()
 {
-	delete (m_Msgs);
 }
 
 void sv::Game::Update()
 {
-	HandleMsgs();
 
 
 
 }
 
-void sv::Game::HandleMsgs()
+void sv::Game::HandleMsg(sv::InputMsg* msg)
 {
-	std::vector<ControllerMsg*> msgs;
-	std::vector<uint> indecies;
-	m_Msgs->GetUnhandledMsgs(msgs, indecies);
-	
-	for(uint i=0; i<msgs.size(); ++i)
-	{
-		ControllerMsg* msg = msgs[i];
-		LOG1(DEBUG_MSG, "Action: %i\n", msg->GetAction());
-
-
-		HandleMsg(msg);
-	}
-
-
-	m_Msgs->Free(indecies);
-}
-
-void sv::Game::HandleMsg(sv::ControllerMsg* msg)
-{
+	LOG1(DEBUG_MSG, "Action: %i\n", msg->GetAction());
 	switch(msg->GetAction())
 	{
 	case eContrAction_Start:
@@ -57,7 +36,7 @@ void sv::Game::HandleMsg(sv::ControllerMsg* msg)
 	default:
 		{
 			char response[] = "Hello";
-			Server::Instance()->SendMsg(response, sizeof(response),m_Socket);
+			Server::Instance()->SendSocketMsg(response, sizeof(response),m_Socket);
 
 			Server::Instance()->Response(0, 0, msg->GetSocket());
 		} break;
