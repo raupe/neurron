@@ -8,6 +8,7 @@ namespace sv
 	enum EMsgType
 	{
 		eMsgType_Init,
+		eMsgType_Move,
 
 		// Controller Msgs
 		eMsgType_Response,
@@ -51,6 +52,18 @@ namespace sv
 
 	private:
 		uchar			m_Channel;
+	};
+
+	class MoveMsg : public Msg
+	{
+	public:
+		MoveMsg(uchar dir);
+		virtual ~MoveMsg() {}
+
+		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
+
+	private:
+		uchar			m_Direction;
 	};
 }
 

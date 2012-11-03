@@ -2,6 +2,7 @@
 #include "Game.h"
 
 #include "InputMsg.h"
+#include "Msg.h"
 #include "Server.h"
 
 sv::Game::Game(unsigned int id)
@@ -35,8 +36,8 @@ void sv::Game::HandleMsg(sv::InputMsg* msg)
 		} break; 
 	default:
 		{
-			char response[] = "Hello";
-			Server::Instance()->SendSocketMsg(response, sizeof(response),m_Socket);
+			MoveMsg initMsg(msg->GetAction()); 
+			Server::Instance()->SendSocketMsg(&initMsg, msg->GetSocket());
 
 			Server::Instance()->Response(0, 0, msg->GetSocket());
 		} break;

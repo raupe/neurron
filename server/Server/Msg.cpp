@@ -50,3 +50,16 @@ void sv::InitMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
 
 	Visit(m_Channel, buffer, pos, length);
 }
+
+sv::MoveMsg::MoveMsg(uchar dir)
+: Msg(eMsgType_Move)
+, m_Direction(dir)
+{
+}
+
+void sv::MoveMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
+{
+	Visit(m_Type, buffer, pos, length);
+
+	Visit(m_Direction, buffer, pos, length);
+}
