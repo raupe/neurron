@@ -65,6 +65,8 @@
 
 
 
+
+
 	<script>
 
 	// config
@@ -78,23 +80,19 @@
 
 
 
-
-
-
 	// connection
-	var	socket = new WebSocket( 'ws://' + server + ':' + port ),
-		dir,
+	var	socket = new WebSocket( 'ws://' + server + ':' + port );
 
 
-		time = (new Date()).getTime(),
+
+	//
+	var dir,
+
+		time = (new Date()).getTime(), // http://de.wikipedia.org/wiki/Human_Response_Time || ~ 100ms
+
+		id = 0,
 
 		channel = null;
-
-
-
-
-
-
 
 
 	socket.onopen = function () {
@@ -112,27 +110,27 @@
 
 		console.log('[received]', msg);
 
+		var data = msg.data;
+
+		data = atob( data );
+
+
 		if ( !channel ) {
-
-			var data = msg.data;
-
-			data = atob( data );
 
 			channel = data.charCodeAt(1);
 
 			alert('ready  !');
+
 		} else {
 
 
 			var diff = (new Date()).getTime() - time;
 
-			console.log('diff:',diff);
-			alert( diff )
+			console.log(diff);
+
+			id = data.charCodeAt(1);
+			dir = data.charCodeAt(2);
 		}
-
-
-		// console.log('diff/1000:',diff/1000);
-
 	};
 
 
@@ -142,7 +140,7 @@
 	};
 
 
-	function send(){
+	function send( dir ){
 
 		var req = new XMLHttpRequest(),
 
@@ -152,7 +150,7 @@
 
 		req.open( 'POST', url, true );
 
-		var data = btoa( String.fromCharCode(  channel, 2, 2 ) );
+		var data = btoa( String.fromCharCode(  channel, id, dir ) );
 
 		req.setRequestHeader( 'Content-Type', 'text/plain; charset=UTF-8' );
 
@@ -181,10 +179,10 @@
 
 		var key = e.which;
 
-		if ( key === 37 ) send();//dir='x1';//x -= size;
-		if ( key === 39 ) send();//dir='x2';//x += size;
-		if ( key === 38 ) send();//dir='y1';//y -= size;
-		if ( key === 40 ) send();//dir='y2';//y += size;
+		if ( key === 37 ) send( '1' );//dir='x1';//x -= size;
+		if ( key === 39 ) send( '2' );//dir='x2';//x += size;
+		if ( key === 38 ) send( '3' );//dir='y1';//y -= size;
+		if ( key === 40 ) send( '4' );//dir='y2';//y += size;
 	});
 
 
@@ -193,32 +191,32 @@
 
 	function move() {
 
-		if ( dir === 'x2' ) x += speed;
-		if ( dir === 'x1' ) x -= speed;
-		if ( dir === 'y1' ) y -= speed;
-		if ( dir === 'y2' ) y += speed;
+		if ( dir === '1' ) x += speed;
+		if ( dir === '2' ) x -= speed;
+		if ( dir === '3' ) y -= speed;
+		if ( dir === '4' ) y += speed;
 
 
 		if ( x+size > width ) x = width-size;
-		// if ( x < 0 ) x = width-size;
+		if ( x < 0 ) x = width-size;
 
-		// if ( y+size > height ) y = 0;
-		// if ( y < 0 ) y = height-size;
+		if ( y+size > height ) y = 0;
+		if ( y < 0 ) y = height-size;
 
 
 		ctx.fillRect( x, y, size, size );
 	}
 
 
-	// (function loop(){
+	(function loop(){
 
-	// 	requestAnimationFrame( loop );
+		requestAnimationFrame( loop );
 
-	// 	// ctx.clearRect( 0,0, width, height )
+		ctx.clearRect( 0,0, width, height )
 
-	// 	move();
+		move();
 
-	// })();
+	})();
 
 
 
