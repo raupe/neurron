@@ -86,15 +86,20 @@
 		dir,
 
 
-		time = 0;
+		time = (new Date()).getTime(),
+
+		channel = null;
+
+
+
+
+
+
 
 
 	socket.onopen = function () {
 
-		// console.log('[opened]');
-		socket.send('Connection-Test');
-
-		time = (new Date()).getTime();
+		console.log('[opened]');
 	};
 
 
@@ -105,16 +110,29 @@
 
 	socket.onmessage = function ( msg ) {
 
-		// console.log('[received]', msg);
-		// dir = 'y1';
-		// if ( msg ) {
+		console.log('[received]', msg);
+
+		if ( !channel ) {
+
+			var data = msg.data;
+
+			data = atob( data );
+
+			channel = data.charCodeAt(1);
+
+			alert('ready  !');
+		} else {
+
 
 			var diff = (new Date()).getTime() - time;
 
-			alert( diff )
 			console.log('diff:',diff);
-			console.log('diff/1000:',diff/1000);
-		// }
+			alert( diff )
+		}
+
+
+		// console.log('diff/1000:',diff/1000);
+
 	};
 
 
@@ -124,12 +142,21 @@
 	};
 
 
-
-
 	function send(){
 
+		var req = new XMLHttpRequest(),
+
+			url = 'http://' + server + ':' + 2020;
+
 		time = (new Date()).getTime();
-		socket.send('test');
+
+		req.open( 'POST', url, true );
+
+		var data = btoa( String.fromCharCode(  channel, 2, 2 ) );
+
+		req.setRequestHeader( 'Content-Type', 'text/plain; charset=UTF-8' );
+
+		req.send( data );
 	};
 
 
