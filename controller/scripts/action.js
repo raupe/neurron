@@ -5,7 +5,7 @@
 		this.req = new XMLHttpRequest();
 		this.url = config.url;
 
-		this.id = 0; // default
+		this.id = 0; // defaults
 		this.channel = config.channel;
 
 		this.register();
