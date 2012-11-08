@@ -12,7 +12,7 @@
 
 			addVariableFrames( screen, action );
 
-			activateTunnel( screen.background );
+			// activateTunnel( screen.background );
 		}
 
 
