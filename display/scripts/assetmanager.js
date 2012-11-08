@@ -1,6 +1,6 @@
 (function(){
 
-	var Loader = display.Loader = function ( assets, main ) {
+	var AssetManager = display.AssetManager = function ( assets, main ) {
 
 		this.images = assets.images;
 		this.sounds = assets.images;
@@ -13,7 +13,7 @@
 		this.load();
 	};
 
-	Loader.prototype.load = function(){
+	AssetManager.prototype.load = function(){
 
 
 		// var assets = this.assets;
@@ -37,7 +37,7 @@
 
 	};
 
-	Loader.prototype.loadImage = function ( key, url ) {
+	AssetManager.prototype.loadImage = function ( key, url ) {
 
 		var img = new Image();
 
@@ -61,7 +61,7 @@
 		img.src = url;
 	};
 
-	Loader.prototype.progress = function(){
+	AssetManager.prototype.progress = function(){
 
 		// console.log( 100/this.images.length + '% loaded');
 	};
