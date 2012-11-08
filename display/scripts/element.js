@@ -24,10 +24,7 @@
         // grid     -> via prototype || main.js
 
         this.color = config.color;
-
-        this.pool = config.pool;
         this.id = config.id;
-
 
         this.size = config.size;
         this.pos = config.pos;
@@ -89,11 +86,12 @@
     Element.prototype.register = function() {
 
         this.nextPos = this.pos;
+
         this.moving = false;
 
         this.counter = 0;
 
-        this.screen.elements.push( this );
+        this.field = this.grid.fields[ this.pos ];
     };
 
 
@@ -148,26 +146,25 @@
     };
 
 
+
+
     Element.prototype.update = function(){
 
-        var field = this.grid.fields[ this.pos ];
+        if ( this.nextPos !== this.pos ) {
 
-        if ( this.nextPos === this.pos ) {
-
-            this.draw( field );
-
-        } else {
-
-            this.animate( field );
+            this.animate();
         }
     };
 
 
-    Element.prototype.animate = function ( field ) {
 
-        var step = field[this.dir][ this.counter ];
+    Element.prototype.animate = function() {
 
-        this.draw( step );
+        var field = this.grid.fields[ this.pos ],
+
+            step = field[this.dir][ this.counter ];
+
+        this.field = step;
 
         this.counter++;
 
@@ -180,7 +177,10 @@
     };
 
 
-    Element.prototype.draw = function( field ) {
+    Element.prototype.draw = function() {
+
+
+        var field = this.field;
 
         // degree is saved per field
         field.deg = this.counter;
@@ -196,6 +196,7 @@
                         this.size
                     );
     };
+
 
 
     Element.prototype.rotate = function ( deg ) {

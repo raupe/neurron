@@ -14,8 +14,6 @@
 		this.width = config.width;
 		this.height = config.height;
 		this.frames = config.frames;
-
-		this.elements = [];
 	};
 
 
@@ -45,7 +43,9 @@
 
 	Screen.prototype.render = function(){
 
-		var elements = this.elements,
+		var players = this.players,		// prototype || controller()
+			obstacles = this.obstacles,	// prototype || controller()
+
 			ctx = this.ctx;
 
 		(function loop(){
@@ -54,11 +54,19 @@
 
 			ctx.clearRect( 0,0, ctx.canvas.width, ctx.canvas.height );
 
-			elements.forEach(function ( element ) {
 
-				element.update();
+			players.forEach(function ( player ) {
 
-				element.draw();
+				player.update();
+
+				player.draw();
+			});
+
+			obstacles.forEach(function ( obstacle ) {
+
+				obstacle.update();
+
+				obstacle.draw();
 			});
 
 		})();
