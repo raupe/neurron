@@ -1,20 +1,19 @@
 (function(){
 
-	var Controller = display.Controller = function ( config ) {
+	var Controller = display.Controller = function() {
 
-		this.players = {}; // player pool
-		this.obstacles = {}; // obstacle pool
-		this.screen = config.screen;
+		this.players = {};		// player pool
+		this.obstacles = {};	// obstacle pool
 	};
 
 	Controller.prototype.handle = function ( name, options ) {
 
 		var commands = {
 
-			"channel"	: this.channel,
-			"create"	: this.create,
-			"move"		: this.move,
-			"remove"	: this.remove
+			"channel"		: this.channel,
+			"create"		: this.create,
+			"move"			: this.move,
+			"remove"		: this.remove
 		};
 
 		commands[ name ].apply( this, options );
@@ -27,7 +26,7 @@
 	};
 
 	// id, type, position
-	Controller.prototype.create = function ( id, type, position ) {
+	Controller.prototype.create = function ( type, id, position ) {
 
 		var element = {
 
@@ -41,14 +40,14 @@
 				"obstacle"	: this.obstacles
 			};
 
-		// create new Object - player/obstacle
-		new element[type]({
 
-			"pos"	: 20,
-			"id"	: options,
-			"screen": this.screen,
-			"pool"	: pools[type],
-			"size"	: config.elements.size
+		// create Element + register in pool
+		pool[type][id] = new element[type]({
+
+			"pos"			: 20,
+			"id"			: options,
+			"pool"			: pools[type],
+			"size"			: config.elements.size
 		});
 	};
 
@@ -59,22 +58,23 @@
 
 		var element = {
 
-			"players"	: this.players,
-			"obstacles"	: this.obstacles
+			"players"		: this.players,
+			"obstacles"		: this.obstacles
 		};
 
 		element[type][index].move(direction);
 	};
 
-	Controller.prototype.remove = function ( type, options ) {
+
+	Controller.prototype.remove = function ( type, id ) {
 
 		var element = {
 
-			"players"	: this.players,
-			"obstacles"	: this.obstacles
+			"players"		: this.players,
+			"obstacles"		: this.obstacles
 		};
 
-		element[type][options].remove();
+		delete element[type][id];
 	};
 
 })();

@@ -21,10 +21,7 @@
 				circles			: 0
 			}),
 
-			controller = new display.Controller({
-
-				screen			: screen
-			}),
+			controller = new display.Controller(),
 
 			connection = new display.Connection({
 
@@ -34,11 +31,12 @@
 			});
 
 
-		// grid
+		// Element references
 		display.Element.prototype.grid = grid;
 
-		// assets
 		display.Element.prototype.assets = assets;
+
+		display.Element.prototype.screen = screen;
 
 
 

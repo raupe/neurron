@@ -1,6 +1,6 @@
 (function(){
 
-    var Element = display.Element = function(){ };
+    var Element = display.Element = function(){};
 
 
     Element.prototype.init = function ( config ) {
@@ -19,17 +19,19 @@
 
     Element.prototype.setup = function ( config ) {
 
+        // assets   -> via prototype || main.js
+        // screen   -> via prototype || main.js
+        // grid     -> via prototype || main.js
+
         this.color = config.color;
 
         this.pool = config.pool;
         this.id = config.id;
 
-        this.screen = config.screen;
 
         this.size = config.size;
         this.pos = config.pos;
 
-        // grid -> via prototype
         this.origin = this.screen.ctx;
 
         this.src = this.assets.images[ this.type ];
@@ -85,8 +87,6 @@
 
 
     Element.prototype.register = function() {
-
-        this.pool[this.id] = this; // add themselve to pool
 
         this.nextPos = this.pos;
         this.moving = false;
@@ -219,9 +219,5 @@
     };
 
 
-    Element.prototype.remove = function () {
-
-        delete this.pool[this.id];
-    };
 
 })();
