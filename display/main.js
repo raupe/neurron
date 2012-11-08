@@ -2,7 +2,9 @@
 
     var main = function( assets ) {
 
-        var screen = new display.Screen({
+		var controller = new display.Controller(),
+
+			screen = new display.Screen({
 
 				width			: config.canvas.width,
 				height			: config.canvas.height,
@@ -19,8 +21,6 @@
 				circles			: 0
 			}),
 
-			controller = new display.Controller(),
-
 			connection = new display.Connection({
 
 				controller		: controller,
@@ -35,7 +35,7 @@
 		display.Element.prototype.screen = screen;
 
 
-		screen.elements.push( grid );
+		screen.obstacles.push( grid );
 
 		/* debug */
 
