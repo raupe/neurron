@@ -1,8 +1,8 @@
-#ifdef WIN32
+//#ifdef WIN32
 #ifdef _DEBUG
 #define DEBUG
 #endif
-#endif
+//#endif
 
 typedef unsigned int uint;
 typedef unsigned char uchar;

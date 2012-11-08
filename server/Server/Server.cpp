@@ -142,7 +142,7 @@ void sv::Server::HandleConnection(int connection)
 	}
 }
 
-
+/*
 void sv::Server::SendSocketMsg(const char* msg, uint length, uint socket)
 {
 	uchar bufferMsg[1024];
@@ -151,6 +151,7 @@ void sv::Server::SendSocketMsg(const char* msg, uint length, uint socket)
 	std::string str = http.GetSocketMsg(bufferMsg, length);
 	send(socket, str.c_str(), length, NULL);
 }
+*/
 
 void sv::Server::SendSocketMsg(Msg* msg, uint socket)
 {
@@ -159,6 +160,7 @@ void sv::Server::SendSocketMsg(Msg* msg, uint socket)
 	msg->GetBuffer(buffer, length, sizeof(buffer));
 	std::string str = http.GetSocketMsg(buffer, length);
 	
+	// TODO: test if everything was send
 	send(socket, str.c_str(), length, NULL);
 }
 
