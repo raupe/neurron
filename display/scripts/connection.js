@@ -5,35 +5,77 @@
 		this.action = config.action;
 		this.url = "ws://" + config.server + ":" + config.port;
 
-
 		this.initializeSocket();
 	};
 
+
 	Connection.prototype.initializeSocket = function(){
 
-		// this.socket = new WebSocket( this.url );
+		this.socket = new WebSocket( this.url );
 		var action = this.action;
 
-		// this.socket.onopen = function( message ){
-//
-		// };
-//
-		// this.socket.onclose = function( message ){
-//
-		// };
+		this.socket.onopen = function(){
 
-		// this.socket.onmessage = function( message ){
+			console.log('[open]');
+		};
 
-			// message need to be shifted before passing to action
+		this.socket.onclose = function( msg ){
 
-			var data = ["create", "player", 0]; // command, type, options
+			console.log('[close]');
+		};
 
-			action.handle( data );
-		// };
 
-		// this.socket.onerror = function( message ){
-//
-		// };
+		this.socket.onmessage = function ( msg ) {
+
+			// console.log(msg);
+
+			var data = msg.data;
+
+			// base64 -> string
+			data = atob( data );
+
+
+			// int
+			var change = data.charCodeAt(0); // 1
+
+			// string
+			change = config.protocol[ change ]; // channel
+
+
+
+			var options = [];
+
+
+			if ( change === 'channel' ) {
+
+				options[0] = data.charCodeAt(1); // channel id
+			}
+
+			if ( change === 'create' ) {
+
+				options[0] = data.charCodeAt(1); // element Id
+				options[1] = data.charCodeAt(2); // element type
+				options[2] = data.charCodeAt(3); // element position
+			}
+
+			if ( change === 'move') {
+
+				options[0] = data.charCodeAt(1); // element Id
+				options[1] = data.charCodeAt(2); // direction
+			}
+
+			if ( change === 'remove' ) {
+
+				options[0] = data.charCodeAt(1); // element Id
+			}
+
+			action.handle( change, options );
+		};
+
+		this.socket.onerror = function ( err ) {
+
+			console.log('[error] ', err );
+		};
 	};
 
 })();

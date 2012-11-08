@@ -7,57 +7,60 @@
 		this.screen = config.screen;
 	};
 
-	Action.prototype.handle = function ( data ) {
+	Action.prototype.handle = function ( name, options ) {
 
 		var commands = {
 
-			/*	those functions are not declared in this scope
-				-> therefore "this" is a reference to prototype */
-
-			"create": this.create,
-			"move": this.move,
-			"remove": this.remove
+			"channel"	: this.channel,
+			"create"	: this.create,
+			"move"		: this.move,
+			"remove"	: this.remove
 		};
 
-		/* execute in the context of this(Action), otherwise method think they are from commands */
-		commands[data[0]].apply( this, [ data[1], data[2] ] );
+		commands[ name ].apply( this, options );
 	};
 
-	Action.prototype.create = function ( type, options ) {
+
+	Action.prototype.channel = function ( id ) {
+
+		console.log( id );
+	};
+
+	// id, type, position
+	Action.prototype.create = function ( id, type, position ) {
 
 		var element = {
 
-				"player": display.Player,
-				"obstacle": display.Obstacle
+				"player"	: display.Player,
+				"obstacle"	: display.Obstacle
 			},
 
 			pools = {
 
-				"player": this.players,
-				"obstacle": this.obstacles
+				"player"	: this.players,
+				"obstacle"	: this.obstacles
 			};
 
 		// create new Object - player/obstacle
 		new element[type]({
 
-			pos: 20,
-			id: options,
-			screen: this.screen,
-			pool: pools[type],
-			size: config.elements.size
+			"pos"	: 20,
+			"id"	: options,
+			"screen": this.screen,
+			"pool"	: pools[type],
+			"size"	: config.elements.size
 		});
 	};
 
-	Action.prototype.move = function ( type, options ) {
+	Action.prototype.move = function ( id, direction ) {
 
 		// TODO options need to be seperated in index and direction
-		var index = 0,
-			direction = options;
+		var index = 0;
 
 		var element = {
 
-			"players": this.players,
-			"obstacles": this.obstacles
+			"players"	: this.players,
+			"obstacles"	: this.obstacles
 		};
 
 		element[type][index].move(direction);
@@ -67,8 +70,8 @@
 
 		var element = {
 
-			"players": this.players,
-			"obstacles": this.obstacles
+			"players"	: this.players,
+			"obstacles"	: this.obstacles
 		};
 
 		element[type][options].remove();
