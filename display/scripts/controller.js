@@ -2,8 +2,8 @@
 
 	var Controller = display.Controller = function() {
 
-		this.players = {};		// player pool
-		this.obstacles = {};	// obstacle pool
+		this.players = display.Screen.prototype.players = [];		// player pool
+		this.obstacles = display.Screen.prototype.obstacles = [];	// obstacle pool
 	};
 
 	Controller.prototype.handle = function ( name, options ) {
@@ -30,7 +30,7 @@
 
 		var element = {
 
-				"player"	: display.Player,
+				"player"	: display.Player, // type: 1 , 2 -> needs to be defined ....
 				"obstacle"	: display.Obstacle
 			},
 
@@ -42,11 +42,10 @@
 
 
 		// create Element + register in pool
-		pool[type][id] = new element[type]({
+		pools[type][id] = new element[type]({
 
 			"pos"			: 20,
-			"id"			: options,
-			"pool"			: pools[type],
+			"id"			: id,
 			"size"			: config.elements.size
 		});
 	};
