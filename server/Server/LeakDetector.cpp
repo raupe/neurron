@@ -1,7 +1,7 @@
 #include "ServerPCH.h"
 #include "LeakDetector.h"
 
-#ifdef DEBUG
+#ifdef DEBUG_WIN
 
 typedef std::list<AllocInfo*> AllocList;
 AllocList* g_AllocList;
