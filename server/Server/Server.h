@@ -19,7 +19,7 @@ namespace sv
 		void Run();
 		
 		void SendSocketMsg(Msg* msg, uint socket);
-		void SendSocketMsg(const char* msg, uint length, uint socket);
+//		void SendSocketMsg(const char* msg, uint length, uint socket);
 		void Response(uchar* msg, uint length, uint socket);
 	private:
 		void HandleConnection(int socket);
