@@ -4,6 +4,12 @@
 #endif
 //#endif
 
+#ifdef WIN32
+#ifdef DEBUG
+#define DEBUG_WIN
+#endif
+#endif
+
 typedef unsigned int uint;
 typedef unsigned char uchar;
 
