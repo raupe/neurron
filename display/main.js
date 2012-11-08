@@ -1,35 +1,34 @@
 (function(){
 
-	new display.Loader( config.assets, function ( assets ) {
+    var main = function( assets ) {
+    
+        display.Element.prototype.assets = assets;
 
-		display.Element.prototype.assets = assets;
+        var screen = new display.Screen({
 
-		var screen = new display.Screen({
+            width: config.canvas.width,
+            height: config.canvas.height,
+            frames: 30
+        }),
 
-				width: config.canvas.width,
-				height: config.canvas.height,
-				frames: 30
-			}),
+        action = new display.Action({
 
-			action = new display.Action({
+            screen: screen
+        }),
 
-				screen: screen
-			}),
+        connection = new display.Connection({
 
-			connection = new display.Connection({
-
-				action: action,
-				server: config.server,
-				port: config.port
-			});
-
-
-		/* debug */
-
-		debug( screen, action, connection );
-
-	});
+            action: action,
+            server: config.server,
+            port: config.port
+        });
 
 
+        /* debug */
+
+        debug( screen, action, connection );
+    }
+    
+    new display.Loader( config.assets, main );
 
 })();
