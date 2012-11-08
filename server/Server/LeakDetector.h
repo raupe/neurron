@@ -3,7 +3,7 @@
 
 #include "Defines.h"
 
-#ifdef DEBUG
+#ifdef DEBUG_WIN
 
 #include <Windows.h>
 #include <list>
