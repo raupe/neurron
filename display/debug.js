@@ -4,72 +4,20 @@
 
 	var debug = (function(){
 
-		function debug ( screen, controller, connection ) {
+		function debug ( screen, grid, controller, connection ) {
 
 			addPlayerInput( controller );
 
-			drawNums( screen );
+			drawNums( grid );
 
-			addVariableFrames( screen, controller );
-
-			// activateTunnel( screen.background );
-		}
-
-
-		function activateTunnel ( tunnel ) {
-
-			var active = true;
-
-						tunnel.update = function(){
-
-							this.change();
-
-							this.draw();
-						};
-
-
-						tunnel.sequence('left');
-
-
-			document.addEventListener('keyup', function ( e ) {
-
-				var key = e.which;
-
-				// show - 0
-				if ( key === 48 ) {
-
-					if ( !active ) {
-
-						active = true;
-
-						tunnel.update = function(){
-
-							this.change();
-
-							this.draw();
-						};
-
-					} else {
-
-						active = false;
-
-						tunnel.update =function(){};
-					}
-				}
-
-				// moving - wasd
-				if ( key === 65 ) tunnel.sequence('left');
-				if ( key === 68 ) tunnel.sequence('right');
-				if ( key === 87 ) tunnel.sequence('top');
-				if ( key === 83 ) tunnel.sequence('bottom');
-			});
+			addVariableFrames( grid, controller );
 
 		}
 
 
-		function drawNums( screen ) {
+		function drawNums( grid ) {
 
-			screen.grid.draw = function(){
+			grid.draw = function(){
 
 				this.drawCircles();
 
@@ -83,9 +31,9 @@
 		}
 
 
-		function drawLine( screen, no ) {
+		function drawLine( grid, no ) {
 
-			screen.grid.draw = function(){
+			grid.draw = function(){
 
 				var fields = screen.grid.fields,
 
@@ -141,10 +89,9 @@
 
 
 		// change framestep between fields, lower framerate - *faster* animation
-		function addVariableFrames ( screen, controller ) {
+		function addVariableFrames ( grid, controller ) {
 
 			var players = controller.players,
-				grid = screen.grid,
 				keymap = {},
 				key;
 
