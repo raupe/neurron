@@ -1,6 +1,8 @@
 (function(){
 
-	new display.Loader( config.assets, function ( assets ) {
+	new display.AssetManager( config.assets, main );
+
+	function main ( assets ) {
 
 		display.Element.prototype.assets = assets;
 
@@ -27,9 +29,7 @@
 		/* debug */
 
 		debug( screen, controller, connection );
-
-	});
-
+	}
 
 
 })();
