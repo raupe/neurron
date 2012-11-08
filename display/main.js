@@ -1,10 +1,8 @@
 (function(){
 
-	new display.AssetManager( config.assets, main );
+    var main = function( assets ) {
 
-	function main ( assets ) {
-
-		var screen = new display.Screen({
+        var screen = new display.Screen({
 
 				width			: config.canvas.width,
 				height			: config.canvas.height,
@@ -33,12 +31,8 @@
 
 		// Element references
 		display.Element.prototype.grid = grid;
-
 		display.Element.prototype.assets = assets;
-
 		display.Element.prototype.screen = screen;
-
-
 
 
 		screen.elements.push( grid );
@@ -46,7 +40,9 @@
 		/* debug */
 
 		debug( screen, grid, controller, connection );
-	}
+	};
 
+	// pre-loading assets
+    new display.AssetManager( config.assets, main );
 
 })();
