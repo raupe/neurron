@@ -22,6 +22,8 @@
 		this.socket.onclose = function( msg ){
 
 			console.log('[close]');
+
+			controller.handle( 'create', [ 'player', 0 ] );
 		};
 
 
@@ -66,7 +68,7 @@
 
 			if ( change === 'remove' ) {
 
-				options[0] = data.charCodeAt(1); // element type
+				options[0] = protocol.remove[ data.charCodeAt(1) ]; // element type
 				options[1] = data.charCodeAt(2); // element id
 			}
 
