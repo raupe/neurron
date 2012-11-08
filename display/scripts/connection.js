@@ -53,8 +53,8 @@
 
 			if ( change === 'create' ) {
 
-				options[0] = data.charCodeAt(1); // element Id
-				options[1] = data.charCodeAt(2); // element type
+				options[0] = data.charCodeAt(1); // element type
+				options[1] = data.charCodeAt(2); // element id
 				options[2] = data.charCodeAt(3); // element position
 			}
 
@@ -66,7 +66,8 @@
 
 			if ( change === 'remove' ) {
 
-				options[0] = data.charCodeAt(1); // element Id
+				options[0] = data.charCodeAt(1); // element type
+				options[1] = data.charCodeAt(2); // element id
 			}
 
 			controller.handle( change, options );
