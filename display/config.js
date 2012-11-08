@@ -33,8 +33,21 @@ var config = {
 	elements: {
 
 		size: 40
+	},
+
+
+	protocol: {
+
+		1: 'channel',
+
+		2: 'create',
+
+		3: 'move'
 	}
 };
+
+
+
 
 /* global namespace */
 window[config.namespace] = {};
