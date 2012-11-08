@@ -29,7 +29,7 @@
         this.size = config.size;
         this.pos = config.pos;
 
-        this.grid = this.screen.grid;
+        // grid -> via prototype
         this.origin = this.screen.ctx;
 
         this.src = this.assets.images[ this.type ];

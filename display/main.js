@@ -4,31 +4,50 @@
 
 	function main ( assets ) {
 
-		display.Element.prototype.assets = assets;
-
 		var screen = new display.Screen({
 
-				width: config.canvas.width,
-				height: config.canvas.height,
-				frames: 30
+				width			: config.canvas.width,
+				height			: config.canvas.height,
+				frames			: 30
+			}),
+
+			grid = new display.Grid({
+
+				origin			: screen.ctx,
+				frames			: screen.frames,
+				players			: 10,
+				distanceToUser	: 350,
+				circleOffset	: 100,
+				circles			: 0
 			}),
 
 			controller = new display.Controller({
 
-				screen: screen
+				screen			: screen
 			}),
 
 			connection = new display.Connection({
 
-				controller: controller,
-				server: config.server,
-				port: config.port
+				controller		: controller,
+				server			: config.server,
+				port			: config.port
 			});
 
 
+		// grid
+		display.Element.prototype.grid = grid;
+
+		// assets
+		display.Element.prototype.assets = assets;
+
+
+
+
+		screen.elements.push( grid );
+
 		/* debug */
 
-		debug( screen, controller, connection );
+		debug( screen, grid, controller, connection );
 	}
 
 

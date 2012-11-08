@@ -6,13 +6,6 @@
 
 		this.createCanvas();
 
-		this.createGrid();
-
-		this.createBackground();
-
-		this.elements.push( this.background );
-		this.elements.push( this.grid );
-
 		this.render();
 	};
 
@@ -33,48 +26,19 @@
 		this.ctx = canvas.getContext('2d');
 		this.cvs = canvas;
 
-		this.scale();
+		scale.apply( this );
 
 		document.body.appendChild( this.cvs );
 
-		window.addEventListener('resize', this.scale.bind(this) );
-		window.addEventListener('orientationchange', this.scale.bind(this) );
-	};
+		window.addEventListener('resize', scale.bind(this) );
+		window.addEventListener('orientationchange', scale.bind(this) );
 
+		function scale(){
 
-	Screen.prototype.scale = function() {
+			this.cvs.width = window.innerWidth;
+			this.cvs.height = window.innerHeight;
+		}
 
-		this.cvs.width = window.innerWidth;
-		this.cvs.height = window.innerHeight;
-	};
-
-
-	Screen.prototype.createGrid = function(){
-
-		this.grid = new display.Grid({
-
-			origin: this.ctx,
-			players: 10,
-			distanceToUser: 350,
-			circleOffset: 100,
-			frames: this.frames,
-			circles: 0
-		});
-	};
-
-
-	Screen.prototype.createBackground = function(){
-
-		this.background = new display.Background({
-
-			edges: 10,					// curve
-			depth: 25,					// amount of circles
-
-			frames: 2,
-			color: [ 0, 30, 90 ],
-			grid: this.grid,
-			origin: this.ctx
-		});
 	};
 
 
@@ -92,7 +56,9 @@
 
 			elements.forEach(function ( element ) {
 
-				element.update(); // former ".draw()"
+				element.update();
+
+				element.draw();
 			});
 
 		})();
