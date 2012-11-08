@@ -1,13 +1,13 @@
 (function(){
 
-	var Action = display.Action = function ( config ) {
+	var Controller = display.Controller = function ( config ) {
 
 		this.players = {}; // player pool
 		this.obstacles = {}; // obstacle pool
 		this.screen = config.screen;
 	};
 
-	Action.prototype.handle = function ( name, options ) {
+	Controller.prototype.handle = function ( name, options ) {
 
 		var commands = {
 
@@ -21,13 +21,13 @@
 	};
 
 
-	Action.prototype.channel = function ( id ) {
+	Controller.prototype.channel = function ( id ) {
 
 		console.log( id );
 	};
 
 	// id, type, position
-	Action.prototype.create = function ( id, type, position ) {
+	Controller.prototype.create = function ( id, type, position ) {
 
 		var element = {
 
@@ -52,7 +52,7 @@
 		});
 	};
 
-	Action.prototype.move = function ( id, direction ) {
+	Controller.prototype.move = function ( id, direction ) {
 
 		// TODO options need to be seperated in index and direction
 		var index = 0;
@@ -66,7 +66,7 @@
 		element[type][index].move(direction);
 	};
 
-	Action.prototype.remove = function ( type, options ) {
+	Controller.prototype.remove = function ( type, options ) {
 
 		var element = {
 

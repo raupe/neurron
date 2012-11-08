@@ -11,14 +11,14 @@
 				frames: 30
 			}),
 
-			action = new display.Action({
+			controller = new display.Controller({
 
 				screen: screen
 			}),
 
 			connection = new display.Connection({
 
-				action: action,
+				controller: controller,
 				server: config.server,
 				port: config.port
 			});
@@ -26,7 +26,7 @@
 
 		/* debug */
 
-		debug( screen, action, connection );
+		debug( screen, controller, connection );
 
 	});
 

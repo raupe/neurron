@@ -4,13 +4,13 @@
 
 	var debug = (function(){
 
-		function debug ( screen, action, connection ) {
+		function debug ( screen, controller, connection ) {
 
-			addPlayerInput( action );
+			addPlayerInput( controller );
 
 			drawNums( screen );
 
-			addVariableFrames( screen, action );
+			addVariableFrames( screen, controller );
 
 			// activateTunnel( screen.background );
 		}
@@ -116,9 +116,9 @@
 
 
 		// simulate player input
-		function addPlayerInput ( action ) {
+		function addPlayerInput ( controller ) {
 
-			var players = action.players,
+			var players = controller.players,
 				key;
 
 			document.addEventListener('keyup', function ( e ){
@@ -141,9 +141,9 @@
 
 
 		// change framestep between fields, lower framerate - *faster* animation
-		function addVariableFrames ( screen, action ) {
+		function addVariableFrames ( screen, controller ) {
 
-			var players = action.players,
+			var players = controller.players,
 				grid = screen.grid,
 				keymap = {},
 				key;

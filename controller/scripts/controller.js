@@ -1,6 +1,6 @@
 (function(){
 
-	var Action = controller.Action = function ( config ) {
+	var Controller = controller.Controller = function ( config ) {
 
 		this.req = new XMLHttpRequest();
 		this.url = config.url;
@@ -12,7 +12,7 @@
 	};
 
 
-	Action.prototype.register = function(){
+	Controller.prototype.register = function(){
 
 		/* serve response  */
 		this.req.onload = function ( t ) {
@@ -37,7 +37,7 @@
 	};
 
 
-	Action.prototype.delegate = function ( starts, ends ) {
+	Controller.prototype.delegate = function ( starts, ends ) {
 
         var start = { x: starts[0].clientX, y: starts[0].clientY},
             end = { x: ends[0].clientX, y: ends[0].clientY},
@@ -73,12 +73,12 @@
 	};
 
 
-	Action.prototype.send = function ( action )  {
+	Controller.prototype.send = function ( Controller )  {
 
 		this.req.open( 'POST', this.url , true );
 
 		// encode into base64, avoiding special characters like '0'
-		var data = btoa( String.fromCharCode(  this.channel, this.id, action ) );
+		var data = btoa( String.fromCharCode(  this.channel, this.id, Controller ) );
 
 		this.req.setRequestHeader( 'Content-Type', 'text/plain; charset=UTF-8' );
 

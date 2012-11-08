@@ -12,7 +12,7 @@
 
 
 		// delegating commands
-		action = new controller.Action({
+		c = new controller.Controller({
 
 			url: 'http://' + config.server + ':' + config.port,
 			channel: channel
@@ -22,7 +22,7 @@
 		// handling input
 		input = new controller.Input({
 
-			action: action,
+			controller: c,
 			screen: screen
 		});
 

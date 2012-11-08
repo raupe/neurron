@@ -3,7 +3,7 @@
 	var Input = controller.Input = function ( config ) {
 
 		this.screen = config.screen;
-		this.action = config.action;
+		this.controller = config.controller;
 
 		this.addHandler();
 	};
@@ -34,7 +34,7 @@
 		var cvs = this.screen.cvs,
 			ctx = this.screen.ctx,
 
-			action = this.action,
+			controller = this.controller,
 
             origins = [],
             starts = [];
@@ -102,7 +102,7 @@
                 ends.push(touches[i]);
             }
 
-            action.delegate(origins ,ends);
+            controller.delegate(origins ,ends);
 
             origins.length = starts.length =  0;
 
