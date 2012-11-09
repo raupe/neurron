@@ -13,7 +13,3 @@
     new display.AssetManager( config.assets, main );
 
 })();
-
-
-// /* debug */
-// debug( screen, grid, manager, connection );
