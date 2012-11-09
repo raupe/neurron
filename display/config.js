@@ -1,15 +1,22 @@
-var config = {
+/* global namespace */
+window.display = {};
 
-	namespace	: 'display',
+/* configurations */
+window.config = {
 
 	server		: 'neurron.com',
 	port		: '2020',
 
-	// default resolution
+	// default resolution ?
 	canvas: {
 
 		width	: 320,
 		height	: 240
+	},
+
+	elements: {
+
+		size: 40
 	},
 
 	assets: {
@@ -29,30 +36,29 @@ var config = {
 	},
 
 
-	elements: {
 
-		size: 40
+	// magic numbers
+	protocol: {
+
+		INIT		: 1,
+		START		: 2,
+		MOVE		: 3,
+		HEAL		: 4,
+		CREATE		: 5,
+		COLLISION	: 6
 	},
 
 
-	protocol: {
+	// categories
+	obstacles: {
 
-		1: 'channel',
-		2: 'create',
-		3: 'move',
+		1: { type: 'damage'	, size: 1, velocity: 1, value:  10, color: 'red'    },
 
+		2: { type: 'heal'	, size: 1, velocity: 1, value:  10, color: 'green'  },
 
-		// options
-		remove: {
+		3: { type: 'points'	, size: 1, velocity: 1, value: 100, color: 'yellow' },
 
-			1: 'player',
-			2: 'obstacle'
-		}
+		4: { type: 'points'	, size: 1, velocity: 1, value:  50, color: 'yellow' }
+
 	}
 };
-
-
-
-
-/* global namespace */
-window[config.namespace] = {};
