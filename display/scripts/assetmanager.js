@@ -2,68 +2,79 @@
 
 	var AssetManager = display.AssetManager = function ( assets, main ) {
 
-		this.images = assets.images;
-		this.sounds = assets.images;
-		this.movies = assets.movies;
-
-		// this.assets = assets;
+		this.assets = assets;
 
 		this.main = main;
 
-		this.load();
+		this.init();
 	};
 
-	AssetManager.prototype.load = function(){
+	AssetManager.prototype.init = function(){
+
+		var assets = this.assets,
+			category,
+			keys;
+
+		this.length = 0;
 
 
-		// var assets = this.assets;
+		// type
+		Object.keys( assets ).forEach(function ( type ) {
 
-		// Object( assets ).forEach(function( type ){
+			category = assets[type];
 
-		// }, this);
-		//
+			keys = Object.keys( category );
 
-		var images = Object.keys( this.images );
-		this.images.length = images.length-1;
+			this.length += keys.length-1;
 
+			// key
+			keys.forEach( function ( key ) {
 
-		images.forEach( function ( key ) {
+				this.load( type, key, category[key] );
 
-			this.loadImage( key, this.images[key] );
+			}, this);
 
-		}, this );
-
-
-
+		}, this);
 	};
 
-	AssetManager.prototype.loadImage = function ( key, url ) {
 
-		var img = new Image();
+	AssetManager.prototype.load = function ( type, key, url ) {
 
-		img.onload = function() {
+		var container;
 
-			this.images[key] = img;
+		if		( type === 'images' ) { container = new Image();	}
+		else if ( type === 'sounds' ) { container = new Audio();	}
+		else if ( type === 'movies' ) { container = new Video();	}
 
-			if ( this.images.length === 0 ) {
+		container.onload = function(){
 
-				this.main( this );
+			this.assets[type][key] = container;
+
+			if ( this.length !== 0 ){
+
+				this.progress( url );
+
+				this.length--;
 
 			} else {
 
-				this.progress();
+				this.main({
 
-				this.images.length--;
+					images: this.assets.images,
+					sounds: this.assets.sounds,
+					movies: this.assets.movies
+				});
 			}
 
 		}.bind(this);
 
-		img.src = url;
+		container.src = url;
 	};
 
-	AssetManager.prototype.progress = function(){
 
-		// console.log( 100/this.images.length + '% loaded');
+	AssetManager.prototype.progress = function ( url ) {
+
+		console.log('[loaded] ' + url + '\t (' + 100/this.length + '%)' );
 	};
 
 
