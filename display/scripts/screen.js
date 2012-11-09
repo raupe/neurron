@@ -1,19 +1,16 @@
 (function(){
 
-	var Screen = display.Screen = function ( config ) {
-
-		this.setup( config );
+	var Screen = display.Screen = function() {
 
 		this.createCanvas();
 
-		this.render();
-	};
 
-	Screen.prototype.setup = function ( config ) {
+		display.Element.prototype.screen = this;
+		display.Background.prototype.screen = this;
+		display.Manager.prototype.screen = this;
+		display.StatusManager.prototype.screen = this;
 
-		this.width = config.width;
-		this.height = config.height;
-		this.frames = config.frames;
+		display.Grid.prototype.screen = this;
 	};
 
 
@@ -36,40 +33,11 @@
 			this.cvs.width = window.innerWidth;
 			this.cvs.height = window.innerHeight;
 		}
-
 	};
 
+	Screen.prototype.clear = function(){
 
-
-	Screen.prototype.render = function(){
-
-		var players = this.players,		// prototype || controller()
-			obstacles = this.obstacles,	// prototype || controller()
-
-			ctx = this.ctx;
-
-		(function loop(){
-
-			requestAnimationFrame( loop );
-
-			ctx.clearRect( 0,0, ctx.canvas.width, ctx.canvas.height );
-
-
-			players.forEach(function ( player ) {
-
-				player.update();
-
-				player.draw();
-			});
-
-			obstacles.forEach(function ( obstacle ) {
-
-				obstacle.update();
-
-				obstacle.draw();
-			});
-
-		})();
+		this.ctx.clearRect( 0,0, this.cvs.width, this.cvs.height );
 	};
 
 })();
