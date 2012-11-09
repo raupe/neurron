@@ -1,8 +1,7 @@
 (function(){
 
-	var Connection = display.Connection = function( config ){
+	var Connection = display.Connection = function() {
 
-		this.manager = config.manager;
 		this.url = "ws://" + config.server + ":" + config.port;
 
 		this.initializeSocket();
@@ -12,7 +11,9 @@
 	Connection.prototype.initializeSocket = function(){
 
 		this.socket = new WebSocket( this.url );
+
 		var manager = this.manager;
+
 
 		this.socket.onopen = function(){
 
@@ -23,56 +24,96 @@
 
 			console.log('[close]');
 
-			manager.handle( 'create', [ 'player', 0 ] );
+			// manager.handle( 'create', [ 'player', 0 ] );
 		};
 
 
 		this.socket.onmessage = function ( msg ) {
 
-			// console.log(msg);
+			var data = atob( msg.data ),			// base64 -> string
 
-			var data = msg.data;
+				action = data.charCodeAt(0),		// int
 
-			// base64 -> string
-			data = atob( data );
+				options = [],						// params
 
-
-			// int
-			var change = data.charCodeAt(0); // 1
-
-			// string
-			change = config.protocol[ change ]; // channel
+				i, l;								// iterator
 
 
+	/* 1 */	if ( action === config.protocol.INIT ) {
 
-			var options = [];
-
-
-			if ( change === 'channel' ) {
-
-				options[0] = data.charCodeAt(1); // channel id
+				options[0] = data.charCodeAt(1); // channel ID
 			}
 
-			if ( change === 'create' ) {
 
-				options[0] = data.charCodeAt(1); // element type
-				options[1] = data.charCodeAt(2); // element id
-				options[2] = data.charCodeAt(3); // element position
+	/* 2 */	if ( action === config.protocol.START ) {
+
+					l = 2 * data.charCodeAt(1); // amount of players
+
+				var players = [];
+
+				for ( i = 2; i < l+2; i += 2 ) {
+
+					players.push({
+
+						pos		: data.charCodeAt(  i),
+						color	: data.charCodeAt(1+i)
+					});
+				}
+
+				options[0] = players;
 			}
 
-			if ( change === 'move') {
 
-				options[0] = data.charCodeAt(1); // element Id
-				options[1] = data.charCodeAt(2); // direction
+	/* 3 */	if ( action === config.protocol.MOVE ) {
+
+				options[0] = data.charCodeAt(1); // player ID
+				options[1] = data.charCodeAt(2); // next pos
 			}
 
-			if ( change === 'remove' ) {
 
-				options[0] = protocol.remove[ data.charCodeAt(1) ]; // element type
-				options[1] = data.charCodeAt(2); // element id
+	/* 4 */	if ( action === config.protocol.HEAL ) {
+
+				options[0] = data.charCodeAt(1); // player ID
+
+						l = data.charCodeAt(2); // amount of targets
+
+				var targets = [];
+
+				for ( i = 3; i < l+3; i++ ) {
+
+					targets.push( data.charCodeAt(i) );
+				}
+
+				options[1] = targets;
 			}
 
-			manager.handle( change, options );
+
+	/* 5 */	if ( action === config.protocol.CREATE ) {
+
+				options[0] = data.charCodeAt(1); // obstacle ID
+				options[1] = data.charCodeAt(2); // category
+				options[2] = data.charCodeAt(2); // position
+			}
+
+
+	/* 6 */	if ( action === config.protocol.COLLISION ) {
+
+				options[0] = data.charCodeAt(1); // obstacle ID
+
+						l =  data.charCodeAt(2); // amount of players
+
+				var playerIds = [];
+
+				for ( i = 2; i < l+2; i++ ) {
+
+					playerIds.push( data.charCodeAt(i) );
+				}
+
+				options[1] = playerIds;
+			}
+
+
+			manager.handle( action, options );
 		};
 
 		this.socket.onerror = function ( err ) {
