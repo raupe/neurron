@@ -12,6 +12,9 @@
 
 
 		display.Element.prototype.grid = this;
+
+		display.Debug.prototype.grid = this;
+		display.Background.prototype.grid = this;
 	};
 
 

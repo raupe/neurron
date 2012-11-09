@@ -12,8 +12,8 @@
 
 		this.render();
 
-
 		display.Connection.prototype.manager = this;
+		display.Debug.prototype.manager = this;
 	};
 
 
@@ -74,7 +74,7 @@
 			6	: this.collide
 		};
 
-		this.commands[ action ].apply( this, options );
+		commands[ action ].call( this, options );
 	};
 
 
@@ -88,20 +88,18 @@
 
 	Manager.prototype.start = function ( players ) {
 
-		console.log('Players: ', players);
-
-		this.playerList	= new display.PlayerList( players );
-
-
 		new display.Grid({
 
-			players: players.length,
+			players: 10,//players.length,
 			frames: 30,
 			distanceToUser: 350,
 			circleOffset: 100,
 			circles: 0
 		});
 
+		this.playerList	= new display.PlayerList( players );
+
+		new display.Debug();
 	};
 
 
