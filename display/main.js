@@ -28,7 +28,6 @@
 				port			: config.port
 			});
 
-
 		// Element references
 		display.Element.prototype.grid = grid;
 		display.Element.prototype.assets = assets;
@@ -38,7 +37,6 @@
 		screen.obstacles.push( grid );
 
 		/* debug */
-
 		debug( screen, grid, controller, connection );
 	};
 
