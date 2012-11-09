@@ -59,6 +59,7 @@
 			} else {
 
 				display.Element.prototype.assetManager = this;
+				display.Background.prototype.assetManager = this;
 
 				this.main();
 			}
