@@ -24,7 +24,7 @@
 
 			console.log('[close]');
 
-			// manager.handle( 'create', [ 'player', 0 ] );
+			manager.handle( config.protocol.START, [ { id:1, pos:1, color:'55' } ] );
 		};
 
 
@@ -55,6 +55,7 @@
 
 					players.push({
 
+						id		: i/2,
 						pos		: data.charCodeAt(  i),
 						color	: data.charCodeAt(1+i)
 					});
