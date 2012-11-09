@@ -1,79 +1,139 @@
 (function(){
 
-	var Manager = display.Manager = function() {
+	var Manager = display.Manager = function()  {
 
-		this.players = display.Screen.prototype.players = [];		// player pool
-		this.obstacles = display.Screen.prototype.obstacles = [];	// obstacle pool
+		this.playerList = [];
+
+		this.obstaclePool = new display.ObstaclePool();
+
+		this.statusManager = new display.StatusManager();
+
+		this.background = new display.Background();
+
+		this.render();
+
+
+		display.Connection.prototype.manager = this;
 	};
 
-	Manager.prototype.handle = function ( name, options ) {
+
+	Manager.prototype.render = function(){
+
+		(function loop(){
+
+			requestAnimationFrame( loop.bind(this) );
+
+
+			this.screen.clear();
+
+
+			forAll( this.playerList, 'update' );
+
+			forAll( this.obstaclePool, 'update' );
+
+
+			this.background.draw();
+
+			forAll( this.playerList, 'draw' );
+
+			this.obstaclePool.list.forEach(function ( obstacle ) {
+
+				if ( obstacle.visible ) {
+
+					obstacle.draw();
+				}
+			});
+
+			this.statusManager.draw();
+
+
+		}.bind(this) )();
+
+
+		function forAll ( collection, method ) {
+
+			for ( var i = 0, l = collection.length; i < l; i++ ) {
+
+				collection[i][method]();
+			}
+		}
+	};
+
+
+
+
+	Manager.prototype.handle = function ( action, options ) {
 
 		var commands = {
 
-			"channel"		: this.channel,
-			"create"		: this.create,
-			"move"			: this.move,
-			"remove"		: this.remove
+			1	: this.init,
+			2	: this.start,
+			3	: this.move,
+			4	: this.heal,
+			5	: this.create,
+			6	: this.collide
 		};
 
-		commands[ name ].apply( this, options );
+		this.commands[ action ].apply( this, options );
 	};
 
 
-	Manager.prototype.channel = function ( id ) {
 
-		console.log( id );
+
+	Manager.prototype.init = function ( channelId ) {
+
+		console.log('Create QR-code from: ', channelId );
 	};
 
-	// id, type, position
-	Manager.prototype.create = function ( type, id, position ) {
 
-		var element = {
+	Manager.prototype.start = function ( players ) {
 
-				"player"	: display.Player, // type: 1 , 2 -> needs to be defined ....
-				"obstacle"	: display.Obstacle
-			},
+		console.log('Players: ', players);
 
-			pools = {
-
-				"player"	: this.players,
-				"obstacle"	: this.obstacles
-			};
+		this.playerList	= new display.PlayerList( players );
 
 
-		// create Element + register in pool
-		pools[type][id] = new element[type]({
+		new display.Grid({
 
-			"pos"			: 20,
-			"id"			: id,
-			"size"			: config.elements.size
+			players: players.length,
+			frames: 30,
+			distanceToUser: 350,
+			circleOffset: 100,
+			circles: 0
 		});
-	};
 
-	Manager.prototype.move = function ( id, direction ) {
-
-		// TODO options need to be seperated in index and direction
-		var index = 0;
-
-		var element = {
-
-			"players"		: this.players,
-			"obstacles"		: this.obstacles
-		};
-
-		element[type][index].move(direction);
 	};
 
 
-	Manager.prototype.remove = function ( type, id ) {
 
-		var element = {
+	Manager.prototype.move = function ( playerId, nextPos ) {
 
-			"players"		: this.players,
-			"obstacles"		: this.obstacles
-		};
+		console.log('playerId:', playerId, ' - nextPos: ', nextPos );
 
-		delete element[type][id];
+		this.playerList[playerId].move( nextPos );
 	};
+
+
+	Manager.prototype.heal = function ( playerId, targets ) {
+
+		this.statusManager.handleHeal( playerId, targets );
+	};
+
+
+
+	Manager.prototype.create = function ( obstacleId, category, position ) {
+
+		this.obstacePool.get( obstacleId, category, position );
+	};
+
+
+
+	Manager.prototype.collide = function( obstacleId, players ) {
+
+		this.statusManager.handleCollide( obstacleId, players);
+	};
+
 
 })();
+
+
