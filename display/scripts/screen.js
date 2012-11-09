@@ -11,6 +11,7 @@
 		display.StatusManager.prototype.screen = this;
 
 		display.Grid.prototype.screen = this;
+		display.Debug.prototype.screen = this;
 	};
 
 
