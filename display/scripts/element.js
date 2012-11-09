@@ -183,7 +183,7 @@
         var field = this.field;
 
         // degree is saved per field
-        field.deg = this.counter;
+        // field.deg = this.counter;
 
         this.rotate( field.deg );
 
