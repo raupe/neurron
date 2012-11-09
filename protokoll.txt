@@ -2,21 +2,48 @@ Controller - Server
 
     [channel] [controllerId] [aktionen]
 
-    channel: id vom zugeh√∂rigen spiel 0 - 1023 || 10 bit || max 1023 Channels
+		1. Byte: Channel  				1 - 255
+		2. Byte: ControllerId			1 - 255
+		3. Byte: Aktion					1 - 255
 
-    controllerId: 0 - 31 || 5 bit || max 31 Spieler
+		immer:
+				0 - unbekannt
 
-    aktionen: 0 - 131 072 || restliche bit || max 131072 aktionen
-
+		Aktionen:
         1 - Spieler erstellen vom Controller || Farbe und Nummer wird vom Server geschickt
         2 - Spieler wird entfernt
         3 - rechts
         4 - links
-        5 - vorne
-        6 - hinten
+        (5 - vorne)
+        (6 - hinten)
+        7 - tap / heal
 
 Server - Display
 
     [aktion] [daten]
+    0. Byte: Aktion
+    n‰chste Bytes: Daten
+
+    Aktionen:
+    		1 - Init
+    				1. Byte: channel ID
+    		2 - Spiel starten
+    				1. Byte: Anzahl Spieler
+    				2. - n: Byte: Farbe der Spieler
+    		3 - Spieler Bewegung
+    				1. Byte: Spieler ID
+    				2. Byte: n‰chste Position
+    		4 - Heal
+    				1. Byte: Healer: Spieler ID
+    				2. Byte: Anzahl Target
+    				3. - n. Byte: Target: Spieler ID
+    		5 - Create Obstacle
+    				1. Byte: Obstcle ID
+    				2. Byte: Kategorie
+    				3. Byte: Position
+    		6 - Collision
+    				1. Byte: Obstacle ID
+    				2. Byte: Anzahl Spieler
+    				3. - n. Byte: Spieler ID
 
 
