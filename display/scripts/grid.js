@@ -75,21 +75,22 @@
 			temp;
 
 
-		for ( circle = 0; circle < circles; circle++ ) { // 3
+		for ( circle = 0; circle < circles; circle++ ) {
 
 			radiusA =	( distanceToUser * outerCircleRadius ) /
 						( distanceToUser + circleOffset * circle);
 
-			//
-			for ( step = 1; step <= steps; step++ ) { // 240
+
+			// var h = ( a *f   ) / ( a + d * n );
+
+			for ( step = 1; step <= steps; step++ ) {
 
 				x1 = Math.cos( rotation * step ) * radiusA + centerX;
 				y1 = Math.sin( rotation * step ) * radiusA + centerY;
 
-				ringPos.push({ x: x1, y: y1 });
+				ringPos.push({ x: x1, y: y1, h: 0, deg: 0 }); // deg, h
 
-				if ( step%frame === 0 ) { // mod 0 ..
-
+				if ( step%frame === 0 ) {
 
 
 					if ( fields.length < maxLength - lanes ) { // last circle check
@@ -102,12 +103,12 @@
 							x2 = Math.cos( rotation * step ) * radiusB + centerX;
 							y2 = Math.sin( rotation * step ) * radiusB + centerY;
 
-							distPos.push({ x:x2, y: y2 });
+							distPos.push({ x:x2, y: y2, h: 0, deg: 0 }); // deg,h
 						}
 
 					} else {
 
-						distPost = [{x: x1, y: y1}];
+						distPost = [{x: x1, y: y1, h: 0, deg: 0 }]; // deg, h
 					}
 
 
@@ -132,7 +133,7 @@
 
                         } else {
 
-							fields[temp].antiDist = [{x: x1,y: y1}];
+							fields[temp].antiDist = [{ x: x1,y: y1, h: 0 , deg: 0 }]; // deg, h
                         }
 
 
@@ -148,7 +149,9 @@
 						x: x1,
 						y: y1,
 						ring: ringPos.slice().reverse(),
-						dist: distPos.slice()
+						dist: distPos.slice(),
+						h: 0 ,
+						deg: 0 // deg
 					});
 
 					distPos.length = ringPos.length = 0;
@@ -157,8 +160,8 @@
 		}
 
 
-		// temporary fix for reverse edge case
-		for ( step = lanes-1; step < fields.length-1; step += lanes ) { // excludes the last field
+		// temporary fix for reverse edge case, excludes the last field
+		for ( step = lanes-1; step < fields.length-1; step += lanes ) {
 
 			fields[step].antiRing.reverse();
 		}
@@ -195,8 +198,6 @@
 
 		this.drawCircles();
 
-		// this.drawGrid();
-
 		this.origin.drawImage( this.ctx.canvas, this.posX, this.posY, this.width, this.height );
 	};
 
@@ -209,26 +210,6 @@
 		fields.forEach(function ( field,counter ) {
 			ctx.fillText( counter,field.x,field.y);
 		});
-
-
-        // var a = fields.length/2;
-
-        // fields[a].ring.forEach(function ( field) {
-        //     ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
-        // });
-
-        // fields[a].antiRing.forEach(function ( field) {
-        //     ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
-        // });
-
-        // fields[a].dist.forEach(function ( field) {
-        //     ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
-        // });
-
-        // fields[a].antiDist.forEach(function ( field) {
-        //     ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
-        // });
-		// console.timeEnd(1);
 	};
 
 
