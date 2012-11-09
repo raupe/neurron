@@ -4,9 +4,16 @@
 
 		this.type = 'player';
 
-		config.color = [ 220, 100, 20 ];
+		this.size = 40;
 
-		this.init( config );
+
+		this.init({
+
+			id: config.id,
+			pos: config.pos,
+			color: [ config.color * 1, config.color * 2, config.color * 3 ]
+
+		});
 	};
 
     Player.prototype = new display.Element();
