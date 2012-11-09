@@ -2,7 +2,7 @@
 
 	var Connection = display.Connection = function( config ){
 
-		this.controller = config.controller;
+		this.manager = config.manager;
 		this.url = "ws://" + config.server + ":" + config.port;
 
 		this.initializeSocket();
@@ -12,7 +12,7 @@
 	Connection.prototype.initializeSocket = function(){
 
 		this.socket = new WebSocket( this.url );
-		var controller = this.controller;
+		var manager = this.manager;
 
 		this.socket.onopen = function(){
 
@@ -23,7 +23,7 @@
 
 			console.log('[close]');
 
-			controller.handle( 'create', [ 'player', 0 ] );
+			manager.handle( 'create', [ 'player', 0 ] );
 		};
 
 
@@ -72,7 +72,7 @@
 				options[1] = data.charCodeAt(2); // element id
 			}
 
-			controller.handle( change, options );
+			manager.handle( change, options );
 		};
 
 		this.socket.onerror = function ( err ) {

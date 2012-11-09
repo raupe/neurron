@@ -4,13 +4,13 @@
 
 	var debug = (function(){
 
-		function debug ( screen, grid, controller, connection ) {
+		function debug ( screen, grid, manager, connection ) {
 
-			addPlayerInput( controller );
+			addPlayerInput( manager );
 
 			drawNums( grid );
 
-			addVariableFrames( grid, controller );
+			addVariableFrames( grid, manager );
 
 		}
 
@@ -64,9 +64,9 @@
 
 
 		// simulate player input
-		function addPlayerInput ( controller ) {
+		function addPlayerInput ( manager ) {
 
-			var players = controller.players,
+			var players = manager.players,
 				key;
 
 			document.addEventListener('keyup', function ( e ){
@@ -89,9 +89,9 @@
 
 
 		// change framestep between fields, lower framerate - *faster* animation
-		function addVariableFrames ( grid, controller ) {
+		function addVariableFrames ( grid, manager ) {
 
-			var players = controller.players,
+			var players = manager.players,
 				keymap = {},
 				key;
 

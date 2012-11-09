@@ -1,12 +1,12 @@
 (function(){
 
-	var Controller = display.Controller = function() {
+	var Manager = display.Manager = function() {
 
 		this.players = display.Screen.prototype.players = [];		// player pool
 		this.obstacles = display.Screen.prototype.obstacles = [];	// obstacle pool
 	};
 
-	Controller.prototype.handle = function ( name, options ) {
+	Manager.prototype.handle = function ( name, options ) {
 
 		var commands = {
 
@@ -20,13 +20,13 @@
 	};
 
 
-	Controller.prototype.channel = function ( id ) {
+	Manager.prototype.channel = function ( id ) {
 
 		console.log( id );
 	};
 
 	// id, type, position
-	Controller.prototype.create = function ( type, id, position ) {
+	Manager.prototype.create = function ( type, id, position ) {
 
 		var element = {
 
@@ -50,7 +50,7 @@
 		});
 	};
 
-	Controller.prototype.move = function ( id, direction ) {
+	Manager.prototype.move = function ( id, direction ) {
 
 		// TODO options need to be seperated in index and direction
 		var index = 0;
@@ -65,7 +65,7 @@
 	};
 
 
-	Controller.prototype.remove = function ( type, id ) {
+	Manager.prototype.remove = function ( type, id ) {
 
 		var element = {
 

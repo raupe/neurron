@@ -2,7 +2,7 @@
 
     var main = function( assets ) {
 
-		var controller = new display.Controller(),
+		var manager = new display.Manager(),
 
 			screen = new display.Screen({
 
@@ -23,7 +23,7 @@
 
 			connection = new display.Connection({
 
-				controller		: controller,
+				manager			: manager,
 				server			: config.server,
 				port			: config.port
 			});
@@ -37,7 +37,7 @@
 		screen.obstacles.push( grid );
 
 		/* debug */
-		debug( screen, grid, controller, connection );
+		debug( screen, grid, manager, connection );
 	};
 
 	// pre-loading assets
