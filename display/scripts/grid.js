@@ -9,15 +9,18 @@
 		this.createCanvas();
 
 		this.update();
+
+
+		display.Element.prototype.grid = this;
 	};
 
 
 	Grid.prototype.setup = function ( config ) {
 
-		this.origin = config.origin;
+		this.origin = this.screen.ctx;
 
-		this.width = this.origin.canvas.width;
-		this.height = this.origin.canvas.height;
+		this.width = this.screen.cvs.width;
+		this.height = this.screen.cvs.height;
 
 
 		this.players = config.players;

@@ -58,12 +58,9 @@
 
 			} else {
 
-				this.main({
+				display.Element.prototype.assetManager = this;
 
-					images: this.assets.images,
-					sounds: this.assets.sounds,
-					movies: this.assets.movies
-				});
+				this.main();
 			}
 
 		}.bind(this);
