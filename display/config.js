@@ -28,7 +28,8 @@ window.config = {
 			julia	: 'assets/tux-test.png',
 			fabian	: 'assets/tux-test.png',
 			duc		: 'assets/tux-test.png',
-			stefan	: 'assets/tux-test.png'
+			stefan	: 'assets/tux-test.png',
+			bg		: 'assets/tux-test.png'
 		}
 
 		// sounds: {},
