@@ -12,8 +12,6 @@
         this.colorize();
 
         this.register();
-
-        this.update();
     };
 
 
@@ -25,9 +23,12 @@
 
         this.color = config.color;
         this.id = config.id;
-
-        this.size = config.size;
         this.pos = config.pos;
+
+        if ( config.size ) {
+
+           this.size = config.size;
+        }
 
         this.origin = this.screen.ctx;
 
@@ -50,6 +51,7 @@
     Element.prototype.colorize = function(){
 
         if ( this.color ) {
+
 
             this.ctx.drawImage( this.src, 0,0, this.size, this.size );
 
@@ -178,7 +180,6 @@
 
 
     Element.prototype.draw = function() {
-
 
         var field = this.field;
 
