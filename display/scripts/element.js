@@ -19,9 +19,9 @@
 
     Element.prototype.setup = function ( config ) {
 
-        // assets   -> via prototype || main.js
-        // screen   -> via prototype || main.js
-        // grid     -> via prototype || main.js
+        // assetManager     -> via prototype
+        // screen           -> via prototype
+        // grid             -> via prototype
 
         this.color = config.color;
         this.id = config.id;
@@ -31,7 +31,7 @@
 
         this.origin = this.screen.ctx;
 
-        this.src = this.assets.images[ this.type ];
+        this.src = this.assetManager.images[ this.type ];
     };
 
 
