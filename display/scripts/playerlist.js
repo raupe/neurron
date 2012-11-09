@@ -2,13 +2,13 @@
 
 	display.PlayerList = function ( players ) {
 
-		var length = players.length-1,
+		var length = players.length,
 
 			list = new Array( length );
 
 		for ( var i = 0; i < length; i++ ) {
 
-			list[i] = new display.Players( players[i] );
+			list[i] = new display.Player( players[i] );
 		}
 
 		return list;
