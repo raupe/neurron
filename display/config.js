@@ -22,10 +22,10 @@ var config = {
 			fabian	: 'assets/tux-test.png',
 			duc		: 'assets/tux-test.png',
 			stefan	: 'assets/tux-test.png'
-		},
+		}
 
-		sounds: {},
-		movies: {}
+		// sounds: {},
+		// movies: {}
 	},
 
 
