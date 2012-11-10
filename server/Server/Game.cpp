@@ -57,7 +57,7 @@ void sv::Game::InitTime()
 	m_Frequence = double(li.QuadPart)/1000.0;
 
     QueryPerformanceCounter(&li);
-    m_Time = li.QuadPart;
+    m_Time = li.QuadPart / m_Frequence;
 #else
 	clock_gettime(CLOCK_MONOTONIC, &m_Time);
 #endif
@@ -65,27 +65,20 @@ void sv::Game::InitTime()
 
 int sv::Game::GetDeltaTime()
 {
-	int retVal = 0;
+	long long newTime;
 #ifdef WIN32
 	LARGE_INTEGER li;
     QueryPerformanceCounter(&li);
 
-	retVal = (int)((li.QuadPart - m_Time)/m_Frequence + 0.5);
-	m_Time = li.QuadPart;
+	m_Time = li.QuadPart / m_Frequence;
 #else
-	timespec temp;
-	clock_gettime(CLOCK_MONOTONIC, &temp);
-	if(temp.tv_nsec < temp.tv_nsec)
-	{
-		retVal = (temp.tv_sec - m_Time.tv_sec - 1) * 1000 
-			+ (int)((1000000000 + temp.tv_nsec - m_Time.tv_nsec)/1000000.0 + 0.5);
-	}
-	else
-	{
-		retVal = (temp.tv_sec - m_Time.tv_sec) * 1000 
-			+ (int)((temp.tv_nsec - m_Time.tv_nsec)/1000000.0 + 0.5);
-	}
-	m_Time = temp;
+	timespec time;
+	clock_gettime(CLOCK_MONOTONIC, &time);
+
+	newTime = time.tv_sec * 1000 + (int)(time.tv_nsec / 1000000.0 + 0.5);
 #endif
+
+	int retVal = newTime - m_Time;
+	m_Time = newTime;
 	return retVal;
 }

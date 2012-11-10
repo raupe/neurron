@@ -34,11 +34,9 @@ namespace sv
 		int					m_Socket;
 		unsigned int		m_Id;
 
-#ifdef WIN32
 		long long			m_Time;
+#ifdef WIN32
 		double				m_Frequence;
-#else
-		timespec			m_Time;
 #endif
 	};
 }
