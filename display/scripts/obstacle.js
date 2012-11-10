@@ -2,7 +2,9 @@
 
 	var Obstacle = display.Obstacle = function ( config ) {
 
-		this.type = 'fabian';
+		this.type = config.type;
+
+		this.visible = true;
 
 		this.init( config );
 	};
