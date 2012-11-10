@@ -2,7 +2,8 @@
 
 	var AssetManager = display.AssetManager = function ( assets, main ) {
 
-		this.assets = assets;
+		this.images = assets.images;
+		this.sounds = assets.sounds;
 
 		this.main = main;
 
@@ -11,68 +12,69 @@
 
 	AssetManager.prototype.init = function(){
 
-		var assets = this.assets,
-			category,
-			keys;
+		var images = Object.keys(this.images),
+			sounds = Object.keys(this.sounds);
 
-		this.length = 0;
+		this.length = images.length + sounds.length;
 
-
-		// type
-		Object.keys( assets ).forEach(function ( type ) {
-
-			category = assets[type];
-
-			keys = Object.keys( category );
-
-			this.length += keys.length-1;
-
-			// key
-			keys.forEach( function ( key ) {
-
-				this.load( type, key, category[key] );
-
-			}, this);
-
-		}, this);
+		images.forEach( this.loadImage, this );
+		sounds.forEach( this.loadSound, this );
 	};
 
+	AssetManager.prototype.loadImage = function ( key ) {
 
-	AssetManager.prototype.load = function ( type, key, url ) {
+		var img = new Image(),
+			url = this.images[ key ];
 
-		var container;
+		img.onload = function(){
 
-		if		( type === 'images' ) { container = new Image();	}
-		else if ( type === 'sounds' ) { container = new Audio();	}
-		else if ( type === 'movies' ) { container = new Video();	}
+			this.images[key] = img;
 
-		container.onload = function(){
-
-			this.assets[type][key] = container;
-
-			if ( this.length !== 0 ){
-
-				this.progress( url );
-
-				this.length--;
-
-			} else {
-
-				display.Element.prototype.assetManager = this;
-				display.Background.prototype.assetManager = this;
-
-				this.main();
-			}
+			this.loaded( url );
 
 		}.bind(this);
 
-		container.src = url;
+		img.src = url;
+	};
+
+
+	AssetManager.prototype.loadSound = function ( key ) {
+
+		var audio = new Audio(),
+			url = this.sounds[ key ];
+
+		audio.preload = 'auto';
+		audio.src = url;
+
+		this.sounds[key] = audio;
+
+		this.loaded( url );
+	};
+
+
+	AssetManager.prototype.loaded = function ( url ) {
+
+		this.length--;
+
+		if ( this.length !== 0 ){
+
+			this.progress( url );
+
+		} else {
+
+			display.Element.prototype.assetManager = this;
+			display.Background.prototype.assetManager = this;
+
+			this.main();
+		}
 	};
 
 
 	AssetManager.prototype.progress = function ( url ) {
 
-		console.log('[loaded] ' + url + '\t (' + 100/this.length + '%)' );
+		var perc = 100/this.length;
+
+		console.log('[loaded] ' + url + '\t (' + perc + '%)' );
 	};
 
 
