@@ -65,7 +65,7 @@
 
 		var list, key;
 
-		document.addEventListener('keyup', function ( e ){
+		document.addEventListener('keyup', function ( e ) {
 
 			e.preventDefault();
 
@@ -84,7 +84,12 @@
 				if ( key === 40 ) playerList[0].move( 6 );
 			}
 			// this.manager.handle( 5, [2,2,2] )
-			if ( key === 49 ) this.manager.create(2,2,2); // #1
+			if ( key === 49 ) {
+
+				this.manager.create(2,1,42); // #1
+				this.manager.create(3,2,27); // #2
+				this.manager.create(5,3,38); // #3
+			}
 
 		}.bind(this));
 	};
