@@ -24,11 +24,7 @@ window.config = {
 		images: {
 
 			player	: 'assets/alpha-test.png',
-			test	: 'assets/alpha-test.png',
-			julia	: 'assets/tux-test.png',
-			fabian	: 'assets/tux-test.png',
-			duc		: 'assets/tux-test.png',
-			stefan	: 'assets/tux-test.png',
+			heal	: 'assets/alpha-test.png',
 			bg		: 'assets/tux-test.png'
 		}
 
@@ -53,13 +49,13 @@ window.config = {
 	// categories
 	obstacles: {
 
-		1: { type: 'damage'	, size: 1, velocity: 1, value:  10, color: 'red'    },
+		1: { type: 'damage'	, size: 1*40, velocity: 1, value:  10, color: 'red'    },
 
-		2: { type: 'heal'	, size: 1, velocity: 1, value:  10, color: 'green'  },
+		2: { type: 'heal'	, size: 1*40, velocity: 1, value:  10, color: [0,170,30]  },
 
-		3: { type: 'points'	, size: 1, velocity: 1, value: 100, color: 'yellow' },
+		3: { type: 'points'	, size: 1*40, velocity: 1, value: 100, color: 'yellow' },
 
-		4: { type: 'points'	, size: 1, velocity: 1, value:  50, color: 'yellow' }
+		4: { type: 'points'	, size: 1*40, velocity: 1, value:  50, color: 'yellow' }
 
 	}
 };
