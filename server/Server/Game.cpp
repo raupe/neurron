@@ -59,7 +59,10 @@ void sv::Game::InitTime()
     QueryPerformanceCounter(&li);
     m_Time = li.QuadPart / m_Frequence;
 #else
-	clock_gettime(CLOCK_MONOTONIC, &m_Time);
+	timespec time;
+	clock_gettime(CLOCK_MONOTONIC, &time);
+
+	m_Time = time.tv_sec * 1000 + (int)(time.tv_nsec / 1000000.0 + 0.5);
 #endif
 }
 
