@@ -1,6 +1,10 @@
 (function(){
 
-    var Element = display.Element = function(){};
+    var Element = display.Element = function(){
+
+        // global e.g. default for player
+        this.size = config.elements.size;
+    };
 
 
     Element.prototype.init = function ( config ) {
@@ -29,6 +33,14 @@
 
            this.size = config.size;
         }
+
+        if ( config.visible ) {
+
+            this.visible = config.visible;
+        }
+
+
+        this.check = false;
 
         this.origin = this.screen.ctx;
 
