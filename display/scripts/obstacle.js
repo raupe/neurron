@@ -2,31 +2,55 @@
 
 	var Obstacle = display.Obstacle = function ( config ) {
 
-		this.type = config.type;
-
-		this.visible = true;
-
 		this.init( config );
 	};
 
     Obstacle.prototype = new display.Element();
 
+    // extend Element init
+    Obstacle.prototype.init = function ( config )  {
+
+		var waypoints = ~~(config.pos/this.grid.lanes),
+
+			lane = [];
+
+		while ( waypoints-- ) {
+
+			lane[waypoints] = config.pos%this.grid.lanes + waypoints * this.grid.lanes;
+		}
+
+		this.lane = lane;
+
+		config.visible = true;
+
+		this.type = config.type;
+
+		display.Element.prototype.init.call(this, config);
+    };
+
+
+    // extend default update
     Obstacle.prototype.update = function(){
 
-		if ( !this.check ) {
+        if ( this.counter === 0 ) {
 
-			this.check = true;
-
-			setTimeout( function(){
+			if ( this.lane.length === 0 ) {
 
 				this.visible = false;
 
 				this.pool.set( this.id );
 
-			}.bind(this), 1000);
-		}
+			} else {
 
-		//ObstaclePool.prototype.update.apply(this);
+				this.nextPos = this.lane.pop();
+
+				this.dir = 'antiDist';
+			}
+        }
+
+		display.Element.prototype.update.apply(this);
     };
+
+
 
 })();
