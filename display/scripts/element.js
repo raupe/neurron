@@ -176,13 +176,13 @@
 
         var field = this.grid.fields[ this.pos ],
 
-            step = field[this.dir][ this.counter ];
+            step = field[this.dir][ ~~this.counter ]; // allow floats
 
         this.field = step;
 
-        this.counter++;
+        this.counter += this.velocity;
 
-        if ( this.counter === field[this.dir].length ) {
+        if ( this.counter >= field[this.dir].length ) { // allow higher multiplicators
 
             this.pos = this.nextPos;
             this.moving = false;

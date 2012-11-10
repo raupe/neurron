@@ -6,6 +6,8 @@
 
 		this.visible = true; // default
 
+		this.velocity = 1;
+
 		this.init({
 
 			id: config.id,

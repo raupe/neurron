@@ -25,6 +25,8 @@
 
 		this.type = config.type;
 
+		this.velocity = config.velocity;
+
 		display.Element.prototype.init.call(this, config);
     };
 
