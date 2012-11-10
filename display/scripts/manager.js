@@ -24,12 +24,13 @@
 			requestAnimationFrame( loop.bind(this) );
 
 
-			this.screen.clear();
+			this.screen.clear(); // prototype
 
 
 			forAll( this.playerList, 'update' );
 
 			forAll( this.obstaclePool, 'update' );
+
 
 
 			this.background.draw();
@@ -45,6 +46,7 @@
 			});
 
 			this.statusManager.draw();
+
 
 
 		}.bind(this) )();
@@ -73,7 +75,7 @@
 			5	: this.create,
 			6	: this.collide
 		};
-
+		// apply... for  [..., .. , ..] ? problem as passing aryments....
 		commands[ action ].call( this, options );
 	};
 
@@ -121,7 +123,7 @@
 
 	Manager.prototype.create = function ( obstacleId, category, position ) {
 
-		this.obstacePool.get( obstacleId, category, position );
+		this.obstaclePool.get( obstacleId, category, position );
 	};
 
 
