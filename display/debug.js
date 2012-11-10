@@ -83,6 +83,8 @@
 				if ( key === 39 ) playerList[0].move( 3 );
 				if ( key === 40 ) playerList[0].move( 6 );
 			}
+			// this.manager.handle( 5, [2,2,2] )
+			if ( key === 49 ) this.manager.create(2,2,2); // #1
 
 		}.bind(this));
 	};
