@@ -7,12 +7,8 @@ window.config = {
 	server		: 'neurron.com',
 	port		: '2020',
 
-	// default resolution ?
-	canvas: {
-
-		width	: 320,
-		height	: 240
-	},
+	// default resolution ? image scale ?
+	// canvas: { width	: 320,	height	: 240 },
 
 	elements: {
 
