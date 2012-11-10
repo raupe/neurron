@@ -27,6 +27,11 @@
 
 		this.velocity = config.velocity;
 
+
+		this.collisionImg = this.assetManager.images[ config.collisionImg ];
+
+		this.collisionSound = this.assetManager.sounds[ config.collisionSound ];
+
 		display.Element.prototype.init.call(this, config);
     };
 
@@ -37,6 +42,8 @@
         if ( this.counter === 0 ) {
 
 			if ( this.lane.length === 0 ) {
+
+				this.animateCollision();
 
 				this.visible = false;
 
@@ -53,6 +60,13 @@
 		display.Element.prototype.update.apply(this);
     };
 
+
+    Obstacle.prototype.animateCollision = function(){
+
+		console.log('[collision] ', this.collisionImg);
+
+		this.collisionSound.play();
+    };
 
 
 })();

@@ -44,7 +44,7 @@
 
         this.origin = this.screen.ctx;
 
-        this.src = this.assetManager.assets.images[ this.type ];
+        this.src = this.assetManager.images[ this.type ];
     };
 
 

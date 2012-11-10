@@ -2,7 +2,7 @@
 
 	var Background = display.Background = function(){
 
-		this.img = this.assetManager.assets.images.bg; // prototype
+		this.img = this.assetManager.images.bg; // prototype
 
 		display.Debug.prototype.background = this; // testing
 	};
