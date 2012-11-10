@@ -6,7 +6,11 @@
 
 		this.visible = true; // default
 
+
 		this.velocity = 1;
+
+		this.energy = 10;
+
 
 		this.init({
 
