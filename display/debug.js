@@ -8,7 +8,7 @@
 
 		this.drawNums();
 
-		// this.addVariableFrames( grid, manager );
+		// this.drawLine( 8 );
 	};
 
 
@@ -28,32 +28,32 @@
 	};
 
 
-	Debug.prototype.drawLine = function ( grid, no ) {
+	Debug.prototype.drawLine = function ( id ) {
 
-		grid.draw = function(){
+		this.background.draw = function(){
 
-			var fields = screen.grid.fields,
+			var fields = this.grid.fields,
 
-				ctx = screen.grid.ctx;
+				ctx = this.grid.ctx;
 
-			var a = no;
-
-			fields[a].ring.forEach(function ( field ) {
+			fields[ id ].ring.forEach(function ( field ) {
 
 				ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
 			});
 
-			fields[a].antiRing.forEach(function ( field) {
+			fields[ id ].antiRing.forEach(function ( field) {
 				ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
 			});
 
-			fields[a].dist.forEach(function ( field) {
+			fields[ id ].dist.forEach(function ( field) {
 				ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
 			});
 
-			fields[a].antiDist.forEach(function ( field) {
+			fields[ id ].antiDist.forEach(function ( field) {
 				ctx.fillRect( field.x-2.5,field.y-2.5,5,5);
 			});
+
+			this.grid.origin.drawImage( this.grid.ctx.canvas, this.grid.posX, this.grid.posY, this.grid.width, this.grid.height );
 		};
 
 	};
@@ -92,38 +92,6 @@
 			}
 
 		}.bind(this));
-	};
-
-
-		// change framestep between fields, lower framerate - *faster* animation
-	Debug.prototype.addVariableFrames = function ( grid, manager ) {
-
-		var players = manager.players,
-			keymap = {},
-			key;
-
-		for ( key = 48 ; key < 57; key++ ) {
-
-			keymap[key]= key - 48;
-		}
-
-		document.addEventListener('keyup', function ( e ){
-
-			e.preventDefault();
-			e.stopPropagation();
-
-			key = e.which;
-
-			if ( !players[0].moving && keymap[key] ) {
-
-				grid.frames = keymap[key] * 5; // default: 6 * 5
-				grid.definePositions.call( grid );
-
-				players[0].moving = true;
-
-				setTimeout( function(){	players[0].moving = false;	});
-			}
-		});
 	};
 
 })();
