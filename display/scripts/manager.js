@@ -29,21 +29,14 @@
 
 			forAll( this.playerList, 'update' );
 
-			forAll( this.obstaclePool, 'update' );
+			forAll( this.obstaclePool.list, 'update' );
 
-
-
+			this.background.update();
 			this.background.draw();
 
 			forAll( this.playerList, 'draw' );
 
-			this.obstaclePool.list.forEach(function ( obstacle ) {
-
-				if ( obstacle.visible ) {
-
-					obstacle.draw();
-				}
-			});
+			forAll( this.obstaclePool.list, 'draw' );
 
 			this.statusManager.draw();
 
@@ -54,9 +47,14 @@
 
 		function forAll ( collection, method ) {
 
-			for ( var i = 0, l = collection.length; i < l; i++ ) {
+			for ( var i = 0, l = collection.length, el; i < l; i++ ) {
 
-				collection[i][method]();
+				el = collection[i];
+
+				if ( el && el.visible ) { // undefined.()
+
+					el[method]();
+				}
 			}
 		}
 	};
@@ -121,9 +119,9 @@
 
 
 
-	Manager.prototype.create = function ( obstacleId, category, position ) {
+	Manager.prototype.create = function ( obstacleId, category, start ) {
 
-		this.obstaclePool.get( obstacleId, category, position );
+		this.obstaclePool.get( obstacleId, category, start );
 	};
 
 
