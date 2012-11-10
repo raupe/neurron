@@ -1,6 +1,8 @@
 #ifndef Pool_h__
 #define Pool_h__
 
+#include <stdlib.h>
+
 namespace sv
 {
 	template <class T>
@@ -16,8 +18,10 @@ namespace sv
 	public:
 		typedef Entry* Iterator;
 
-		Pool(uint size);
+		Pool();
 		~Pool();
+
+		void		Init(uint size);
 
 		T*			Get();
 		void		Free (T* object);
@@ -37,10 +41,17 @@ namespace sv
 //////////////////////////////////////////////////////////////////////////////////////////////////7
 
 template <class T>
-sv::Pool<T>::Pool(uint size)
-: m_Size(size)
+sv::Pool<T>::Pool()
+: m_Size(0)
 , m_UsedEntries(0)
 {
+}
+
+template <class T>
+void sv::Pool<T>::Init(uint size)
+{
+	m_Size = size;
+
 	m_Entries = static_cast<Entry*>(malloc(sizeof(Entry) * m_Size));
 
 	for(uint i=0; i<m_Size-1; ++i)

@@ -2,9 +2,9 @@
 #include "GameFactory.h"
 
 sv::GameFactory::GameFactory()
-: Pool(255)
-, m_CountId(1)
+: m_CountId(1)
 {
+	Pool::Init(255);
 }
 
 sv::GameFactory::~GameFactory()

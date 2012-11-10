@@ -73,6 +73,7 @@ int sv::Game::GetDeltaTime()
 	retVal = (int)((li.QuadPart - m_Time)/m_Frequence + 0.5);
 	m_Time = li.QuadPart;
 #else
+	timespec temp;
 	clock_gettime(CLOCK_MONOTONIC, &temp);
 	if(temp.tv_nsec < temp.tv_nsec)
 	{
