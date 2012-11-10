@@ -20,9 +20,7 @@
 		model.id = id;
 		model.pos = start;
 
-		if ( this.pool.length ) { // at least one entry
-
-			model.visible = true;
+		if ( this.pool.length ) {
 
 			entry = this.pool.pop();
 
@@ -37,15 +35,9 @@
 	};
 
 
-	ObstaclePool.prototype.set = function ( id ) {
+	ObstaclePool.prototype.set = function ( id ) { // transfer to pool
 
 		this.pool.push( this.list[id] );
-	};
-
-
-	ObstaclePool.prototype.free = function ( size ) { // delete pool
-
-		this.pool.length = size;
 	};
 
 })();
