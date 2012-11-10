@@ -20,7 +20,11 @@ window.config = {
 		images: {
 
 			player	: 'assets/alpha-test.png',
+
+			damage	: 'assets/alpha-test.png',
 			heal	: 'assets/alpha-test.png',
+			points	: 'assets/alpha-test.png',
+
 			bg		: 'assets/tux-test.png'
 		}
 
@@ -45,13 +49,14 @@ window.config = {
 	// categories
 	obstacles: {
 
-		1: { type: 'damage'	, size: 1*40, velocity: 1, value:  10, color: 'red'    },
+		// type defines the image key
+		1: { type: 'damage'	, size: 1*40, velocity: 0.5, value:  10, color: [ 213,  10,  50 ] }, // red
 
-		2: { type: 'heal'	, size: 1*40, velocity: 1, value:  10, color: [0,170,30]  },
+		2: { type: 'heal'	, size: 1*40, velocity: 1  , value:  10, color: [   0, 170,  30 ] }, // grean
 
-		3: { type: 'points'	, size: 1*40, velocity: 1, value: 100, color: 'yellow' },
+		3: { type: 'points'	, size: 1*40, velocity: 1  , value: 100, color: [ 240, 220,  10 ] }, // yellow
 
-		4: { type: 'points'	, size: 1*40, velocity: 1, value:  50, color: 'yellow' }
+		4: { type: 'points'	, size: 1*40, velocity: 1  , value:  50, color: [ 240, 220,  10 ] }
 
 	}
 };
