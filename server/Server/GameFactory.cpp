@@ -4,7 +4,7 @@
 sv::GameFactory::GameFactory()
 : m_CountId(1)
 {
-	Pool::Init(255);
+	Init(255);
 }
 
 sv::GameFactory::~GameFactory()
