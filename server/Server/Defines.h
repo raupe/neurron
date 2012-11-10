@@ -24,6 +24,7 @@ typedef unsigned char uchar;
 #ifdef DEBUG
 
 #include "Output.h"
+#include "stdio.h"
 
 #define ASSERT(x,y) if(!(x)) sv::Output::Error(y);
 #define LOG(x,y) if(x) sv::Output::Print(y);
