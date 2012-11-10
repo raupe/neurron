@@ -93,7 +93,7 @@
 
 				options[0] = data.charCodeAt(1); // obstacle ID
 				options[1] = data.charCodeAt(2); // category
-				options[2] = data.charCodeAt(2); // position
+				options[2] = data.charCodeAt(3); // startpos
 			}
 
 
