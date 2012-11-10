@@ -4,11 +4,12 @@
 #include "Singleton.h"
 #include "Game.h"
 
+#include "Pool.h"
 #include <vector>
 
 namespace sv
 {
-	class GameFactory : public Singleton<GameFactory>
+	class GameFactory : public Pool<Game>, public Singleton<GameFactory>
 	{
 	public:
 		GameFactory();
@@ -16,13 +17,14 @@ namespace sv
 		
 		Game*	CreateGame();
 		Game*	GetGame(uint id);
-		void	EndGame(unsigned int id);
+		void	DeleteGame(unsigned int id);
 
 		void	Update();
 
 	private:
-		bool m_Lock;
+		bool	m_Lock;
 		std::vector<Game*> m_Games;
+		uchar	m_CountId;
 	};
 }
 

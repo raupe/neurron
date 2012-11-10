@@ -2,79 +2,59 @@
 #include "GameFactory.h"
 
 sv::GameFactory::GameFactory()
+: Pool(255)
+, m_CountId(1)
 {
-	// TEST
-	CreateGame();
 }
 
 sv::GameFactory::~GameFactory()
 {
-	for (unsigned int i=0; i < m_Games.size(); ++i)
-	{
-		if(m_Games[i])
-		{
-			delete(m_Games[i]);
-			m_Games[i] = 0;
-		}
-	}
 }
 
 sv::Game* sv::GameFactory::CreateGame()
 {
-	unsigned int id = 0;
-	
-	for (unsigned int i=0; i < m_Games.size(); ++i)
-	{
-		if (! m_Games[i])
-		{
-			id = i + 1;
-			break;
-		}
-	}
+	Game* game = Get();
+	game->SetId(m_CountId);
 
-	if(id == 0)
-	{
-		id = m_Games.size();
-		uint size = id == 0 ? 1 : 2*id;
-		m_Games.resize(size, 0);
-
-		id++;
-	}
-	
-	Game* game = S_NEW Game(id);
-	m_Games[id - 1] = game;
+	if(m_CountId == 255)
+		m_CountId = 1;
+	else
+		m_CountId++;
 
 	return game;
 }
 
-void sv::GameFactory::EndGame(unsigned int id)
+void sv::GameFactory::DeleteGame(unsigned int id)
 {
-	Game* game = m_Games[id - 1];
+	Game* game = GetGame(id);
 	if(game)
-		delete(game);
-	m_Games[id - 1] = 0;
+		Free(game);
 }
 
 
 sv::Game* sv::GameFactory::GetGame(uint id)
 {
-	if(id <= m_Games.size() && id > 0)
+	Pool<Game>::Iterator iter = First();
+	while(iter)
 	{
-		Game* retVal = m_Games[id - 1];
-		if(retVal && retVal->GetId() == id)
-			return retVal;
+		Game* game = Pool<Game>::Get(iter);
+		if(game->GetId() == id)
+			return game;
+		iter = Pool<Game>::Next(iter);
 	}
+
 	ASSERT(true, "Error: sv::GameFactory::GetGame : game doesn't exist");
 	return 0;
 }
 
 void sv::GameFactory::Update()
 {
-	for (unsigned int i=0; i < m_Games.size(); ++i)
+	
+	Pool<Game>::Iterator iter = First();
+	while(iter)
 	{
-		if (m_Games[i])
-		{
-			m_Games[i]->Update();
-		}
+		Game* game = Pool<Game>::Get(iter);
+		game->Update();
+		iter = Pool<Game>::Next(iter);
 	}
 }
