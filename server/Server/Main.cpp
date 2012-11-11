@@ -6,13 +6,16 @@
 
 #include "Output.h"
 #include <boost/thread.hpp>
+#ifdef WIN32
+#include <Windows.h>
+#endif
 
 void End()
 {
 	sv::Server::Destroy();
 	sv::Engine::Destroy();
 	sv::InputMsgPool::Destroy();
-#ifdef DEBUG
+#ifdef DEBUG_WIN
 	DumpUnfreed();
 #endif
 }

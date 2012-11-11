@@ -7,7 +7,7 @@ namespace sv
 {
 	enum EMsgType
 	{
-		eMsgType_Init,
+		eMsgType_Init = 1,
 		eMsgType_Move,
 
 		// Controller Msgs

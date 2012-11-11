@@ -12,7 +12,7 @@ void sv::Output::Error(std::string msg)
 {
 	std::cout << msg << '\n';
 
-#ifdef DEBUG
+#ifdef DEBUG_WIN
 	std::cout << "Break? [Y/N]";
 	char answ;
 	std::cin >> answ;

@@ -32,14 +32,20 @@ build_all_configurations: Debug Release
 
 # Builds the Debug configuration...
 .PHONY: Debug
-Debug: create_folders gccDebug/LeakDetector.o gccDebug/Singleton.o gccDebug/InputMsg.o gccDebug/hl_sha1.o gccDebug/HttpProtocol.o gccDebug/Msg.o gccDebug/InputMsgPool.o gccDebug/Server.o gccDebug/Main.o gccDebug/ServerPCH.o gccDebug/Output.o gccDebug/Engine.o gccDebug/Game.o gccDebug/GameFactory.o 
-	g++ gccDebug/LeakDetector.o gccDebug/Singleton.o gccDebug/InputMsg.o gccDebug/hl_sha1.o gccDebug/HttpProtocol.o gccDebug/Msg.o gccDebug/InputMsgPool.o gccDebug/Server.o gccDebug/Main.o gccDebug/ServerPCH.o gccDebug/Output.o gccDebug/Engine.o gccDebug/Game.o gccDebug/GameFactory.o  $(Debug_Library_Path) $(Debug_Libraries) -Wl,-rpath,./ -o ../gccDebug/Server.exe
+Debug: create_folders gccDebug/LeakDetector.o gccDebug/Pool.o gccDebug/Singleton.o gccDebug/InputMsg.o gccDebug/hl_sha1.o gccDebug/HttpProtocol.o gccDebug/Msg.o gccDebug/InputMsgPool.o gccDebug/Server.o gccDebug/Main.o gccDebug/ServerPCH.o gccDebug/Output.o gccDebug/Grid.o gccDebug/Engine.o gccDebug/Game.o gccDebug/GameFactory.o gccDebug/Element.o gccDebug/Obstacle.o gccDebug/ObstacleManager.o gccDebug/Player.o gccDebug/PlayerManager.o 
+	g++ gccDebug/LeakDetector.o gccDebug/Pool.o gccDebug/Singleton.o gccDebug/InputMsg.o gccDebug/hl_sha1.o gccDebug/HttpProtocol.o gccDebug/Msg.o gccDebug/InputMsgPool.o gccDebug/Server.o gccDebug/Main.o gccDebug/ServerPCH.o gccDebug/Output.o gccDebug/Grid.o gccDebug/Engine.o gccDebug/Game.o gccDebug/GameFactory.o gccDebug/Element.o gccDebug/Obstacle.o gccDebug/ObstacleManager.o gccDebug/Player.o gccDebug/PlayerManager.o  $(Debug_Library_Path) $(Debug_Libraries) -Wl,-rpath,./ -o ../gccDebug/Server.exe
 
 # Compiles file LeakDetector.cpp for the Debug configuration...
 -include gccDebug/LeakDetector.d
 gccDebug/LeakDetector.o: LeakDetector.cpp
 	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c LeakDetector.cpp $(Debug_Include_Path) -o gccDebug/LeakDetector.o
 	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM LeakDetector.cpp $(Debug_Include_Path) > gccDebug/LeakDetector.d
+
+# Compiles file Pool.cpp for the Debug configuration...
+-include gccDebug/Pool.d
+gccDebug/Pool.o: Pool.cpp
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c Pool.cpp $(Debug_Include_Path) -o gccDebug/Pool.o
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM Pool.cpp $(Debug_Include_Path) > gccDebug/Pool.d
 
 # Compiles file Singleton.cpp for the Debug configuration...
 -include gccDebug/Singleton.d
@@ -101,6 +107,12 @@ gccDebug/Output.o: Output.cpp
 	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c Output.cpp $(Debug_Include_Path) -o gccDebug/Output.o
 	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM Output.cpp $(Debug_Include_Path) > gccDebug/Output.d
 
+# Compiles file Grid.cpp for the Debug configuration...
+-include gccDebug/Grid.d
+gccDebug/Grid.o: Grid.cpp
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c Grid.cpp $(Debug_Include_Path) -o gccDebug/Grid.o
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM Grid.cpp $(Debug_Include_Path) > gccDebug/Grid.d
+
 # Compiles file Engine.cpp for the Debug configuration...
 -include gccDebug/Engine.d
 gccDebug/Engine.o: Engine.cpp
@@ -119,16 +131,52 @@ gccDebug/GameFactory.o: GameFactory.cpp
 	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c GameFactory.cpp $(Debug_Include_Path) -o gccDebug/GameFactory.o
 	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM GameFactory.cpp $(Debug_Include_Path) > gccDebug/GameFactory.d
 
+# Compiles file Element.cpp for the Debug configuration...
+-include gccDebug/Element.d
+gccDebug/Element.o: Element.cpp
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c Element.cpp $(Debug_Include_Path) -o gccDebug/Element.o
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM Element.cpp $(Debug_Include_Path) > gccDebug/Element.d
+
+# Compiles file Obstacle.cpp for the Debug configuration...
+-include gccDebug/Obstacle.d
+gccDebug/Obstacle.o: Obstacle.cpp
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c Obstacle.cpp $(Debug_Include_Path) -o gccDebug/Obstacle.o
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM Obstacle.cpp $(Debug_Include_Path) > gccDebug/Obstacle.d
+
+# Compiles file ObstacleManager.cpp for the Debug configuration...
+-include gccDebug/ObstacleManager.d
+gccDebug/ObstacleManager.o: ObstacleManager.cpp
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c ObstacleManager.cpp $(Debug_Include_Path) -o gccDebug/ObstacleManager.o
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM ObstacleManager.cpp $(Debug_Include_Path) > gccDebug/ObstacleManager.d
+
+# Compiles file Player.cpp for the Debug configuration...
+-include gccDebug/Player.d
+gccDebug/Player.o: Player.cpp
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c Player.cpp $(Debug_Include_Path) -o gccDebug/Player.o
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM Player.cpp $(Debug_Include_Path) > gccDebug/Player.d
+
+# Compiles file PlayerManager.cpp for the Debug configuration...
+-include gccDebug/PlayerManager.d
+gccDebug/PlayerManager.o: PlayerManager.cpp
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -c PlayerManager.cpp $(Debug_Include_Path) -o gccDebug/PlayerManager.o
+	$(CPP_COMPILER) $(Debug_Preprocessor_Definitions) $(Debug_Compiler_Flags) -MM PlayerManager.cpp $(Debug_Include_Path) > gccDebug/PlayerManager.d
+
 # Builds the Release configuration...
 .PHONY: Release
-Release: create_folders gccRelease/LeakDetector.o gccRelease/Singleton.o gccRelease/InputMsg.o gccRelease/hl_sha1.o gccRelease/HttpProtocol.o gccRelease/Msg.o gccRelease/InputMsgPool.o gccRelease/Server.o gccRelease/Main.o gccRelease/ServerPCH.o gccRelease/Output.o gccRelease/Engine.o gccRelease/Game.o gccRelease/GameFactory.o 
-	g++ gccRelease/LeakDetector.o gccRelease/Singleton.o gccRelease/InputMsg.o gccRelease/hl_sha1.o gccRelease/HttpProtocol.o gccRelease/Msg.o gccRelease/InputMsgPool.o gccRelease/Server.o gccRelease/Main.o gccRelease/ServerPCH.o gccRelease/Output.o gccRelease/Engine.o gccRelease/Game.o gccRelease/GameFactory.o  $(Release_Library_Path) $(Release_Libraries) -Wl,-rpath,./ -o ../gccRelease/Server.exe
+Release: create_folders gccRelease/LeakDetector.o gccRelease/Pool.o gccRelease/Singleton.o gccRelease/InputMsg.o gccRelease/hl_sha1.o gccRelease/HttpProtocol.o gccRelease/Msg.o gccRelease/InputMsgPool.o gccRelease/Server.o gccRelease/Main.o gccRelease/ServerPCH.o gccRelease/Output.o gccRelease/Grid.o gccRelease/Engine.o gccRelease/Game.o gccRelease/GameFactory.o gccRelease/Element.o gccRelease/Obstacle.o gccRelease/ObstacleManager.o gccRelease/Player.o gccRelease/PlayerManager.o 
+	g++ gccRelease/LeakDetector.o gccRelease/Pool.o gccRelease/Singleton.o gccRelease/InputMsg.o gccRelease/hl_sha1.o gccRelease/HttpProtocol.o gccRelease/Msg.o gccRelease/InputMsgPool.o gccRelease/Server.o gccRelease/Main.o gccRelease/ServerPCH.o gccRelease/Output.o gccRelease/Grid.o gccRelease/Engine.o gccRelease/Game.o gccRelease/GameFactory.o gccRelease/Element.o gccRelease/Obstacle.o gccRelease/ObstacleManager.o gccRelease/Player.o gccRelease/PlayerManager.o  $(Release_Library_Path) $(Release_Libraries) -Wl,-rpath,./ -o ../gccRelease/Server.exe
 
 # Compiles file LeakDetector.cpp for the Release configuration...
 -include gccRelease/LeakDetector.d
 gccRelease/LeakDetector.o: LeakDetector.cpp
 	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c LeakDetector.cpp $(Release_Include_Path) -o gccRelease/LeakDetector.o
 	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM LeakDetector.cpp $(Release_Include_Path) > gccRelease/LeakDetector.d
+
+# Compiles file Pool.cpp for the Release configuration...
+-include gccRelease/Pool.d
+gccRelease/Pool.o: Pool.cpp
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c Pool.cpp $(Release_Include_Path) -o gccRelease/Pool.o
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM Pool.cpp $(Release_Include_Path) > gccRelease/Pool.d
 
 # Compiles file Singleton.cpp for the Release configuration...
 -include gccRelease/Singleton.d
@@ -190,6 +238,12 @@ gccRelease/Output.o: Output.cpp
 	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c Output.cpp $(Release_Include_Path) -o gccRelease/Output.o
 	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM Output.cpp $(Release_Include_Path) > gccRelease/Output.d
 
+# Compiles file Grid.cpp for the Release configuration...
+-include gccRelease/Grid.d
+gccRelease/Grid.o: Grid.cpp
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c Grid.cpp $(Release_Include_Path) -o gccRelease/Grid.o
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM Grid.cpp $(Release_Include_Path) > gccRelease/Grid.d
+
 # Compiles file Engine.cpp for the Release configuration...
 -include gccRelease/Engine.d
 gccRelease/Engine.o: Engine.cpp
@@ -207,6 +261,36 @@ gccRelease/Game.o: Game.cpp
 gccRelease/GameFactory.o: GameFactory.cpp
 	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c GameFactory.cpp $(Release_Include_Path) -o gccRelease/GameFactory.o
 	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM GameFactory.cpp $(Release_Include_Path) > gccRelease/GameFactory.d
+
+# Compiles file Element.cpp for the Release configuration...
+-include gccRelease/Element.d
+gccRelease/Element.o: Element.cpp
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c Element.cpp $(Release_Include_Path) -o gccRelease/Element.o
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM Element.cpp $(Release_Include_Path) > gccRelease/Element.d
+
+# Compiles file Obstacle.cpp for the Release configuration...
+-include gccRelease/Obstacle.d
+gccRelease/Obstacle.o: Obstacle.cpp
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c Obstacle.cpp $(Release_Include_Path) -o gccRelease/Obstacle.o
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM Obstacle.cpp $(Release_Include_Path) > gccRelease/Obstacle.d
+
+# Compiles file ObstacleManager.cpp for the Release configuration...
+-include gccRelease/ObstacleManager.d
+gccRelease/ObstacleManager.o: ObstacleManager.cpp
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c ObstacleManager.cpp $(Release_Include_Path) -o gccRelease/ObstacleManager.o
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM ObstacleManager.cpp $(Release_Include_Path) > gccRelease/ObstacleManager.d
+
+# Compiles file Player.cpp for the Release configuration...
+-include gccRelease/Player.d
+gccRelease/Player.o: Player.cpp
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c Player.cpp $(Release_Include_Path) -o gccRelease/Player.o
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM Player.cpp $(Release_Include_Path) > gccRelease/Player.d
+
+# Compiles file PlayerManager.cpp for the Release configuration...
+-include gccRelease/PlayerManager.d
+gccRelease/PlayerManager.o: PlayerManager.cpp
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -c PlayerManager.cpp $(Release_Include_Path) -o gccRelease/PlayerManager.o
+	$(CPP_COMPILER) $(Release_Preprocessor_Definitions) $(Release_Compiler_Flags) -MM PlayerManager.cpp $(Release_Include_Path) > gccRelease/PlayerManager.d
 
 # Creates the intermediate and output folders for each configuration...
 .PHONY: create_folders
