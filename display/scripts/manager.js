@@ -73,7 +73,7 @@
 			5	: this.create,
 			6	: this.collide
 		};
-		// apply... for  [..., .. , ..] ? problem as passing aryments....
+
 		commands[ action ].call( this, options );
 	};
 
@@ -103,32 +103,30 @@
 	};
 
 
+	/* playerId - nextPos */
+	Manager.prototype.move = function ( params ) {
 
-	Manager.prototype.move = function ( playerId, nextPos ) {
+		this.playerList[ params[0] ].move( params[1] );
+	};
 
-		console.log('playerId:', playerId, ' - nextPos: ', nextPos );
+	/* playerId - targets */
+	Manager.prototype.heal = function ( params ) {
 
-		this.playerList[playerId].move( nextPos );
+		this.statusManager.handleHeal( params[0], params[1] );
 	};
 
 
-	Manager.prototype.heal = function ( playerId, targets ) {
+	/* obstacleId - category - start */
+	Manager.prototype.create = function ( params ) {
 
-		this.statusManager.handleHeal( playerId, targets );
+		this.obstaclePool.get( params[0], params[1], params[2] );
 	};
 
 
+	/* obstacleId - players */
+	Manager.prototype.collide = function( params ) {
 
-	Manager.prototype.create = function ( obstacleId, category, start ) {
-
-		this.obstaclePool.get( obstacleId, category, start );
-	};
-
-
-
-	Manager.prototype.collide = function( obstacleId, players ) {
-
-		this.statusManager.handleCollide( obstacleId, players);
+		this.statusManager.handleCollide( params[0], params[1] );
 	};
 
 
