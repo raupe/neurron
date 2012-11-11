@@ -44,7 +44,7 @@
 
         this.origin = this.screen.ctx;
 
-        this.src = this.assetManager.images[ this.type ];
+        this.src = this.assetManager.get('image', this.type );
     };
 
 
@@ -62,38 +62,43 @@
 
     Element.prototype.colorize = function(){
 
-        if ( this.color ) {
+        // ToDo: improve flow
+
+        setTimeout( function() {
+
+            if ( this.color ) {
+
+                this.ctx.drawImage( this.src, 0,0, this.size, this.size );
 
 
-            this.ctx.drawImage( this.src, 0,0, this.size, this.size );
+                var image = this.ctx.getImageData( 0, 0, this.size, this.size ),
+
+                    size = image.width * image.height + 1,
+
+                    pixels = image.data,
+
+                    i;
+
+                while ( --size ) {
+
+                    i = size << 2;
+
+                    pixels[   i ] = this.color[0];
+                    pixels[ ++i ] = this.color[1];
+                    pixels[ ++i ] = this.color[2];
+                }
+
+                this.ctx.putImageData( image, 0, 0 );
 
 
-            var image = this.ctx.getImageData( 0, 0, this.size, this.size ),
+                image = new Image();
 
-                size = image.width * image.height + 1,
+                image.src = this.ctx.canvas.toDataURL('img/png');
 
-                pixels = image.data,
-
-                i; // incrementor
-
-            while ( --size ) {
-
-                i = size << 2;
-
-                pixels[   i ] = this.color[0];
-                pixels[ ++i ] = this.color[1];
-                pixels[ ++i ] = this.color[2];
-                // pixels[ i * 4 + 3 ] = pixels[ i * 4 + 3 ];
+                this.src = image;
             }
 
-            this.ctx.putImageData( image, 0, 0 );
-
-
-            image = new Image();
-            image.src = this.ctx.canvas.toDataURL('img/png');
-
-            this.src = image;
-        }
+        }.bind(this), 10 );
     };
 
 
@@ -195,7 +200,7 @@
 
         var field = this.field;
 
-        // degree is saved per field
+        // // degree is saved per field
         // field.deg = this.counter;
 
         this.rotate( field.deg );

@@ -1,15 +1,22 @@
 (function(){
 
-    var main = function() {
-
-		new display.Screen();
-
-		new display.Manager();
-
-		new display.Connection();
-	};
-
 	// loading assets
-    new display.AssetManager( config.assets, main );
+    var manager = new display.AssetManager( config.assets );
+
+
+    manager.on('progress', function ( e ) {
+
+		console.log(e.progress);
+    });
+
+
+    manager.on('load', function(){
+
+        new display.Screen();
+
+        new display.Manager();
+
+        new display.Connection();
+    });
 
 })();
