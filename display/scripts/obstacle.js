@@ -27,10 +27,10 @@
 
 		this.velocity = config.velocity;
 
+		// this.collisionImg = this.assetManager.get('image', config.collisionImg );
 
-		this.collisionImg = this.assetManager.images[ config.collisionImg ];
-
-		this.collisionSound = this.assetManager.sounds[ config.collisionSound ];
+		this.collisionSound = config.collisionSound;
+		// this.collisionSound = this.assetManager.get('audio', config.collisionSound);
 
 		display.Element.prototype.init.call(this, config);
     };
@@ -63,10 +63,19 @@
 
     Obstacle.prototype.animateCollision = function(){
 
-		console.log('[collision] ', this.collisionImg);
+		// console.log(this.assetManager.get( 'audio', this.collisionSound.src ));
+		this.assetManager.get( 'audio', this.collisionSound ).play();
 
-		this.collisionSound.play();
+		// console.log('[collision] ', this.collisionImg.src);
+		// console.log('audio', this.collisionSound );
+		// url -> ist der key !
+		// this.assetManager.get( 'audio', this.collisionSound ).play();
     };
+
+
+    // case 'timeupdate':
+
+				// args.push( this.element.currentTime );
 
 
 })();
