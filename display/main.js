@@ -6,11 +6,15 @@
 
     manager.on('progress', function ( e ) {
 
-		console.log(e.progress);
+		// console.log(e.progress);
     });
 
 
+
+
     manager.on('load', function(){
+
+        // console.log(manager.assets);
 
         new display.Screen();
 
