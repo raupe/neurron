@@ -8,10 +8,18 @@ namespace sv
 	enum EMsgType
 	{
 		eMsgType_Init = 1,
+		eMsgType_Start,
 		eMsgType_Move,
+		eMsgType_Heal,
+		eMsgType_Obstacle,
+		eMsgType_Collision,
+		eMsgType_Polling,
 
 		// Controller Msgs
 		eMsgType_Response,
+		eMsgType_ResponseOk,
+		eMsgType_ResponseStart,
+		eMsgType_ResponseNoGame,
 	};
 
 	class Msg
@@ -64,6 +72,47 @@ namespace sv
 
 	private:
 		uchar			m_Direction;
+	};
+
+	class PollingMsg : public Msg
+	{
+	public:
+		PollingMsg();
+		virtual ~PollingMsg() {}
+
+		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
+	};
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	
+	class ResponseOkMsg : public Msg
+	{
+	public:
+		ResponseOkMsg();
+		virtual ~ResponseOkMsg() {}
+
+		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
+	};
+
+	class ResponseStartMsg : public Msg
+	{
+	public:
+		ResponseStartMsg(uchar id, uchar color);
+		virtual ~ResponseStartMsg() {}
+
+		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
+	private:
+		uchar			m_Id;
+		uchar			m_Color;
+	};
+
+	class ResponseNoGameMsg : public Msg
+	{
+	public:
+		ResponseNoGameMsg();
+		virtual ~ResponseNoGameMsg() {}
+
+		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
 	};
 }
 

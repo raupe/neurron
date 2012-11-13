@@ -18,9 +18,9 @@ namespace sv
 		void Exit();
 		void Run();
 		
-		void SendSocketMsg(Msg* msg, uint socket);
+		bool SendSocketMsg(Msg* msg, uint socket);
 //		void SendSocketMsg(const char* msg, uint length, uint socket);
-		void Response(uchar* msg, uint length, uint socket);
+		void Response(Msg* msg, uint socket);
 	private:
 		void HandleConnection(int socket);
 		HttpProtocol http;

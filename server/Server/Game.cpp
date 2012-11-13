@@ -9,7 +9,11 @@
 #include <Windows.h>
 #endif
 
+#define POLLING_RATE 5000000
+
 sv::Game::Game()
+: m_TimeLastMsg(0)
+, m_Status(eGameStatus_Waiting)
 {
 	InitTime();
 }
@@ -20,9 +24,15 @@ sv::Game::~Game()
 
 void sv::Game::Update()
 {
-	LOG1(DEBUG_TIME, "passed time in millisec: %d\n", GetDeltaTime());
+	uint deltaTime = GetDeltaTime();
+	LOG1(DEBUG_TIME, "passed time in microsec: %d\n", deltaTime);
 
-
+	m_TimeLastMsg += deltaTime;
+	if(m_TimeLastMsg > POLLING_RATE)
+	{
+		PollingMsg msg;
+		SendMsg(&msg);
+	}
 }
 
 void sv::Game::HandleMsg(sv::InputMsg* msg)
@@ -32,19 +42,38 @@ void sv::Game::HandleMsg(sv::InputMsg* msg)
 	{
 	case eContrAction_Start:
 		{
-			uchar response[2];
-			response[0] = 'a'; // id
-			response[1] = 'b'; // id
+			ResponseStartMsg response(1, 1);
+			Server::Instance()->Response(&response, msg->GetSocket());
+		} break;
+	case eContrAction_Right:
+		{
 
-			Server::Instance()->Response(response, sizeof(response), msg->GetSocket());
-		} break; 
+		} //break;
+	case eContrAction_Left:
+		{
+
+		} //break;
 	default:
 		{
 			MoveMsg initMsg(msg->GetAction()); 
-			Server::Instance()->SendSocketMsg(&initMsg, m_Socket);
+			SendMsg(&initMsg);
 
-			Server::Instance()->Response(0, 0, msg->GetSocket());
+			ResponseOkMsg response;
+			Server::Instance()->Response(&response, msg->GetSocket());
 		} break;
+	}
+}
+
+void sv::Game::SendMsg(Msg* msg)
+{
+	m_TimeLastMsg = 0;
+	bool success = Server::Instance()->SendSocketMsg(msg, m_Socket);
+	if(! success)
+	{
+		uint index = 0;
+		InputMsg* msg = InputMsgPool::Instance()->GetFreeMsg(index);
+		msg->SetContent(m_Id, 0, eContrAction_DeleteGame, 0);
+		InputMsgPool::Instance()->SetUnhandled(index);
 	}
 }
 
@@ -54,34 +83,34 @@ void sv::Game::InitTime()
 	LARGE_INTEGER li;
 	BOOL success = QueryPerformanceFrequency(&li);
 	ASSERT(success, "QueryPerformanceFrequency faled.");
-	m_Frequence = double(li.QuadPart)/1000.0;
+	m_Frequence = double(li.QuadPart)/1000000.0;
 
     QueryPerformanceCounter(&li);
-    m_Time = li.QuadPart / m_Frequence;
+    m_Time = (long long)(li.QuadPart / m_Frequence);
 #else
 	timespec time;
 	clock_gettime(CLOCK_MONOTONIC, &time);
 
-	m_Time = time.tv_sec * 1000 + (int)(time.tv_nsec / 1000000.0 + 0.5);
+	m_Time = time.tv_sec * 1000000 + (int)(time.tv_nsec / 1000.0 + 0.5);
 #endif
 }
 
-int sv::Game::GetDeltaTime()
+ulong sv::Game::GetDeltaTime()
 {
 	long long newTime;
 #ifdef WIN32
 	LARGE_INTEGER li;
     QueryPerformanceCounter(&li);
 
-	m_Time = li.QuadPart / m_Frequence;
+	newTime = (long long)(li.QuadPart / m_Frequence);
 #else
 	timespec time;
 	clock_gettime(CLOCK_MONOTONIC, &time);
 
-	newTime = time.tv_sec * 1000 + (int)(time.tv_nsec / 1000000.0 + 0.5);
+	newTime = time.tv_sec * 1000000 + (int)(time.tv_nsec / 1000.0 + 0.5);
 #endif
 
-	int retVal = newTime - m_Time;
+	uint retVal = (uint)(newTime - m_Time);
 	m_Time = newTime;
 	return retVal;
 }

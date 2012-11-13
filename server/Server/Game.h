@@ -9,12 +9,22 @@
 
 namespace sv
 {
+	class Msg;
+
 	class Game
 	{
 		template<class T>
 		friend class Pool;
+	private:
+		enum EGameStatus
+		{
+			eGameStatus_Waiting,
+			eGameStatus_Countdown,
+			eGameStatus_Running
+		};
+
 	public:
-		unsigned int		GetId() { return m_Id; }
+		uchar				GetId() { return m_Id; }
 		void				SetId(uint id) { m_Id = id; }
 
 		void				Update();
@@ -23,16 +33,20 @@ namespace sv
 		int					GetSocket() { return m_Socket; }
 
 		void				HandleMsg(InputMsg* msg);
+		void				SendMsg(Msg* msg);
 		
 	private:
 		Game();
-		~Game();
+		~Game();			
 
 		void				InitTime();
-		int					GetDeltaTime();
+		ulong				GetDeltaTime();
 
 		int					m_Socket;
-		unsigned int		m_Id;
+		uchar				m_Id;
+		uint				m_Status;
+
+		ulong				m_TimeLastMsg;
 
 		long long			m_Time;
 #ifdef WIN32

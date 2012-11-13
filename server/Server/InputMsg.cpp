@@ -20,6 +20,9 @@ void sv::InputMsg::SetContent(uchar* buffer, const uint& length, uint socket)
 		m_ControllerId = buffer[1];
 		m_Action = buffer[2];
 	}
+
+	if(m_Action >= eContrAction_Max)
+		m_Action = eContrAction_Undifined;
 }
 
 void sv::InputMsg::SetContent(uint channel, uint controllerId, uint action, uint socket)

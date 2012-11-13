@@ -6,8 +6,26 @@ namespace sv
 	class Player
 	{
 	public:
-		Player();
+		Player(uint id, uint color);
 		~Player();
+
+		uint	GetId() { return m_Id; }
+		uint	GetColor() { return m_Color; }
+		uint	GetPos() { return m_Pos; }
+		
+		void	SetPos(uint pos);
+		void	SetNextPos(uint pos);
+
+		void	Update(ulong deltaTime);
+	private:
+		uint	m_Id;
+		uint	m_Color;
+
+		uint	m_Pos;
+		uint	m_NextPos;
+
+		uint	m_PassedTime;
+		bool	m_Moving;
 	};
 }
 

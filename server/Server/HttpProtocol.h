@@ -27,15 +27,15 @@ namespace sv
 		RequestInfo	GetInfo(const std::string msg);
 		bool		IsSocketRequest(const RequestInfo& info);
 		
-		std::string	GetHeader();
+		//std::string	GetHeader();
 		std::string GetErrorHeader();
-		std::string	GetMsg(const uchar* msg, uint length);
+		void		GetMsg(const uchar* msg, char* buffer, uint& length);
 
 		std::string	GetSocketHeader(const RequestInfo& info);
-		std::string GetSocketMsg(const uchar* msg, uint& length);
+		void		GetSocketMsg(const uchar* msg, char* buffer, uint& length);
 		
-		std::string	EncodeBase64(const unsigned char* msg, unsigned int length);
-		void		DecodeBase64(std::string msg, unsigned int& length, unsigned char* out);
+		void		EncodeBase64(const unsigned char* msg, char* buffer, uint& length);
+		void		DecodeBase64(std::string msg, unsigned int& length, unsigned char* buffer);
 		
 		void SHA1own(const unsigned char* msg, uint length, unsigned int* h);
 

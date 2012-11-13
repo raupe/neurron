@@ -50,21 +50,34 @@ bool sv::HttpProtocol::IsSocketRequest(const sv::RequestInfo& info)
 		&& info.m_Upgrade == "websocket";
 }
 
-std::string	sv::HttpProtocol::GetHeader()
+/*std::string	sv::HttpProtocol::GetHeader()
 {
-	//return GetErrorHeader();
-	return "HTTP/1.1 200 OK\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Allow-Methods:\"GET, POST, PUT, DELETE, OPTIONS\"\r\nAccess-Control-Allow-Headers:\"content-type, accept\"\r\n\r\n";//Content-Type: text/html; charset=UTF-8\r\n\r\n";
-}
+	return "HTTP/1.1 200 OK\r\nAccess-Control-Allow-Origin: *\r\n"
+		"Access-Control-Allow-Methods:\"GET, POST, PUT, DELETE, OPTIONS\"\r\n"
+		"Access-Control-Allow-Headers:\"content-type, accept\"\r\n"
+		"\r\n";
+		//"Content-Type: text/html; charset=UTF-8\r\n\r\n";
+}*/
 
 std::string	sv::HttpProtocol::GetErrorHeader()
 {
-	return GetHeader();
-	//return "HTTP/1.1 200 OK\nAccess-Control-Allow-Origin: *\nAccess-Control-Allow-Methods:\"GET, POST, PUT, DELETE, OPTIONS\"\nAccess-Control-Allow-Headers:\"content-type, origin, accept\"\n\n";
+	return "HTTP/1.1 400 Error\nAccess-Control-Allow-Origin: *\r\n"
+		"Access-Control-Allow-Methods:\"GET, POST, PUT, DELETE, OPTIONS\"\r\n"
+		"Access-Control-Allow-Headers:\"content-type, origin, accept\"\r\n"
+		"\r\n";
 }
 
-std::string sv::HttpProtocol::GetMsg(const uchar* msg, uint length)
+void sv::HttpProtocol::GetMsg(const uchar* msg, char* buffer, uint& length)
 {
-	return EncodeBase64(msg, length);
+	const char* header = "HTTP/1.1 200 OK\r\nAccess-Control-Allow-Origin: *\r\n"
+		"Access-Control-Allow-Methods:\"GET, POST, PUT, DELETE, OPTIONS\"\r\n"
+		"Access-Control-Allow-Headers:\"content-type, accept\"\r\n"
+		"\r\n";
+	uint headerLength = strlen(header);
+	memcpy(buffer, header, headerLength);
+
+	EncodeBase64(msg, buffer+headerLength, length);
+	length += headerLength;
 }
 
 std::string	sv::HttpProtocol::GetSocketHeader(const sv::RequestInfo& info)
@@ -82,30 +95,29 @@ std::string	sv::HttpProtocol::GetSocketHeader(const sv::RequestInfo& info)
 	sha1.SHA1Result(context, step2);
 	delete(context);
 
-	// encode Base64	
-	std::string acceptKey = EncodeBase64(step2, 20);
+	// encode Base64
+	char buffer[29];
+	uint length = sizeof(step2);
+	EncodeBase64(step2, buffer, length);
+	buffer[length] = 0;
+
 
 	return "HTTP/1.1 101 WebSocket Protocol Handshake\r\n"
 		   "Upgrade: websocket\r\n"
 		   "Connection: Upgrade\r\n"
-		   "Sec-WebSocket-Accept: " + acceptKey + "\r\n"
+		   "Sec-WebSocket-Accept: " + std::string(buffer) + "\r\n"
 		   "\r\n";
 }
 
-std::string sv::HttpProtocol::GetSocketMsg(const uchar* msg, uint& length)
+void sv::HttpProtocol::GetSocketMsg(const uchar* msg, char* buffer, uint& length)
 {
-	std::string encoded = EncodeBase64(msg, length);
+	buffer[0] = '\x81';
+	EncodeBase64(msg, buffer+2, length);
 
-	ASSERT(encoded.length() < 127, "sv::HttpProtocol::GetSocketMsg :  msg too long");
+	ASSERT(length < 127, "sv::HttpProtocol::GetSocketMsg :  msg too long");
 
-
-	std::string retVal;
-	retVal += '\x81';
-	retVal += (char) encoded.length();
-	retVal += encoded;
-
-	length = encoded.length() + 2;
-	return retVal;
+	buffer[1] = (uchar) length;
+	length += 2;
 }
 
 char GetChar(uchar val)
@@ -123,12 +135,12 @@ char GetChar(uchar val)
 	return '\0';
 }
 
-std::string	sv::HttpProtocol::EncodeBase64(const unsigned char* msg, unsigned int length)
+void sv::HttpProtocol::EncodeBase64(const unsigned char* msg, char* buffer, uint& length)
 {
-	std::string retVal = "";
-	unsigned char parts[4];
-	unsigned char src[3];
-	unsigned int pos = 0;
+	uchar parts[4];
+	uchar src[3];
+	uint pos = 0;
+	uint posBuffer = 0;
 	while(pos < length)
 	{
 		src[0] = msg[pos];
@@ -141,15 +153,30 @@ std::string	sv::HttpProtocol::EncodeBase64(const unsigned char* msg, unsigned in
 		parts[3] = src[2] & 0x3F;
 
 		if(pos + 2 < length)
-			retVal = retVal + GetChar(parts[0]) + GetChar(parts[1]) + GetChar(parts[2]) + GetChar(parts[3]);
+		{
+			buffer[posBuffer++] = GetChar(parts[0]);
+			buffer[posBuffer++] = GetChar(parts[1]);
+			buffer[posBuffer++] = GetChar(parts[2]);
+			buffer[posBuffer++] = GetChar(parts[3]);
+		}
 		else if(pos + 1 < length)
-			retVal = retVal + GetChar(parts[0]) + GetChar(parts[1]) + GetChar(parts[2]) + '=';
+		{
+			buffer[posBuffer++] = GetChar(parts[0]);
+			buffer[posBuffer++] = GetChar(parts[1]);
+			buffer[posBuffer++] = GetChar(parts[2]);
+			buffer[posBuffer++] = '=';
+		}
 		else
-			retVal = retVal + GetChar(parts[0]) + GetChar(parts[1]) + '=' + '=';
+		{
+			buffer[posBuffer++] = GetChar(parts[0]);
+			buffer[posBuffer++] = GetChar(parts[1]);
+			buffer[posBuffer++] = '=';
+			buffer[posBuffer++] = '=';
+		}
 		
 		pos += 3;
 	}
-	return retVal;
+	length = posBuffer;
 }
 
 uchar GetVal(char c)
@@ -167,7 +194,7 @@ uchar GetVal(char c)
 	return 0;
 }
 
-void sv::HttpProtocol::DecodeBase64(std::string msg, unsigned int& length, unsigned char* out)
+void sv::HttpProtocol::DecodeBase64(std::string msg, unsigned int& length, unsigned char* buffer)
 {
 	unsigned char parts[3];
 	unsigned char src[4];
@@ -184,13 +211,13 @@ void sv::HttpProtocol::DecodeBase64(std::string msg, unsigned int& length, unsig
 		parts[1] = (src[1] << 4) | (src[2] >> 2);
 		parts[2] = (src[2] << 6) | src[3];
 		
-		out[posOut++] = parts[0];
+		buffer[posOut++] = parts[0];
 		if(msg[pos+2] == '=')
 			break;
-		out[posOut++] = parts[1];
+		buffer[posOut++] = parts[1];
 		if(msg[pos+3] == '=')
 			break;
-		out[posOut++] = parts[2];
+		buffer[posOut++] = parts[2];
 
 		pos+=4;
 	}

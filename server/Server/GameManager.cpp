@@ -1,20 +1,21 @@
 #include "ServerPCH.h"
-#include "GameFactory.h"
+#include "GameManager.h"
 
-sv::GameFactory::GameFactory()
+sv::GameManager::GameManager()
 : m_CountId(1)
 {
 	Init(255);
 }
 
-sv::GameFactory::~GameFactory()
+sv::GameManager::~GameManager()
 {
 }
 
-sv::Game* sv::GameFactory::CreateGame()
+sv::Game* sv::GameManager::CreateGame(int socket)
 {
 	Game* game = Get();
 	game->SetId(m_CountId);
+	game->SetSocket(socket);
 
 	if(m_CountId == 255)
 		m_CountId = 1;
@@ -24,15 +25,13 @@ sv::Game* sv::GameFactory::CreateGame()
 	return game;
 }
 
-void sv::GameFactory::DeleteGame(unsigned int id)
+void sv::GameManager::DeleteGame(Game* game)
 {
-	Game* game = GetGame(id);
-	if(game)
-		Free(game);
+	Free(game);
 }
 
 
-sv::Game* sv::GameFactory::GetGame(uint id)
+sv::Game* sv::GameManager::GetGame(uchar id)
 {
 	Pool<Game>::Iterator iter = First();
 	while(iter)
@@ -43,13 +42,12 @@ sv::Game* sv::GameFactory::GetGame(uint id)
 		iter = Pool<Game>::Next(iter);
 	}
 
-	ASSERT(true, "Error: sv::GameFactory::GetGame : game doesn't exist");
+	ASSERT(true, "Error: sv::GameManager::GetGame : game doesn't exist");
 	return 0;
 }
 
-void sv::GameFactory::Update()
+void sv::GameManager::Update()
 {
-	
 	Pool<Game>::Iterator iter = First();
 	while(iter)
 	{

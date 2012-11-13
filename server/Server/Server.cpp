@@ -3,7 +3,7 @@
 #include "ServerPCH.h"
 #include "Server.h"
 
-#include "GameFactory.h"
+#include "GameManager.h"
 #include "Game.h"
 #include "Msg.h"
 #include "InputMsg.h"
@@ -11,7 +11,10 @@
 
 #ifdef WIN32
 #include <winsock.h>
+
 #define CLOSE_SOCKET(s) closesocket(s);
+#define GET_ERROR WSAGetLastError()
+
 #else
 #include <netdb.h>
 #include <arpa/inet.h>
@@ -19,7 +22,9 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <string.h>
+
 #define CLOSE_SOCKET(s) close(s);
+#define GET_ERROR errno
 #endif
 
 
@@ -35,12 +40,12 @@ sv::Server::~Server()
 
 void sv::Server::Init()
 {
-	GameFactory::Create();
+	GameManager::Create();
 }
 
 void sv::Server::Exit()
 {
-	GameFactory::Destroy();
+	GameManager::Destroy();
 }
 
 void sv::Server::Run()
@@ -153,25 +158,35 @@ void sv::Server::SendSocketMsg(const char* msg, uint length, uint socket)
 }
 */
 
-void sv::Server::SendSocketMsg(Msg* msg, uint socket)
+bool sv::Server::SendSocketMsg(Msg* msg, uint socket)
 {
-	uchar buffer[1024];
+	uchar bufferMsg[1024];
 	uint length = 0;
-	msg->GetBuffer(buffer, length, sizeof(buffer));
-	std::string str = http.GetSocketMsg(buffer, length);
+	msg->GetBuffer(bufferMsg, length, sizeof(bufferMsg));
+
+	char buffer[1024];
+	http.GetSocketMsg(bufferMsg, buffer, length);
 	
 	// TODO: test if everything was send
-	send(socket, str.c_str(), length, NULL);
+	int success = send(socket, buffer, length, NULL);
+	LOG1(DEBUG_WEBSOCKET && success == -1, "Connection closed: %i", GET_ERROR);
+	return success != -1;
 }
 
-void sv::Server::Response(uchar* msg, uint length, uint socket)
+void sv::Server::Response(Msg* msg, uint socket)
 {
-	std::string str = http.GetHeader();
+	uchar bufferMsg[1024];
+	uint length = 0;
+	msg->GetBuffer(bufferMsg, length, sizeof(bufferMsg));
+
+	char buffer[1024];
+	http.GetMsg(bufferMsg, buffer, length);
 	
-	if(length)
-		str += http.GetMsg(msg, length);
+	// TODO: test if everything was send
+	send(socket, buffer, length, NULL);
 	
-	LOG1(DEBUG_PROTOCOLL,"Outgoing Header:\n%s\n", str.c_str());
-	send(socket, str.c_str(), str.length() + 1, NULL);
+	
+	buffer[length] = 0;
+	LOG1(DEBUG_PROTOCOLL,"Outgoing Header:\n%s\n", buffer);
 	CLOSE_SOCKET(socket);
 }

@@ -63,3 +63,50 @@ void sv::MoveMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
 
 	Visit(m_Direction, buffer, pos, length);
 }
+
+sv::PollingMsg::PollingMsg()
+: Msg(eMsgType_Polling)
+{
+}
+
+void sv::PollingMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
+{
+	Visit(m_Type, buffer, pos, length);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+sv::ResponseOkMsg::ResponseOkMsg()
+: Msg(eMsgType_ResponseOk)
+{
+}
+
+void sv::ResponseOkMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
+{
+	Visit(m_Type, buffer, pos, length);
+}
+
+sv::ResponseStartMsg::ResponseStartMsg(uchar id, uchar color)
+: Msg(eMsgType_ResponseStart)
+, m_Id(id)
+, m_Color(color)
+{
+}
+
+void sv::ResponseStartMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
+{
+	Visit(m_Type, buffer, pos, length);
+	
+	Visit(m_Id, buffer, pos, length);
+	Visit(m_Color, buffer, pos, length);
+}
+
+sv::ResponseNoGameMsg::ResponseNoGameMsg()
+: Msg(eMsgType_ResponseNoGame)
+{
+}
+
+void sv::ResponseNoGameMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
+{
+	Visit(m_Type, buffer, pos, length);
+}
