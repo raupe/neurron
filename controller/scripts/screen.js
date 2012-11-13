@@ -6,6 +6,8 @@
 		this.height = config.height;
 
 		this.createCanvas();
+
+		controller.Input.prototype.screen = this;
 	};
 
 

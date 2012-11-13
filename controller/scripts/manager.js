@@ -9,6 +9,8 @@
 		this.channel = config.channel;
 
 		this.register();
+
+		controller.Input.prototype.manager = this;
 	};
 
 

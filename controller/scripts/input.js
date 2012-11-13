@@ -1,9 +1,6 @@
 (function(){
 
-	var Input = controller.Input = function ( config ) {
-
-		this.screen = config.screen;
-		this.manager = config.manager;
+	var Input = controller.Input = function() {
 
 		this.addHandler();
 	};
