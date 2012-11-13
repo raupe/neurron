@@ -58,6 +58,7 @@
                 direction = 3;//rechts
             }
 
+			this.send( direction );
         }
 
 
@@ -74,7 +75,6 @@
         // }
 
 
-        this.send( direction );
 	};
 
 
