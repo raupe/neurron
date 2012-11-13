@@ -39,6 +39,9 @@
 				i, l;								// iterator
 
 
+			if ( action === config.protocol.POLLING ) return;
+
+
 	/* 1 */	if ( action === config.protocol.INIT ) {
 
 				options[0] = data.charCodeAt(1); // channel ID
