@@ -4,6 +4,8 @@
 
 		this.playerList = [];
 
+		this.grid = new display.Grid();
+
 		this.obstaclePool = new display.ObstaclePool();
 
 		this.statusManager = new display.StatusManager();
@@ -31,7 +33,8 @@
 
 			forAll( this.obstaclePool.list, 'update' );
 
-			this.background.update();
+			// console.log(1);
+			// this.background.update();
 			this.background.draw();
 
 			forAll( this.playerList, 'draw' );
@@ -88,16 +91,19 @@
 
 	Manager.prototype.start = function ( players ) {
 
-		new display.Grid({
+		this.grid.init({
 
 			players: 10,//players.length,
 			frames: 30,
 			distanceToUser: 350,
 			circleOffset: 100,
-			circles: 0
+			circles: 0,
+			factor: 4
 		});
 
 		this.playerList	= new display.PlayerList( players );
+
+		this.statusManager.init( this.playerList );
 
 		new display.Debug();
 	};
