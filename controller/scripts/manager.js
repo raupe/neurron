@@ -24,10 +24,10 @@
 
 				msg = atob( res.substr( 0, res.length -1 ) );
 
-			// results
-			this.id = msg.charCodeAt( 0 );
-			this.color = msg.charCodeAt( 1 );
-		};
+			// // results
+			// this.id = msg.charCodeAt( 0 );
+			// this.color = msg.charCodeAt( 1 );
+		}.bind(this);
 
 		// /* on remove */
 		// document.onbeforeunload = function(){
@@ -75,12 +75,12 @@
 	};
 
 
-	Manager.prototype.send = function ( Manager )  {
+	Manager.prototype.send = function ( action )  {
 
 		this.req.open( 'POST', this.url , true );
 
 		// encode into base64, avoiding special characters like '0'
-		var data = btoa( String.fromCharCode(  this.channel, this.id, Manager ) );
+		var data = btoa( String.fromCharCode(  this.channel, this.id, action ) );
 
 		this.req.setRequestHeader( 'Content-Type', 'text/plain; charset=UTF-8' );
 
