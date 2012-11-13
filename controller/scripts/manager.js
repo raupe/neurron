@@ -58,17 +58,20 @@
                 direction = 3;//rechts
             }
 
-        } else {
-
-            if ( start.y > end.y ) {
-
-                direction = 5;//hoch
-
-            } else {
-
-                direction = 6;//unten
-            }
         }
+
+
+        // else {
+
+        //     if ( start.y > end.y ) {
+
+        //         direction = 5;//hoch
+
+        //     } else {
+
+        //         direction = 6;//unten
+        //     }
+        // }
 
 
         this.send( direction );
