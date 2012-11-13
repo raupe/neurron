@@ -2,6 +2,14 @@
 
 	var Grid = display.Grid = function ( config ) {
 
+		display.Element.prototype.grid = this;
+
+		display.Debug.prototype.grid = this;
+		display.Background.prototype.grid = this;
+	};
+
+	Grid.prototype.init = function ( config ) {
+
 		this.setup( config );
 
 		this.definePositions();
@@ -9,12 +17,6 @@
 		this.createCanvas();
 
 		this.update();
-
-
-		display.Element.prototype.grid = this;
-
-		display.Debug.prototype.grid = this;
-		display.Background.prototype.grid = this;
 	};
 
 
@@ -22,7 +24,7 @@
 
 		this.origin = this.screen.ctx;
 
-		this.width = this.screen.cvs.width;
+		this.width = this.screen.cvs.width - this.screen.cvs.width / config.factor;
 		this.height = this.screen.cvs.height;
 
 
