@@ -17,7 +17,6 @@
 
 	Background.prototype.draw = function(){
 
-
 	};
 
 })();

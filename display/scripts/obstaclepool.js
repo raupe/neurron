@@ -12,7 +12,7 @@
 	};
 
 
-	ObstaclePool.prototype.get = function( id, category, start ) {
+	ObstaclePool.prototype.get = function ( id, category, start ) {
 
 		var model = config.obstacles[category],
 			entry;
