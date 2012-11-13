@@ -3,26 +3,31 @@
 	var StatusManager = display.StatusManager = function() {
 
 		this.points = 0;
-
-		this.createPanel();
+		this.createPanel( 4 );
 	};
 
 
-	StatusManager.prototype.createPanel = function(){
+	StatusManager.prototype.init = function ( playerlist )  {
+
+	};
+
+
+	StatusManager.prototype.createPanel = function ( factor ) {
 
 		var cvs = document.createElement('canvas'),
 			ctx = cvs.getContext('2d');
 
-		this.offset = this.screen.cvs.width/5;
+			this.offset = this.screen.cvs.width / factor;
 
 		cvs.width = this.offset;
+		cvs.height = this.screen.cvs.height;
+
+		this.start = this.screen.cvs.width - this.offset;
+
 
 		ctx.fillStyle = '#000';
 
-		this.start = this.screen.cvs.width - this.offset;
-		this.height = this.screen.cvs.height;
-
-		ctx.fillRect( this.start, 0, this.offset, this.height );
+		ctx.fillRect( 0, 0, cvs.width, cvs.height );
 
 		this.panel = cvs;
 	};
