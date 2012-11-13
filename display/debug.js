@@ -23,7 +23,11 @@
 
 			this.grid.drawLines();
 
-			this.grid.origin.drawImage( this.grid.ctx.canvas, this.grid.posX, this.grid.posY, this.grid.width, this.grid.height );
+			this.grid.origin.drawImage( this.grid.ctx.canvas,
+										this.grid.posX,
+										this.grid.posY,
+										this.grid.width,
+										this.grid.height );
 		};
 	};
 
@@ -81,9 +85,9 @@
 			if ( !playerList[0].moving ) {
 
 				if ( key === 37 ) playerList[0].move( 4 );
-				if ( key === 38 ) playerList[0].move( 5 );
+				// if ( key === 38 ) playerList[0].move( 5 );
 				if ( key === 39 ) playerList[0].move( 3 );
-				if ( key === 40 ) playerList[0].move( 6 );
+				// if ( key === 40 ) playerList[0].move( 6 );
 			}
 
 			if ( key === 49 ) {
