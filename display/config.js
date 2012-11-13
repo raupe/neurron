@@ -27,7 +27,7 @@ window.config = {
 
 			// collision	: 'assets/5.png',
 
-			background	: 'assets/6.png'
+			background	: 'assets/background.jpg'
 		},
 
 		audio: {
@@ -41,6 +41,8 @@ window.config = {
 
 	// magic numbers
 	protocol: {
+
+		POLLING		: 0,
 
 		INIT		: 1,
 		START		: 2,
