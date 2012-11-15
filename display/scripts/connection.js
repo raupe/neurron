@@ -50,7 +50,7 @@
 			}
 
 
-	/* 2 */	if ( action === config.protocol.START ) {
+	/* 3 */	if ( action === config.protocol.START ) {
 
 					l = 2 * data.charCodeAt(1); // amount of players
 
@@ -70,14 +70,14 @@
 			}
 
 
-	/* 3 */	if ( action === config.protocol.MOVE ) {
+	/* 4 */	if ( action === config.protocol.MOVE ) {
 
 				options[0] = data.charCodeAt(1); // player ID
 				options[1] = data.charCodeAt(2); // next pos
 			}
 
 
-	/* 4 */	if ( action === config.protocol.HEAL ) {
+	/* 5 */	if ( action === config.protocol.HEAL ) {
 
 				options[0] = data.charCodeAt(1); // player ID
 
@@ -94,7 +94,7 @@
 			}
 
 
-	/* 5 */	if ( action === config.protocol.CREATE ) {
+	/* 6 */	if ( action === config.protocol.CREATE ) {
 
 				options[0] = data.charCodeAt(1); // obstacle ID
 				options[1] = data.charCodeAt(2); // category
@@ -102,7 +102,7 @@
 			}
 
 
-	/* 6 */	if ( action === config.protocol.COLLISION ) {
+	/* 7 */	if ( action === config.protocol.COLLISION ) {
 
 				options[0] = data.charCodeAt(1); // obstacle ID
 
