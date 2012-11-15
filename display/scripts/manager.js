@@ -33,8 +33,7 @@
 
 			forAll( this.obstaclePool.list, 'update' );
 
-			// console.log(1);
-			// this.background.update();
+			this.background.update();
 			this.background.draw();
 
 			forAll( this.playerList, 'draw' );
@@ -70,17 +69,23 @@
 		var commands = {
 
 			1	: this.init,
-			2	: this.start,
-			3	: this.move,
-			4	: this.heal,
-			5	: this.create,
-			6	: this.collide
+			2	: this.countdown,
+			3	: this.start,
+			4	: this.move,
+			5	: this.heal,
+			6	: this.create,
+			7	: this.collide
 		};
 
 		commands[ action ].call( this, options );
 	};
 
 
+
+	Manager.prototype.coutdown = function() {
+
+		console.log('countdown...');
+	};
 
 
 	Manager.prototype.init = function ( channelId ) {

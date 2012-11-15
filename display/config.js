@@ -45,11 +45,12 @@ window.config = {
 		POLLING		: 0,
 
 		INIT		: 1,
-		START		: 2,
-		MOVE		: 3,
-		HEAL		: 4,
-		CREATE		: 5,
-		COLLISION	: 6
+		COUNTDOWN	: 2,
+		START		: 3,
+		MOVE		: 4,
+		HEAL		: 5,
+		CREATE		: 6,
+		COLLISION	: 7
 	},
 
 
