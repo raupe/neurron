@@ -16,3 +16,8 @@ canvas {
 	      -o-transform-style: preserve-3d;
 	 		 transform-style: preserve-3d;
 }
+
+#qrcode img {
+    position: absolute;
+    z-index: 99;
+}
