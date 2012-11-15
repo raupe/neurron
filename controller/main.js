@@ -21,5 +21,8 @@
 		// handling input
 		new controller.Input();
 
+
+		new controller.Button('Start');
+
 })();
 
