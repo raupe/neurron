@@ -8,9 +8,14 @@
 		this.id = 0; // defaults
 		this.channel = config.channel;
 
-		this.register();
-
 		controller.Input.prototype.manager = this;
+		controller.Button.prototype.manager = this;
+	};
+
+
+	Manager.prototype.start = function(){
+
+		this.register();
 	};
 
 
@@ -23,6 +28,9 @@
 			var res = t.currentTarget.responseText;
 
 				msg = atob( res.substr( 0, res.length -1 ) );
+
+
+
 
 			// // results
 			// this.id = msg.charCodeAt( 0 );
