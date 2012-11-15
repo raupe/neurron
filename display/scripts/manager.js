@@ -85,7 +85,15 @@
 
 	Manager.prototype.init = function ( channelId ) {
 
-		console.log('Create QR-code from: ', channelId );
+        var qrCode = "http://game.neurron.com/controller/#" + channelId;
+
+        var element = document.getElementById("qrcode");
+
+        var bodyElement = document.body;
+        if(element.lastChild)
+          element.replaceChild(showQRCode(qrCode), element.lastChild);
+        else
+          element.appendChild(showQRCode(qrCode));
 	};
 
 
