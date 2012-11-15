@@ -25,6 +25,8 @@
 			console.log('[close]');
 
 			manager.handle( config.protocol.START, [ { id:1, pos:1, color:'55' } ] );
+
+            manager.init(2);
 		};
 
 
