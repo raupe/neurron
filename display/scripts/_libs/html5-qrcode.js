@@ -15,7 +15,7 @@
 function showQRCode(text) {
 
 
-  var dotsize = 6;  // size of box drawn on canvas
+  var dotsize = 8;  // size of box drawn on canvas
   var padding = 10; // (white area around your QRCode)
   var black = "rgb(0,0,0)";
   var white = "rgb(255,255,255)";

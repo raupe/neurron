@@ -17,7 +17,12 @@ canvas {
 	 		 transform-style: preserve-3d;
 }
 
+
 #qrcode img {
+
     position: absolute;
     z-index: 99;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
 }
