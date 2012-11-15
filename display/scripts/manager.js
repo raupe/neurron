@@ -82,7 +82,7 @@
 
 
 
-	Manager.prototype.coutdown = function() {
+	Manager.prototype.countdown = function() {
 
 		console.log('countdown...');
 	};
