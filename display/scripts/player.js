@@ -9,7 +9,7 @@
 
 		this.velocity = 1;
 
-		this.energy = 10;
+		this.energy = 100;
 
 
 		this.init({
