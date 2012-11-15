@@ -7,6 +7,8 @@ window.config = {
 	server		: 'neurron.com',
 	port		: '2020',
 
+    factor: 4, // offset for statusbar and grid
+
 	// default resolution ? image scale ?
 	// canvas: { width	: 320,	height	: 240 },
 
