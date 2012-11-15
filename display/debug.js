@@ -92,35 +92,35 @@
 
 			if ( key === 49 ) {
 
-				this.manager.handle( 5, [1,1,42] );
+				this.manager.handle( 6, [1,1,42] );
 			}
 
 			if ( key === 50 ) {
 
-				this.manager.handle( 5, [ 1,1,42] );
-				this.manager.handle( 5, [ 2,2,27] );
-				this.manager.handle( 5, [ 3,3,38] );
+				this.manager.handle( 6, [ 1,1,42] );
+				this.manager.handle( 6, [ 2,2,27] );
+				this.manager.handle( 6, [ 3,3,38] );
 
-				this.manager.handle( 5, [ 4,1,30] );
-				this.manager.handle( 5, [ 5,2,31] );
-				this.manager.handle( 5, [ 6,3,32] );
-				this.manager.handle( 5, [ 7,1,33] );
-				this.manager.handle( 5, [ 8,2,34] );
-				this.manager.handle( 5, [ 9,3,35] );
-				this.manager.handle( 5, [10,1,36] );
-				this.manager.handle( 5, [11,2,37] );
-				this.manager.handle( 5, [12,3,38] );
-				this.manager.handle( 5, [13,1,39] );
-				this.manager.handle( 5, [14,2,40] );
-				this.manager.handle( 5, [14,3,41] );
+				this.manager.handle( 6, [ 4,1,30] );
+				this.manager.handle( 6, [ 5,2,31] );
+				this.manager.handle( 6, [ 6,3,32] );
+				this.manager.handle( 6, [ 7,1,33] );
+				this.manager.handle( 6, [ 8,2,34] );
+				this.manager.handle( 6, [ 9,3,35] );
+				this.manager.handle( 6, [10,1,36] );
+				this.manager.handle( 6, [11,2,37] );
+				this.manager.handle( 6, [12,3,38] );
+				this.manager.handle( 6, [13,1,39] );
+				this.manager.handle( 6, [14,2,40] );
+				this.manager.handle( 6, [14,3,41] );
 
 
-				this.manager.handle( 5, [15,1,44] );
-				this.manager.handle( 5, [16,2,45] );
-				this.manager.handle( 5, [17,3,46] );
-				this.manager.handle( 5, [18,1,48] );
-				this.manager.handle( 5, [19,2,49] );
-				this.manager.handle( 5, [20,3,50] );
+				this.manager.handle( 6, [15,1,44] );
+				this.manager.handle( 6, [16,2,45] );
+				this.manager.handle( 6, [17,3,46] );
+				this.manager.handle( 6, [18,1,48] );
+				this.manager.handle( 6, [19,2,49] );
+				this.manager.handle( 6, [20,3,50] );
 			}
 
 			if ( key === 51 ) {
@@ -135,41 +135,41 @@
 
 					active = true;
 
-					this.manager.handle( 5, [ 1,1,42] );
-					this.manager.handle( 5, [ 2,2,27] );
-					this.manager.handle( 5, [ 3,3,38] );
-					this.manager.handle( 5, [ 4,1,30] );
-					this.manager.handle( 5, [ 5,2,31] );
-					this.manager.handle( 5, [ 6,3,32] );
-					this.manager.handle( 5, [ 7,1,33] );
-					this.manager.handle( 5, [ 8,2,34] );
-					this.manager.handle( 5, [ 9,3,35] );
-					this.manager.handle( 5, [10,1,36] );
-					this.manager.handle( 5, [11,2,37] );
-					this.manager.handle( 5, [12,3,38] );
-					this.manager.handle( 5, [13,1,39] );
-					this.manager.handle( 5, [14,2,40] );
-					this.manager.handle( 5, [15,3,41] );
-					this.manager.handle( 5, [16,1,44] );
-					this.manager.handle( 5, [17,2,45] );
-					this.manager.handle( 5, [18,3,46] );
-					this.manager.handle( 5, [19,1,48] );
-					this.manager.handle( 5, [20,2,49] );
-					this.manager.handle( 5, [21,3,50] );
+					this.manager.handle( 6, [ 1,1,42] );
+					this.manager.handle( 6, [ 2,2,27] );
+					this.manager.handle( 6, [ 3,3,38] );
+					this.manager.handle( 6, [ 4,1,30] );
+					this.manager.handle( 6, [ 5,2,31] );
+					this.manager.handle( 6, [ 6,3,32] );
+					this.manager.handle( 6, [ 7,1,33] );
+					this.manager.handle( 6, [ 8,2,34] );
+					this.manager.handle( 6, [ 9,3,35] );
+					this.manager.handle( 6, [10,1,36] );
+					this.manager.handle( 6, [11,2,37] );
+					this.manager.handle( 6, [12,3,38] );
+					this.manager.handle( 6, [13,1,39] );
+					this.manager.handle( 6, [14,2,40] );
+					this.manager.handle( 6, [15,3,41] );
+					this.manager.handle( 6, [16,1,44] );
+					this.manager.handle( 6, [17,2,45] );
+					this.manager.handle( 6, [18,3,46] );
+					this.manager.handle( 6, [19,1,48] );
+					this.manager.handle( 6, [20,2,49] );
+					this.manager.handle( 6, [21,3,50] );
 
 					ref = setInterval(function(){
 
-						this.manager.handle( 5, [ 1,1,42] );
-						this.manager.handle( 5, [ 2,2,27] );
-						this.manager.handle( 5, [ 3,3,38] );
-						this.manager.handle( 5, [ 5,2,31] );
-						this.manager.handle( 5, [ 6,3,32] );
-						this.manager.handle( 5, [ 8,2,34] );
-						this.manager.handle( 5, [ 9,3,35] );
-						this.manager.handle( 5, [10,2,37] );
-						this.manager.handle( 5, [11,3,38] );
-						this.manager.handle( 5, [12,2,40] );
-						this.manager.handle( 5, [13,1,41] );
+						this.manager.handle( 6, [ 1,1,42] );
+						this.manager.handle( 6, [ 2,2,27] );
+						this.manager.handle( 6, [ 3,3,38] );
+						this.manager.handle( 6, [ 5,2,31] );
+						this.manager.handle( 6, [ 6,3,32] );
+						this.manager.handle( 6, [ 8,2,34] );
+						this.manager.handle( 6, [ 9,3,35] );
+						this.manager.handle( 6, [10,2,37] );
+						this.manager.handle( 6, [11,3,38] );
+						this.manager.handle( 6, [12,2,40] );
+						this.manager.handle( 6, [13,1,41] );
 
 					}.bind(this), 2000);
 				}
