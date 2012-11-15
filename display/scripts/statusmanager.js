@@ -3,7 +3,7 @@
 	var StatusManager = display.StatusManager = function() {
 
 		this.points = 0;
-		this.createPanel( 4 );
+		this.createPanel( config.factor );
 	};
 
 

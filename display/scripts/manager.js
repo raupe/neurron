@@ -111,7 +111,7 @@
 			distanceToUser: 350,
 			circleOffset: 100,
 			circles: 0,
-			factor: 4
+			factor: config.factor
 		});
 
 		this.playerList	= new display.PlayerList( players );
