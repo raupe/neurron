@@ -3,6 +3,9 @@
 	var Input = controller.Input = function() {
 
 		this.addHandler();
+
+
+		controller.Button.prototype.input = this;
 	};
 
 
@@ -43,21 +46,34 @@
 		ctx.strokeStyle = 'blue';
 
 
+		this.started = false;
+
+
 		cvs.addEventListener('touchstart', function ( e ) {
 
 			e.preventDefault();
 			e.stopPropagation();
 
-			var touches = e.changedTouches;
+			if ( this.started ) {
 
-			for ( var i = 0, l = touches.length; i < l; i++ ) {
+				var touches = e.changedTouches;
 
-				starts.push(touches[i]);
-                origins.push(touches[i]);
+				for ( var i = 0, l = touches.length; i < l; i++ ) {
+
+					starts.push(touches[i]);
+					origins.push(touches[i]);
+				}
+
+				ctx.beginPath();
+
+			} else {
+
+				// console.log('start');
 			}
 
-			ctx.beginPath();
-		});
+
+
+		}.bind(this));
 
 
 		cvs.addEventListener('touchmove', function ( e ) {
@@ -65,50 +81,66 @@
 			e.preventDefault();
 			e.stopPropagation();
 
-			var touches = e.changedTouches,
+			if ( this.started ) {
 
-				end,
-				current;
+				var touches = e.changedTouches,
 
-			for ( var i = 0, l = touches.length; i < l; i++ ) {
+					end,
+					current;
 
-				end = touches[i];
-				current = starts[i];
+				for ( var i = 0, l = touches.length; i < l; i++ ) {
 
-                // ctx.moveTo( current.clientX, current.clientY );
-                // ctx.lineTo( end.clientX, end.clientY );
-                // ctx.lineTo( current.clientX, current.clientY );
-                ctx.lineTo( current.clientX, current.clientY, end.clientX, end.clientY );
+					end = touches[i];
+					current = starts[i];
 
-                starts[i] = end;
+					// ctx.moveTo( current.clientX, current.clientY );
+					// ctx.lineTo( end.clientX, end.clientY );
+					// ctx.lineTo( current.clientX, current.clientY );
+					ctx.lineTo( current.clientX, current.clientY, end.clientX, end.clientY );
+
+					starts[i] = end;
+				}
+
+				ctx.stroke();
 			}
 
-			ctx.stroke();
-		});
+		}.bind(this));
 
 		cvs.addEventListener('touchend', function ( e ) {
 
 			e.preventDefault();
 			e.stopPropagation();
 
-            var touches = e.changedTouches,
-                ends = [];
+			if ( this.started ) {
 
-            for ( var i = 0, l = touches.length; i < l; i++ ) {
+				var touches = e.changedTouches,
+					ends = [];
 
-                ends.push(touches[i]);
-            }
+				for ( var i = 0, l = touches.length; i < l; i++ ) {
 
-            manager.delegate(origins ,ends);
+					ends.push(touches[i]);
+				}
 
-            origins.length = starts.length =  0;
+				manager.delegate(origins ,ends);
 
-			ctx.save();
+				origins.length = starts.length =  0;
 
-			ctx.clearRect( 0 , 0 ,cvs.width, cvs.height);
+				ctx.save();
 
-			ctx.restore();
-		});
+				ctx.clearRect( 0 , 0 ,cvs.width, cvs.height);
+
+				ctx.restore();
+
+			} else {
+
+				// console.log('start-end');
+
+				// manager.start();
+
+				// started = true; // later: in callback of onload
+			}
+
+		}.bind(this));
 
 
 		cvs.addEventListener('touchcancel', function ( e ) {
