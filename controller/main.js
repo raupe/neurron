@@ -23,6 +23,5 @@
 
 
 		new controller.Button('Start');
-
 })();
 
