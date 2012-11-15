@@ -110,7 +110,7 @@
 
 				var playerIds = [];
 
-				for ( i = 2; i < l+2; i++ ) {
+				for ( i = 3; i < l+3; i++ ) {
 
 					playerIds.push( data.charCodeAt(i) );
 				}
