@@ -18,7 +18,7 @@
 
 		box.innerHTML = this.text;
 
-		box.addEventListener('click', this.onclick.bind(this) );
+		box.addEventListener('touchend', this.onclick.bind(this) );
 
 		document.body.appendChild( box );
 	};
