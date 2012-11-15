@@ -4,8 +4,7 @@
 
 		this.createCanvas();
 
-		this.requestFullScreen();
-
+		// this.requestFullScreen();
 
 		display.Element.prototype.screen = this;
 		display.Background.prototype.screen = this;
