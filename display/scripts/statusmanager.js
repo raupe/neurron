@@ -46,7 +46,6 @@
             b;
 
 		for ( var i = 0, l = playerList.length; i < l; i++ ){
-
             currentPlayer = playerList[i];
             currentPlayer.energy = 100;
             r = currentPlayer.color[0];
