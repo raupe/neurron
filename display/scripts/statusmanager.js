@@ -143,12 +143,12 @@
 
 	StatusManager.prototype.handleCollide = function ( obstacleId, playersIds ) {
 
-        console.log(display.Obstacle.pool);
         // hardcoded, need to grab with help of obstacleId
-        var type = 'points',
+        var currentObstacle = this.pool.list[obstacleId],
+            type = currentObstacle.type,
+            value = currentObstacle.value,
             numberOfPlayers = playersIds.length,
             currentPlayer,
-            value = 30,
             i;
 
         if ( type == 'damage' ) {
