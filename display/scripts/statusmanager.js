@@ -20,6 +20,8 @@
         this.color = 'green';
         this.distance = this.fullBarHeight + 10;
 
+        this.healer = 0;
+
 		this.updatePoints( 0 );
 		this.updateLifeBars();
 	};
@@ -111,7 +113,14 @@
 
 	StatusManager.prototype.handleHeal = function ( playerId, players ) {
 
-		console.log(playerId, players);
+        var numberOfPlayers = players.length,
+            i;
+
+        this.healer = this.playerList[playerId - 1];
+        console.log(numberOfPlayers);
+        for ( i = 0; i < numberOfPlayers; i++) {
+
+        }
 	};
 
 
