@@ -11,9 +11,9 @@
 
 		this.commands = {
 
-			1: 'The game has ended',
-			2: 'The game is already running',
-			3: 'Game not found'
+			1: ['label', 'The game has ended'],
+			2: ['label', 'The game is already running'],
+			3: ['label', 'Game not found']
 		};
 
 		controller.Input.prototype.manager = this;
@@ -27,11 +27,9 @@
 	};
 
 
-	Manager.prototype.show = function ( text ) {
+	Manager.prototype.show = function ( type, text ) {
 
-
-		// new controller.Button('Start');
-		console.log('[button/label] ' + text );
+		new controller.Button( type, text );
 	};
 
 
