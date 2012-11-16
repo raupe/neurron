@@ -41,9 +41,17 @@
 
 
         // style settings
-		ctx.lineWidth = 4;
+
+
+        ctx.lineWidth = 18;
 		ctx.lineCap = 'round';
-		ctx.strokeStyle = 'blue';
+        var grd = ctx.createLinearGradient(0, 0, cvs.width, cvs.height);
+        grd.addColorStop(0, '#ffffff');
+        grd.addColorStop(0.5, '#BAE9F7');
+        grd.addColorStop(1, '#ffffff');
+
+
+		ctx.strokeStyle = grd;
 
 
 		this.started = false;
