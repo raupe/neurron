@@ -4,16 +4,20 @@ window.display = {};
 /* configurations */
 window.config = {
 
-	server		: '141.45.200.85',
+	server		: 'neurron.com',
 	port		: '2020',
+
 
     factor: 4, // offset for statusbar and grid
 
+
     // colors for lifeBars
     colorLimits: {
+
         red: 20,
-        orange: 60,
+        orange: 60
     },
+
 
 	// default resolution ? image scale ?
 	// canvas: { width	: 320,	height	: 240 },
