@@ -98,7 +98,7 @@
                 this.src = image;
             }
 
-        }.bind(this), 40 );
+        }.bind(this), 60 );
     };
 
 
@@ -113,65 +113,42 @@
         this.field = this.grid.fields[ this.pos ];
     };
 
-    // ToDo: -:> get field, define direction
 
-    Element.prototype.move = function ( direction ) {
+    Element.prototype.move = function ( nextPos ) {
 
-        // 4: left, 5: top, 3: right, 6: down
-        var change = ( direction === 4 || direction === 5 ) ? 1 : -1;
+        if ( nextPos === this.pos ) return;
 
+        this.nextPos = nextPos;
 
-        // left - right
-        if ( direction === 3 || direction === 4 ) {
+        if ( !this.moving ) {
 
-            this.dir = ( direction === 4 ) ? 'antiRing' : 'ring';
-
-
-            if ( direction === 4 ) { // edge case: 39 -> 20
-
-                if ( ( this.pos+change ) % this.grid.lanes === 0 ) {
-
-                    change -= this.grid.lanes * ( ( this.pos+change + 1 ) % this.grid.lanes );
-                }
-            }
-
-
-            if ( direction === 3 ) { // edge case: 20 -> 39
-
-                if ( (this.pos+change+1) % this.grid.lanes === 0 ) {
-
-                    change += this.grid.lanes;
-                }
-            }
-        }
-
-
-        // up - down
-        if ( direction === 5 || direction === 6 ) {
-
-            this.dir = ( direction === 5 ) ? 'dist' : 'antiDist';
-
-            change = ( direction === 5 ) ?  change + this.grid.lanes - 1 :
-                                            change - this.grid.lanes + 1;
-        }
-
-
-        // position exists
-        if ( this.grid.fields[ this.pos + change ] ) {
-            // var change = direction;
-            console.log(change);
-            this.nextPos += change;
             this.moving = true;
-        }
 
+            this.setDir();
+        }
     };
 
+
+    // check: uhrzeigersinn <- antiRing, gegen -> ring
+    Element.prototype.setDir = function() {
+
+        var nextPos = this.nextPos;
+
+        if ( nextPos > this.pos ) {
+
+            this.dir = ( nextPos - this.pos) < this.grid.lanes/2 ? 'antiRing' : 'ring';
+
+        } else {
+
+            this.dir = ( this.pos - nextPos ) > this.grid.lanes/2 ? 'antiRing' : 'ring';
+        }
+    };
 
 
 
     Element.prototype.update = function(){
 
-        if ( this.nextPos !== this.pos ) {
+        if ( this.moving ) {
 
             this.animate();
         }
@@ -189,11 +166,42 @@
 
         this.counter += this.velocity;
 
+
         if ( this.counter >= field[this.dir].length ) { // allow higher multiplicators
 
-            this.pos = this.nextPos;
-            this.moving = false;
             this.counter = 0;
+
+            if ( this.dir === 'ring' ) {
+
+                if ( this.pos%this.grid.lanes === 0 ) {
+
+                    this.pos += (this.grid.lanes - 1);
+
+                } else {
+
+                    this.pos--;
+                }
+
+            } else {
+
+                if ( this.pos%this.grid.lanes === this.grid.lanes-1) {
+
+                    this.pos -= (this.grid.lanes - 1);
+
+                } else {
+
+                    this.pos++;
+                }
+            }
+
+            if ( this.nextPos !== this.pos ) {
+
+                this.setDir();
+
+            } else {
+
+                this.moving = false;
+            }
         }
     };
 
