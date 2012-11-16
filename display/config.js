@@ -8,6 +8,7 @@ window.config = {
 	port		: '2020',
 
     factor: 4, // offset for statusbar and grid
+    amountToHeal: 10, // how much a player can heal
 
     // colors for lifeBars
     colorLimits: {
