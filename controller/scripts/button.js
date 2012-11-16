@@ -17,11 +17,11 @@
 	Button.prototype.init = function(){
 
 		var box = document.createElement('div');
-		box.id = 'start';
 
         if( this.type === 'button'){
 
 		    box.className = 'button';
+            box.id = 'start';
         }else{
 
             box.className = 'label';
@@ -62,7 +62,7 @@
 
         this.height = Math.round(window.innerHeight/2);
 
-    }
+    };
 
     Button.prototype.pos = function(){
 
