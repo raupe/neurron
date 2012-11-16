@@ -9,6 +9,12 @@ window.config = {
 
     factor: 4, // offset for statusbar and grid
 
+    // colors for lifeBars
+    colorLimits: {
+        red: 20,
+        orange: 60,
+    },
+
 	// default resolution ? image scale ?
 	// canvas: { width	: 320,	height	: 240 },
 

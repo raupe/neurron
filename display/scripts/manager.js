@@ -122,6 +122,7 @@
 		this.playerList	= new display.PlayerList( params[0] );
 
 		this.statusManager.init( this.playerList );
+        this.statusManager.handleHeal();
 
 		new display.Debug();
 	};
