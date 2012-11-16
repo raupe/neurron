@@ -22,23 +22,27 @@
 
         this.healer = 0;
 
-		this.updatePoints( 0 );
-		this.updateLifeBars();
+		this.update();
 	};
 
+    StatusManager.prototype.update = function(){
 
-	StatusManager.prototype.updatePoints = function ( value ) {
+        this.setBackground();
+        this.showPoints();
+        this.showLifeBars();
+    }
+
+	StatusManager.prototype.showPoints = function () {
 
 		var ctx = this.panel,
 			size = 40;
 
 		ctx.fillStyle = 'yellow';
 		ctx.font = 'italic ' + size + 'pt Arial';
-		ctx.fillText( value + ' points', this.offset/5, size * 2 );
+		ctx.fillText( this.points + ' points', this.offset/5, size * 2 );
 	};
 
-    // TODO set limits in config for red, orange/yellow, green
-	StatusManager.prototype.updateLifeBars = function () {
+	StatusManager.prototype.showLifeBars = function () {
 
 		var ctx = this.panel,
 			playerList = this.playerList,
@@ -48,8 +52,9 @@
             b;
 
 		for ( var i = 0, l = playerList.length; i < l; i++ ){
+
             currentPlayer = playerList[i];
-            currentPlayer.energy = 100;
+
             r = currentPlayer.color[0];
             g = currentPlayer.color[1];
             b = currentPlayer.color[2];
@@ -95,41 +100,82 @@
 		cvs.height = this.screen.cvs.height;
 
 		this.start = this.screen.cvs.width - this.offset;
-
-
-		ctx.fillStyle = '#000';
-
-		ctx.fillRect( 0, 0, cvs.width, cvs.height );
-
 		this.panel = ctx;
+        this.setBackground();
 	};
+
+
+    StatusManager.prototype.setBackground = function () {
+        this.panel.fillStyle = '#000';
+		this.panel.fillRect( 0, 0, this.panel.canvas.width, this.panel.canvas.height );
+    }
 
 
 	StatusManager.prototype.draw = function(){
 
-		this.screen.ctx.drawImage( this.panel.canvas, this.start, 0 );
+        this.screen.ctx.drawImage( this.panel.canvas, this.start, 0 );
 	};
 
 
-	StatusManager.prototype.handleHeal = function ( playerId, players ) {
+	StatusManager.prototype.handleHeal = function ( playerId, playersIds ) {
 
-        var numberOfPlayers = players.length,
-            i;
+        var numberOfPlayers = playersIds.length,
+            amountToHeal = config.amountToHeal,
+            healForEachPlayer = ~~(amountToHeal / numberOfPlayers),
+            currentPlayer,  i;
 
         this.healer = this.playerList[playerId - 1];
-        console.log(numberOfPlayers);
-        for ( i = 0; i < numberOfPlayers; i++) {
 
+        if (this.healer.energy > amountToHeal) {
+
+            this.healer.energy -= amountToHeal;
+
+            for ( i = 0; i < numberOfPlayers; i++) {
+
+                currentPlayer = this.playerList[playersIds[i] - 1];
+                currentPlayer.energy += healForEachPlayer;
+            }
         }
+
+        this.update();
 	};
 
 
-	StatusManager.prototype.handleCollision = function ( obstacleId, players ) {
+	StatusManager.prototype.handleCollision = function ( obstacleId, playersIds ) {
 
-		console.log(obstacleId, players);
+        // hardcoded, need to grab with help of obstacleId
+        var type = 'points',
+            numberOfPlayers = playersIds.length,
+            currentPlayer,
+            value = 30,
+            i;
+
+        if ( type == 'damage' ) {
+
+            for ( i = 0; i < numberOfPlayers; i++ ){
+                currentPlayer = this.playerList[playersIds[i] - 1];
+                currentPlayer.energy -= value;
+            }
+
+        } else if ( type == 'heal' ) {
+
+            for ( i = 0; i < numberOfPlayers; i++ ){
+                var healForEachPlayer = ~~(value / numberOfPlayers);
+                currentPlayer = this.playerList[playersIds[i] - 1];
+                currentPlayer.energy += healForEachPlayer;
+            }
+
+        } else {
+
+            for ( i = 0; i < numberOfPlayers; i++ ){
+                var pointsForEachPlayer = ~~(value / numberOfPlayers);
+                currentPlayer = this.playerList[playersIds[i] - 1];
+
+                this.points += (currentPlayer.energy / 100) * pointsForEachPlayer;
+            }
+        }
+
+        this.update();
 	};
-
-
-
 
 })();
