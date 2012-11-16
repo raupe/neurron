@@ -98,7 +98,7 @@
                 this.src = image;
             }
 
-        }.bind(this), 60 );
+        }.bind(this), 80 );
     };
 
 
