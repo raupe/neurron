@@ -11,15 +11,17 @@
 
 		this.playerList = playerList;
 
-        this.fullBar = this.offset / 1.6;
+        this.fullBarWidth = this.offset / 1.6;
+        this.fullBarHeight = 40;
         this.lifeBarStartX = this.offset / 8;
         this.colorBarStartX = this.lifeBarStartX / 2;
-        this.lifeLabelStartX = this.lifeBarStartX + this.fullBar;
+        this.lifeLabelStartX = this.lifeBarStartX + this.fullBarWidth;
         this.startY = 140;
         this.color = 'green';
+        this.distance = this.fullBarHeight + 10;
 
 		this.updatePoints( 0 );
-		this.updateLifeBars( 100 );
+		this.updateLifeBars();
 	};
 
 
@@ -34,7 +36,7 @@
 	};
 
     // TODO set limits in config for red, orange/yellow, green
-	StatusManager.prototype.updateLifeBars = function ( energy ) {
+	StatusManager.prototype.updateLifeBars = function () {
 
 		var ctx = this.panel,
 			playerList = this.playerList,
@@ -66,16 +68,16 @@
 
             // lifeBars
 			ctx.fillStyle = this.color;
-			ctx.fillRect( this.lifeBarStartX, this.startY + i*50, this.fullBar * (currentPlayer.energy / 100), 40);
+			ctx.fillRect( this.lifeBarStartX, this.startY + i*this.distance, this.fullBarWidth * (currentPlayer.energy / 100), this.fullBarHeight);
 
             // lifeLabels
 			ctx.fillStyle = 'white';
 			ctx.font = 'italic ' + 20 + 'pt Arial';
-			ctx.fillText( currentPlayer.energy + ' %', this.lifeLabelStartX, this.startY + 30 );
+			ctx.fillText( currentPlayer.energy + ' %', this.lifeLabelStartX, (this.startY + 30) + i*this.distance );
 
             // colorBar
             ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
-            ctx.fillRect(this.colorBarStartX, this.startY + i*50, this.lifeBarStartX/2, 40);
+            ctx.fillRect(this.colorBarStartX, this.startY + i*this.distance, this.lifeBarStartX/2, this.fullBarHeight);
 		}
 
 	};
@@ -108,9 +110,9 @@
 	};
 
 
-	StatusManager.prototype.handleHeal = function ( playerId, targets ) {
+	StatusManager.prototype.handleHeal = function ( playerId, players ) {
 
-		console.log(playerId, targets);
+		console.log(playerId, players);
 	};
 
 
