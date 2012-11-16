@@ -84,15 +84,23 @@
 
 			if ( !playerList[0].moving ) {
 
-				if ( key === 37 ) playerList[0].move( 1 );
+
+				if ( key === 37 ) { // left
+
+                    this.manager.handle( 6, [2,1,42] );
+                    this.manager.handle( 7, [2, [2]]);
+                }
+
 				// if ( key === 38 ) playerList[0].move( 5 );
 				if ( key === 39 ) playerList[0].move( 14 );
 				// if ( key === 40 ) playerList[0].move( 6 );
 			}
 
-			if ( key === 49 ) {
+			if ( key === 49 ) { // 1
 
-				this.manager.handle( 6, [1,1,42] );
+				this.manager.handle( 6, [1,3,42] );
+                this.manager.handle( 7, [1, [2]]);
+
 			}
 
 			if ( key === 50 ) {

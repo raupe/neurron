@@ -23,6 +23,7 @@
 
 		config.visible = true;
 
+        this.value = config.value;
 		this.type = config.type;
 
 		this.velocity = config.velocity;

@@ -9,12 +9,14 @@
 		this.list = [];
 
 		display.Obstacle.prototype.pool = this;
+        display.StatusManager.prototype.pool = this;
 	};
 
 
 	ObstaclePool.prototype.get = function ( id, category, start ) {
 
-		var model = config.obstacles[category],
+
+        var model = config.obstacles[category],
 			entry;
 
 		model.id = id;

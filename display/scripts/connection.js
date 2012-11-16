@@ -3,7 +3,6 @@
 	var Connection = display.Connection = function() {
 
 		this.url = "ws://" + config.server + ":" + config.port;
-
 		this.initializeSocket();
 	};
 
@@ -24,12 +23,14 @@
 
 			console.log('[close]');
 
-			// manager.handle( config.protocol.START, [[
-   //              { id:1, pos:0, color:'55' }
-   //              // { id:2, pos:2, color:'15' }
-   //          ]] );
 
-            // manager.init(2);
+			manager.handle( config.protocol.START, [[
+                { id:1, pos:1, color:{r: 255, g: 0, b: 0} },
+                { id:2, pos:2, color:{r: 0, g: 255, b: 0} },
+                { id:3, pos:4, color:{r: 0, g: 0, b: 255} }
+            ]] );
+
+            manager.init(2);
 		};
 
 
@@ -129,6 +130,7 @@
 
 			console.log('[error] ', err );
 		};
+
 	};
 
 })();

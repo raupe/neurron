@@ -9,6 +9,8 @@ window.config = {
 
 
     factor: 4, // offset for statusbar and grid
+    amountToHeal: 10, // how much a player can heal
+    punishPoints: 1000,
 
 
     // colors for lifeBars

@@ -6,6 +6,7 @@
 namespace sv
 {
 	class Player;
+	class Grid;
 
 	class PlayerManager
 	{
@@ -13,11 +14,16 @@ namespace sv
 		PlayerManager();
 		~PlayerManager();
 
-		Player*					AddPlayer();
+		Player*					AddPlayer(Grid* grid);
 		Player*					GetPlayer(uint id);
 		void					Restart();
 
+		void					Start();
 		void					Update(ulong deltaTime);
+
+		uchar					GetNumber();
+		void					GetColors(uchar* colors);
+		void					GetPos(uchar* pos);
 	private:
 		std::vector<Player*>	m_Player;
 		uint					m_Color;

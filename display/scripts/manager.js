@@ -60,10 +60,9 @@
 
 
 
-
 	Manager.prototype.handle = function ( action, options ) {
 
-		var commands = {
+        var commands = {
 
 			1	: this.init,
 			2	: this.countdown,
@@ -118,12 +117,12 @@
 			factor: config.factor
 		});
 
+        // this.init(2);
 		this.playerList	= new display.PlayerList( params[0] );
 
 		this.statusManager.init( this.playerList );
-        this.statusManager.handleHeal();
 
-		new display.Debug();
+        new display.Debug();
 	};
 
 

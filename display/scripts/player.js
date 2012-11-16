@@ -14,7 +14,7 @@
 
 			id: config.id,
 			pos: config.pos,
-			color: [ config.color * 1, config.color * 2, config.color * 3 ]
+			color: [ config.color.r, config.color.g, config.color.b ]
 		});
 	};
 
