@@ -94,6 +94,7 @@
 
 				this.manager.handle( 6, [1,1,42] );
                 this.manager.handle( 7, [1, [2]]);
+                
 			}
 
 			if ( key === 50 ) {
