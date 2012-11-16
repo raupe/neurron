@@ -40,13 +40,15 @@
 
 			var res = t.currentTarget.responseText,
 
-				msg = res.substr( 0, res.length - 1 ),
+				temp = res.length%4,				// shorten to 4
 
-				data = atob( msg.data ),			// base64 -> string
+				msg = res.substr( 0, res.length - temp ),
+
+				data = atob( msg ),					// base64 -> string
 
 				action = data.charCodeAt(0);		// int
 
-			if ( action === config.protocol.START ) {
+			if ( action === config.protocol.START ) { //
 
 				this.id = data.charCodeAt(1);
 				this.color = data.charCodeAt(2);
@@ -118,7 +120,7 @@
 
 		// encode into base64, avoiding special characters like '0'
 		var data = btoa( String.fromCharCode(  this.channel, this.id, action ) );
-
+		console.log(this.channel);
 		this.req.setRequestHeader( 'Content-Type', 'text/plain; charset=UTF-8' );
 
 		this.req.send( data );
