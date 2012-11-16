@@ -6,11 +6,9 @@
 
 		this.visible = true; // default
 
-
 		this.velocity = 1;
 
 		this.energy = 100;
-
 
 		this.init({
 

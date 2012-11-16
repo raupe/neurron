@@ -24,10 +24,10 @@
 
 			console.log('[close]');
 
-			// manager.handle( config.protocol.START, [
-   //              { id:1, pos:1, color:'55' },
-   //              { id:2, pos:2, color:'15' }
-   //          ] );
+			// manager.handle( config.protocol.START, [[
+   //              { id:1, pos:0, color:'55' }
+   //              // { id:2, pos:2, color:'15' }
+   //          ]] );
 
             // manager.init(2);
 		};
@@ -132,3 +132,4 @@
 	};
 
 })();
+
