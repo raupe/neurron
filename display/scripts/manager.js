@@ -21,13 +21,9 @@
 
 	Manager.prototype.render = function(){
 
-		(function loop(){
-
-			requestAnimationFrame( loop.bind(this) );
-
+		(function loop ( delta ) {
 
 			this.screen.clear(); // prototype
-
 
 			forAll( this.playerList, 'update' );
 
@@ -43,6 +39,7 @@
 			this.statusManager.draw();
 
 
+			requestAnimationFrame( loop.bind(this) );
 
 		}.bind(this) )();
 
@@ -65,7 +62,7 @@
 
 
 	Manager.prototype.handle = function ( action, options ) {
-		console.log(action, options);
+
 		var commands = {
 
 			1	: this.init,
@@ -76,6 +73,8 @@
 			6	: this.create,
 			7	: this.collide
 		};
+
+		console.log(action, options);
 
 		commands[ action ].call( this, options );
 	};
@@ -98,11 +97,11 @@
 
         if ( element.lastChild ) {
 
-          element.replaceChild(showQRCode(qrCode), element.lastChild);
+			element.replaceChild(showQRCode(qrCode), element.lastChild);
 
         } else {
 
-          element.appendChild(showQRCode(qrCode));
+			element.appendChild(showQRCode(qrCode));
         }
 	};
 
@@ -111,7 +110,7 @@
 
 		this.grid.init({
 
-			players: 10,//players.length,
+			players: 8,				// players.length,
 			frames: 30,
 			distanceToUser: 350,
 			circleOffset: 100,
