@@ -141,8 +141,9 @@
 	};
 
 
-	StatusManager.prototype.handleCollision = function ( obstacleId, playersIds ) {
+	StatusManager.prototype.handleCollide = function ( obstacleId, playersIds ) {
 
+        console.log(display.Obstacle.pool);
         // hardcoded, need to grab with help of obstacleId
         var type = 'points',
             numberOfPlayers = playersIds.length,
