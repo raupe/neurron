@@ -24,8 +24,9 @@
 			console.log('[close]');
 
 			 manager.handle( config.protocol.START, [[
-                 { id:1, pos:1, color:'55' },
-                 { id:2, pos:2, color:'15' }
+                 { id:1, pos:1, color:{r: 255, g: 0, b: 0} },
+                 { id:2, pos:2, color:{r: 0, g: 255, b: 0} },
+                 { id:3, pos:4, color:{r: 0, g: 0, b: 255} }
              ]] );
 
             // manager.init(2);
