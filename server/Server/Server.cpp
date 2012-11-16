@@ -12,6 +12,7 @@
 #ifdef WIN32
 #include <winsock.h>
 
+#define SEND(socket, message, length) send(socket, message, length, NULL)
 #define CLOSE_SOCKET(s) closesocket(s);
 #define GET_ERROR WSAGetLastError()
 
@@ -23,6 +24,7 @@
 #include <sys/types.h>
 #include <string.h>
 
+#define SEND(socket, message, length) send(socket, message, length, MSG_NOSIGNAL)
 #define CLOSE_SOCKET(s) close(s);
 #define GET_ERROR errno
 #endif
@@ -123,7 +125,7 @@ void sv::Server::HandleConnection(int connection)
 	{
 		std::string response;
 		response = http.GetSocketHeader(headerInfo);
-		send(connection, response.c_str(), response.length(), NULL);
+		SEND(connection, response.c_str(), response.length());
 		
 		LOG1(DEBUG_MSG, "Incomming key:\n%s\n", headerInfo.m_SecWebSocketKey.c_str());
 		LOG1(DEBUG_MSG, "Socket header:\n%s\n", response.c_str());
@@ -154,7 +156,7 @@ void sv::Server::SendSocketMsg(const char* msg, uint length, uint socket)
 	std::memcpy(bufferMsg, msg, length);
 
 	std::string str = http.GetSocketMsg(bufferMsg, length);
-	send(socket, str.c_str(), length, NULL);
+	SEND(socket, str.c_str(), length);
 }
 */
 
@@ -168,7 +170,7 @@ bool sv::Server::SendSocketMsg(Msg* msg, uint socket)
 	http.GetSocketMsg(bufferMsg, buffer, length);
 	
 	// TODO: test if everything was send
-	int success = send(socket, buffer, length, NULL);
+	int success = SEND(socket, buffer, length);
 	LOG1(DEBUG_WEBSOCKET && success == -1, "Connection closed: %i", GET_ERROR);
 	return success != -1;
 }
@@ -183,7 +185,7 @@ void sv::Server::Response(Msg* msg, uint socket)
 	http.GetMsg(bufferMsg, buffer, length);
 	
 	// TODO: test if everything was send
-	send(socket, buffer, length, NULL);
+	SEND(socket, buffer, length);
 	
 	
 	buffer[length] = 0;

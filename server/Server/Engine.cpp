@@ -54,6 +54,7 @@ void sv::Engine::HandleMsgs()
 
 		if(msg->GetAction() == eContrAction_CreateGame)
 		{
+			LOG(DEBUG_FLOW, "Game created");
 			Game* game = manager->CreateGame(msg->GetSocket());
 
 			InitMsg initMsg(game->GetId()); 
@@ -63,6 +64,7 @@ void sv::Engine::HandleMsgs()
 		}
 		else if(msg->GetAction() == eContrAction_DeleteGame)
 		{
+			LOG(DEBUG_FLOW, "Game deleted");
 			Game* game = manager->GetGame(msg->GetChannel());
 			manager->DeleteGame(game);
 		}
@@ -75,7 +77,7 @@ void sv::Engine::HandleMsgs()
 			}
 			else
 			{
-				ResponseNoGameMsg response;
+				ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_NoGame);
 				Server::Instance()->Response(&response, msg->GetSocket());
 			}
 		}

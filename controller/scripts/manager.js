@@ -8,6 +8,14 @@
 		this.id = 0; // defaults
 		this.channel = config.channel;
 
+
+		this.commands = {
+
+			1: 'The game has ended',
+			2: 'The game is already running',
+			3: 'Game not found'
+		};
+
 		controller.Input.prototype.manager = this;
 		controller.Button.prototype.manager = this;
 	};
@@ -19,22 +27,44 @@
 	};
 
 
+	Manager.prototype.show = function ( text ) {
+
+
+		// new controller.Button('Start');
+		console.log('[button/label] ' + text );
+	};
+
+
 	Manager.prototype.register = function(){
 
 		/* serve response  */
 		this.req.onload = function ( t ) {
 
-			// console.log(t);
-			var res = t.currentTarget.responseText;
+			var res = t.currentTarget.responseText,
 
-				msg = atob( res.substr( 0, res.length -1 ) );
+				temp = res.length%4,				// shorten to 4
 
+				msg = res.substr( 0, res.length - temp ),
 
+				data = atob( msg ),					// base64 -> string
 
+				action = data.charCodeAt(0);		// int
 
-			// // results
-			// this.id = msg.charCodeAt( 0 );
-			// this.color = msg.charCodeAt( 1 );
+			if ( action === config.protocol.START ) { //
+
+				this.id = data.charCodeAt(1);
+				this.color = data.charCodeAt(2);
+			}
+
+			if ( action === config.protocol.STATUS ) {
+
+				var state = data.charCodeAt(1);
+
+				if ( state === 0 ) return;
+
+				this.show( commands[ state ] );
+			}
+
 		}.bind(this);
 
 		// /* on remove */
@@ -59,11 +89,11 @@
 
             if ( start.x > end.x ) {
 
-                direction = 4;//links
+                direction = 4; // links
 
             } else {
 
-                direction = 3;//rechts
+                direction = 3; // rechts
             }
 
 			this.send( direction );

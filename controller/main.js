@@ -22,7 +22,7 @@
 		new controller.Input();
 
 
-		new controller.Button('label','start');
+		new controller.Button('Start');
 
 })();
 

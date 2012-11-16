@@ -21,13 +21,9 @@
 
 	Manager.prototype.render = function(){
 
-		(function loop(){
-
-			requestAnimationFrame( loop.bind(this) );
-
+		(function loop ( delta ) {
 
 			this.screen.clear(); // prototype
-
 
 			forAll( this.playerList, 'update' );
 
@@ -43,6 +39,7 @@
 			this.statusManager.draw();
 
 
+			requestAnimationFrame( loop.bind(this) );
 
 		}.bind(this) )();
 
@@ -63,10 +60,9 @@
 
 
 
-
 	Manager.prototype.handle = function ( action, options ) {
 
-		var commands = {
+        var commands = {
 
 			1	: this.init,
 			2	: this.countdown,
@@ -76,6 +72,8 @@
 			6	: this.create,
 			7	: this.collide
 		};
+
+		console.log(action, options);
 
 		commands[ action ].call( this, options );
 	};
@@ -95,37 +93,43 @@
         var element = document.getElementById("qrcode");
 
         var bodyElement = document.body;
-        if(element.lastChild)
-          element.replaceChild(showQRCode(qrCode), element.lastChild);
-        else
-          element.appendChild(showQRCode(qrCode));
+
+        if ( element.lastChild ) {
+
+			element.replaceChild(showQRCode(qrCode), element.lastChild);
+
+        } else {
+
+			element.appendChild(showQRCode(qrCode));
+        }
 	};
 
-
-	Manager.prototype.start = function ( players ) {
+	/* playerlist */
+	Manager.prototype.start = function ( params ) {
 
 		this.grid.init({
 
-			players: 10,//players.length,
+			players: 8,				// players.length,
 			frames: 30,
 			distanceToUser: 350,
 			circleOffset: 100,
 			circles: 0,
-			factor: 4
+			factor: config.factor
 		});
 
-		this.playerList	= new display.PlayerList( players );
+        // this.init(2);
+		this.playerList	= new display.PlayerList( params[0] );
 
 		this.statusManager.init( this.playerList );
 
-		new display.Debug();
+        new display.Debug();
 	};
 
 
 	/* playerId - nextPos */
 	Manager.prototype.move = function ( params ) {
 
-		this.playerList[ params[0] ].move( params[1] );
+		this.playerList[ params[0]-1 ].move( params[1] );
 	};
 
 	/* playerId - targets */

@@ -11,6 +11,14 @@ var config = {
 
 		width: 320,
 		height: 240
+	},
+
+
+
+	protocol: {
+
+		START		: 1,
+		STATUS		: 2
 	}
 };
 

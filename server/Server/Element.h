@@ -3,11 +3,38 @@
 
 namespace sv
 {
+	class Grid;
+
 	class Element
 	{
 	public:
-		Element();
+		Element(uint id, Grid* grid, uint pos);
 		~Element();
+		
+		virtual void	Start();
+		virtual void	Update(ulong deltaTime);
+
+		uint			GetId() { return m_Id; }
+		uint			GetPos() { return m_Pos; }
+		
+		int				MoveRigth();
+		int				MoveLeft();
+
+	protected:
+		void			SetPos(uint pos);
+
+	private:
+
+		uint			m_Id;
+		
+		uint			m_Pos;
+		uint			m_NextPos;
+		uint			m_DesiredPos;
+		
+		uint			m_PassedTime;
+		bool			m_Moving;
+
+		Grid*			m_Grid;
 	};
 }
 

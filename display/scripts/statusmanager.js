@@ -3,7 +3,7 @@
 	var StatusManager = display.StatusManager = function() {
 
 		this.points = 0;
-		this.createPanel( 4 );
+		this.createPanel( config.factor );
 	};
 
 
@@ -11,35 +11,79 @@
 
 		this.playerList = playerList;
 
-		this.updatePoints( 0 );
-		this.updateLifeBars( 100 );
+        this.fullBarWidth = this.offset / 1.6;
+        this.fullBarHeight = 40;
+        this.lifeBarStartX = this.offset / 8;
+        this.colorBarStartX = this.lifeBarStartX / 2;
+        this.lifeLabelStartX = this.lifeBarStartX + this.fullBarWidth;
+        this.startY = 140;
+        this.color = 'green';
+        this.distance = this.fullBarHeight + 10;
+
+        this.healer = 0;
+
+		this.update();
 	};
 
+    StatusManager.prototype.update = function(){
 
-	StatusManager.prototype.updatePoints = function ( value ) {
+        this.setBackground();
+        this.showPoints();
+        this.showLifeBars();
+    }
+
+	StatusManager.prototype.showPoints = function () {
 
 		var ctx = this.panel,
 			size = 40;
 
-		ctx.fillStyle = 'red';
+		ctx.fillStyle = 'yellow';
 		ctx.font = 'italic ' + size + 'pt Arial';
-		ctx.fillText( value + ' points', this.offset/5, size * 2 );
+		ctx.fillText( this.points + ' points', this.offset/5, size * 2 );
 	};
 
-
-	StatusManager.prototype.updateLifeBars = function ( energy ) {
+	StatusManager.prototype.showLifeBars = function () {
 
 		var ctx = this.panel,
-			playerList = this.playerList;
+			playerList = this.playerList,
+            currentPlayer,
+            r,
+            g,
+            b;
 
 		for ( var i = 0, l = playerList.length; i < l; i++ ){
 
-			ctx.fillStyle = 'green';
-			ctx.fillRect( 20, 200, 300, 40);
+            currentPlayer = playerList[i];
 
+            r = currentPlayer.color[0];
+            g = currentPlayer.color[1];
+            b = currentPlayer.color[2];
+
+            if (currentPlayer.energy <= config.colorLimits.red) {
+
+                this.color = 'red';
+
+            } else if ( currentPlayer.energy <= config.colorLimits.orange ) {
+
+                this.color = 'orange';
+
+            } else {
+
+                this.color = 'green';
+            }
+
+            // lifeBars
+			ctx.fillStyle = this.color;
+			ctx.fillRect( this.lifeBarStartX, this.startY + i*this.distance, this.fullBarWidth * (currentPlayer.energy / 100), this.fullBarHeight);
+
+            // lifeLabels
 			ctx.fillStyle = 'white';
 			ctx.font = 'italic ' + 20 + 'pt Arial';
-			ctx.fillText( energy + ' %', this.offset/2.5, 230 );
+			ctx.fillText( currentPlayer.energy + ' %', this.lifeLabelStartX, (this.startY + 30) + i*this.distance );
+
+            // colorBar
+            ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
+            ctx.fillRect(this.colorBarStartX, this.startY + i*this.distance, this.lifeBarStartX/2, this.fullBarHeight);
 		}
 
 	};
@@ -50,40 +94,95 @@
 		var cvs = document.createElement('canvas'),
 			ctx = cvs.getContext('2d');
 
-			this.offset = this.screen.cvs.width / factor;
+		this.offset = this.screen.cvs.width / factor;
 
 		cvs.width = this.offset;
 		cvs.height = this.screen.cvs.height;
 
 		this.start = this.screen.cvs.width - this.offset;
-
-
-		ctx.fillStyle = '#000';
-
-		ctx.fillRect( 0, 0, cvs.width, cvs.height );
-
 		this.panel = ctx;
+        this.setBackground();
 	};
+
+
+    StatusManager.prototype.setBackground = function () {
+        this.panel.fillStyle = '#000';
+		this.panel.fillRect( 0, 0, this.panel.canvas.width, this.panel.canvas.height );
+    }
 
 
 	StatusManager.prototype.draw = function(){
 
-		this.screen.ctx.drawImage( this.panel.canvas, this.start, 0 );
+        this.screen.ctx.drawImage( this.panel.canvas, this.start, 0 );
 	};
 
 
-	StatusManager.prototype.handleHeal = function ( playerId, targets ) {
+	StatusManager.prototype.handleHeal = function ( playerId, playersIds ) {
 
-		console.log(playerId, targets);
+        var numberOfPlayers = playersIds.length,
+            amountToHeal = config.amountToHeal,
+            healForEachPlayer = ~~(amountToHeal / numberOfPlayers),
+            currentPlayer,  i;
+
+        this.healer = this.playerList[playerId - 1];
+
+        if (this.healer.energy > amountToHeal) {
+
+            this.healer.energy -= amountToHeal;
+
+            for ( i = 0; i < numberOfPlayers; i++) {
+
+                currentPlayer = this.playerList[playersIds[i] - 1];
+                if (currentPlayer.energy <= 90) currentPlayer.energy += healForEachPlayer;
+            }
+        }
+
+        this.update();
 	};
 
 
-	StatusManager.prototype.handleCollision = function ( obstacleId, players ) {
+	StatusManager.prototype.handleCollide = function ( obstacleId, playersIds ) {
 
-		console.log(obstacleId, players);
+        var currentObstacle = this.pool.list[obstacleId],
+            type = currentObstacle.type,
+            value = currentObstacle.value,
+            numberOfPlayers = playersIds.length,
+            currentPlayer,
+            i;
+
+        if ( type == 'damage' ) {
+
+            for ( i = 0; i < numberOfPlayers; i++ ){
+                currentPlayer = this.playerList[playersIds[i] - 1];
+                if (currentPlayer.energy >= value) {
+                    currentPlayer.energy -= value;
+                } else {
+                    currentPlayer.energy = 0;
+                }
+                if (currentPlayer.energy === 0) {
+                    this.points -= config.punishPoints;
+                }
+            }
+
+        } else if ( type == 'heal' ) {
+
+            for ( i = 0; i < numberOfPlayers; i++ ){
+                var healForEachPlayer = ~~(value / numberOfPlayers);
+                currentPlayer = this.playerList[playersIds[i] - 1];
+                if (currentPlayer.energy <= 90) currentPlayer.energy += healForEachPlayer;
+            }
+
+        } else {
+
+            for ( i = 0; i < numberOfPlayers; i++ ){
+                var pointsForEachPlayer = ~~(value / numberOfPlayers);
+                currentPlayer = this.playerList[playersIds[i] - 1];
+
+                this.points += (currentPlayer.energy / 100) * pointsForEachPlayer;
+            }
+        }
+
+        this.update();
 	};
-
-
-
 
 })();
