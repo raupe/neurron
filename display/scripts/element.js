@@ -113,6 +113,7 @@
         this.field = this.grid.fields[ this.pos ];
     };
 
+    // ToDo: -:> get field, define direction
 
     Element.prototype.move = function ( direction ) {
 
@@ -157,7 +158,8 @@
 
         // position exists
         if ( this.grid.fields[ this.pos + change ] ) {
-
+            // var change = direction;
+            console.log(change);
             this.nextPos += change;
             this.moving = true;
         }
@@ -201,7 +203,7 @@
         var field = this.field;
 
         // // degree is saved per field
-        // field.deg = this.counter;
+        field.deg = this.counter;
 
         this.rotate( field.deg );
 
