@@ -7,19 +7,19 @@ namespace sv
 {
 	enum EMsgType
 	{
+		eMsgType_Polling,
 		eMsgType_Init = 1,
+		eMsgType_Countdown,
 		eMsgType_Start,
 		eMsgType_Move,
 		eMsgType_Heal,
 		eMsgType_Obstacle,
 		eMsgType_Collision,
-		eMsgType_Polling,
 
 		// Controller Msgs
-		eMsgType_Response,
-		eMsgType_ResponseOk,
+		eMsgType_Response, // Not used as msg-type
 		eMsgType_ResponseStart,
-		eMsgType_ResponseNoGame,
+		eMsgType_ResponseStatus,
 	};
 
 	class Msg
@@ -31,23 +31,18 @@ namespace sv
 		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length) = 0;
 
 	protected:
-		void			Visit(unsigned int& i, uchar* buffer, uint& pos, const uint& length);
-		void			Visit(uchar& i, uchar* buffer, uint& pos, const uint& length);
+		void			Visit(uchar i, uchar* buffer, uint& pos, const uint& length);
 
 		uchar			m_Type;
 	};
 
-	class ResponseMsg : public Msg
+	class PollingMsg : public Msg
 	{
 	public:
-		ResponseMsg(uchar id, uchar color);
-		virtual ~ResponseMsg() {}
+		PollingMsg();
+		virtual ~PollingMsg() {}
 
 		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
-
-	private:
-		uchar			m_Id;
-		uchar			m_Color;
 	};
 
 	class InitMsg : public Msg
@@ -62,37 +57,48 @@ namespace sv
 		uchar			m_Channel;
 	};
 
+	class CountdownMsg : public Msg
+	{
+	public:
+		CountdownMsg(uchar length);
+		virtual ~CountdownMsg() {}
+
+		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
+	private:
+		uchar			m_Length;
+	};
+
+	class StartMsg : public Msg
+	{
+	public:
+		StartMsg(uchar number);
+		virtual ~StartMsg();
+
+		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
+
+		void			SetColors(uchar* colors);
+		void			SetPos(uchar* pos);
+
+	private:
+		uchar			m_Number;
+		uchar*			m_Colors;
+		uchar*			m_Pos;
+	};
+
 	class MoveMsg : public Msg
 	{
 	public:
-		MoveMsg(uchar dir);
+		MoveMsg(uchar playerId, uchar pos);
 		virtual ~MoveMsg() {}
 
 		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
 
 	private:
-		uchar			m_Direction;
-	};
-
-	class PollingMsg : public Msg
-	{
-	public:
-		PollingMsg();
-		virtual ~PollingMsg() {}
-
-		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
+		uchar			m_PLayerId;
+		uchar			m_Pos;
 	};
 
 	//////////////////////////////////////////////////////////////////////////////////////
-	
-	class ResponseOkMsg : public Msg
-	{
-	public:
-		ResponseOkMsg();
-		virtual ~ResponseOkMsg() {}
-
-		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
-	};
 
 	class ResponseStartMsg : public Msg
 	{
@@ -105,14 +111,24 @@ namespace sv
 		uchar			m_Id;
 		uchar			m_Color;
 	};
-
-	class ResponseNoGameMsg : public Msg
+	
+	class ResponseStatusMsg : public Msg
 	{
 	public:
-		ResponseNoGameMsg();
-		virtual ~ResponseNoGameMsg() {}
+		enum
+		{
+			eResponseStatus_Ok,
+			eResponseStatus_NotRunning,
+			eResponseStatus_Failed,
+			eResponseStatus_NoGame,
+		};
+
+		ResponseStatusMsg(uchar status);
+		virtual ~ResponseStatusMsg() {}
 
 		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
+	private:
+		uchar			m_Status;
 	};
 }
 

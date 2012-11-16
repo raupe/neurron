@@ -1,31 +1,23 @@
 #ifndef Player_h__
 #define Player_h__
 
+#include "Element.h"
+
 namespace sv
 {
-	class Player
+	class Grid;
+
+	class Player : public Element
 	{
 	public:
-		Player(uint id, uint color);
+		Player(uint id, uint color, Grid* grid, uint pos);
 		~Player();
-
-		uint	GetId() { return m_Id; }
-		uint	GetColor() { return m_Color; }
-		uint	GetPos() { return m_Pos; }
 		
-		void	SetPos(uint pos);
-		void	SetNextPos(uint pos);
+		virtual void	Update(ulong deltaTime);
 
-		void	Update(ulong deltaTime);
+		uint	GetColor() { return m_Color; }
 	private:
-		uint	m_Id;
 		uint	m_Color;
-
-		uint	m_Pos;
-		uint	m_NextPos;
-
-		uint	m_PassedTime;
-		bool	m_Moving;
 	};
 }
 

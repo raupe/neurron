@@ -4,28 +4,80 @@
 #include "InputMsg.h"
 #include "Msg.h"
 #include "Server.h"
+#include "PlayerManager.h"
+#include "Player.h"
+#include "Grid.h"
 
 #ifdef WIN32
 #include <Windows.h>
 #endif
 
-#define POLLING_RATE 5000000
-
 sv::Game::Game()
 : m_TimeLastMsg(0)
-, m_Status(eGameStatus_Waiting)
+, m_Status(eGameStatus_Wait)
+, m_Countdown(0)
+, m_PlayerManager(0)
+, m_Grid(0)
 {
 	InitTime();
+	m_PlayerManager = S_NEW PlayerManager();
+	m_Grid = S_NEW Grid();
 }
 
 sv::Game::~Game()
 {
+	delete(m_PlayerManager);
+	delete(m_Grid);
+}
+
+void sv::Game::Init(uint id, int socket)
+{
+	m_Id = id;
+	m_Socket = socket;
+
+	m_PlayerManager->Restart();
+	m_Status = eGameStatus_Wait;
+	m_Countdown = 0;
 }
 
 void sv::Game::Update()
 {
 	uint deltaTime = GetDeltaTime();
 	LOG1(DEBUG_TIME, "passed time in microsec: %d\n", deltaTime);
+
+	switch(m_Status)
+	{
+		case eGameStatus_Wait:
+		{
+
+		} break;
+		case eGameStatus_Countdown:
+		{
+			m_Countdown += deltaTime;
+			if(m_Countdown > COUNTDOWN)
+			{
+				LOG(DEBUG_FLOW, "Countdown ended");
+				m_Status = eGameStatus_Run;
+
+				uchar playerNumber = m_PlayerManager->GetNumber();
+				m_Grid->Init(16);//playerNumber*2);
+				m_PlayerManager->Start();
+
+				uchar color[20]; // set to max number or allocate dynamicly
+				uchar pos[20]; // set to max number or allocate dynamicly
+				m_PlayerManager->GetColors(color);
+				m_PlayerManager->GetPos(pos);
+				StartMsg startMsg(playerNumber);
+				startMsg.SetColors(color);
+				startMsg.SetPos(pos);
+				SendMsg(&startMsg);
+			}
+		} break;
+		case eGameStatus_Run:
+		{
+			m_PlayerManager->Update(deltaTime);
+		} break;
+	}
 
 	m_TimeLastMsg += deltaTime;
 	if(m_TimeLastMsg > POLLING_RATE)
@@ -42,23 +94,86 @@ void sv::Game::HandleMsg(sv::InputMsg* msg)
 	{
 	case eContrAction_Start:
 		{
-			ResponseStartMsg response(1, 1);
-			Server::Instance()->Response(&response, msg->GetSocket());
+			if(m_Status != eGameStatus_Run)
+			{
+				if(m_Status == eGameStatus_Wait)
+				{
+					m_Countdown = 0;
+					m_Status = eGameStatus_Countdown;
+					LOG(DEBUG_FLOW, "Countdown started");
+
+					CountdownMsg countdownMsg((uchar)(COUNTDOWN/1000));
+					SendMsg(&countdownMsg);
+				}
+				Player* pl = m_PlayerManager->AddPlayer(m_Grid);
+				LOG(DEBUG_FLOW, "Player added");
+
+				ResponseStartMsg response(pl->GetId(), pl->GetColor());
+				Server::Instance()->Response(&response, msg->GetSocket());
+			}
+			else
+			{
+				ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_Failed);
+				Server::Instance()->Response(&response, msg->GetSocket());
+			}
+
 		} break;
 	case eContrAction_Right:
 		{
+			bool success = false;
+			if(m_Status == eGameStatus_Run)
+			{
+				Player* player = m_PlayerManager->GetPlayer(msg->GetControllerId());
+				if(player)
+				{
+					int pos = player->MoveRigth();
+					MoveMsg moveMsg(player->GetId(), pos);
+					SendMsg(&moveMsg);
 
-		} //break;
+					success = true;
+				}
+			}
+			if(!success)
+			{
+				ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_Failed);
+				Server::Instance()->Response(&response, msg->GetSocket());
+			}
+			else
+			{
+				ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_Ok);
+				Server::Instance()->Response(&response, msg->GetSocket());
+			}
+		} break;
 	case eContrAction_Left:
 		{
+			bool success = false;
+			if(m_Status == eGameStatus_Run)
+			{
+				Player* player = m_PlayerManager->GetPlayer(msg->GetControllerId());
+				if(player)
+				{
+					int pos = player->MoveLeft();
+					MoveMsg moveMsg(player->GetId(), pos);
+					SendMsg(&moveMsg);
 
-		} //break;
+					success = true;
+				}
+			}
+			if(!success)
+			{
+				ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_Failed);
+				Server::Instance()->Response(&response, msg->GetSocket());
+			}
+			else
+			{
+				ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_Ok);
+				Server::Instance()->Response(&response, msg->GetSocket());
+			}
+
+		} break;
 	default:
 		{
-			MoveMsg initMsg(msg->GetAction()); 
-			SendMsg(&initMsg);
-
-			ResponseOkMsg response;
+			ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_Failed);
 			Server::Instance()->Response(&response, msg->GetSocket());
 		} break;
 	}

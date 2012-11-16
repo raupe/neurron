@@ -10,6 +10,8 @@
 namespace sv
 {
 	class Msg;
+	class PlayerManager;
+	class Grid;
 
 	class Game
 	{
@@ -18,18 +20,17 @@ namespace sv
 	private:
 		enum EGameStatus
 		{
-			eGameStatus_Waiting,
+			eGameStatus_Wait,
 			eGameStatus_Countdown,
-			eGameStatus_Running
+			eGameStatus_Run,
 		};
 
 	public:
-		uchar				GetId() { return m_Id; }
-		void				SetId(uint id) { m_Id = id; }
+		void				Init(uint id, int socket);
 
 		void				Update();
-
-		void				SetSocket(int s) { m_Socket = s; }
+		
+		uchar				GetId() { return m_Id; }
 		int					GetSocket() { return m_Socket; }
 
 		void				HandleMsg(InputMsg* msg);
@@ -42,12 +43,20 @@ namespace sv
 		void				InitTime();
 		ulong				GetDeltaTime();
 
-		int					m_Socket;
+		// general
 		uchar				m_Id;
 		uint				m_Status;
+		PlayerManager*		m_PlayerManager;
+		Grid*				m_Grid;
 
+		// countdown
+		ulong				m_Countdown;
+
+		// connection
+		int					m_Socket;
 		ulong				m_TimeLastMsg;
 
+		//time
 		long long			m_Time;
 #ifdef WIN32
 		double				m_Frequence;
