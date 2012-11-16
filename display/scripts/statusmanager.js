@@ -159,6 +159,9 @@
                 } else {
                     currentPlayer.energy = 0;
                 }
+                if (currentPlayer.energy === 0) {
+                    this.points -= config.punishPoints;
+                }
             }
 
         } else if ( type == 'heal' ) {
