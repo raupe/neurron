@@ -29,6 +29,8 @@
 
 	Manager.prototype.show = function ( text ) {
 
+
+		// new controller.Button('Start');
 		console.log('[button/label] ' + text );
 	};
 
@@ -120,7 +122,7 @@
 
 		// encode into base64, avoiding special characters like '0'
 		var data = btoa( String.fromCharCode(  this.channel, this.id, action ) );
-		console.log(this.channel);
+
 		this.req.setRequestHeader( 'Content-Type', 'text/plain; charset=UTF-8' );
 
 		this.req.send( data );
