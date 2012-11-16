@@ -117,6 +117,7 @@
 		this.playerList	= new display.PlayerList( players );
 
 		this.statusManager.init( this.playerList );
+        this.statusManager.handleHeal();
 
 		new display.Debug();
 	};
