@@ -4,7 +4,7 @@ window.display = {};
 /* configurations */
 window.config = {
 
-	server		: 'neurron.com',
+	server		: '141.45.200.85',
 	port		: '2020',
 
     factor: 4, // offset for statusbar and grid
