@@ -143,7 +143,6 @@
 
 	StatusManager.prototype.handleCollide = function ( obstacleId, playersIds ) {
 
-        // hardcoded, need to grab with help of obstacleId
         var currentObstacle = this.pool.list[obstacleId],
             type = currentObstacle.type,
             value = currentObstacle.value,
