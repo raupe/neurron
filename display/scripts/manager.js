@@ -65,7 +65,7 @@
 
 
 	Manager.prototype.handle = function ( action, options ) {
-
+		console.log(action, options);
 		var commands = {
 
 			1	: this.init,
@@ -95,14 +95,19 @@
         var element = document.getElementById("qrcode");
 
         var bodyElement = document.body;
-        if(element.lastChild)
+
+        if ( element.lastChild ) {
+
           element.replaceChild(showQRCode(qrCode), element.lastChild);
-        else
+
+        } else {
+
           element.appendChild(showQRCode(qrCode));
+        }
 	};
 
-
-	Manager.prototype.start = function ( players ) {
+	/* playerlist */
+	Manager.prototype.start = function ( params ) {
 
 		this.grid.init({
 
@@ -114,7 +119,7 @@
 			factor: config.factor
 		});
 
-		this.playerList	= new display.PlayerList( players );
+		this.playerList	= new display.PlayerList( params[0] );
 
 		this.statusManager.init( this.playerList );
 
@@ -125,7 +130,7 @@
 	/* playerId - nextPos */
 	Manager.prototype.move = function ( params ) {
 
-		this.playerList[ params[0] ].move( params[1] );
+		this.playerList[ params[0]-1 ].move( params[1] );
 	};
 
 	/* playerId - targets */
