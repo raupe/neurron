@@ -133,7 +133,7 @@
             for ( i = 0; i < numberOfPlayers; i++) {
 
                 currentPlayer = this.playerList[playersIds[i] - 1];
-                currentPlayer.energy += healForEachPlayer;
+                if (currentPlayer.energy <= 90) currentPlayer.energy += healForEachPlayer;
             }
         }
 
@@ -155,7 +155,11 @@
 
             for ( i = 0; i < numberOfPlayers; i++ ){
                 currentPlayer = this.playerList[playersIds[i] - 1];
-                currentPlayer.energy -= value;
+                if (currentPlayer.energy >= value) {
+                    currentPlayer.energy -= value;
+                } else {
+                    currentPlayer.energy = 0;
+                }
             }
 
         } else if ( type == 'heal' ) {
@@ -163,7 +167,7 @@
             for ( i = 0; i < numberOfPlayers; i++ ){
                 var healForEachPlayer = ~~(value / numberOfPlayers);
                 currentPlayer = this.playerList[playersIds[i] - 1];
-                currentPlayer.energy += healForEachPlayer;
+                if (currentPlayer.energy <= 90) currentPlayer.energy += healForEachPlayer;
             }
 
         } else {
