@@ -14,8 +14,7 @@ sv::GameManager::~GameManager()
 sv::Game* sv::GameManager::CreateGame(int socket)
 {
 	Game* game = Get();
-	game->SetId(m_CountId);
-	game->SetSocket(socket);
+	game->Init(m_CountId, socket);
 
 	if(m_CountId == 255)
 		m_CountId = 1;

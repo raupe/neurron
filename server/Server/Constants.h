@@ -1,0 +1,10 @@
+// Game
+#define POLLING_RATE 5000000
+#define COUNTDOWN 5000000
+
+//Grid
+#define NUMBER_CIRCLES 10
+
+//Element
+#define MOVE_TIME 1200000
+#define CHANGE_TIME 600000

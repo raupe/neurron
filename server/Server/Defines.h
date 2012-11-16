@@ -14,12 +14,14 @@ typedef unsigned int uint;
 typedef unsigned char uchar;
 typedef unsigned long ulong;
 
-#define DEBUG_SERVER true
+#define LOG_ERROR true
+#define DEBUG_SERVER false
 #define DEBUG_PROTOCOLL false
 #define DEBUG_MSG false
-#define LOG_ERROR true
 #define DEBUG_WEBSOCKET false
 #define DEBUG_TIME false
+#define DEBUG_FLOW false
+#define DEBUG_MOVEMENT true
 
 
 #ifdef DEBUG
