@@ -19,24 +19,24 @@
     };
 
 
-    Element.prototype.setup = function ( config ) {
+    Element.prototype.setup = function ( params ) {
 
         // assetManager     -> via prototype
         // screen           -> via prototype
         // grid             -> via prototype
 
-        this.color = config.color;
-        this.id = config.id;
-        this.pos = config.pos;
+        this.color = params.color;
+        this.id = params.id;
+        this.pos = params.pos;
 
-        if ( config.size ) {
+        if ( params.size ) {
 
-           this.size = config.size;
+           this.size = params.size;
         }
 
-        if ( config.visible ) {
+        if ( params.visible ) {
 
-            this.visible = config.visible;
+            this.visible = params.visible;
         }
 
 
