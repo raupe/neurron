@@ -43,15 +43,17 @@
         // style settings
 
 
-        ctx.lineWidth = 18;
+        ctx.lineWidth = 3;
 		ctx.lineCap = 'round';
+        ctx.shadowColor='#BAE9F7';
+        ctx.shadowBlur = 20;
         var grd = ctx.createLinearGradient(0, 0, cvs.width, cvs.height);
         grd.addColorStop(0, '#ffffff');
         grd.addColorStop(0.5, '#BAE9F7');
         grd.addColorStop(1, '#ffffff');
 
 
-		ctx.strokeStyle = grd;
+		ctx.strokeStyle = grd;//'#BAE9F7';
 
 
 		this.started = false;
