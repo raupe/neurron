@@ -1,6 +1,8 @@
 #include "ServerPCH.h"
 #include "Msg.h"
 
+#include <stdlib.h>
+
 sv::Msg::Msg(uchar type)
 : m_Type(type)
 {
