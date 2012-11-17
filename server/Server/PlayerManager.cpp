@@ -13,7 +13,7 @@ sv::PlayerManager::PlayerManager()
 
 sv::PlayerManager::~PlayerManager()
 {
-	Restart();
+	Reset();
 }
 
 
@@ -35,7 +35,7 @@ sv::Player* sv::PlayerManager::GetPlayer(uint id)
 	return 0;
 }
 
-void sv::PlayerManager::Restart()
+void sv::PlayerManager::Reset()
 {
 	for(int i=m_Player.size()-1; i>=0; --i)
 		delete(m_Player[i]);

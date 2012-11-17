@@ -19,18 +19,24 @@ namespace sv
 		Grid();
 		~Grid();
 
-		void		Init(uint numberLanes);
+		void		Init(uchar numberPlayer);
 
-		uint		GetPosRight(uint pos);
-		uint		GetPosLeft(uint pos);
-		int			GetPosOut(uint pos);
+		uchar		GetInnerPos(uchar lane); 
+		bool		IsEdge(uchar pos);
+		uchar		GetNumberLanes() { return m_NumberLanes; }
 
-		void		AddElement(int pos, Element* element);
-		void		RemoveElement(int pos, Element* element);
+		uchar		GetPosRight(uchar pos);
+		uchar		GetPosLeft(uchar pos);
+		uchar		GetPosOut(uchar pos);
+
+		void		AddElement(uchar pos, Element* element);
+		void		RemoveElement(uchar pos, Element* element);
 
 	private:
+		static const uchar s_MapPlayerLanes[];
+
 		Field**			m_Grid;
-		uint			m_NumberLanes;
+		uchar			m_NumberLanes;
 	};
 }
 #endif // Grid_h__
