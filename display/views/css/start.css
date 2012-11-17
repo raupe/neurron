@@ -1,0 +1,49 @@
+html, body {
+    height: 100%;
+}
+.outer_wrapper {
+    border: 2px solid yellowgreen;
+    height: 98%;
+}
+.inner_wrapper {
+    margin: 4%;
+    border: 2px solid black;
+    height: 92%;
+}
+.header {
+    border: 2px solid red;
+    height: 10%;
+}
+.main_wrapper {
+    border: 2px solid green;
+    margin-top: 6%;
+    margin-bottom: 2%;
+    width: 50%;
+    height: 60%;
+    float: left;
+}
+.nav {
+
+}
+.content {
+
+}
+.qr_wrapper {
+    border: 2px solid blue;
+    margin-top: 6%;
+    margin-bottom: 2%;
+    margin-left: 8%;
+    width: 40%;
+    height: 60%;
+    float: left;
+}
+.label{
+
+}
+.qr_code {
+
+}
+.footer {
+    border: 2px solid brown;
+    height: 10%;
+}
