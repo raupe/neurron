@@ -23,13 +23,15 @@
 
 		(function loop ( delta ) {
 
+			forAll( this.playerList, 'update', delta );
+
+			forAll( this.obstaclePool.list, 'update', delta );
+
+			this.background.update( delta );
+
+
 			this.screen.clear(); // prototype
 
-			forAll( this.playerList, 'update' );
-
-			forAll( this.obstaclePool.list, 'update' );
-
-			this.background.update();
 			this.background.draw();
 
 			forAll( this.playerList, 'draw' );
@@ -44,7 +46,7 @@
 		}.bind(this) )();
 
 
-		function forAll ( collection, method ) {
+		function forAll ( collection, method, delta ) {
 
 			for ( var i = 0, l = collection.length, el; i < l; i++ ) {
 
@@ -52,7 +54,7 @@
 
 				if ( el && el.visible ) { // undefined.()
 
-					el[method]();
+					el[method]( delta );
 				}
 			}
 		}
@@ -110,7 +112,6 @@
 		this.grid.init({
 
 			players: 8,				// players.length,
-			frames: 30,
 			distanceToUser: 350,
 			circleOffset: 100,
 			circles: 0,
@@ -147,7 +148,7 @@
 
 
 	/* obstacleId - players */
-	Manager.prototype.collide = function( params ) {
+	Manager.prototype.collide = function ( params ) {
 
 		this.statusManager.handleCollide( params[0], params[1] );
 	};

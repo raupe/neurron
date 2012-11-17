@@ -2,14 +2,21 @@
 
     var Element = display.Element = function(){
 
-        // global e.g. default for player
-        this.size = config.elements.size;
+        // ToDo: check why created two instances first ( should get sice, checkMove )
     };
 
 
-    Element.prototype.init = function ( config ) {
+    Element.prototype.init = function ( params ) {
 
-        this.setup( config );
+        // global e.g. default for player
+        this.size = config.elements.size;
+
+        this.checkMove = config.duration.moveTime / this.grid.frames;
+
+
+
+
+        this.setup( params );
 
         this.createCanvas();
 
@@ -38,6 +45,10 @@
 
             this.visible = params.visible;
         }
+
+
+        this.diff = 0;
+
 
 
         this.check = false;
@@ -129,7 +140,7 @@
     };
 
 
-    // check: uhrzeigersinn <- antiRing, gegen -> ring
+    // check: clockwise <- antiRing, anticlockwise -> ring
     Element.prototype.setDir = function() {
 
         var nextPos = this.nextPos;
@@ -146,12 +157,20 @@
 
 
 
-    Element.prototype.update = function(){
+    Element.prototype.update = function ( delta ) {
 
-        if ( this.moving ) {
+        this.diff += delta;
 
-            this.animate();
+        if ( this.diff >= this.checkMove ) {
+
+            this.diff -= this.checkMove;
+
+            if ( this.moving ) {
+
+                this.animate();
+            }
         }
+
     };
 
 
@@ -210,9 +229,7 @@
 
         var field = this.field;
 
-        // // degree is saved per field
-        field.deg = this.counter;
-
+        // degree is saved per field
         this.rotate( field.deg );
 
         this.origin.drawImage(

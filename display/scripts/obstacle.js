@@ -33,12 +33,18 @@
 		this.collisionSound = config.collisionSound;
 		// this.collisionSound = this.assetManager.get('audio', config.collisionSound);
 
+
+
+        // this.checkCollision = config.duration.moveTime / this.grid.frames;
+
+
+
 		display.Element.prototype.init.call(this, config);
     };
 
 
     // extend default update
-    Obstacle.prototype.update = function(){
+    Obstacle.prototype.update = function ( delta ) {
 
         if ( this.counter === 0 ) {
 
