@@ -12,8 +12,6 @@
 
 		this.background = new display.Background();
 
-		this.render();
-
 		display.Connection.prototype.manager = this;
 		display.Debug.prototype.manager = this;
 	};
@@ -83,20 +81,20 @@
 
 	Manager.prototype.init = function ( channelId ) {
 
-        var qrCode = "http://game.neurron.com/controller/#" + channelId;
+   //      var qrCode = "http://game.neurron.com/controller/#" + channelId;
 
-        var element = document.getElementById("qrcode");
+   //      var element = document.getElementById("qrcode");
 
-        qrCode = showQRCode(qrCode, {r: 0, g: 0, b: 255});
+   //      qrCode = showQRCode(qrCode, {r: 0, g: 0, b: 255});
 
-        if ( element.lastChild ) {
+   //      if ( element.lastChild ) {
 
-			element.replaceChild(qrCode, element.lastChild);
+			// element.replaceChild(qrCode, element.lastChild);
 
-        } else {
+   //      } else {
 
-			element.appendChild(qrCode);
-        }
+			// element.appendChild(qrCode);
+   //      }
 
 	};
 
@@ -123,6 +121,8 @@
 		this.playerList	= new display.PlayerList( params[1] );
 
 		this.statusManager.init( this.playerList );
+
+		this.render();
 
 		new display.Debug();
 	};
