@@ -42,12 +42,12 @@ window.config = {
 
 		image: {
 
-			collision : { // spritesheet
+			// collision : { // spritesheet
 
-				src		: '',
-				width	: '',
-				height	: ''
-			},
+			//	src		: '',
+			//	width	: '',
+			//	height	: ''
+			// },
 
 			player		: 'assets/1.png',
 
