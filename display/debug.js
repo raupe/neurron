@@ -70,7 +70,7 @@
 		var list, key, ref,
 
 			active = false;
-		this.manager.handle( 6, [ 1, 1, 15 ]);
+		// this.manager.handle( 6, [ 1, 1, 15 ]);
 		document.addEventListener('keyup', function ( e ) {
 
 			e.preventDefault();
@@ -82,28 +82,10 @@
 
 			key = e.which;
 
-			// if ( !playerList[0].moving ) {
+			if ( key === 49 )  this.manager.handle( 4, [ 1,  2 ]);		// 1
+			if ( key === 50 )  this.manager.handle( 4, [ 1,  3 ]);		// 2
 
-
-				// if ( key === 37 ) { // left
-
-    //                 // this.manager.handle( 6, [2,1,42] );
-    //                 this.manager.handle( 4, [1, 0]);
-    //             }
-
-				// // if ( key === 38 ) playerList[0].move( 5 );
-				// if ( key === 39 ) playerList[0].move( 14 );
-			// if ( key === 40 ) playerList[0].move( 6 );
-
-
-
-			if ( key === 49 )  this.manager.handle( 4, [ 1,  2 ]); // 1
-			if ( key === 50 )  this.manager.handle( 4, [ 1,  3 ]); // 2
-
-			if ( key === 51 )  this.manager.handle( 6, [ 1, 1, 15 ]); // 3 // just valid results !
-/* obstacleId - category - start */
-
-// missing a frame ? -> this.manager.handle( 4, [ 1,  3 ]), bei 4 circles
+			if ( key === 51 )  this.manager.handle( 6, [ 1, 1, 15 ]);	// 3
 
 
 
