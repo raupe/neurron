@@ -19,7 +19,7 @@
 
 	Manager.prototype.render = function(){
 
-		(function loop ( delta ) {
+		function loop ( delta ) {
 
 			forAll( this.playerList, 'update', delta );
 
@@ -40,8 +40,9 @@
 
 
 			requestAnimationFrame( loop.bind(this) );
+		}
 
-		}.bind(this) )();
+		loop.call( this, 0 );
 
 
 		function forAll ( collection, method, delta ) {
@@ -56,6 +57,7 @@
 				}
 			}
 		}
+
 	};
 
 
@@ -73,7 +75,7 @@
 			7	: this.collide
 		};
 
-		console.log(action, options);
+		// console.log(action, options);
 
 		commands[ action ].call( this, options );
 	};
@@ -81,20 +83,20 @@
 
 	Manager.prototype.init = function ( channelId ) {
 
-   //      var qrCode = "http://game.neurron.com/controller/#" + channelId;
+        var qrCode = "http://game.neurron.com/controller/#" + channelId;
 
-   //      var element = document.getElementById("qrcode");
+        var element = document.getElementById("qrcode");
 
-   //      qrCode = showQRCode(qrCode, {r: 0, g: 0, b: 255});
+        qrCode = showQRCode(qrCode, {r: 0, g: 0, b: 255});
 
-   //      if ( element.lastChild ) {
+        if ( element.lastChild ) {
 
-			// element.replaceChild(qrCode, element.lastChild);
+			element.replaceChild(qrCode, element.lastChild);
 
-   //      } else {
+        } else {
 
-			// element.appendChild(qrCode);
-   //      }
+			element.appendChild(qrCode);
+        }
 
 	};
 
@@ -108,6 +110,7 @@
 	/* playerlist */
 	Manager.prototype.start = function ( params ) {
 
+
 		this.grid.init({
 
 			lanes: params[0],
@@ -118,11 +121,13 @@
 			players: params[1].length
 		});
 
+
+		this.render();
+
 		this.playerList	= new display.PlayerList( params[1] );
 
 		this.statusManager.init( this.playerList );
 
-		this.render();
 
 		new display.Debug();
 	};
