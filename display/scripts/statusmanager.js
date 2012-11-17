@@ -30,7 +30,7 @@
         this.setBackground();
         this.showPoints();
         this.showLifeBars();
-    }
+    };
 
 	StatusManager.prototype.showPoints = function () {
 
@@ -108,7 +108,7 @@
     StatusManager.prototype.setBackground = function () {
         this.panel.fillStyle = '#000';
 		this.panel.fillRect( 0, 0, this.panel.canvas.width, this.panel.canvas.height );
-    }
+    };
 
 
 	StatusManager.prototype.draw = function(){
