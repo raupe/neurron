@@ -45,6 +45,7 @@ typedef unsigned long ulong;
 
 #define ASSERT(x,y)
 #define LOG(x,y)
-#define LOG1(x,y,z)
+#define LOG1(x,y,a)
+#define LOG2(x,y,a,b)
 
 #endif
