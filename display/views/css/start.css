@@ -6,9 +6,14 @@ html, body {
     height: 98%;
 }
 .inner_wrapper {
+    background-image: url("../images/neurronwire_start_00.jpg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
     margin: 4%;
     border: 2px solid black;
-    height: 92%;
+    height: 500px;
+    width: 750px;
+    margin: auto;
 }
 .header {
     border: 2px solid red;
