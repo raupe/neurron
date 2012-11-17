@@ -30,7 +30,7 @@
                 { id:3, pos:4, color:{r: 0, g: 0, b: 255} }
             ]] );
 
-            manager.init(2);
+            manager.init(1);
 		};
 
 
