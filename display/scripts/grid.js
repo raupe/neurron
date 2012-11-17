@@ -233,7 +233,7 @@
 			width = this.width,
 			height = this.height,
 
-			circles = this.circles + 3, // > 3 as basic player radius
+			circles = this.circles, // > 3 as basic player radius
 
 			distanceToUser = this.distanceToUser,
 			outerCircleRadius = this.outerCircleRadius,
