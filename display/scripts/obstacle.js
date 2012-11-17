@@ -14,7 +14,7 @@
 		this.endField = params.pos%this.grid.lanes;
 
 		params.visible = true;
-		console.log(this.endField);
+
         this.value = params.value;
 		this.type = params.type;
 
@@ -33,76 +33,47 @@
     };
 
 
-    // extend default update
-    // Obstacle.prototype.animate = function() { // since allways update moving....
+    Obstacle.prototype.setDir = function(){
+
+		this.dir = 'antiDist';
+    };
 
 
-   //      var field = this.grid.fields[ this.pos ],
+	// since allways update moving -> after fieldstep
+    Obstacle.prototype.change = function() {
 
-   //          step = field[this.dir][ ~~this.counter ]; // allow floats
+		if ( this.pos === this.endField ) {
 
-   //      this.field = step;
+			this.vanish();
 
-   //      this.counter += this.velocity;
+		} else {
 
+			// collide ?
 
-   //      if ( this.counter >= field[this.dir].length ) { // allow higher multiplicators
-
-			// this.counter = 0;
-
-			// if ( this.pos === this.endField ) {
-
-			// 	// console.log(2);
-			// 	this.vanish();
-
-			// } else {
-
-			// 	// this.pos -=
-
-			// }
-
-			// // console.log();
+			// else
+			this.pos -= this.grid.lanes;
+		}
+    };
 
 
-			// console.log(1);
-        // }
+    Obstacle.prototype.vanish = function(){ // glitch: 3 -> 4
 
+		this.visible = false;
+		this.moving = false;
 
-		// display.Element.prototype.update.apply(this);
-    // };
-
-  //   Obstacle.prototype.setDir = function(){
-
-		// this.dir = 'antiDist';
-  //   };
-
-
-    Obstacle.prototype.vanish = function(){
-
+		this.pool.set( this.id );
 
 		this.assetManager.get( 'audio', this.collisionSound ).play();
-
-		// this.visible = false;
-		// this.pool.set( this.id );
     };
 
 
     Obstacle.prototype.animateCollision = function(){
 
 		// console.log(this.assetManager.get( 'audio', this.collisionSound.src ));
-		this.assetManager.get( 'audio', this.collisionSound ).play();
+		// this.assetManager.get( 'audio', this.collisionSound ).play();
 
 		// console.log('[collision] ', this.collisionImg.src);
 		// console.log('audio', this.collisionSound );
-		// url -> ist der key !
-		// this.assetManager.get( 'audio', this.collisionSound ).play();
-		//
-		//
-
-		// if length...
-
-		// this.visible = false;
-		// this.pool.set( this.id );
-    };
+	};
 
 })();
