@@ -8,21 +8,24 @@ window.config = {
 	port		: '2020',
 
 
-    factor: 4, // offset for statusbar and grid
-    amountToHeal: 10, // how much a player can heal
-    punishPoints: 1000,
+    factor			: 4,		// offset for statusbar and grid
+    amountToHeal	: 10,		// how much a player can heal
+    punishPoints	: 1000,
+
+
+    duration: {
+
+		moveTime	: 1200		// 1.2s, sync with server
+    },
 
 
     // colors for lifeBars
     colorLimits: {
 
-        red: 20,
-        orange: 60
+        red			: 20,
+        orange		: 60,
     },
 
-
-	// default resolution ? image scale ?
-	// canvas: { width	: 320,	height	: 240 },
 
 	elements: {
 
