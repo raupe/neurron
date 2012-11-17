@@ -30,7 +30,7 @@
 
 		this.players = config.players;
 		this.circles = config.circles;
-		this.frames = config.frames;
+		this.frames = this.getFrames();
 
 
 		this.distanceToUser = config.distanceToUser;
@@ -41,6 +41,12 @@
 		this.posX = 0;
 		this.posY = 0;
 	};
+
+	Grid.prototype.getFrames = function(){
+		console.log('grid: ', this);
+		return 30;
+	};
+
 
 	Grid.prototype.definePositions = function(){
 
