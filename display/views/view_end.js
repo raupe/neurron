@@ -1,6 +1,6 @@
 (function(){
 
-	display.view.end = (function(){
+	display.views.end = (function(){
 
 		var left = '\
 		\
@@ -9,6 +9,7 @@
 		right = '\
 		\
 		';
+
 
 		return [ left, right ];
 

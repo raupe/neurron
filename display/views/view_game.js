@@ -1,6 +1,6 @@
 (function(){
 
-	display.view.start = (function(){
+	display.views.start = (function(){
 
 		var left = '\
 		\
