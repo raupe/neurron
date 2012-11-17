@@ -2,9 +2,9 @@
 #include "Player.h"
 
 sv::Player::Player(uint id, uint color, Grid* grid, uint pos)
-: Element(id, grid, pos)
-, m_Color(color)
+: m_Color(color)
 {
+	Init(id, grid, pos);
 }
 
 sv::Player::~Player()

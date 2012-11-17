@@ -16,11 +16,12 @@ namespace sv
 
 		Player*					AddPlayer(Grid* grid);
 		Player*					GetPlayer(uint id);
-		void					Restart();
 
+		void					Reset();
 		void					Start();
 		void					Update(ulong deltaTime);
 
+		// for Msgs
 		uchar					GetNumber();
 		void					GetColors(uchar* colors);
 		void					GetPos(uchar* pos);

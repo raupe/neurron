@@ -8,30 +8,31 @@ namespace sv
 	class Element
 	{
 	public:
-		Element(uint id, Grid* grid, uint pos);
+		Element();
 		~Element();
+		void			Init(uchar id, Grid* grid, uchar pos);
 		
 		virtual void	Start();
 		virtual void	Update(ulong deltaTime);
 
-		uint			GetId() { return m_Id; }
-		uint			GetPos() { return m_Pos; }
+
+		uchar			GetId() { return m_Id; }
+		uchar			GetPos() { return m_Pos; }
 		
-		int				MoveRigth();
-		int				MoveLeft();
+		uchar			MoveRigth();
+		uchar			MoveLeft();
+		uchar			MoveOut();
 
 	protected:
-		void			SetPos(uint pos);
+		void			SetPos(uchar pos);
 
-	private:
-
-		uint			m_Id;
+		uchar			m_Id;
 		
-		uint			m_Pos;
-		uint			m_NextPos;
-		uint			m_DesiredPos;
+		uchar			m_Pos;
+		uchar			m_NextPos;
+		uchar			m_DesiredPos;
 		
-		uint			m_PassedTime;
+		ulong			m_PassedTime;
 		bool			m_Moving;
 
 		Grid*			m_Grid;

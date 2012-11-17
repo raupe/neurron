@@ -54,12 +54,13 @@ void sv::CountdownMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
 	Visit(m_Length, buffer, pos, length);
 }
 
-sv::StartMsg::StartMsg(uchar pos)
+sv::StartMsg::StartMsg(uchar pos, uchar lanes)
 : Msg(eMsgType_Start)
 , m_Number(pos)
+, m_NumberLanes(lanes)
 {
-	m_Colors = (uchar*) malloc(m_Number * sizeof(m_Number));
-	m_Pos = (uchar*) malloc(m_Number * sizeof(m_Number));
+	m_Colors = (uchar*) malloc(m_Number * sizeof(uchar));
+	m_Pos = (uchar*) malloc(m_Number * sizeof(uchar));
 }
 
 sv::StartMsg::~StartMsg()
@@ -83,8 +84,9 @@ void sv::StartMsg::SetPos(uchar* pos)
 void sv::StartMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
 {
 	Visit(m_Type, buffer, pos, length);
-
+	
 	Visit(m_Number, buffer, pos, length);
+//	Visit(m_NumberLanes, buffer, pos, length);
 	for(uint i=0; i< m_Number; ++i)
 	{
 		Visit(m_Pos[i], buffer, pos, length);
@@ -104,6 +106,23 @@ void sv::MoveMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
 	Visit(m_Type, buffer, pos, length);
 	
 	Visit(m_PLayerId, buffer, pos, length);
+	Visit(m_Pos, buffer, pos, length);
+}
+
+sv::ObstacleMsg::ObstacleMsg(uchar obstacleId, uchar category, uchar pos)
+: Msg(eMsgType_Obstacle)
+, m_ObstacleId(obstacleId)
+, m_Category(category)
+, m_Pos(pos)
+{
+}
+
+void sv::ObstacleMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
+{
+	Visit(m_Type, buffer, pos, length);
+	
+	Visit(m_ObstacleId, buffer, pos, length);
+	Visit(m_Category, buffer, pos, length);
 	Visit(m_Pos, buffer, pos, length);
 }
 

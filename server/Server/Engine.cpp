@@ -33,9 +33,9 @@ void sv::Engine::Run()
 		while(iter)
 		{
 			Game* game = manager->Get(iter);
-			game->Update();
 			iter = manager->Next(iter);
-			
+
+			game->Update();
 			HandleMsgs();
 		}
 	}

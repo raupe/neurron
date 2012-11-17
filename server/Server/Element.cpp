@@ -3,19 +3,29 @@
 
 #include "Grid.h"
 
-sv::Element::Element(uint id, Grid* grid, uint pos)
-: m_Id(id)
-, m_Pos(pos)
+sv::Element::Element()
+: m_Id(0)
+, m_Pos(0)
 , m_NextPos(m_Pos)
+, m_DesiredPos(m_Pos)
 , m_PassedTime(0)
 , m_Moving(false)
-, m_Grid(grid)
+, m_Grid(0)
 {
 
 }
 
 sv::Element::~Element()
 {
+}
+
+void sv::Element::Init(uchar id, Grid* grid, uchar pos)
+{
+	m_Id = id;
+	m_Grid = grid;
+	m_Pos = pos;
+	m_NextPos = m_Pos;
+	m_DesiredPos = m_Pos;
 }
 
 void sv::Element::Start()
@@ -47,7 +57,7 @@ void sv::Element::Update(ulong deltaTime)
 	}
 }
 
-int sv::Element::MoveRigth()
+uchar sv::Element::MoveRigth()
 {
 	m_DesiredPos = m_Grid->GetPosRight(m_NextPos);
 	if(! m_Moving)
@@ -60,7 +70,7 @@ int sv::Element::MoveRigth()
 	return m_DesiredPos;
 }
 
-int sv::Element::MoveLeft()
+uchar sv::Element::MoveLeft()
 {
 	m_DesiredPos = m_Grid->GetPosLeft(m_NextPos);
 	if(! m_Moving)
@@ -73,7 +83,20 @@ int sv::Element::MoveLeft()
 	return m_DesiredPos;
 }
 
-void sv::Element::SetPos(uint pos)
+uchar sv::Element::MoveOut()
+{
+	m_DesiredPos = m_Grid->GetPosOut(m_NextPos);
+	if(! m_Moving)
+	{
+		m_PassedTime = 0;
+		m_NextPos = m_DesiredPos;
+		m_Moving = true;
+	}
+	LOG1(DEBUG_MOVEMENT, "Move out to %i", m_DesiredPos);
+	return m_DesiredPos;
+}
+
+void sv::Element::SetPos(uchar pos)
 { 
 	m_Grid->RemoveElement(m_Pos, this);
 	m_Pos = pos;
