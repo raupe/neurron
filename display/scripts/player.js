@@ -1,6 +1,6 @@
 (function(){
 
-	var Player = display.Player = function ( config ) {
+	var Player = display.Player = function ( params ) {
 
 		this.type = 'player';
 
@@ -12,9 +12,9 @@
 
 		this.init({
 
-			id: config.id,
-			pos: config.pos,
-			color: [ config.color.r, config.color.g, config.color.b ]
+			id: params.id,
+			pos: params.pos,
+			color: [ params.color.r, params.color.g, params.color.b ]
 		});
 	};
 
