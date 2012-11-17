@@ -1,0 +1,32 @@
+html, body {
+}
+.outer_wrapper {
+    border: 1px solid yellowgreen;
+}
+.inner_wrapper {
+    border: 1px solid black;
+}
+.header {
+    border: 1px solid red;
+}
+.main_wrapper {
+    border: 1px solid green;
+}
+.nav {
+
+}
+.content {
+
+}
+.qr_wrapper {
+    border: 1px solid blue;
+}
+.label{
+
+}
+.qr_code {
+
+}
+.footer {
+    border: 1px solid brown;
+}
