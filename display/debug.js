@@ -4,89 +4,12 @@
 
 	var Debug = display.Debug = function(){
 
-		this.addSceneHandler();
+		this.addPlayerInput();
+
+		this.drawNums();
 
 		// this.drawLine( 8 );
 	};
-
-	Debug.prototype.showGame = function(){
-
-		this.scene.changeTo( 'game', function(){
-
-			// // loading assets
-			var manager = new display.AssetManager( config.assets );
-
-				manager.on('progress', function ( e ) {
-
-				// console.log(e.progress);
-			});
-
-
-			manager.on('load', function(){
-
-				// console.log(manager.assets);
-
-				new display.Screen();
-
-				new display.Manager();
-
-				new display.Connection();
-
-
-
-			});
-
-		});
-
-		setTimeout(function(){
-
-
-			this.addPlayerInput();
-
-			this.drawNums();
-
-		}.bind(this), 500);
-
-	};
-
-
-	Debug.prototype.addSceneHandler = function(){
-
-		var ul = document.createElement('ul');
-
-		ul.innerHTML = '\
-			\
-			<li>Start</li>\
-			<li>Load</li>\
-			<li>Game</li>\
-			<li>End</li>\
-		';
-
-		var target = document.body.childNodes[0],
-
-			parent = target.parentNode;
-
-		parent.insertBefore( ul, target );
-
-		ul.addEventListener('click', function ( e ) {
-
-			var trg = e.srcElement.innerText.toLowerCase();
-
-			console.log(trg);
-
-
-			if ( trg === 'game' ) {
-
-				this.showGame();
-
-			} else {
-
-				this.scene.show( trg );
-			}
-
-		}.bind(this));
-	};
-
 
 
 
