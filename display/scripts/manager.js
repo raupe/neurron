@@ -94,16 +94,17 @@
 
         var element = document.getElementById("qrcode");
 
-        var bodyElement = document.body;
+        qrCode = showQRCode(qrCode, {r: 0, g: 0, b: 255});
 
         if ( element.lastChild ) {
 
-			element.replaceChild(showQRCode(qrCode), element.lastChild);
+			element.replaceChild(qrCode, element.lastChild);
 
         } else {
 
-			element.appendChild(showQRCode(qrCode));
+			element.appendChild(qrCode);
         }
+
 	};
 
 	/* playerlist */
