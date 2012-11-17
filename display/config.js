@@ -1,7 +1,7 @@
 /* global namespace */
 window.display = {
 
-	view: {}
+	views: {}
 };
 
 /* configurations */
