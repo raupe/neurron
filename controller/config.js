@@ -1,10 +1,11 @@
+/* global namespace */
+window.controller = {};
+
 /* configuraitons */
 var config = {
 
-	namespace: 'controller',
-
-	server: '141.45.202.51',
-	port: '2020',
+	server		: 'neurron.com',
+	port		: '2020',
 
 	// basic resolution
 	canvas: {
@@ -21,11 +22,6 @@ var config = {
 		STATUS		: 2
 	}
 };
-
-
-
-/* global namespace */
-window[config.namespace] = {};
 
 
 
