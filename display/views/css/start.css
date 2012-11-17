@@ -1,16 +1,26 @@
 html, body {
+    height: 100%;
 }
 .outer_wrapper {
-    border: 1px solid yellowgreen;
+    border: 2px solid yellowgreen;
+    height: 98%;
 }
 .inner_wrapper {
-    border: 1px solid black;
+    margin: 4%;
+    border: 2px solid black;
+    height: 92%;
 }
 .header {
-    border: 1px solid red;
+    border: 2px solid red;
+    height: 10%;
 }
 .main_wrapper {
-    border: 1px solid green;
+    border: 2px solid green;
+    margin-top: 6%;
+    margin-bottom: 2%;
+    width: 50%;
+    height: 60%;
+    float: left;
 }
 .nav {
 
@@ -19,7 +29,13 @@ html, body {
 
 }
 .qr_wrapper {
-    border: 1px solid blue;
+    border: 2px solid blue;
+    margin-top: 6%;
+    margin-bottom: 2%;
+    margin-left: 8%;
+    width: 40%;
+    height: 60%;
+    float: left;
 }
 .label{
 
@@ -28,5 +44,6 @@ html, body {
 
 }
 .footer {
-    border: 1px solid brown;
+    border: 2px solid brown;
+    height: 10%;
 }
