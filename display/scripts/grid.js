@@ -8,9 +8,9 @@
 		display.Background.prototype.grid = this;
 	};
 
-	Grid.prototype.init = function ( config ) {
+	Grid.prototype.init = function ( params ) {
 
-		this.setup( config );
+		this.setup( params );
 
 		this.definePositions();
 
@@ -20,21 +20,21 @@
 	};
 
 
-	Grid.prototype.setup = function ( config ) {
+	Grid.prototype.setup = function ( params ) {
 
 		this.origin = this.screen.ctx;
 
-		this.width = this.screen.cvs.width - this.screen.cvs.width / config.factor;
+		this.width = this.screen.cvs.width - this.screen.cvs.width / params.factor;
 		this.height = this.screen.cvs.height;
 
-
-		this.players = config.players;
-		this.circles = config.circles;
 		this.frames = this.getFrames();
 
+		this.players = params.players;
+		this.circles = params.circles;
+		this.lanes = params.lanes;
 
-		this.distanceToUser = config.distanceToUser;
-		this.circleOffset = config.circleOffset;
+		this.distanceToUser = params.distanceToUser;
+		this.circleOffset = params.circleOffset;
 		this.outerCircleRadius = this.height/2;
 
 		// placement
@@ -43,8 +43,8 @@
 	};
 
 	Grid.prototype.getFrames = function(){
-		console.log('grid: ', this);
-		return 30;
+
+		return config.frames;
 	};
 
 
@@ -57,9 +57,9 @@
 			frame = this.frames,
 
 			/* pre-calculations */
-			circles = this.circles + 3, // = 3
-			lanes = this.players * 2, // 8
-			steps = lanes * frame, // 240
+			circles = this.circles,
+			lanes = this.lanes,
+			steps = lanes * frame,
 			rotation = ( 2 * Math.PI ) / steps,
 			factor = 1/frame, // 1/30
 			maxLength = circles * lanes,
