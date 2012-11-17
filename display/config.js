@@ -1,16 +1,22 @@
 /* global namespace */
-window.display = {};
+window.display = {
+
+	view: {}
+};
 
 /* configurations */
 window.config = {
 
-	server		: 'neurron.com',
-	port		: '2020',
+	server			: 'neurron.com',
+	port			: '2020',
 
 
     factor			: 4,		// offset for statusbar and grid
     amountToHeal	: 10,		// how much a player can heal
     punishPoints	: 1000,
+
+
+    circles			: 10,		// sync with server
 
 
     duration: {
@@ -23,7 +29,7 @@ window.config = {
     colorLimits: {
 
         red			: 20,
-        orange		: 60,
+        orange		: 60
     },
 
 
@@ -35,6 +41,13 @@ window.config = {
 	assets: {
 
 		image: {
+
+			collision : { // spritesheet
+
+				src		: '',
+				width	: '',
+				height	: ''
+			},
 
 			player		: 'assets/1.png',
 
