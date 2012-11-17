@@ -7,7 +7,7 @@ window.display = {
 /* configurations */
 window.config = {
 
-	server			: '141.45.202.51',
+	server			: 'neurron.com',
 	port			: '2020',
 
 
@@ -16,7 +16,7 @@ window.config = {
     punishPoints	: 1000,
 
 
-    circles			: 10,		// sync with server
+    circles			: 4,		// sync with server
     frames			: 30,
 
 
