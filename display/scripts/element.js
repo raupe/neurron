@@ -161,7 +161,7 @@
 
         this.diff += delta;
 
-        while ( this.diff >= this.checkMove ) {
+        if ( this.diff >= this.checkMove ) { // @julia: why not working as - 'while'
 
             this.diff -= this.checkMove;
 
@@ -185,44 +185,52 @@
 
         this.counter += this.velocity;
 
-
         if ( this.counter >= field[this.dir].length ) { // allow higher multiplicators
 
             this.counter = 0;
 
-            if ( this.dir === 'ring' ) {
-
-                if ( this.pos%this.grid.lanes === 0 ) {
-
-                    this.pos += (this.grid.lanes - 1);
-
-                } else {
-
-                    this.pos--;
-                }
-
-            } else {
-
-                if ( this.pos%this.grid.lanes === this.grid.lanes-1) {
-
-                    this.pos -= (this.grid.lanes - 1);
-
-                } else {
-
-                    this.pos++;
-                }
-            }
-
-            if ( this.nextPos !== this.pos ) {
-
-                this.setDir();
-
-            } else {
-
-                this.moving = false;
-            }
+            this.change();
         }
     };
+
+
+    Element.prototype.change = function(){
+
+        if ( this.dir === 'ring' ) {
+
+            if ( this.pos%this.grid.lanes === 0 ) {
+
+                this.pos += (this.grid.lanes - 1);
+
+            } else {
+
+                this.pos--;
+            }
+
+        } else {
+
+            if ( this.pos%this.grid.lanes === this.grid.lanes-1) {
+
+                this.pos -= (this.grid.lanes - 1);
+
+            } else {
+
+                this.pos++;
+            }
+        }
+
+        if ( this.nextPos !== this.pos ) {
+
+            this.setDir();
+
+        } else {
+
+            this.moving = false;
+        }
+
+    };
+
+
 
 
     Element.prototype.draw = function() {
