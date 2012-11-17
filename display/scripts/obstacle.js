@@ -1,70 +1,89 @@
 (function(){
 
-	var Obstacle = display.Obstacle = function ( config ) {
+	var Obstacle = display.Obstacle = function ( params ) {
 
-		this.init( config );
+		this.init( params );
 	};
 
     Obstacle.prototype = new display.Element();
 
+
     // extend Element init
-    Obstacle.prototype.init = function ( config )  {
+    Obstacle.prototype.init = function ( params ) {
 
-		var waypoints = ~~(config.pos/this.grid.lanes),
+		this.endField = params.pos%this.grid.lanes;
 
-			lane = [];
+		params.visible = true;
+		console.log(this.endField);
+        this.value = params.value;
+		this.type = params.type;
 
-		while ( waypoints-- ) {
 
-			lane[waypoints] = config.pos%this.grid.lanes + waypoints * this.grid.lanes;
-		}
+		this.velocity = params.velocity;
 
-		this.lane = lane;
-
-		config.visible = true;
-
-        this.value = config.value;
-		this.type = config.type;
-
-		this.velocity = config.velocity;
+		this.collisionSound = params.collisionSound;
 
 		// this.collisionImg = this.assetManager.get('image', config.collisionImg );
-
-		this.collisionSound = config.collisionSound;
 		// this.collisionSound = this.assetManager.get('audio', config.collisionSound);
-
-
-
         // this.checkCollision = config.duration.moveTime / this.grid.frames;
 
+		display.Element.prototype.init.call( this, params );
 
-
-		display.Element.prototype.init.call(this, config);
+		this.move( this.endField );
     };
 
 
     // extend default update
-    Obstacle.prototype.update = function ( delta ) {
+    // Obstacle.prototype.animate = function() { // since allways update moving....
 
-        if ( this.counter === 0 ) {
 
-			if ( this.lane.length === 0 ) {
+   //      var field = this.grid.fields[ this.pos ],
 
-				this.animateCollision();
+   //          step = field[this.dir][ ~~this.counter ]; // allow floats
 
-				this.visible = false;
+   //      this.field = step;
 
-				this.pool.set( this.id );
+   //      this.counter += this.velocity;
 
-			} else {
 
-				this.nextPos = this.lane.pop();
+   //      if ( this.counter >= field[this.dir].length ) { // allow higher multiplicators
 
-				this.dir = 'antiDist';
-			}
-        }
+			// this.counter = 0;
 
-		display.Element.prototype.update.apply(this);
+			// if ( this.pos === this.endField ) {
+
+			// 	// console.log(2);
+			// 	this.vanish();
+
+			// } else {
+
+			// 	// this.pos -=
+
+			// }
+
+			// // console.log();
+
+
+			// console.log(1);
+        // }
+
+
+		// display.Element.prototype.update.apply(this);
+    // };
+
+  //   Obstacle.prototype.setDir = function(){
+
+		// this.dir = 'antiDist';
+  //   };
+
+
+    Obstacle.prototype.vanish = function(){
+
+
+		this.assetManager.get( 'audio', this.collisionSound ).play();
+
+		// this.visible = false;
+		// this.pool.set( this.id );
     };
 
 
@@ -77,12 +96,13 @@
 		// console.log('audio', this.collisionSound );
 		// url -> ist der key !
 		// this.assetManager.get( 'audio', this.collisionSound ).play();
+		//
+		//
+
+		// if length...
+
+		// this.visible = false;
+		// this.pool.set( this.id );
     };
-
-
-    // case 'timeupdate':
-
-				// args.push( this.element.currentTime );
-
 
 })();
