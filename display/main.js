@@ -1,16 +1,10 @@
 (function(){
 
-     // loading assets
-    var manager = new display.AssetManager( config.assets );
+    var manager = display.AssetManager;
 
-    manager.on('progress', function ( e ) {
+    manager.set( config.assets, function ( assets ) {
 
-        // console.log(e.progress);
-    });
-
-    manager.on('load', function(){
-
-        // console.log(manager.assets);
+        // console.log(assets);
 
         new display.Screen();
 
@@ -18,5 +12,14 @@
 
         new display.Connection();
     });
+
+
+    manager.on( 'progress', function ( e ) {
+
+        // console.log(e.progress);
+    });
+
+    display.Element.prototype.assetManager = manager;
+    display.Background.prototype.assetManager = manager;
 
 })();

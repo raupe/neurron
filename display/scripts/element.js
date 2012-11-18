@@ -73,43 +73,37 @@
 
     Element.prototype.colorize = function(){
 
-        // ToDo: improve flow
+        if ( this.color ) {
 
-        setTimeout( function() {
-
-            if ( this.color ) {
-
-                this.ctx.drawImage( this.src, 0,0, this.size, this.size );
+            this.ctx.drawImage( this.src, 0,0, this.size, this.size );
 
 
-                var image = this.ctx.getImageData( 0, 0, this.size, this.size ),
+            var image = this.ctx.getImageData( 0, 0, this.size, this.size ),
 
-                    size = image.width * image.height + 1,
+                size = image.width * image.height + 1,
 
-                    pixels = image.data,
+                pixels = image.data,
 
-                    i;
+                i;
 
-                while ( --size ) {
+            while ( --size ) {
 
-                    i = size << 2;
+                i = size << 2;
 
-                    pixels[   i ] = this.color[0];
-                    pixels[ ++i ] = this.color[1];
-                    pixels[ ++i ] = this.color[2];
-                }
-
-                this.ctx.putImageData( image, 0, 0 );
-
-
-                image = new Image();
-
-                image.src = this.ctx.canvas.toDataURL('img/png');
-
-                this.src = image;
+                pixels[   i ] = this.color[0];
+                pixels[ ++i ] = this.color[1];
+                pixels[ ++i ] = this.color[2];
             }
 
-        }.bind(this), 80 );
+            this.ctx.putImageData( image, 0, 0 );
+
+
+            image = new Image();
+
+            image.src = this.ctx.canvas.toDataURL('img/png');
+
+            this.src = image;
+        }
     };
 
 
