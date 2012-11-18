@@ -2,7 +2,7 @@
 
     var manager = display.AssetManager;
 
-    manager.set( config.assets, function ( assets ) {
+    manager.set( config.assets, function() {
 
         // console.log(assets);
 
@@ -18,6 +18,8 @@
 
         // console.log(e.progress);
     });
+
+
 
     display.Element.prototype.assetManager = manager;
     display.Background.prototype.assetManager = manager;
