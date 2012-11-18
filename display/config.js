@@ -36,36 +36,34 @@ window.config = {
 
 	elements: {
 
-		size: 40
+		size		: 40
 	},
 
 	assets: {
 
 		image: {
 
-			// collision : { // spritesheet
+			player		: 'assets/player.png',
 
-			//	src		: '',
-			//	width	: '',
-			//	height	: ''
-			// },
+			damage		: 'assets/damage.png',
+			heal		: 'assets/heal.png',
+			points		: 'assets/points.png',
 
-			player		: 'assets/1.png',
+			background	: 'assets/background.jpg',
 
-			damage		: 'assets/2.png',
-			heal		: 'assets/3.png',
-			points		: 'assets/4.png',
 
-			// collision	: 'assets/5.png',
+			collision: {
 
-			background	: 'assets/background.jpg'
+				src		: 'assets/explosion-sprite-sheet.png',
+				width	: '64'
+			}
+
 		},
 
 		audio: {
 
 			collision	: 'assets/collision-test.wav'
 		}
-		// movies: {}
 	},
 
 
