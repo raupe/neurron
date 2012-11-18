@@ -21,10 +21,12 @@
 
 		this.velocity = params.velocity;
 
-		this.collisionSound = params.collisionSound;
+		this.collisionSound = this.assetManager.get( 'audio', params.collisionSound );
 
-		// this.collisionImg = this.assetManager.get('image', config.collisionImg );
-		// this.collisionSound = this.assetManager.get('audio', config.collisionSound);
+		this.collisionImage = this.assetManager.get('image', params.collisionImg );
+
+		this.collisionCounter = 0;
+
         // this.checkCollision = config.duration.moveTime / this.grid.frames;
 
 		display.Element.prototype.init.call( this, params );
@@ -44,11 +46,14 @@
 
 		if ( this.pos === this.endField ) {
 
+			// 1.) glitch: 3 -> 4, next position ?
+			// 2.) last step, half pixels ?
+
 			this.vanish();
 
 		} else {
 
-			// collide ?
+			// collide logic....
 
 			// else
 			this.pos -= this.grid.lanes;
@@ -56,24 +61,31 @@
     };
 
 
-    Obstacle.prototype.vanish = function(){ // glitch: 3 -> 4
+    Obstacle.prototype.vanish = function(){
 
-		this.visible = false;
-		this.moving = false;
-
-		this.pool.set( this.id );
-
-		this.assetManager.get( 'audio', this.collisionSound ).play();
+		this.animateCollision();
     };
 
 
     Obstacle.prototype.animateCollision = function(){
 
-		// console.log(this.assetManager.get( 'audio', this.collisionSound.src ));
-		// this.assetManager.get( 'audio', this.collisionSound ).play();
+		if ( this.collisionCounter === 0 ) this.collisionSound.play();
 
-		// console.log('[collision] ', this.collisionImg.src);
-		// console.log('audio', this.collisionSound );
+		if ( this.collisionCounter < this.collisionImage.length ) {
+
+			this.src = this.collisionImage[ this.collisionCounter ];
+
+			this.collisionCounter++;
+
+		} else {
+
+			this.collisionCounter = 0;
+
+			this.visible = false;
+			this.moving = false;
+
+			this.pool.set( this.id );
+		}
 	};
 
 })();
