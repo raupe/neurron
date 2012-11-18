@@ -29,7 +29,7 @@
 				finished	: true
 			};
 
-		/* ToDo: detect browser feature of XHR.responseType */
+		/* ToDo: detect browser feature of XHR.responseType && canvas.toBlob */
 
 		function detectBlob() {
 
@@ -129,8 +129,6 @@
 		}
 
 
-
-
 		var norm = { // obj-del
 
 			Object	:	function ( src ) { // key or path
@@ -139,9 +137,9 @@
 
 								types = Object.keys( src ),
 
-								type, entries,	// temp
+								type, entries, info, sel,	// temp
 
-								i, l, j, k;		// iterators
+								i, l, j, k;					// iterators
 
 
 							for ( i = 0, l = types.length; i < l; i++ ){
@@ -154,20 +152,42 @@
 
 									for ( j = 0, k = entries.length; j < k; j++ ) {
 
-										list[ li++ ] = {
-															type: type,
-															id	: entries[j],
-															src	: src[type][entries[j]]
-														};
+										sel = src[type][entries[j]];
+
+										info = {
+
+											type: type,
+											id	: entries[j],
+											src	: sel.src || sel
+										};
+
+										if ( sel.width )	info.width = sel.width;
+										if ( sel.height )	info.height = sel.height;
+
+										if ( check(sel) === 'Object' && sel.length ) { // != String
+
+											info.length = sel.length;
+										}
+
+										list[ li++ ] = info;
 									}
 
 								} else {
 
-									list[ li++ ] = {
-														type: getType( src[type] ),
-														id	: type,
-														src	: src[type]
-													};
+									sel = src[type];
+
+									info = {
+
+										type: getType( src[type] ),
+										id	: type,
+										src	: sel.src || sel
+									};
+
+									if ( sel.width )	info.width = sel.width;
+									if ( sel.height )	info.height = sel.height;
+									if ( sel.length )	info.length = sel.length;
+
+									list[ li++ ] = info;
 								}
 
 							}
@@ -179,9 +199,9 @@
 
 							var list = [], li = 0,
 
-								entry,		// temp
+								entry, info,		// temp
 
-								i, l;		// iterators
+								i, l;			// iterators
 
 							for ( i = 0, l = src.length; i < l; i++ ) {
 
@@ -189,22 +209,31 @@
 
 								if (  check( entry ) !== 'String' ) {
 
-									list[ li++ ] = {
-														type: entry.type || getType( entry.src ),
-														id	: entry.id,
-														src	: entry.src
-													};
+									info = {
+
+										type: entry.type || getType( entry.src ),
+										id	: entry.id,
+										src	: entry.src
+									};
+
+									if ( entry.width )	info.width = entry.width;
+									if ( entry.height )	info.height = entry.height;
+									if ( entry.length )	info.length = entry.length;
+
+									list[ li++ ] = info;
 
 								} else {
 
-									list[ li++ ] = {
-														type: getType( entry ),
-														id	: null,
-														src	: entry
-													};
+									info = {
+
+										type: getType( entry ),
+										id	: null,
+										src	: entry
+									};
+
+									list[ li++ ] = info;
 								}
 							}
-
 
 							return list;
 						},
@@ -256,9 +285,11 @@
 					i;			// iterator
 
 				AssetManager.length = length;
-				AssetManager.total = 0;
-				AssetManager.step = 100 / length;
 				AssetManager.finished = false;
+
+				AssetManager.total = 0;
+				AssetManager.step = ~~( 0.5 + (100 / length) );
+
 
 				for ( i = 0; i < length; i++ ) {
 
@@ -270,14 +301,15 @@
 				}
 			},
 
-			get = function ( type, id ) {
+			get = function ( type, id, frame ) {
 
 				var src = ( !id ) ? AssetManager._assets[ type ] : AssetManager[ type ][ id ];
 
-				// as not defined
 				if ( !src ) return null;
 
-				if ( check(src) !== 'String' ) { // discrete signal
+				if ( frame ) src = src[frame];
+
+				if ( check(src) !== 'String' ) { // discrete signal - image
 
 					return src;
 
@@ -397,7 +429,7 @@
 
 				type = asset.type,
 
-				url = asset.src,
+				url = asset.src || asset.origin,
 
 				format = url.substr( url.lastIndexOf('.') +1 ).toLowerCase(),
 
@@ -418,7 +450,7 @@
 
 		function loaded ( asset, blob ) {
 
-			// if ( AssetManager.storage && supportIDB ) {} // saving the blobg -> as defined
+			if ( AssetManager.storage && supportIDB ) {} // saving the blobg -> as defined
 
 			var data = URL.createObjectURL( blob );
 
@@ -426,9 +458,16 @@
 
 				declareImage( asset, data );
 
-			} else { // continuous signal || text
+			} else { // continuous signal
 
-				result( asset, data );
+				if ( asset.type === 'audio' && asset.length ) {
+
+					getAudioSprites( asset, data );
+
+				} else {
+
+					result( asset, data );
+				}
 			}
 		}
 
@@ -438,26 +477,136 @@
 
 			img.onload = function(){
 
-				result( asset, data, img );
+				if ( !asset.width && !asset.height ) {
+
+					result( asset, data, img );
+
+				} else { // sprites
+
+					getImageSprites( asset, img );
+				}
 			};
 
 			img.src = data;
 		}
 
 
+		function getImageSprites ( asset, img ) {
+
+			AssetManager.length--; // origin
+
+			var width = asset.width || asset.height,
+				height = asset.height || asset.width,
+
+				columns = img.width/width,
+				rows = img.height/height,
+
+				frame = 0,			// counter
+
+				sprite,	info,		// ref
+
+				src, data, buffer,	// temp
+
+				i, j, k, l;			// iterator
+
+			var cvs = document.createElement('canvas'),
+				ctx = cvs.getContext('2d');
+
+			cvs.width = width;
+			cvs.height = height;
+
+			for ( i = 0; i < rows; i++ ) {
+
+				for ( j = 0; j < columns; j++ ) {
+
+					AssetManager.length++;
+
+					ctx.clearRect( 0, 0, width, height );
+
+					ctx.drawImage(	img,
+
+									j * width,
+									i * height,
+									width,
+									height,
+									0,
+									0,
+									width,
+									height
+								);
+
+					// to binary data
+					if ( true ) {
+
+						src = cvs.toDataURL('img/png');
+
+						data = atob( src.split(',')[1] );
+
+						buffer = new ArrayBuffer( data.length );
+
+						uint = new Uint8Array( buffer );
+
+						for ( k = 0, l = data.length; k < l; k++ ) {
+
+							uint[ k ] = data.charCodeAt(k);
+						}
+
+						info = {
+
+							type	: 'image',
+							id		: asset.id,
+							origin	: asset.src,
+							frame	: frame
+						};
+
+						createBlob( info, buffer );
+
+					} else { // !! , else case -> blobUrl
+
+						data = cvs.toBlobURL();
+
+						loaded( asset, data );
+					}
+
+					frame++;
+				}
+			}
+		}
+
+
+		function getAudioSprites ( asset, data ) {
+
+
+			// result( asset, data, audio );
+		}
+
+
+
 		function result ( asset, data, container ) {
 
-			AssetManager._assets[ asset.src ] = container || data;
+			if ( !asset.origin ) {
+
+				AssetManager._assets[ asset.src ] = container || data;
+
+			} else { // sprite
+
+				if ( !AssetManager._assets[ asset.origin ][0] ){
+
+					AssetManager._assets[ asset.origin ] = [];
+				}
+
+				AssetManager._assets[ asset.origin ][ asset.frame ] = container || data;
+			}
 
 			if ( asset.id ) {
 
-				AssetManager[ asset.type ][ asset.id ] = AssetManager._assets[ asset.src ];
+				AssetManager[ asset.type ][ asset.id ] = AssetManager._assets[ asset.src || asset.origin ];
 
 			} else {
 
 				if ( !AssetManager[ asset.type ]._ ) AssetManager[ asset.type ]._ = [];
 
-				AssetManager[ asset.type ]._.push( AssetManager._assets[ asset.src ] );
+				AssetManager[ asset.type ]._.push( AssetManager._assets[ asset.src || asset.origin ] );
 			}
 
 			if ( ! --AssetManager.length ) {
@@ -465,10 +614,6 @@
 				emit( 'load', AssetManager );
 			}
 		}
-
-
-// defineMedia
-//
 
 
 		return {
