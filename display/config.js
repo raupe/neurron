@@ -1,16 +1,23 @@
 /* global namespace */
-window.display = {};
+window.display = {
+
+	views: {}
+};
 
 /* configurations */
 window.config = {
 
-	server		: 'neurron.com',
-	port		: '2020',
+	server			: 'neurron.com',
+	port			: '2020',
 
 
     factor			: 4,		// offset for statusbar and grid
     amountToHeal	: 10,		// how much a player can heal
     punishPoints	: 1000,
+
+
+    circles			: 4,		// sync with server
+    frames			: 30,
 
 
     duration: {
@@ -23,35 +30,40 @@ window.config = {
     colorLimits: {
 
         red			: 20,
-        orange		: 60,
+        orange		: 60
     },
 
 
 	elements: {
 
-		size: 40
+		size		: 40
 	},
 
 	assets: {
 
 		image: {
 
-			player		: 'assets/1.png',
+			player		: 'assets/player.png',
 
-			damage		: 'assets/2.png',
-			heal		: 'assets/3.png',
-			points		: 'assets/4.png',
+			damage		: 'assets/damage.png',
+			heal		: 'assets/heal.png',
+			points		: 'assets/points.png',
 
-			// collision	: 'assets/5.png',
+			background	: 'assets/background.jpg',
 
-			background	: 'assets/background.jpg'
+
+			collision: {
+
+				src		: 'assets/explosion-sprite-sheet.png',
+				width	: '64'
+			}
+
 		},
 
 		audio: {
 
 			collision	: 'assets/collision-test.wav'
 		}
-		// movies: {}
 	},
 
 

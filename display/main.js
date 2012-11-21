@@ -1,69 +1,27 @@
 (function(){
 
+    var manager = display.AssetManager;
 
-    new display.Debug();
+    manager.set( config.assets, function() {
 
+        // console.log(assets);
 
+        new display.Screen();
 
-    // available scenes - default / current scene - fetch sites , parse , then callback what to do
-    new display.Scenemanager({
+        new display.Manager();
 
-        start : 'views/start',
-        load  : 'views/load',
-        game  : 'views/game',
-        end   : 'views/end'
-
-    }, function ( scene ) { // reference to this - as a single scene !
-
-        scene.show('start');
+        new display.Connection();
+    });
 
 
-        // console.log(scene);
-        // document.addEventListener('click', function(){
+    manager.on( 'progress', function ( e ) {
 
-        //     scene.show('load');
-        //     //scene.changeTo('load');//, function() { // show + transition , optional paramter as a callback
-
-        // });
-
-
-
-        // // loading assets
-        // var manager = new display.AssetManager( config.assets );
-
-
-        // manager.on('progress', function ( e ) {
-
-        //     // console.log(e.progress);
-        // });
-
-
-
-
-        // manager.on('load', function(){
-
-        //     // console.log(manager.assets);
-
-        //     new display.Screen();
-
-        //     new display.Manager();
-
-        //     new display.Connection();
-        // });
-
-
-        // });
-
-        // scenemanager.on('load', function(){  });
-
-        // scenemanager.on('game', function(){});
-
-
+        // console.log(e.progress);
     });
 
 
 
-
-
+    display.Element.prototype.assetManager = manager;
+    display.Background.prototype.assetManager = manager;
 
 })();

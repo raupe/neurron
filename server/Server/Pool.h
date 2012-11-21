@@ -22,9 +22,11 @@ namespace sv
 		~Pool();
 
 		void		Init(uint size);
+		void		Clear();
 
 		T*			Get();
 		void		Free (T* object);
+		void		FreeAll();
 
 		Iterator	First() { return m_UsedEntries; }
 		T*			Get(Iterator iterator) { return iterator->m_Object; }
@@ -43,15 +45,24 @@ namespace sv
 template <class T>
 sv::Pool<T>::Pool()
 : m_Size(0)
+, m_Entries(0)
 , m_UsedEntries(0)
+, m_FreeEntries(0)
 {
+}
+
+template <class T>
+sv::Pool<T>::~Pool()
+{
+	Clear();
 }
 
 template <class T>
 void sv::Pool<T>::Init(uint size)
 {
-	m_Size = size;
+	Clear();
 
+	m_Size = size;
 	m_Entries = static_cast<Entry*>(malloc(sizeof(Entry) * m_Size));
 
 	for(uint i=0; i<m_Size-1; ++i)
@@ -66,11 +77,16 @@ void sv::Pool<T>::Init(uint size)
 }
 
 template <class T>
-sv::Pool<T>::~Pool()
+void sv::Pool<T>::Clear()
 {
-	for(uint i=0; i<m_Size; ++i)
-		delete(m_Entries[i].m_Object);
-	free(m_Entries);
+	if(m_Entries)
+	{
+		for(uint i=0; i<m_Size; ++i)
+			delete(m_Entries[i].m_Object);
+		free(m_Entries);
+
+		m_Entries = 0;
+	}
 }
 
 template <class T>
@@ -88,7 +104,7 @@ T* sv::Pool<T>::Get()
 }
 
 template <class T>
-void sv::Pool<T>::Free (T* object)
+void sv::Pool<T>::Free(T* object)
 {
 	Entry** formerPt = &m_UsedEntries;
 	Entry* entry = m_UsedEntries;
@@ -105,5 +121,23 @@ void sv::Pool<T>::Free (T* object)
 		entry = entry->m_Next;
 	}
 }
+
+template <class T>
+void sv::Pool<T>::FreeAll()
+{
+	Entry* entry = m_UsedEntries;
+	Entry* temp = 0;
+	while(entry)
+	{
+		temp = entry->m_Next;
+
+		entry->m_Next = m_FreeEntries;
+		m_FreeEntries = entry;
+
+		entry = temp;
+	}
+	m_UsedEntries = 0;
+}
+
 
 #endif // Pool_h__

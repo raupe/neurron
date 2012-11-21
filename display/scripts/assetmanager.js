@@ -1,27 +1,37 @@
 (function(){
 
-	var AssetManager = display.AssetManager = (function(){
+	display.AssetManager = (function(){
 
-		function AssetManager ( assets, storage ) {
+		var supportBlob = detectBlob(),
+			supportIDB	= detectIDB(),
 
-			this.storage = storage || false;
+			channels = {
 
-			this.requests = [];
+				load		: new Array(1),
+				error		: new Array(1),
+				progress	: new Array(1)
+			},
 
-			this.assets = {};
+			AssetManager = {
 
-			this.supportBlob = this.detectBlob();
-			this.supportIDB = this.detectIDB();
+				storage		: false,
 
-			if ( !assets ) return this;
+				_assets		: {},
 
-			this.init ( assets );
-		}
+				image		: {},
+				audio		: {},
+				movie		: {},
+				// text		: {},
 
+				length		: 0,	// amount of files
+				total		: 0,	// loaded
+				step		: 0,	// average
+				finished	: true
+			};
 
-		/* ToDo: detect browser feature of XHR.responseType */
+		/* ToDo: detect browser feature of XHR.responseType && canvas.toBlob */
 
-		AssetManager.prototype.detectBlob = function(){
+		function detectBlob() {
 
 			if ( !window.URL ) {
 
@@ -36,12 +46,12 @@
 			}
 
 			return true;
-		};
+		}
 
 
 		/* ToDo: extend IDB support */
 
-		AssetManager.prototype.detectIDB = function(){
+		function detectIDB() {
 
 			if ( !window.indexedDB ) {
 
@@ -71,178 +81,355 @@
 			}
 
 			return true;
-		};
+		}
 
 
-		/* ToDo: connecting via indexedDB */
+		function getIDB ( name ) {
 
-		AssetManager.prototype.useStorage = function ( url ) {
-
-			var storage = localStorage[url];
-
-			return storage;
-		};
+			console.log('IDB: ', name);
+		}
 
 
 
-		AssetManager.prototype.clear = function() {
-
-			var assets = Object.keys(this.assets);
-
-			for ( var i = 0, l = assets.length; i < l; i++ ) {
-
-				delete localStorage[ assets[i] ];
-			}
-		};
 
 
-		AssetManager.prototype.init = function ( assets ) {
+		function check ( obj ) {
 
-			var types = Object.keys( assets ),
-
-				_list = {},
-
-				counter = 0,
-
-				list = [],
-
-				refs = {},
-
-				sources, media, j, k, key, url;
-
-			// supported: image, audio, text, movie
-			for ( var i = 0, l = types.length; i < l; i++ ) {
-
-				media = assets[ types[i] ];
-
-				if ( !media.length ) {
-
-					sources = Object.keys( media );
-
-					this[ types[i] ] = {}; // this.image = {}
-
-				} else {
-
-					sources = media;
-				}
-
-				for ( j = 0, k = sources.length; j < k; j++ ) {
-
-					_list[ media[ sources[j] ] ] = 0;
-
-					refs[ media[ sources[j] ] ] = { media: types[i], id: sources[j] };
-
-					list[ counter ++] = media[ sources[j] ];
-				}
-			}
-
-			this.refs = refs;
-
-			this.assets = _list;
-
-			this.length = list.length;
-
-			this.step = 100/this.length;
-
-			this.total = 0;
-
-			for ( i = 0, l = list.length; i<l; i++ ) {
-
-				this.req( list[i] );
-			}
-		};
+			return Object.prototype.toString.call( obj ).slice( 8, -1 );
+		}
 
 
-		AssetManager.prototype._getPool = function ( type ) {
 
-			var instance;
+		function getType ( url ) {
 
-			if ( type === XMLHttpRequest && this.requests.length ) {
+			url = url.substr( url.lastIndexOf('.') + 1 ).toLowerCase();
 
-				instance = this.requests.pop();
+			if ( url === 'png' || url === 'jpg' || url === 'jpeg' || url === 'gif' || url === 'webp' ) {
+
+				url = 'image';
+
+			} else if ( url === 'wav' || url === 'mp3' || url === 'ogg' || url === 'opus' ) {
+
+				url = 'audio';
+
+			} else if ( url === 'mp4' || url === 'avi' || url === 'webm' ) {
+
+				url = 'movie';
+
+			// } else if ( url === 'txt' || url === 'md' ) {
+
+			//	url = 'text';
 
 			} else {
 
-				instance = new type();
+				throw Error( '[ Undefined Type - ".' + url + '" ]');
 			}
 
-			return instance;
+			return url;
+		}
+
+
+		var norm = { // obj-del
+
+			Object	:	function ( src ) { // key or path
+
+							var list = [], li = 0,
+
+								types = Object.keys( src ),
+
+								type, entries, info, sel,	// temp
+
+								i, l, j, k;					// iterators
+
+
+							for ( i = 0, l = types.length; i < l; i++ ){
+
+								type = types[i];
+
+								if ( check( src[ type ] ) === 'Object' ) {
+
+									entries = Object.keys( src[ type ] );
+
+									for ( j = 0, k = entries.length; j < k; j++ ) {
+
+										sel = src[type][entries[j]];
+
+										info = {
+
+											type: type,
+											id	: entries[j],
+											src	: sel.src || sel
+										};
+
+										if ( sel.width )	info.width = sel.width;
+										if ( sel.height )	info.height = sel.height;
+
+										if ( check(sel) === 'Object' && sel.length ) { // != String
+
+											info.length = sel.length;
+										}
+
+										list[ li++ ] = info;
+									}
+
+								} else {
+
+									sel = src[type];
+
+									info = {
+
+										type: getType( src[type] ),
+										id	: type,
+										src	: sel.src || sel
+									};
+
+									if ( sel.width )	info.width = sel.width;
+									if ( sel.height )	info.height = sel.height;
+									if ( sel.length )	info.length = sel.length;
+
+									list[ li++ ] = info;
+								}
+
+							}
+
+							return list;
+						},
+
+			Array	:	function ( src ) { // full, id, type || just string
+
+							var list = [], li = 0,
+
+								entry, info,		// temp
+
+								i, l;			// iterators
+
+							for ( i = 0, l = src.length; i < l; i++ ) {
+
+								entry = src[i];
+
+								if (  check( entry ) !== 'String' ) {
+
+									info = {
+
+										type: entry.type || getType( entry.src ),
+										id	: entry.id,
+										src	: entry.src
+									};
+
+									if ( entry.width )	info.width = entry.width;
+									if ( entry.height )	info.height = entry.height;
+									if ( entry.length )	info.length = entry.length;
+
+									list[ li++ ] = info;
+
+								} else {
+
+									info = {
+
+										type: getType( entry ),
+										id	: null,
+										src	: entry
+									};
+
+									list[ li++ ] = info;
+								}
+							}
+
+							return list;
+						},
+
+			String	:	function ( src ) {
+
+							return [ { id: null, type: getType( src ) , src: src }];
+						}
 		};
 
 
-		AssetManager.prototype._setPool = function ( obj ) {
+		function emit ( type ) {
 
-			if ( obj instanceof XMLHttpRequest ) {
+			var listener = channels[ type ][0];
 
-				this.requests.push( obj );
-			}
-		};
+				args = Array.prototype.slice.call( arguments, 1 );
 
+			if ( check( listener ) === 'Array' ) {
 
-
-
-		AssetManager.prototype.req = function ( url ) {
-
-			if ( this.storage && this.useStorage( url ) ) {
-
-				if ( !this.usedStorage ) this.usedStorage = true;
-
-				var data = this.useStorage( url );
-
-				this._loaded( url, data ) ;
+				listener[0].apply( listener[1], args || [] );
 
 			} else {
 
-				var xhr = this._getPool( XMLHttpRequest );
+				console.warn( 'There is no listener on - "'+ type +'":( ');
+			}
+		}
 
-				xhr.open( 'GET', url, true );
 
+
+		var on = function ( type, callback, context ) {
+
+				channels[ type ][0] = [ callback, context ];
+			},
+
+
+			set = function ( src, callback, storage ) {
+
+				if ( storage ) AssetManager.storage = getIDB( storage );
+
+				if ( callback ) channels.load[0] = [ callback ];
+
+
+				src = norm[ check(src) ]( src );
+
+				var length = src.length,
+
+					current,	// temp
+
+					i;			// iterator
+
+				AssetManager.length = length;
+				AssetManager.finished = false;
+
+				AssetManager.total = 0;
+				AssetManager.step = ~~( 0.5 + (100 / length) );
+
+
+				for ( i = 0; i < length; i++ ) {
+
+					current = src[i];
+
+					AssetManager._assets[ current.src ] = 0; // 0 percent loaded
+
+					request( current );
+				}
+			},
+
+			get = function ( type, id, frame ) {
+
+				var src = ( !id ) ? AssetManager._assets[ type ] : AssetManager[ type ][ id ];
+
+				if ( !src ) return null;
+
+				if ( frame ) src = src[frame];
+
+				if ( check(src) !== 'String' ) { // discrete signal - image
+
+					return src;
+
+				} else { // blob-url || continuous signal
+
+					if ( !id ) type = getType( type );
+
+					var container = ( type === 'audio' ) ? new Audio() : document.createElement('video');
+
+					container.src = src;
+
+					return container;
+				}
+			},
+
+
+			unset = function ( id, persistent ) {
+
+				id = norm[ check(id) ]( id );
+
+				var length = id.length,
+
+					current, src,		// temp
+					i;					// iterator
+
+				for ( i = 0; i < length; i++ ) {
+
+					current = id[i];
+
+					src = AssetManager._assets[ current.src ];
+
+					delete AssetManager._assets[ current.src ];
+
+					URL.revokeObjectURL( src.src || src );
+
+					if ( persistent ) {
+
+						// remove form IDB
+					}
+				}
+			};
+
+
+
+		function request ( asset ) {
+
+			if ( AssetManager.storage && supportIDB ) {
+
+				// check if its in IDB
+
+				// return  ->
+
+			} else {
+
+				var xhr = new XMLHttpRequest();
+
+				xhr.open( 'GET', asset.src, true );
 
 				xhr.onload = function ( t ) {
 
-					this._setPool( xhr );
+					var response = xhr.response;
 
-					var response = t.currentTarget.response;
+					if ( supportBlob ) {
 
-					if ( this.supportBlob ) {
-
-						this._loaded( url, response );
+						loaded( asset, response );
 
 					} else {
 
-						this.createBlob( url, response );
+						createBlob( asset, response );
 					}
+				};
 
-				}.bind(this);
+				xhr.onprogress = function ( e ) { handleProgress( asset, e ); };
 
+				xhr.onerror = function ( err ) { handleError( asset, xhr.error.code, err );	};
 
-
-				xhr.onerror = function ( err ) {
-
-					this._error( url, err.currentTarget.error.code, err );
-
-				}.bind(this);
-
-				xhr.onprogress = function ( e ) {
-
-					this._progress( url, e );
-
-				}.bind(this);
-
-
-				xhr.responseType = this.supportBlob ? 'blob' : 'arraybuffer';
+				xhr.responseType = supportBlob ? 'blob' : 'arraybuffer';
 
 				xhr.send();
 			}
-		};
+		}
+
+
+		function handleProgress ( asset, e ) {
+
+			var perc = ~~( 0.5 + ( AssetManager.step * (~~(( e.loaded / e.total ) * 100 ) ) ) / 100 );
+
+			AssetManager.total += perc - AssetManager._assets[ asset.src ];
+
+			AssetManager._assets[ asset.src ] = perc;
+
+			if ( !AssetManager.finished ) {
+
+				if ( AssetManager.total >= 100 ) {
+
+					AssetManager.total = 100;
+
+					AssetManager.finished = true;
+				}
+
+				emit( 'progress', { src: asset, progress: AssetManager.total });
+			}
+		}
 
 
 
-		AssetManager.prototype.createBlob = function ( url, data ) { // convert arraybuffer
+		function handleError ( asset, code, error ) {
+
+			emit( 'error', { src: asset, code: code, error: error });
+		}
+
+
+
+		function createBlob ( asset, data ) { // convert array buffer
 
 			var view = new DataView( data ),
 
-				type = getType( url ),
+				type = asset.type,
+
+				url = asset.src || asset.origin,
 
 				format = url.substr( url.lastIndexOf('.') +1 ).toLowerCase(),
 
@@ -257,213 +444,185 @@
 				blob = ( new BlobBuilder() ).append([ view ]).getBlob( type + '/' + format );
 			}
 
-			this._loaded( url, blob );
-		};
+			loaded( asset, blob );
+		}
 
 
+		function loaded ( asset, blob ) {
 
-		AssetManager.prototype._loaded = function ( url, blob ) {
+			if ( AssetManager.storage && supportIDB ) {} // saving the blobg -> as defined
 
 			var data = URL.createObjectURL( blob );
 
-			refs = this.refs[url];
+			if ( asset.type === 'image' ) { // discrete signal
 
-			this.assets[ url ] = data;
+				declareImage( asset, data );
 
-			if ( refs ) this[refs.media][refs.id] = this.assets[ url ];
+			} else { // continuous signal
 
-			if ( this.storage ) localStorage[url] = result;
+				if ( asset.type === 'audio' && asset.length ) {
 
-			if ( ! --this.length ) {
+					getAudioSprites( asset, data );
 
-				// if ( ) -> restrict channel -> just as registered
-				display.Element.prototype.assetManager = this;
-				display.Background.prototype.assetManager = this;
+				} else {
 
-				_emit('load', this );
-			}
-		};
-
-
-		AssetManager.prototype._error = function ( src, code, e ) {
-
-			_emit('error', { src: src, code: code, e: e });
-		};
-
-
-		AssetManager.prototype._progress = function ( src, e ) {
-
-			var perc = ~~( 0.5 + ( this.step * (~~(( e.loaded / e.total ) * 100 ) ) ) / 100 );
-
-			this.total += perc - this.assets[ src ];
-
-			this.assets[ src ] = perc;
-
-			if ( !this._finished ) {
-
-				if ( this.total >= 100 ) { // clear
-
-					this.total = 100;
-
-					this._finished = true;
-
-					this.requests.length = 0;
+					result( asset, data );
 				}
-
-				_emit('progress', { src: src, progress: this.total	});
 			}
-		};
+		}
 
+		function declareImage ( asset, data ) {
 
+			var img = new Image();
 
-		AssetManager.prototype.set = function ( options, callback, context ) {
+			img.onload = function(){
 
-			channels.load.length = 0; // clean
+				if ( !asset.width && !asset.height ) {
 
-			channels.load.push( [ callback, context ] );
+					result( asset, data, img );
 
+				} else { // sprites
 
-			if ( !options.length ) options = [ options ];
-
-			var asset;
-
-			this.total = 0;
-
-			this._finish = false;
-
-			this.length = options.length;
-
-			this.step = 100/this.length;
-
-			for ( var i = 0, l = options.length; i < l; i++ ) {
-
-				asset = options[i];
-
-				if ( asset.type && asset.id ) {
-
-					this.refs[ asset.src ] = { media: asset.type, id: asset.id };
+					getImageSprites( asset, img );
 				}
+			};
 
-				this.req( asset.src );
-			}
-		};
-
-
-		AssetManager.prototype.unset = function ( type, key ) {
-
-			if ( !key ) {
-
-				URL.revokeObjectURL( type );
-
-				if ( localStorage[type] ) delete localStorage[type];
-
-				delete this.assets[type];
-			}
-
-			else {
-
-				URL.revokeObjectURL( this[type][key] );
-
-				if ( localStorage[ this[type][key] ] ) delete localStorage[ this[type][key] ];
-
-				delete this[type][key];
-			}
-		};
+			img.src = data;
+		}
 
 
+		function getImageSprites ( asset, img ) {
 
+			AssetManager.length--; // origin
 
-		/* retrieve media , ToDo: callback ? pool ? */
-		AssetManager.prototype.get = function ( type, key ) {
+			var width = asset.width || asset.height,
+				height = asset.height || asset.width,
 
-			var src = ( !key ) ? this.assets[type] : this[type][key],
+				columns = img.width/width,
+				rows = img.height/height,
 
-				container = {
+				frame = 0,			// counter
 
-					image: new Image(),
+				sprite,	info,		// ref
 
-					audio: new Audio(),
+				src, data, buffer,	// temp
 
-					video: function( src ){
+				i, j, k, l;			// iterator
 
-						var vid = document.createElement('video');
+			var cvs = document.createElement('canvas'),
+				ctx = cvs.getContext('2d');
 
-						vid.src = src;
+			cvs.width = width;
+			cvs.height = height;
 
-						return vid;
+			for ( i = 0; i < rows; i++ ) {
+
+				for ( j = 0; j < columns; j++ ) {
+
+					AssetManager.length++;
+
+					ctx.clearRect( 0, 0, width, height );
+
+					ctx.drawImage(	img,
+
+									j * width,
+									i * height,
+									width,
+									height,
+									0,
+									0,
+									width,
+									height
+								);
+
+					// to binary data
+					if ( true ) {
+
+						src = cvs.toDataURL('img/png');
+
+						data = atob( src.split(',')[1] );
+
+						buffer = new ArrayBuffer( data.length );
+
+						uint = new Uint8Array( buffer );
+
+						for ( k = 0, l = data.length; k < l; k++ ) {
+
+							uint[ k ] = data.charCodeAt(k);
+						}
+
+						info = {
+
+							type	: 'image',
+							id		: asset.id,
+							origin	: asset.src,
+							frame	: frame
+						};
+
+						createBlob( info, buffer );
+
+					} else { // !! , else case -> blobUrl
+
+						data = cvs.toBlobURL();
+
+						loaded( asset, data );
 					}
-				};
 
-			// isn't defined yet
-			if ( !src ) return null;
-
-			if ( !key ) type = getType( type );
-
-
-			container = container[type];
-
-			container.src = src;
-
-			return container;
-		};
-
-
-
-		var channels = { // length: 1
-
-			load: [],
-			error: [],
-			progress: []
-		};
-
-		function getType ( url ) {
-
-			url = url.substr( url.lastIndexOf('.') +1 ).toLowerCase();
-
-			if ( url === 'png' || url === 'jpg' || url === 'jpeg' ||	url === 'gif' || url === 'webp' ) {
-
-				url = 'image';
-
-			} else if ( url === 'wav' || url === 'mp3' || url === 'ogg' || url === 'opus' ) {
-
-				url = 'audio';
-
-			} else if ( url === 'mp4' || url === 'avi' || url === 'webm' ) {
-
-				url = 'movie';
-
-			} else {
-
-				throw Error( url + ' <- is not supported yet !');
+					frame++;
+				}
 			}
-
-			return url;
-		}
-
-		function _emit( type ) {
-
-			var subscriber = channels[ type ],
-
-				args = Array.prototype.slice.call( arguments, 1 );
-
-			subscriber[0][0].apply( subscriber[0][1], args || [] );
 		}
 
 
-		AssetManager.prototype.on = function ( type, callback, context ) {
+		function getAudioSprites ( asset, data ) {
 
-			if ( this.usedStorage ) {
 
-				callback( this );
+			// result( asset, data, audio );
+		}
+
+
+
+		function result ( asset, data, container ) {
+
+			if ( !asset.origin ) {
+
+				AssetManager._assets[ asset.src ] = container || data;
+
+			} else { // sprite
+
+				if ( !AssetManager._assets[ asset.origin ][0] ){
+
+					AssetManager._assets[ asset.origin ] = [];
+				}
+
+				AssetManager._assets[ asset.origin ][ asset.frame ] = container || data;
+			}
+
+			if ( asset.id ) {
+
+				AssetManager[ asset.type ][ asset.id ] = AssetManager._assets[ asset.src || asset.origin ];
 
 			} else {
 
-				channels[ type ][0] = [ callback, context ];
+				if ( !AssetManager[ asset.type ]._ ) AssetManager[ asset.type ]._ = [];
+
+				AssetManager[ asset.type ]._.push( AssetManager._assets[ asset.src || asset.origin ] );
 			}
 
-		};
+			if ( ! --AssetManager.length ) {
 
-		return AssetManager;
+				emit( 'load', AssetManager );
+			}
+		}
+
+
+		return {
+
+			on		: on,
+			set		: set,
+			get		: get,
+			unset	: unset
+		};
 
 	})();
 

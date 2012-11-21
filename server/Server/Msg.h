@@ -71,7 +71,7 @@ namespace sv
 	class StartMsg : public Msg
 	{
 	public:
-		StartMsg(uchar number);
+		StartMsg(uchar number, uchar lanes);
 		virtual ~StartMsg();
 
 		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
@@ -81,6 +81,7 @@ namespace sv
 
 	private:
 		uchar			m_Number;
+		uchar			m_NumberLanes;
 		uchar*			m_Colors;
 		uchar*			m_Pos;
 	};
@@ -95,6 +96,20 @@ namespace sv
 
 	private:
 		uchar			m_PLayerId;
+		uchar			m_Pos;
+	};
+
+	class ObstacleMsg : public Msg
+	{
+	public:
+		ObstacleMsg(uchar obstacleId, uchar category, uchar pos);
+		virtual ~ObstacleMsg() {}
+
+		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
+
+	private:
+		uchar			m_ObstacleId;
+		uchar			m_Category;
 		uchar			m_Pos;
 	};
 

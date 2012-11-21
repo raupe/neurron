@@ -1,88 +1,91 @@
 (function(){
 
-	var Obstacle = display.Obstacle = function ( config ) {
+	var Obstacle = display.Obstacle = function ( params ) {
 
-		this.init( config );
+		this.init( params );
 	};
 
     Obstacle.prototype = new display.Element();
 
+
     // extend Element init
-    Obstacle.prototype.init = function ( config )  {
+    Obstacle.prototype.init = function ( params ) {
 
-		var waypoints = ~~(config.pos/this.grid.lanes),
+		this.endField = params.pos%this.grid.lanes;
 
-			lane = [];
+		params.visible = true;
 
-		while ( waypoints-- ) {
-
-			lane[waypoints] = config.pos%this.grid.lanes + waypoints * this.grid.lanes;
-		}
-
-		this.lane = lane;
-
-		config.visible = true;
-
-        this.value = config.value;
-		this.type = config.type;
-
-		this.velocity = config.velocity;
-
-		// this.collisionImg = this.assetManager.get('image', config.collisionImg );
-
-		this.collisionSound = config.collisionSound;
-		// this.collisionSound = this.assetManager.get('audio', config.collisionSound);
+        this.value = params.value;
+		this.type = params.type;
 
 
+		this.velocity = params.velocity;
+
+		this.collisionSound = this.assetManager.get( 'audio', params.collisionSound );
+
+		this.collisionImage = this.assetManager.get('image', params.collisionImg );
+
+		this.collisionCounter = 0;
 
         // this.checkCollision = config.duration.moveTime / this.grid.frames;
 
+		display.Element.prototype.init.call( this, params );
 
-
-		display.Element.prototype.init.call(this, config);
+		this.move( this.endField );
     };
 
 
-    // extend default update
-    Obstacle.prototype.update = function ( delta ) {
+    Obstacle.prototype.setDir = function(){
 
-        if ( this.counter === 0 ) {
+		this.dir = 'antiDist';
+    };
 
-			if ( this.lane.length === 0 ) {
 
-				this.animateCollision();
+	// since allways update moving -> after fieldstep
+    Obstacle.prototype.change = function() {
 
-				this.visible = false;
+		if ( this.pos === this.endField ) {
 
-				this.pool.set( this.id );
+			// 1.) glitch: 3 -> 4, next position ?
+			// 2.) last step, half pixels ?
 
-			} else {
+			this.vanish();
 
-				this.nextPos = this.lane.pop();
+		} else {
 
-				this.dir = 'antiDist';
-			}
-        }
+			// collide logic....
 
-		display.Element.prototype.update.apply(this);
+			// else
+			this.pos -= this.grid.lanes;
+		}
+    };
+
+
+    Obstacle.prototype.vanish = function(){
+
+		this.animateCollision();
     };
 
 
     Obstacle.prototype.animateCollision = function(){
 
-		// console.log(this.assetManager.get( 'audio', this.collisionSound.src ));
-		this.assetManager.get( 'audio', this.collisionSound ).play();
+		if ( this.collisionCounter === 0 ) this.collisionSound.play();
 
-		// console.log('[collision] ', this.collisionImg.src);
-		// console.log('audio', this.collisionSound );
-		// url -> ist der key !
-		// this.assetManager.get( 'audio', this.collisionSound ).play();
-    };
+		if ( this.collisionCounter < this.collisionImage.length ) {
 
+			this.src = this.collisionImage[ this.collisionCounter ];
 
-    // case 'timeupdate':
+			this.collisionCounter++;
 
-				// args.push( this.element.currentTime );
+		} else {
 
+			this.collisionCounter = 0;
+
+			this.visible = false;
+			this.moving = false;
+
+			this.pool.set( this.id );
+		}
+	};
 
 })();

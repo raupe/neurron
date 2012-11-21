@@ -12,8 +12,6 @@
 
 		this.background = new display.Background();
 
-		this.render();
-
 		display.Connection.prototype.manager = this;
 		display.Debug.prototype.manager = this;
 	};
@@ -21,7 +19,7 @@
 
 	Manager.prototype.render = function(){
 
-		(function loop ( delta ) {
+		function loop ( delta ) {
 
 			forAll( this.playerList, 'update', delta );
 
@@ -42,8 +40,9 @@
 
 
 			requestAnimationFrame( loop.bind(this) );
+		}
 
-		}.bind(this) )();
+		loop.call( this, 0 );
 
 
 		function forAll ( collection, method, delta ) {
@@ -58,6 +57,7 @@
 				}
 			}
 		}
+
 	};
 
 
@@ -75,16 +75,9 @@
 			7	: this.collide
 		};
 
-		console.log(action, options);
+		// console.log(action, options);
 
 		commands[ action ].call( this, options );
-	};
-
-
-
-	Manager.prototype.countdown = function() {
-
-		console.log('countdown...');
 	};
 
 
@@ -107,24 +100,36 @@
 
 	};
 
+
+	Manager.prototype.countdown = function() {
+
+		console.log('countdown...');
+	};
+
+
 	/* playerlist */
 	Manager.prototype.start = function ( params ) {
 
+
 		this.grid.init({
 
-			players: 8,				// players.length,
-			distanceToUser: 350,
+			lanes: params[0],
 			circleOffset: 100,
-			circles: 0,
-			factor: config.factor
+			distanceToUser: 350,
+			factor: config.factor,
+			circles: config.circles,
+			players: params[1].length
 		});
 
-        // this.init(2);
-		this.playerList	= new display.PlayerList( params[0] );
+
+		this.render();
+
+		this.playerList	= new display.PlayerList( params[1] );
 
 		this.statusManager.init( this.playerList );
 
-        new display.Debug();
+
+		new display.Debug();
 	};
 
 

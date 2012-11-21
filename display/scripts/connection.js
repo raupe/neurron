@@ -3,6 +3,7 @@
 	var Connection = display.Connection = function() {
 
 		this.url = "ws://" + config.server + ":" + config.port;
+
 		this.initializeSocket();
 	};
 
@@ -23,14 +24,15 @@
 
 			console.log('[close]');
 
+            // manager.init(1);
 
-			manager.handle( config.protocol.START, [[
-                { id:1, pos:1, color:{r: 255, g: 0, b: 0} },
-                { id:2, pos:2, color:{r: 0, g: 255, b: 0} },
-                { id:3, pos:4, color:{r: 0, g: 0, b: 255} }
+			manager.handle( config.protocol.START, [ 4, [
+
+                { id:1, pos:1, color:{r: 255, g: 0, b: 0} }
+   //              { id:2, pos:2, color:{r: 0, g: 255, b: 0} },
+   //              { id:3, pos:4, color:{r: 0, g: 0, b: 255} }
             ]] );
 
-            manager.init(1);
 		};
 
 
@@ -56,11 +58,14 @@
 
 	/* 3 */	if ( action === config.protocol.START ) {
 
-					l = 2 * data.charCodeAt(1); // amount of players
+				l = 2 * data.charCodeAt(1); // amount of players
+
+				options[0] = data.charCodeAt(2); // amount of lanes
+
 
 				var players = [];
 
-				for ( i = 2; i < l+2; i += 2 ) {
+				for ( i = 3; i < l+3; i += 2 ) {
 
 					players.push({
 
@@ -70,7 +75,7 @@
 					});
 				}
 
-				options[0] = players;
+				options[1] = players;
 			}
 
 
