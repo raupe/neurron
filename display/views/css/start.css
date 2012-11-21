@@ -1,10 +1,111 @@
 html, body {
     height: 100%;
 }
-.outer_wrapper {
-    border: 2px solid yellowgreen;
-    height: 98%;
+.content_wrapper {
+    height: 100%;
+    width: 100%;
+    min-width: 760px;
+    min-height: 500px;
 }
+
+.slider_wrapper {
+    float: left;
+    width: 75%;
+    min-width: 570px;
+    height: 100%;
+    background-color: gray;
+}
+
+.slider_content_wrap {
+    width: 80%;
+    min-width: 490px;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #9acd32;
+}
+.logo {
+    width: 35%;
+    min-width: 270px;
+    height: 15%;
+    min-height: 90px;
+    background-color: #e6e6fa;
+    margin-left: 10%;
+}
+
+.slider_box_wrap{
+    width: 100%;
+    height:70%;
+    min-height: 350px;
+    margin-top: 8%;
+    background-color: #7fffd4;
+    position: relative;
+}
+.button {
+    width: 24%;
+    height: 15%;
+    min-height: 50px;
+    background-color: #fffff0;
+    float: left;
+    position: relative;
+    z-index: 999;
+}
+
+.intro_button {
+    margin-left: 10%;
+    margin-right: 2%;
+}
+
+.play_button {
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.demo_button {
+    margin-left: 2%;
+    margin-right: 10%;
+}
+
+.dashboard {
+    width: 90%;
+    height: 20%;
+    min-height: 50px;
+    background-color: #f5deb3;
+    position: absolute;
+    top: 5%;
+    z-index: 0;
+    margin-left: 5%;
+    margin-right: 5%;
+    clear: both;
+}
+
+.screen_wrap {
+    width: 100%;
+    min-height: 315px;
+    height: 90%;
+    background-color: #f5deb3;
+    position: absolute;
+    top: 10%;
+    z-index: 0;
+}
+
+.screen{
+    width: 80%;
+    height: 80%;
+    margin: 10%;
+    position: absolute;
+    background-color: purple;
+}
+
+.qr_wrapper {
+float: right;
+width: 25%;
+min-width: 190px;
+height: 100%;
+background-color: #bdb76b;
+    }
+
+/*
 .inner_wrapper {
     background-image: url("../images/neurronwire_start_00.jpg");
     background-size: 100% 100%;
@@ -15,40 +116,4 @@ html, body {
     width: 750px;
     margin: auto;
 }
-.header {
-    border: 2px solid red;
-    height: 10%;
-}
-.main_wrapper {
-    border: 2px solid green;
-    margin-top: 6%;
-    margin-bottom: 2%;
-    width: 50%;
-    height: 60%;
-    float: left;
-}
-.nav {
-
-}
-.content {
-
-}
-.qr_wrapper {
-    border: 2px solid blue;
-    margin-top: 6%;
-    margin-bottom: 2%;
-    margin-left: 8%;
-    width: 40%;
-    height: 60%;
-    float: left;
-}
-.label{
-
-}
-.qr_code {
-
-}
-.footer {
-    border: 2px solid brown;
-    height: 10%;
-}
+*/
