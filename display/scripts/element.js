@@ -132,12 +132,11 @@
     };
 
 
-
     Element.prototype.update = function ( delta ) {
-
+    	
         this.diff += delta;
 
-        if ( this.diff >= this.checkMove ) {
+        while ( this.diff >= this.checkMove ) {
 
             this.diff -= this.checkMove;
 

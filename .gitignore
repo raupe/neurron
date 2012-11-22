@@ -7,3 +7,6 @@
 
 # prevent workspace push
 .idea
+
+# UltraEdit backup files
+*.bak
