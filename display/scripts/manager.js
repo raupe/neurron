@@ -28,10 +28,10 @@
 
 			delta = time - last;
 
-			console.log('delta: ', delta);
+//			console.log('delta: ', delta);
 
-			console.timeEnd(1);
-			console.time(1);
+//			console.timeEnd(1);
+//			console.time(1);
 
 			forAll( this.playerList, 'update', delta );
 
