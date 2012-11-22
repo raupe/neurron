@@ -16,6 +16,10 @@ window.config = {
     punishPoints		: 1000,
 
 
+
+	circleOffset		: 100,
+	distanceToUser		: 150,
+
     circles				: 10,		// sync with server
     frames				: 30,
 
@@ -88,7 +92,7 @@ window.config = {
 
 		1: {
 			type			: 'damage',
-			size			: 1*40,
+			size			: 1*80,
 			velocity		: 1,
 			value			:  10,
 			color			: [ 213,  10,  50 ], // red

@@ -86,7 +86,11 @@
 			step,
 			dist,
 
-			temp;
+			temp,
+
+			scale,
+
+			deg;
 
 
 		for ( circle = 0; circle < circles; circle++ ) {
@@ -95,14 +99,17 @@
 						( distanceToUser + circleOffset * circle);
 
 
-			// var h = ( a *f   ) / ( a + d * n );
+			scale = distanceToUser / ( distanceToUser + circleOffset * circle ); // * BILDGRÖßE
 
 			for ( step = 1; step <= steps; step++ ) {
 
 				x1 = Math.cos( rotation * step ) * radiusA + centerX;
 				y1 = Math.sin( rotation * step ) * radiusA + centerY;
 
-				ringPos.push({ x: x1, y: y1, h: 0, deg: 0 }); // deg, h
+				deg = rotation * step;
+
+				ringPos.push({ x: x1, y: y1, scale: scale, deg: deg }); // deg, h
+
 
 				if ( step%frame === 0 ) {
 
@@ -114,15 +121,17 @@
 							radiusB =	( distanceToUser * outerCircleRadius ) /
 										( distanceToUser + circleOffset * ( circle + factor * dist ) );
 
+							scale = distanceToUser / ( distanceToUser + circleOffset * ( circle + factor * dist ) ); // * BILDGRÖßE
+
 							x2 = Math.cos( rotation * step ) * radiusB + centerX;
 							y2 = Math.sin( rotation * step ) * radiusB + centerY;
 
-							distPos.push({ x:x2, y: y2, h: 0, deg: 0 }); // deg,h
+							distPos.push({ x:x2, y: y2, scale: scale, deg: deg }); // deg,h
 						}
 
 					} else {
 
-						distPost = [{x: x1, y: y1, h: 0, deg: 0 }]; // deg, h
+						distPost = [{x: x1, y: y1, scale: scale, deg: deg }]; // deg, h
 					}
 
 
@@ -147,7 +156,7 @@
 
                         } else {
 
-							fields[temp].antiDist = [{ x: x1,y: y1, h: 0 , deg: 0 }]; // deg, h
+							fields[temp].antiDist = [{ x: x1,y: y1, scale: scale , deg: deg }]; // deg, h
                         }
 
 
@@ -164,8 +173,8 @@
 						y: y1,
 						ring: ringPos.slice().reverse(),
 						dist: distPos.slice(),
-						h: 0 ,
-						deg: 0 // deg
+						scale: scale,
+						deg: deg // deg
 					});
 
 					distPos.length = ringPos.length = 0;
@@ -249,6 +258,7 @@
 			radius = ( distanceToUser * outerCircleRadius ) / ( distanceToUser + circleOffset * i);
 
 			// var h = ( a *f   ) / ( a + d * n );
+			//  var h = ( distanceToUser * BILDGRÖßE  ) / ( distanceToUser + circleOffset * n );
 			ctx.beginPath();
 
 			ctx.arc( width/2, height/2, radius, 0, Math.PI * 2, true );
