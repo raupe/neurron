@@ -178,7 +178,7 @@
                 if (currentPlayer.energy <= 90) currentPlayer.energy += healForEachPlayer;
             }
 
-        } else {
+        } else { // points
 
             for ( i = 0; i < numberOfPlayers; i++ ){
                 var pointsForEachPlayer = ~~(value / numberOfPlayers);
