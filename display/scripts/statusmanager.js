@@ -101,6 +101,7 @@
 
 		this.start = this.screen.cvs.width - this.offset;
 		this.panel = ctx;
+        this.canvas = cvs;
         this.setBackground();
 	};
 
@@ -113,7 +114,8 @@
 
 	StatusManager.prototype.draw = function(){
 
-        this.screen.ctx.drawImage( this.panel.canvas, this.start, 0 );
+//        this.screen.ctx.drawImage( this.panel.canvas, this.start, 0 );
+          document.body.appendChild( this.canvas );
 	};
 
 
