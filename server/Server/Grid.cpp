@@ -2,6 +2,8 @@
 #include "Grid.h"
 
 #include "Player.h"
+#include <string.h>
+
 //													  1  2  3   4   5   6   7   8
 const uchar sv::Grid::s_MapPlayerLanes[PLAYER_MAX] = {4, 8, 12, 12, 15, 12, 14, 16};
 
