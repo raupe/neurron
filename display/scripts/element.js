@@ -179,18 +179,21 @@
         var field = this.field;
 
         this.origin.save();
-        this.origin.translate( field.x , field.y );
-        this.origin.rotate( field.deg );
-        this.origin.translate( -field.x , -field.y);
 
-        this.origin.drawImage(
+            this.origin.translate( field.x , field.y );
 
-                        this.src,
-                        field.x - this.size/2 * field.scale,
-                        field.y - this.size/2 * field.scale,
-                        this.size * field.scale,
-                        this.size * field.scale
-                    );
+            this.origin.rotate( field.angle );
+
+            this.origin.translate( -field.x , -field.y);
+
+            this.origin.drawImage(
+
+                            this.src,
+                            field.x - this.size/2 * field.scale,
+                            field.y - this.size/2 * field.scale,
+                            this.size * field.scale,
+                            this.size * field.scale
+                        );
 
         this.origin.restore();
     };
