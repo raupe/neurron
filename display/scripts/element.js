@@ -49,8 +49,6 @@
 
         this.diff = 0;
 
-
-
         this.check = false;
 
         this.origin = this.screen.ctx;
@@ -134,28 +132,12 @@
     };
 
 
-    // check: clockwise <- antiRing, anticlockwise -> ring
-    Element.prototype.setDir = function() {
-
-        var nextPos = this.nextPos;
-
-        if ( nextPos > this.pos ) {
-
-            this.dir = ( nextPos - this.pos) < this.grid.lanes/2 ? 'antiRing' : 'ring';
-
-        } else {
-
-            this.dir = ( this.pos - nextPos ) > this.grid.lanes/2 ? 'antiRing' : 'ring';
-        }
-    };
-
-
 
     Element.prototype.update = function ( delta ) {
 
         this.diff += delta;
 
-        if ( this.diff >= this.checkMove ) { // @julia: why not working as - 'while'
+        while ( this.diff >= this.checkMove ) {
 
             this.diff -= this.checkMove;
 
@@ -185,43 +167,6 @@
 
             this.change();
         }
-    };
-
-
-    Element.prototype.change = function(){
-
-        if ( this.dir === 'ring' ) {
-
-            if ( this.pos%this.grid.lanes === 0 ) {
-
-                this.pos += (this.grid.lanes - 1);
-
-            } else {
-
-                this.pos--;
-            }
-
-        } else {
-
-            if ( this.pos%this.grid.lanes === this.grid.lanes-1) {
-
-                this.pos -= (this.grid.lanes - 1);
-
-            } else {
-
-                this.pos++;
-            }
-        }
-
-        if ( this.nextPos !== this.pos ) {
-
-            this.setDir();
-
-        } else {
-
-            this.moving = false;
-        }
-
     };
 
 
