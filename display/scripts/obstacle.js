@@ -43,21 +43,14 @@
 
 	// since allways update moving -> after fieldstep
     Obstacle.prototype.change = function() {
-
-		if ( this.pos === this.endField ) {
-
-			// 1.) glitch: 3 -> 4, next position ?
-			// 2.) last step, half pixels ?
-
-			this.vanish();
-
-		} else {
-
-			// collide logic....
-
-			// else
-			this.pos -= this.grid.lanes;
+    	
+		this.pos -= this.grid.lanes;
+		if(this.pos < this.grid.lanes) {
+			
+			//this.vanish();
+			this.moving = false;
 		}
+		
     };
 
 
