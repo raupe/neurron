@@ -10,14 +10,24 @@ namespace sv
 	class Player : public Element
 	{
 	public:
-		Player(uint id, uint color, Grid* grid, uint pos);
+		Player();
 		~Player();
 		
+		void			Init(uchar id, Grid* grid, uchar color);
+		virtual void	Reset();
+		virtual void	Start(uchar pos);
 		virtual void	Update(ulong deltaTime);
 
-		uint	GetColor() { return m_Color; }
+		uchar			GetColor() { return m_Color; }
+		uchar			GetEnegery() { return m_Energy; }
+		void			SetEnergy(uchar energy) { m_Energy = energy; }
 	private:
-		uint	m_Color;
+		virtual void	SetPos(uchar pos);
+
+		virtual ulong	GetChangeTime() { return CHANGE_TIME_PL; }
+
+		uchar			m_Color;
+		uchar			m_Energy;
 	};
 }
 

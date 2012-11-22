@@ -2,6 +2,7 @@
 #include "Msg.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 sv::Msg::Msg(uchar type)
 : m_Type(type)
@@ -86,7 +87,7 @@ void sv::StartMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
 	Visit(m_Type, buffer, pos, length);
 	
 	Visit(m_Number, buffer, pos, length);
-//	Visit(m_NumberLanes, buffer, pos, length);
+	Visit(m_NumberLanes, buffer, pos, length);
 	for(uint i=0; i< m_Number; ++i)
 	{
 		Visit(m_Pos[i], buffer, pos, length);
@@ -124,6 +125,34 @@ void sv::ObstacleMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
 	Visit(m_ObstacleId, buffer, pos, length);
 	Visit(m_Category, buffer, pos, length);
 	Visit(m_Pos, buffer, pos, length);
+}
+
+sv::CollisionMsg::CollisionMsg(uchar obstacleId, uchar playerCount)
+: Msg(eMsgType_Collision)
+, m_ObstacleId(obstacleId)
+, m_PlayerCount(playerCount)
+{
+	m_PlayerIds = static_cast<uchar*>( malloc(m_PlayerCount * sizeof(uchar)) );
+}
+
+sv::CollisionMsg::~CollisionMsg()
+{
+	free(m_PlayerIds);
+}
+
+void sv::CollisionMsg::SetPlayer(uchar* playerIds)
+{
+	memcpy(m_PlayerIds, playerIds, m_PlayerCount);
+}
+
+void sv::CollisionMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
+{
+	Visit(m_Type, buffer, pos, length);
+	
+	Visit(m_ObstacleId, buffer, pos, length);
+	Visit(m_PlayerCount, buffer, pos, length);
+	for(uchar i=0; i<m_PlayerCount; ++i)
+		Visit(m_PlayerIds[i], buffer, pos, length);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////

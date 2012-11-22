@@ -12,6 +12,7 @@ namespace sv
 	class Msg;
 	class PlayerManager;
 	class ObstacleManager;
+	class StatusManager;
 	class Grid;
 
 	class Game
@@ -28,9 +29,9 @@ namespace sv
 
 	public:
 		void				Init(uint id, int socket);
-
+		void				Reset();
+		void				Start();
 		void				Update();
-		void				StartGame();
 		
 		uchar				GetId() { return m_Id; }
 		int					GetSocket() { return m_Socket; }
@@ -39,6 +40,11 @@ namespace sv
 		void				HandleStartMsg(InputMsg* msg);
 		void				HandleMoveMsg(InputMsg* msg, bool rigth);
 		void				SendMsg(Msg* msg);
+		
+		PlayerManager*		GetPlayerManager() { return m_PlayerManager; }
+		ObstacleManager*	GetObstacleManager() { return m_ObstacleManager; }
+		StatusManager*		GetStatusManager() { return m_StatusManager; }
+		Grid*				GetGrid() { return m_Grid; }
 		
 	private:
 		Game();
@@ -52,6 +58,7 @@ namespace sv
 		uchar				m_Status;
 		PlayerManager*		m_PlayerManager;
 		ObstacleManager*	m_ObstacleManager;
+		StatusManager*		m_StatusManager;
 		Grid*				m_Grid;
 
 		// countdown

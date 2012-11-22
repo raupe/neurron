@@ -10,9 +10,9 @@ namespace sv
 	public:
 		Element();
 		~Element();
-		void			Init(uchar id, Grid* grid, uchar pos);
 		
-		virtual void	Start();
+		virtual void	Reset();
+		virtual void	Start(uchar pos);
 		virtual void	Update(ulong deltaTime);
 
 
@@ -24,7 +24,10 @@ namespace sv
 		uchar			MoveOut();
 
 	protected:
-		void			SetPos(uchar pos);
+		void			Init(uchar id, Grid* grid);
+		virtual void	SetPos(uchar pos) { m_Pos = pos; }
+
+		virtual ulong	GetChangeTime() = 0;
 
 		uchar			m_Id;
 		
