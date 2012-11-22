@@ -9,6 +9,6 @@
 
     Timer.prototype.loop = function() {
         window.setTimeout(this.loop.bind(this), 1000);
-        console.log(this.time++);
+//        console.log(this.time++);
     }
 })();
