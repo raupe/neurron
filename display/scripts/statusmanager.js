@@ -149,10 +149,12 @@
             currentPlayer,
             i;
 
-        if ( type == 'damage' ) {
+        if ( type === 'damage' ) {
 
             for ( i = 0; i < numberOfPlayers; i++ ){
+
                 currentPlayer = this.playerList[playersIds[i] - 1];
+
                 if (currentPlayer.energy >= value) {
                     currentPlayer.energy -= value;
                 } else {
@@ -163,7 +165,7 @@
                 }
             }
 
-        } else if ( type == 'heal' ) {
+        } else if ( type === 'heal' ) {
 
             for ( i = 0; i < numberOfPlayers; i++ ){
                 var healForEachPlayer = ~~(value / numberOfPlayers);
