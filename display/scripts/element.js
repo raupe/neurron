@@ -175,18 +175,22 @@
     Element.prototype.draw = function() {
 
         var field = this.field;
-
-        // degree is saved per field
-        this.rotate( this.counter );
+        
+        this.origin.save();
+        this.origin.translate( field.x , field.y );
+        this.origin.rotate( field.deg );
+        this.origin.translate( -field.x , -field.y);
 
         this.origin.drawImage(
 
-                        this.img,
-                        field.x - this.size/2,// * field.scale,
-                        field.y - this.size/2,// * field.scale,
-                        this.size, //* field.scale,
-                        this.size //* field.scale
+                        this.src,
+                        field.x - this.size/2 * field.scale,
+                        field.y - this.size/2 * field.scale,
+                        this.size * field.scale,
+                        this.size * field.scale
                     );
+                    
+        this.origin.restore();
     };
 
 
@@ -197,13 +201,13 @@
 
         ctx.save();
 
+            ctx.clearRect( 0, 0, this.size, this.size ); // keep alpha != overdraw
             // ctx.translate( ctx.canvas.width/2 - this.size/2,
             //                ctx.canvas.height/2 - this.size/2 );
 
-            ctx.rotate( deg * Math.PI / 180 );// * Math.PI / 180 ); // rad
+            ctx.rotate( deg );//;// * Math.PI / 180 ); // rad
             // ctx.rotate( Math.PI / 4 );// * Math.PI / 180 ); // rad
 
-            ctx.clearRect( 0, 0, this.size, this.size ); // keep alpha != overdraw
 
             ctx.drawImage( this.src, 0,0, this.size, this.size );
 
