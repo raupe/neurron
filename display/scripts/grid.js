@@ -159,10 +159,7 @@
 
 							fields[temp].antiDist = fields[temp-lanes].dist.slice().reverse();
 
-                        } else {
-
-							fields[temp].antiDist = [{ x: x1,y: y1, scale: scale , angle: angle }];
-                        }
+                        } 
 
 
 						if ( temp && temp % lanes === 0 ) {
