@@ -24,10 +24,10 @@
 
         this.healer = 0;
 
-		this.update();
+		this.draw();
 	};
 
-    StatusManager.prototype.update = function(){
+    StatusManager.prototype.draw = function(){
 
         this.setBackground();
         this.showPoints();
@@ -116,13 +116,6 @@
     };
 
 
-	StatusManager.prototype.draw = function(){
-
-//        this.screen.ctx.drawImage( this.panel.canvas, this.start, 0 );
-//          document.body.appendChild( this.canvas );
-	};
-
-
 	StatusManager.prototype.handleHeal = function ( playerId, playersIds ) {
 
         var numberOfPlayers = playersIds.length,
@@ -143,7 +136,7 @@
             }
         }
 
-        this.update();
+        this.draw();
 	};
 
 
@@ -188,7 +181,7 @@
             }
         }
 
-        this.update();
+        this.draw();
 	};
 
      StatusManager.prototype.greet = function () {
@@ -196,7 +189,7 @@
          this.playerList[0].energy = this.playerList[0].energy - 10;
          console.log(this.playerList[0].energy);
 
-         this.update();
+         this.draw();
      }
 
 })();
