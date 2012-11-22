@@ -177,15 +177,15 @@
         var field = this.field;
 
         // degree is saved per field
-        this.rotate( field.deg );
+        this.rotate( this.counter );
 
         this.origin.drawImage(
 
                         this.img,
-                        field.x - this.size/2,
-                        field.y - this.size/2,
-                        this.size,
-                        this.size
+                        field.x - this.size/2,// * field.scale,
+                        field.y - this.size/2,// * field.scale,
+                        this.size, //* field.scale,
+                        this.size //* field.scale
                     );
     };
 
@@ -197,10 +197,11 @@
 
         ctx.save();
 
-            ctx.translate( ctx.canvas.width/2 - this.size/2,
-                           ctx.canvas.height/2 - this.size/2 );
+            // ctx.translate( ctx.canvas.width/2 - this.size/2,
+            //                ctx.canvas.height/2 - this.size/2 );
 
-            ctx.rotate( deg * Math.PI / 180 ); // rad
+            ctx.rotate( deg * Math.PI / 180 );// * Math.PI / 180 ); // rad
+            // ctx.rotate( Math.PI / 4 );// * Math.PI / 180 ); // rad
 
             ctx.clearRect( 0, 0, this.size, this.size ); // keep alpha != overdraw
 
