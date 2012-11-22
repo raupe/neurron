@@ -9,7 +9,7 @@
 
 namespace sv
 {
-	class GameManager : public Pool<Game>, public Singleton<GameManager>
+	class GameManager : public Pool<Game>
 	{
 	public:
 		GameManager();

@@ -25,8 +25,10 @@ namespace sv
 
 		Obstacle();
 		~Obstacle();
-		void			Init(uchar id, Grid* grid, uchar pos, Properties properties);
 
+		void			Init(uchar id, Grid* grid, Properties properties);
+		virtual void	Reset();
+		virtual void	Start(uchar pos);
 		virtual void	Update(ulong deltaTime);
 
 		uchar			GetType() { return m_Properties.m_Type; }
@@ -35,6 +37,8 @@ namespace sv
 		uchar			Getsize() { return m_Properties.m_Size; }
 
 	private:
+		virtual ulong	GetChangeTime() { return CHANGE_TIME_OB; }
+
 		Properties		m_Properties;
 	};
 }
