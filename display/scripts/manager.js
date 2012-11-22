@@ -28,6 +28,11 @@
 
 			delta = time - last;
 
+			console.log('delta: ', delta);
+
+			console.timeEnd(1);
+			console.time(1);
+
 			forAll( this.playerList, 'update', delta );
 
 			forAll( this.obstaclePool.list, 'update', delta );
