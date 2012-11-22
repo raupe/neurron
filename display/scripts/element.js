@@ -133,7 +133,7 @@
 
 
     Element.prototype.update = function ( delta ) {
-    	
+
         this.diff += delta;
 
         while ( this.diff >= this.checkMove ) {
