@@ -19,7 +19,15 @@
 
 	Manager.prototype.render = function(){
 
-		function loop ( delta ) {
+		var last = 0,
+
+			delta;
+
+
+		function loop ( time ) {
+
+			delta = time - last;
+
 
 			forAll( this.playerList, 'update', delta );
 
@@ -38,6 +46,8 @@
 
 			this.statusManager.draw();
 
+
+			last = time;
 
 			requestAnimationFrame( loop.bind(this) );
 		}
