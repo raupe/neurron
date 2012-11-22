@@ -4,6 +4,8 @@
 
 		this.points = 0;
 		this.createPanel( config.factor );
+
+        display.Debug.prototype.statusManager = this;
 	};
 
 
@@ -94,15 +96,18 @@
 		var cvs = document.createElement('canvas'),
 			ctx = cvs.getContext('2d');
 
-		this.offset = this.screen.cvs.width / factor;
+		this.offset = (window.innerWidth / 4);
+        console.log("statusmanager width: " + this.offset);
 
 		cvs.width = this.offset;
-		cvs.height = this.screen.cvs.height;
+		cvs.height = window.innerHeight;
 
 		this.start = this.screen.cvs.width - this.offset;
 		this.panel = ctx;
         this.canvas = cvs;
         this.setBackground();
+
+        document.body.appendChild( this.canvas );
 	};
 
 
@@ -115,7 +120,7 @@
 	StatusManager.prototype.draw = function(){
 
 //        this.screen.ctx.drawImage( this.panel.canvas, this.start, 0 );
-          document.body.appendChild( this.canvas );
+//          document.body.appendChild( this.canvas );
 	};
 
 
@@ -186,5 +191,13 @@
 
         this.update();
 	};
+
+     StatusManager.prototype.greet = function () {
+         console.log("hello");
+         this.playerList[0].energy = this.playerList[0].energy - 10;
+         console.log(this.playerList[0].energy);
+
+         this.update();
+     }
 
 })();
