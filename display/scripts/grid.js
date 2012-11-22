@@ -24,7 +24,8 @@
 
 		this.origin = this.screen.ctx;
 
-		this.width = this.screen.cvs.width - this.screen.cvs.width / params.factor;
+//		this.width = this.screen.cvs.width - this.screen.cvs.width / params.factor;
+        this.width = this.screen.cvs.width;
 		this.height = this.screen.cvs.height;
 
 		this.frames = this.getFrames();
@@ -110,7 +111,7 @@
 
 
 				if ( step%frame != 0 ) {
-					
+
 					ringPos.push({ x: x1, y: y1, scale: scale, deg: deg }); // deg, h
 
 				} else {
