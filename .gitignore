@@ -10,3 +10,9 @@
 
 # UltraEdit backup files
 *.bak
+
+# project files
+.project
+
+# gitignore
+.gitignore
