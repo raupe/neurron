@@ -48,7 +48,7 @@
 
 			forAll( this.obstaclePool.list, 'draw' );
 
-			this.statusManager.draw();
+//			this.statusManager.draw(); // statusManager doesnt need to be drawn, it is drawn when something is updated
 
 
 			last = time;
@@ -141,7 +141,7 @@
 		this.playerList	= new display.PlayerList( params[1] );
 
 		this.statusManager.init( this.playerList );
-
+        console.log("full width: "+window.innerWidth);
 
 		new display.Debug();
 	};
