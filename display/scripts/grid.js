@@ -89,6 +89,7 @@
 			temp,
 
 			scale,
+			scaleStep,
 
 			deg;
 
@@ -123,12 +124,12 @@
 							radiusB =	( distanceToUser * outerCircleRadius ) /
 										( distanceToUser + circleOffset * ( circle + factor * dist ) );
 
-							scale = distanceToUser / ( distanceToUser + circleOffset * ( circle + factor * dist ) ); // * BILDGRÖßE
+							scaleStep = distanceToUser / ( distanceToUser + circleOffset * ( circle + factor * dist ) ); // * BILDGRÖßE
 
 							x2 = Math.cos( rotation * step ) * radiusB + centerX;
 							y2 = Math.sin( rotation * step ) * radiusB + centerY;
 
-							distPos.push({ x:x2, y: y2, scale: scale, deg: deg }); // deg,h
+							distPos.push({ x:x2, y: y2, scale: scaleStep, deg: deg }); // deg,h
 						}
 
 					} else {

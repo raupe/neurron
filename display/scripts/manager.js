@@ -51,7 +51,12 @@
 			requestAnimationFrame( loop.bind(this) );
 		}
 
-		requestAnimationFrame( loop.bind(this) );
+		requestAnimationFrame( function(time) {
+				
+				last = time;
+				
+				loop.call(this, time);
+			}.bind(this) );
 
 
 		function forAll ( collection, method, delta ) {
