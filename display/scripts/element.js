@@ -155,21 +155,19 @@
 
 		var field = this.grid.fields[ this.pos ];
 
-            	
         if ( this.counter >= field[this.dir].length ) { // allow higher multiplicators
 
             this.counter = 0;
 
             this.change();
-            
-            this.field = this.grid.fields[ this.pos ];
-            
+
+            this.field = this.grid.fields[ this.pos ]; // after change
+
         } else {
 
-        	this.field = field[this.dir][ ~~this.counter ]; // allow floats
+            this.field = field[this.dir][ ~~this.counter ]; // allow floats
 
-        	this.counter += this.velocity;
-        	
+            this.counter += this.velocity;
         }
     };
 
@@ -179,21 +177,24 @@
     Element.prototype.draw = function() {
 
         var field = this.field;
-        
+
         this.origin.save();
-        this.origin.translate( field.x , field.y );
-        this.origin.rotate( field.deg );
-        this.origin.translate( -field.x , -field.y);
 
-        this.origin.drawImage(
+            this.origin.translate( field.x , field.y );
 
-                        this.src,
-                        field.x - this.size/2 * field.scale,
-                        field.y - this.size/2 * field.scale,
-                        this.size * field.scale,
-                        this.size * field.scale
-                    );
-                    
+            this.origin.rotate( field.angle );
+
+            this.origin.translate( -field.x , -field.y);
+
+            this.origin.drawImage(
+
+                            this.src,
+                            field.x - this.size/2 * field.scale,
+                            field.y - this.size/2 * field.scale,
+                            this.size * field.scale,
+                            this.size * field.scale
+                        );
+
         this.origin.restore();
     };
 
