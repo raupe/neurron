@@ -28,7 +28,6 @@
 
 			delta = time - last;
 
-
 			forAll( this.playerList, 'update', delta );
 
 			forAll( this.obstaclePool.list, 'update', delta );
@@ -52,7 +51,7 @@
 			requestAnimationFrame( loop.bind(this) );
 		}
 
-		loop.call( this, 0 );
+		requestAnimationFrame( loop.bind(this) );
 
 
 		function forAll ( collection, method, delta ) {
