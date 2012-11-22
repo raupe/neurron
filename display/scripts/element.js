@@ -153,19 +153,23 @@
 
     Element.prototype.animate = function() {
 
-        var field = this.grid.fields[ this.pos ],
+		var field = this.grid.fields[ this.pos ];
 
-            step = field[this.dir][ ~~this.counter ]; // allow floats
-
-        this.field = step;
-
-        this.counter += this.velocity;
-
+            	
         if ( this.counter >= field[this.dir].length ) { // allow higher multiplicators
 
             this.counter = 0;
 
             this.change();
+            
+            this.field = this.grid.fields[ this.pos ];
+            
+        } else {
+
+        	this.field = field[this.dir][ ~~this.counter ]; // allow floats
+
+        	this.counter += this.velocity;
+        	
         }
     };
 

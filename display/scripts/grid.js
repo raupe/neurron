@@ -108,10 +108,12 @@
 
 				deg = rotation * step;
 
-				ringPos.push({ x: x1, y: y1, scale: scale, deg: deg }); // deg, h
 
+				if ( step%frame != 0 ) {
+					
+					ringPos.push({ x: x1, y: y1, scale: scale, deg: deg }); // deg, h
 
-				if ( step%frame === 0 ) {
+				} else {
 
 
 					if ( fields.length < maxLength - lanes ) { // last circle check
@@ -131,7 +133,7 @@
 
 					} else {
 
-						distPost = [{x: x1, y: y1, scale: scale, deg: deg }]; // deg, h
+						distPos = [{x: x1, y: y1, scale: scale, deg: deg }]; // deg, h
 					}
 
 
