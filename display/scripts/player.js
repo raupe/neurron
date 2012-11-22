@@ -70,8 +70,6 @@
         } else {
 
             this.moving = false;
-
-            console.log(this.field);
         }
     };
 
