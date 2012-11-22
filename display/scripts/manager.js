@@ -143,6 +143,8 @@
 		this.statusManager.init( this.playerList );
 
 		new display.Debug();
+
+        new display.Timer();
 	};
 
 
