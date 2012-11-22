@@ -32,8 +32,11 @@
 
 		function scale(){
 
-			this.cvs.width = window.innerWidth;
-			this.cvs.height = window.innerHeight;
+//			this.cvs.width = window.innerWidth;
+//			this.cvs.height = window.innerHeight;
+            this.cvs.width = (window.innerWidth / 4) * 3;
+            console.log("screen width: " + this.cvs.width);
+            this.cvs.height = window.innerHeight;
 		}
 	};
 
