@@ -96,7 +96,7 @@
 		var cvs = document.createElement('canvas'),
 			ctx = cvs.getContext('2d');
 
-		this.offset = (window.innerWidth / 4);
+		this.offset = (window.innerWidth / config.factor);
         console.log("statusmanager width: " + this.offset);
 
 		cvs.width = this.offset;

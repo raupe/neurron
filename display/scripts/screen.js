@@ -34,7 +34,7 @@
 
 //			this.cvs.width = window.innerWidth;
 //			this.cvs.height = window.innerHeight;
-            this.cvs.width = (window.innerWidth / 4) * 3;
+            this.cvs.width = (window.innerWidth / config.factor) * (config.factor - 1); // (width / 4) * 3 | config.factor === 4
             console.log("screen width: " + this.cvs.width);
             this.cvs.height = window.innerHeight;
 		}
