@@ -137,7 +137,7 @@
 
         this.diff += delta;
 
-        while ( this.diff >= this.checkMove ) {
+        if ( this.diff >= this.checkMove ) {
 
             this.diff -= this.checkMove;
 
