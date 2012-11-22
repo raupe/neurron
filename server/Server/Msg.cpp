@@ -2,6 +2,7 @@
 #include "Msg.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 sv::Msg::Msg(uchar type)
 : m_Type(type)
