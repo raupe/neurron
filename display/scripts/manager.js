@@ -52,9 +52,9 @@
 		}
 
 		requestAnimationFrame( function(time) {
-				
+
 				last = time;
-				
+
 				loop.call(this, time);
 			}.bind(this) );
 
@@ -89,7 +89,7 @@
 			7	: this.collide
 		};
 
-		// console.log(action, options);
+		console.log(action, options);
 
 		commands[ action ].call( this, options );
 	};
@@ -161,6 +161,8 @@
 
 	/* obstacleId - category - start */
 	Manager.prototype.create = function ( params ) {
+
+		console.time(1);
 
 		this.obstaclePool.get( params[0], params[1], params[2] );
 	};

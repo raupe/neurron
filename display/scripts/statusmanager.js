@@ -182,6 +182,8 @@
         }
 
         this.draw();
+
+        currentObstacle.vanish();
 	};
 
      StatusManager.prototype.greet = function () {
@@ -190,6 +192,6 @@
          console.log(this.playerList[0].energy);
 
          this.draw();
-     }
+     };
 
 })();

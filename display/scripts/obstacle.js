@@ -43,14 +43,21 @@
 
 	// since allways update moving -> after fieldstep
     Obstacle.prototype.change = function() {
-    	
+
 		this.pos -= this.grid.lanes;
+
 		if(this.pos < this.grid.lanes) {
-			
-			//this.vanish();
+
+			// this.vanish();
+			console.timeEnd(1);
+
+
+			this.visible = false;
 			this.moving = false;
+
+			this.pool.set( this.id );
 		}
-		
+
     };
 
 
