@@ -39,6 +39,7 @@
 	ObstaclePool.prototype.set = function ( id ) { // transfer to pool
 
 		this.pool.push( this.list[id] );
+		delete this.list[id];
 	};
 
 })();
