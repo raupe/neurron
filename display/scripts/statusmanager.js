@@ -97,7 +97,6 @@
 			ctx = cvs.getContext('2d');
 
 		this.offset = (window.innerWidth / config.factor);
-        console.log("statusmanager width: " + this.offset);
 
 		cvs.width = this.offset;
 		cvs.height = window.innerHeight;

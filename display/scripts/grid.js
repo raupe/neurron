@@ -24,7 +24,8 @@
 
 		this.origin = this.screen.ctx;
 
-		this.width = this.screen.cvs.width - this.screen.cvs.width / params.factor;
+//		this.width = this.screen.cvs.width - this.screen.cvs.width / params.factor;
+        this.width = this.screen.cvs.width;
 		this.height = this.screen.cvs.height;
 
 		this.frames = this.getFrames();
@@ -91,7 +92,7 @@
 			scale,
 			scaleStep,
 
-			deg;
+			angle;
 
 
 		for ( circle = 0; circle < circles; circle++ ) {
@@ -100,22 +101,23 @@
 						( distanceToUser + circleOffset * circle);
 
 
-			scale = distanceToUser / ( distanceToUser + circleOffset * circle ); // * BILDGRÖßE
+			scale = distanceToUser / ( distanceToUser + circleOffset * circle );
 
 			for ( step = 1; step <= steps; step++ ) {
 
 				x1 = Math.cos( rotation * step ) * radiusA + centerX;
 				y1 = Math.sin( rotation * step ) * radiusA + centerY;
 
-				deg = rotation * step;
+				angle = rotation * step;
 
 
-				if ( step%frame != 0 ) {
-					
-					ringPos.push({ x: x1, y: y1, scale: scale, deg: deg }); // deg, h
+
+				if ( step%frame !== 0 ) {
+
+
+					ringPos.push({ x: x1, y: y1, scale: scale, angle: angle });
 
 				} else {
-
 
 					if ( fields.length < maxLength - lanes ) { // last circle check
 
@@ -129,12 +131,12 @@
 							x2 = Math.cos( rotation * step ) * radiusB + centerX;
 							y2 = Math.sin( rotation * step ) * radiusB + centerY;
 
-							distPos.push({ x:x2, y: y2, scale: scaleStep, deg: deg }); // deg,h
+							distPos.push({ x:x2, y: y2, scale: scaleStep, angle: angle });
 						}
 
 					} else {
 
-						distPos = [{x: x1, y: y1, scale: scale, deg: deg }]; // deg, h
+						distPos = [{x: x1, y: y1, scale: scale, angle: angle }];
 					}
 
 
@@ -159,7 +161,7 @@
 
                         } else {
 
-							fields[temp].antiDist = [{ x: x1,y: y1, scale: scale , deg: deg }]; // deg, h
+							fields[temp].antiDist = [{ x: x1,y: y1, scale: scale , angle: angle }];
                         }
 
 
@@ -177,7 +179,7 @@
 						ring: ringPos.slice().reverse(),
 						dist: distPos.slice(),
 						scale: scale,
-						deg: deg // deg
+						angle: angle
 					});
 
 					distPos.length = ringPos.length = 0;

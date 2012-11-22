@@ -141,7 +141,6 @@
 		this.playerList	= new display.PlayerList( params[1] );
 
 		this.statusManager.init( this.playerList );
-        console.log("full width: "+window.innerWidth);
 
 		new display.Debug();
 	};
