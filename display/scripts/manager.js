@@ -28,11 +28,6 @@
 
 			delta = time - last;
 
-			console.log('delta: ', delta);
-
-			console.timeEnd(1);
-			console.time(1);
-
 			forAll( this.playerList, 'update', delta );
 
 			forAll( this.obstaclePool.list, 'update', delta );
@@ -128,8 +123,8 @@
 		this.grid.init({
 
 			lanes: params[0],
-			circleOffset: 100,
-			distanceToUser: 350,
+			circleOffset: config.circleOffset,
+			distanceToUser: config.distanceToUser,
 			factor: config.factor,
 			circles: config.circles,
 			players: params[1].length
