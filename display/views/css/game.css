@@ -1,0 +1,13 @@
+canvas {
+    vertical-align: top;
+}
+.timer {
+    position: absolute;
+    left: 2%;
+    top: 2%;
+}
+.countdown {
+    position: absolute;
+    left: 37%;
+    top: 45%;
+}
