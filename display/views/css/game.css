@@ -4,7 +4,7 @@ canvas {
 .timer {
     position: absolute;
     left: 2%;
-    top: 2%;
+    bottom: 2%;
 }
 .countdown {
     position: absolute;
