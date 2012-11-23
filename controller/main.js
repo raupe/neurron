@@ -1,7 +1,7 @@
 (function(){
 
 	// reference for display
-	var channel = window.location.hash.substr(1);
+	var channel = window.location.search.substr(1);
 
 		// showing element
 		new controller.Screen({
