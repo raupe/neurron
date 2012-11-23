@@ -4,11 +4,8 @@
 	var channel = window.location.search.substr(1);
 
 		// showing element
-		new controller.Screen({
+		new controller.Screen();
 
-			width: config.canvas.width,
-			height: config.canvas.height
-		});
 
 		// handling input
 		new controller.Input();
