@@ -30,8 +30,11 @@ canvas {
     -webkit-border-radius:12px;
     border-radius:12px;
     border:1px solid #74b807;
-    display:table;
     position: absolute;
+    width: 50%;
+    height: 50%;
+    top: 25%;
+    left: 25%;
 }
 
 
@@ -54,8 +57,11 @@ canvas {
      -webkit-border-radius:12px;
      border-radius:12px;
      border:1px solid #4B4D48;
-     display:table;
      position: absolute;
+     width: 50%;
+     height: 50%;
+     top: 25%;
+     left: 25%;
  }
 
  #text{
@@ -66,8 +72,8 @@ canvas {
      text-decoration:none;
      text-shadow:1px 1px 0px #515251;
      text-align: center;
-     display: table-cell;
      vertical-align: middle;
+     margin-top: 20%;
  }
 
  .hide {
