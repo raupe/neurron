@@ -119,24 +119,17 @@
 
 				} else {
 
-					if ( fields.length < maxLength - lanes ) { // last circle check
+					for ( dist = 1; dist < frame; dist++ ) {
 
-						for ( dist = 1; dist < frame; dist++ ) {
+						radiusB =	( distanceToUser * outerCircleRadius ) /
+									( distanceToUser + circleOffset * ( circle - factor * dist ) );
 
-							radiusB =	( distanceToUser * outerCircleRadius ) /
-										( distanceToUser + circleOffset * ( circle + factor * dist ) );
+						scaleStep = distanceToUser / ( distanceToUser + circleOffset * ( circle - factor * dist ) ); // * BILDGRÖßE
 
-							scaleStep = distanceToUser / ( distanceToUser + circleOffset * ( circle + factor * dist ) ); // * BILDGRÖßE
+						x2 = Math.cos( rotation * step ) * radiusB + centerX;
+						y2 = Math.sin( rotation * step ) * radiusB + centerY;
 
-							x2 = Math.cos( rotation * step ) * radiusB + centerX;
-							y2 = Math.sin( rotation * step ) * radiusB + centerY;
-
-							distPos.push({ x:x2, y: y2, scale: scaleStep, angle: angle });
-						}
-
-					} else {
-
-						distPos = [{x: x1, y: y1, scale: scale, angle: angle }];
+						distPos.push({ x:x2, y: y2, scale: scaleStep, angle: angle });
 					}
 
 
@@ -154,12 +147,6 @@
 
 						//	fields[temp].antiRing.reverse();
 						// }
-
-                        if ( temp - lanes >= 0 ) {
-
-							fields[temp].antiDist = fields[temp-lanes].dist.slice().reverse();
-
-                        } 
 
 
 						if ( temp && temp % lanes === 0 ) {
@@ -193,7 +180,7 @@
 
 		// last point
 		fields[fields.length-1].antiRing = fields[fields.length - lanes ].ring.slice().reverse();
-		fields[fields.length-1].antiDist = fields[fields.length - lanes - 1].dist.slice().reverse();
+	//	fields[fields.length-1].antiDist = fields[fields.length - lanes - 1].dist.slice().reverse();
 
 
 		this.fields = fields;
