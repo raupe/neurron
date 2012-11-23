@@ -25,12 +25,10 @@
 			3	: this.heal
 		};
 
-		console.log(action, options);
+		// console.log(action, options);
 
 		commands[ action ].call( this, options );
 	};
-
-// this.manager.handle( config.commands.REGISTER );
 
 
 
@@ -62,6 +60,8 @@
 
 				this.id = data.charCodeAt(1);
 				this.color = data.charCodeAt(2);
+
+				this.button.trigger();
 			}
 
 			if ( action === config.protocol.STATUS ) {
@@ -76,18 +76,20 @@
 		}.bind(this);
 
 		// /* on remove */
-		// document.onbeforeunload = function(){
+		// document.onbeforeunload = function(){};
 
-		// };
 		this.send( 1 );
 	};
 
 
 
 
-	Manager.prototype.move = function ( starts, ends ) {
+	Manager.prototype.move = function ( params ) {
 
-        var start = { x: starts[0].clientX, y: starts[0].clientY},
+		var starts = params[0],
+			ends = params[1],
+
+			start = { x: starts[0].clientX, y: starts[0].clientY},
             end = { x: ends[0].clientX, y: ends[0].clientY},
             diffX = Math.abs(end.x - start.x),
             diffY = Math.abs(end.y - start.y),
