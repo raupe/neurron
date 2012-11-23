@@ -14,11 +14,11 @@ var config = {
 		height		: 240
 	},
 
-	buttons: {
+	boxes: {
 
-		1			: ['label', 'The game has ended'],
-		2			: ['label', 'The game is already running'],
-		3			: ['label', 'Game not found']
+		1			: [ 'label' , 'The game has ended'],
+		2			: [ 'label' , 'The game is already running'],
+		3			: [ 'label' , 'Game not found']
 	},
 
 

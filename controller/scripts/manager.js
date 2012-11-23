@@ -8,11 +8,11 @@
 		this.channel = config.channel;
 
 		this.req = new XMLHttpRequest();
-		this.button = new controller.Button();
+		this.box = new controller.Box();
 
 
 		controller.Input.prototype.manager = this;
-		controller.Button.prototype.manager = this;
+		controller.Box.prototype.manager = this;
 	};
 
 
@@ -35,9 +35,9 @@
 
 	Manager.prototype.show = function ( category ) {
 
-		var button = config.buttons[ category ];
+		var button = config.boxes[ category ];
 
-		this.button.set( button[0], button[1] ); // type - text
+		this.box.set( button[0], button[1] ); // type - text
 	};
 
 
@@ -60,8 +60,6 @@
 
 				this.id = data.charCodeAt(1);
 				this.color = data.charCodeAt(2);
-
-				this.button.trigger();
 			}
 
 			if ( action === config.protocol.STATUS ) {

@@ -10,7 +10,7 @@
 
 		this.tapped = false;
 
-		controller.Button.prototype.input = this;
+		controller.Box.prototype.input = this;
 	};
 
 
