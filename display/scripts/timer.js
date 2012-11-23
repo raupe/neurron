@@ -1,9 +1,9 @@
 (function(){
 
-    var Timer = display.Timer = function(milliseconds){
+    var Timer = display.Timer = function(milliseconds, type){
 
         this.timeLeft = milliseconds;
-
+        this.type = type;
         this.timeLeftString = "";
 
         this.loop();
@@ -19,6 +19,11 @@
         if (this.timeLeft >= 1000 ) { // just call loop if timeLeft is greater than 1 second
 
             window.setTimeout(this.loop.bind(this), 1000);
+
+        } else {
+
+            var timerContainer = document.getElementById(this.type);
+            document.body.removeChild(timerContainer);
         }
     }
 
@@ -36,21 +41,20 @@
 
     Timer.prototype.displayTimeLeft = function() {
 
-        var timerContainer = document.getElementById("timer");
+        var timerContainer = document.getElementById(this.type);
 
         if (!timerContainer) {
 
             timerContainer = document.createElement('div');
-            timerContainer.setAttribute("id", "timer");
-            timerContainer.setAttribute("class", "timer");
+            timerContainer.setAttribute("id", this.type);
+            timerContainer.setAttribute("class", this.type);
             timerContainer.innerHTML = this.timeLeftString;
 
             document.body.appendChild( timerContainer );
+
         } else {
 
             timerContainer.innerHTML = this.timeLeftString;
         }
     }
 })();
-
-// todo: cleartimeout
