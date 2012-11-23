@@ -1,70 +1,95 @@
 (function(){
 
-	var Button = controller.Button =  function ( type, text ) {
+	var Button = controller.Button = function() {
 
-        this.type = type;
-		this.text = text;
+        this.type = 'button';
+		this.text = 'Start';
         this.width = 200;
         this.height = 100;
         this.left = 0;
         this.top = 0;
 
+        this.createButton();
+
 		this.init();
 	};
 
 
+    Button.prototype.createButton = function(){
 
-	Button.prototype.init = function(){
+        var box = document.createElement('div');
 
-        //this.Button.disable();
+            box.id = 'box';
 
-		var box = document.createElement('div');
+            if( this.type === 'button'){
 
-        if( this.type === 'button'){
+                box.className = 'button';
 
-		    box.className = 'button';
-            box.id = 'start';
-        }else{
+            }else{
 
-            box.className = 'label';
-        }
+                box.className = 'label';
+            }
 
         var textBox = document.createElement('div');
-        textBox.id = 'textBox';
-        textBox.innerHTML = this.text;
+
+            textBox.innerHTML = this.text;
+            textBox.id = 'textBox';
+
+
+        this.setStyle( box );
 
         box.appendChild( textBox );
+
+        box.addEventListener('touchend', this.click.bind(this) );
+
+        document.body.appendChild( box );
+    };
+
+
+    Button.prototype.setStyle = function ( box ) {
+
         this.scale();
 
         this.pos();
 
-        box.setAttribute(
-            'style',
+        box.setAttribute( 'style',
+
             'width: '+this.width+'px; ' +
             'height: '+this.height+'px; ' +
             'left:'+this.left+'px; ' +
             'top:'+this.top+'px;'
         );
+    };
 
-		box.addEventListener('touchend', this.start.bind(this) );
 
-		document.body.appendChild( box );
+
+    Button.prototype.init = function(){
+
+        this.input.disable();
 	};
+
+
 
     window.addEventListener("orientationchange", function() {
 
-        box.parentNode.removeChild( box );
+        var box = document.getElementById('box');
+
+        // box.parentNode.removeChild( box );
+
         this.init();
 
+        this.setStyle( box );
+
     }.bind(this), false);
+
 
     Button.prototype.scale = function(){
 
         this.width = Math.round(window.innerWidth/2);
 
         this.height = Math.round(window.innerHeight/2);
-
     };
+
 
     Button.prototype.pos = function(){
 
@@ -73,34 +98,28 @@
         this.top = Math.round(window.innerHeight/2) - (this.height/2);
     };
 
-	Button.prototype.start = function(){
+
+	Button.prototype.click = function(){
+
+        this.manager.handle( config.commands.REGISTER );
+    };
 
 
-		this.manager.start();
+    Button.prototype.trigger = function(){
 
-        //this.Button.enable();
+        this.input.enable();
 
-		this.hide(); // later: in callback
-	};
+		this.hide();
+    };
 
 
 	Button.prototype.hide = function(){
 
-		var box = document.getElementById('start');
-
-			countdown = 1000;
-
-		setTimeout(function(){
-
-            box.setAttribute(
-                'style',
-                'display: none;'
-            );
-
-		}.bind(this), countdown);
-
-        this.set( 'button', 'no');
+		var box = document.getElementById('box');
+        // console.log(box);
+        box.setAttribute( 'style', 'display: none;' );
 	};
+
 
     Button.prototype.set = function( type, text ){
 
@@ -116,11 +135,9 @@
 
         if( this.type === 'button') {
 
-            box.setAttribute(
-                'style',
-                'display: block;'
-            );
-        }else{
+            box.setAttribute( 'style', 'display: block;' );
+
+        } else{
 
         }
     };
