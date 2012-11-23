@@ -129,11 +129,7 @@
 
 	/* 8 */	if ( action === config.protocol.END ) {
 
-                console.log("===================================");
-                console.log(data.charCodeAt(1));
-                console.log(data.charCodeAt(2));
-                console.log("===================================");
-                options[0] = data.charCodeAt(1) << 8 + data.charCodeAt(2); // Teampunktzahl
+                options[0] = (data.charCodeAt(1) << 8) + data.charCodeAt(2); // Teampunktzahl
             }
 
 
