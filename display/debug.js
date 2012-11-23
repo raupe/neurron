@@ -88,7 +88,7 @@
 			if ( key === 51 )  this.manager.handle( 6, [ 1, 1, 15 ]);	// 3
             if ( key === 52 ) { // 4
 //                this.statusManager.greet();
-                this.manager.end(42);
+                this.manager.end([42]);
             }
 
 
