@@ -86,7 +86,7 @@
 			if ( key === 50 )  this.manager.handle( 4, [ 1,  3 ]);		// 2
 
 			if ( key === 51 )  this.manager.handle( 6, [ 1, 1, 15 ]);	// 3
-            if ( key === 52 )  this.statusManager.greet();	// 4
+            if ( key === 52 )  this.manager.handle( config.protocol.COLLISION, [ 1, [1] ]);	// 4
 
 
 
