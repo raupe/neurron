@@ -8,7 +8,7 @@ window.display = {
 window.config = {
 
 
-	server				: 'neurrom.com',
+	server				: '141.45.201.38',
 	port				: '2020',
 
 
@@ -84,7 +84,8 @@ window.config = {
 		MOVE			: 4,
 		HEAL			: 5,
 		CREATE			: 6,
-		COLLISION		: 7
+		COLLISION		: 7,
+        END             : 8
 	},
 
 

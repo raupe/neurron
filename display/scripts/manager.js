@@ -4,6 +4,8 @@
 
 		this.playerList = [];
 
+        this.runningGame = false;
+
 		this.grid = new display.Grid();
 
 		this.obstaclePool = new display.ObstaclePool();
@@ -48,7 +50,10 @@
 
 			last = time;
 
-			requestAnimationFrame( loop.bind(this) );
+            if (this.runningGame) {
+
+                requestAnimationFrame( loop.bind(this) );
+            }
 		}
 
 		requestAnimationFrame( function(time) {
@@ -86,7 +91,8 @@
 			4	: this.move,
 			5	: this.heal,
 			6	: this.create,
-			7	: this.collide
+			7	: this.collide,
+            8   : this.end
 		};
 
 		console.log(action, options);
@@ -134,7 +140,7 @@
 			players: params[1].length
 		});
 
-
+        this.runningGame = true;
 		this.render();
 
 		this.playerList	= new display.PlayerList( params[1] );
@@ -143,7 +149,7 @@
 
 		new display.Debug();
 
-        new display.Timer( 3 * 60 * 1000, "timer");
+        new display.Timer( 10 * 1000, "timer");
 	};
 
 
@@ -171,6 +177,11 @@
 	Manager.prototype.collide = function ( params ) {
 
 		this.statusManager.handleCollide( params[0], params[1] );
+	};
+
+    Manager.prototype.end = function ( params ) {
+
+		console.log("end, points: " + params[0]);
 	};
 
 
