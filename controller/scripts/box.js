@@ -52,7 +52,6 @@
             // pos
             left = Math.round((window.innerWidth/2) - (this.width/2)),
             top = Math.round(window.innerHeight/2) - (this.height/2);
-            console.log(width);
 
         element.setAttribute( 'style',
 
