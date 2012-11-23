@@ -124,7 +124,6 @@
 	/* playerlist */
 	Manager.prototype.start = function ( params ) {
 
-
 		this.grid.init({
 
 			lanes: params[0],
@@ -163,8 +162,6 @@
 
 	/* obstacleId - category - start */
 	Manager.prototype.create = function ( params ) {
-
-		console.time(1);
 
 		this.obstaclePool.get( params[0], params[1], params[2] );
 	};

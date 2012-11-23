@@ -49,9 +49,6 @@
 		if(this.pos < this.grid.lanes) {
 
 			// this.vanish();
-			console.timeEnd(1);
-
-
 			this.visible = false;
 			this.moving = false;
 
