@@ -52,6 +52,11 @@
             if (this.runningGame) {
 
                 requestAnimationFrame( loop.bind(this) );
+
+            } else {
+
+                this.screen.clear();
+                alert("Game End");
             }
 		}
 
@@ -151,8 +156,6 @@
 
 		new display.Debug();
 
-
-
         new display.Timer( 1 * 60 * 1000, "timer");
 	};
 
@@ -185,6 +188,7 @@
 
     Manager.prototype.end = function ( params ) {
 
+        this.runningGame = false;
 		console.log( 'end, points: ' + params[0] );
 	};
 

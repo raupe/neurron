@@ -30,8 +30,13 @@ canvas {
     -webkit-border-radius:12px;
     border-radius:12px;
     border:1px solid #74b807;
-    display:table;
     position: absolute;
+    width: 50%;
+    height: 50%;
+    min-width: 200px;
+    min-height: 100px;
+    top: 25%;
+    left: 25%;
 }
 
 
@@ -54,20 +59,28 @@ canvas {
      -webkit-border-radius:12px;
      border-radius:12px;
      border:1px solid #4B4D48;
-     display:table;
      position: absolute;
+     width: 50%;
+     height: 50%;
+     min-width: 200px;
+     min-height: 100px;
+     top: 25%;
+     left: 25%;
  }
 
  #text{
      color:#ffffff;
      font-family:arial;
-     font-size:34px;
+     font-size:1.5em;
      font-weight:bold;
      text-decoration:none;
      text-shadow:1px 1px 0px #515251;
      text-align: center;
-     display: table-cell;
      vertical-align: middle;
+     position: absolute;
+     width: 100%;
+     vertical-align: center;
+     top: 40%;
  }
 
  .hide {
