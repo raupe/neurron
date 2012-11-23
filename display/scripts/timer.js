@@ -1,13 +1,13 @@
 (function(){
 
-    var Timer = display.Timer = function(milliseconds, type){
+    var Timer = display.Timer = function ( milliseconds, type ){
 
         this.timeLeft = milliseconds;
         this.type = type;
         this.timeLeftString = "";
 
         this.loop();
-    }
+    };
 
     Timer.prototype.loop = function() {
 
@@ -25,7 +25,7 @@
             var timerContainer = document.getElementById(this.type);
             document.body.removeChild(timerContainer);
         }
-    }
+    };
 
     Timer.prototype.setTimeLeftString = function() {
 
@@ -37,7 +37,7 @@
         }
 
         this.timeLeftString = "0" + min + ":" + seconds;
-    }
+    };
 
     Timer.prototype.displayTimeLeft = function() {
 
@@ -56,5 +56,6 @@
 
             timerContainer.innerHTML = this.timeLeftString;
         }
-    }
+    };
+
 })();
