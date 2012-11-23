@@ -23,7 +23,7 @@
 
 		this.collisionSound = this.assetManager.get( 'audio', params.collisionSound );
 
-		this.collisionImage = this.assetManager.get('image', params.collisionImg );
+		this.collisionImages = this.assetManager.get( 'image', params.collisionImg );
 
 		this.collisionCounter = 0;
 
@@ -46,46 +46,42 @@
 
 		this.pos -= this.grid.lanes;
 
-		if(this.pos < this.grid.lanes) {
+		if ( this.pos < this.grid.lanes ) {
 
 			// this.vanish();
-			console.timeEnd(1);
-
-
-			this.visible = false;
-			this.moving = false;
-
-			this.pool.set( this.id );
+			this.collide();
 		}
 
     };
 
-
     Obstacle.prototype.vanish = function(){
 
-		this.animateCollision();
+		this.visible = false;
+		this.moving = false;
+
+		this.pool.set( this.id );
     };
 
 
-    Obstacle.prototype.animateCollision = function(){
+    Obstacle.prototype.collide = function(){
 
 		if ( this.collisionCounter === 0 ) this.collisionSound.play();
 
-		if ( this.collisionCounter < this.collisionImage.length ) {
+		if ( this.collisionCounter < this.collisionImages.length ) {
 
-			this.src = this.collisionImage[ this.collisionCounter ];
+			this.src = this.collisionImages[ this.collisionCounter ];
 
 			this.collisionCounter++;
+
+			console.log('collicionCounter: ', this.collicionCounter );
 
 		} else {
 
 			this.collisionCounter = 0;
 
-			this.visible = false;
-			this.moving = false;
-
-			this.pool.set( this.id );
+			this.vanish();
 		}
-	};
+    };
+
 
 })();

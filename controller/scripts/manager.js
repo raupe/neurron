@@ -2,34 +2,44 @@
 
 	var Manager = controller.Manager = function ( config ) {
 
-		this.req = new XMLHttpRequest();
-		this.url = config.url;
+		this.id = 0; // default
 
-		this.id = 0; // defaults
+		this.url = config.url;
 		this.channel = config.channel;
 
+		this.req = new XMLHttpRequest();
+		this.button = new controller.Button();
 
-		this.commands = {
-
-			1: ['label', 'The game has ended'],
-			2: ['label', 'The game is already running'],
-			3: ['label', 'Game not found']
-		};
 
 		controller.Input.prototype.manager = this;
 		controller.Button.prototype.manager = this;
 	};
 
 
-	Manager.prototype.start = function(){
+	Manager.prototype.handle = function ( action, options ) {
 
-		this.register();
+		var commands = {
+
+			1	: this.register,
+			2	: this.move,
+			3	: this.heal
+		};
+
+		console.log(action, options);
+
+		commands[ action ].call( this, options );
 	};
 
+// this.manager.handle( config.commands.REGISTER );
 
-	Manager.prototype.show = function ( type, text ) {
 
-		new controller.Button( type, text );
+
+
+	Manager.prototype.show = function ( category ) {
+
+		var button = config.buttons[ category ];
+
+		this.button.set( button[0], button[1] ); // type - text
 	};
 
 
@@ -60,7 +70,7 @@
 
 				if ( state === 0 ) return;
 
-				this.show( this.commands[ state ] );
+				this.show( state );
 			}
 
 		}.bind(this);
@@ -69,13 +79,13 @@
 		// document.onbeforeunload = function(){
 
 		// };
-
-
 		this.send( 1 );
 	};
 
 
-	Manager.prototype.delegate = function ( starts, ends ) {
+
+
+	Manager.prototype.move = function ( starts, ends ) {
 
         var start = { x: starts[0].clientX, y: starts[0].clientY},
             end = { x: ends[0].clientX, y: ends[0].clientY},
@@ -83,34 +93,23 @@
             diffY = Math.abs(end.y - start.y),
             direction;
 
-        if ( diffX > diffY ) {
+        if ( start.x > end.x ) {
 
-            if ( start.x > end.x ) {
+            direction = 4; // links
 
-                direction = 4; // links
+        } else {
 
-            } else {
-
-                direction = 3; // rechts
-            }
-
-			this.send( direction );
+            direction = 3; // rechts
         }
 
-
-        // else {
-
-        //     if ( start.y > end.y ) {
-
-        //         direction = 5;//hoch
-
-        //     } else {
-
-        //         direction = 6;//unten
-        //     }
-        // }
+		this.send( direction );
+	};
 
 
+
+	Manager.prototype.heal = function(){
+
+		this.send( 5 );
 	};
 
 

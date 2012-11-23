@@ -55,7 +55,7 @@ canvas {
      position: absolute;
  }
 
- .textBox{
+ #textBox{
      color:#ffffff;
      font-family:arial;
      font-size:34px;

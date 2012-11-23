@@ -2,9 +2,6 @@
 
 	var Screen = controller.Screen = function ( config ) {
 
-		this.width = config.width;
-		this.height = config.height;
-
 		this.createCanvas();
 
 		controller.Input.prototype.screen = this;
@@ -30,6 +27,18 @@
 
 		this.cvs.width = window.innerWidth;
 		this.cvs.height = window.innerHeight;
+	};
+
+
+	Screen.prototype.clear = function(){
+
+		var ctx = this.ctx;
+
+		ctx.save();
+
+		ctx.clearRect( 0 , 0 , ctx.canvas.width, ctx.canvas.height );
+
+		ctx.restore();
 	};
 
 })();
