@@ -179,7 +179,7 @@
                 var healForEachPlayer = ~~(value / numberOfPlayers);
                 currentPlayer = this.playerList[playersIds[i] - 1];
                 currentPlayer.energy += healForEachPlayer;
-                
+
                 if (currentPlayer.energy > 100) currentPlayer.energy = 100;
             }
 
@@ -195,15 +195,8 @@
 
         this.draw();
 
-        currentObstacle.vanish();
+        currentObstacle.collide();
 	};
 
-     StatusManager.prototype.greet = function () {
-         console.log("hello");
-         this.playerList[0].energy = this.playerList[0].energy - 10;
-         console.log(this.playerList[0].energy);
-
-         this.draw();
-     };
 
 })();

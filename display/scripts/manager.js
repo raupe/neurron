@@ -108,9 +108,9 @@
 
 	Manager.prototype.init = function ( channelId ) {
 
-        var qrCode = "http://game.neurron.com/controller/#" + channelId;
+        var qrCode = 'http://game.neurron.com/controller/?' + channelId;
 
-        var element = document.getElementById("qrcode");
+        var element = document.getElementById('qrcode');
 
         qrCode = showQRCode(qrCode, {r: 0, g: 0, b: 255});
 
@@ -155,8 +155,6 @@
 		this.statusManager.init( this.playerList );
 
 		new display.Debug();
-
-
 
         new display.Timer( 1 * 60 * 1000, "timer");
 	};
