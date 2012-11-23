@@ -117,7 +117,7 @@
 
 	Manager.prototype.countdown = function() {
 
-		console.log('countdown...');
+        new display.Timer( 5 * 1000, "countdown");
 	};
 
 
@@ -143,7 +143,7 @@
 
 		new display.Debug();
 
-        new display.Timer(3 * 1000);
+        new display.Timer( 3 * 60 * 1000, "timer");
 	};
 
 
