@@ -77,6 +77,9 @@
 
         this.setStyle( box );
 
+        //vm font adjustment
+        document.getElementById('text').style['z-index: 1'];
+
     }.bind(this), false);
 
 
@@ -114,6 +117,7 @@
        // box.setAttribute( 'style', 'display: none;' );
        box.className += ' hide';
     };
+
 
 
 })();
