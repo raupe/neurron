@@ -19,36 +19,34 @@
         //this.Button.disable();
 
 		var box = document.createElement('div');
+        box.id = 'start';
 
         if( this.type === 'button'){
 
 		    box.className = 'button';
-            box.id = 'start';
+
         }else{
 
             box.className = 'label';
         }
 
         var textBox = document.createElement('div');
+
         textBox.id = 'textBox';
+
         textBox.innerHTML = this.text;
 
         box.appendChild( textBox );
-        this.scale();
-
-        this.pos();
-
-        box.setAttribute(
-            'style',
-            'width: '+this.width+'px; ' +
-            'height: '+this.height+'px; ' +
-            'left:'+this.left+'px; ' +
-            'top:'+this.top+'px;'
-        );
 
 		box.addEventListener('touchend', this.start.bind(this) );
 
 		document.body.appendChild( box );
+
+        this.scale();
+
+        this.pos();
+
+        this.style();
 	};
 
     window.addEventListener("orientationchange", function() {
@@ -57,6 +55,20 @@
         this.init();
 
     }.bind(this), false);
+
+    Button.prototype.style = function(){
+
+        var box = document.getElementById('start');
+
+        box.setAttribute(
+            'style',
+            'width: '+this.width+'px; ' +
+                'height: '+this.height+'px; ' +
+                'left:'+this.left+'px; ' +
+                'top:'+this.top+'px;'
+        );
+
+    };
 
     Button.prototype.scale = function(){
 
@@ -76,7 +88,7 @@
 	Button.prototype.start = function(){
 
 
-		this.manager.start();
+		//this.manager.start();
 
         //this.Button.enable();
 
@@ -90,16 +102,16 @@
 
 			countdown = 1000;
 
-		setTimeout(function(){
+		/*setTimeout(function(){
 
             box.setAttribute(
                 'style',
                 'display: none;'
             );
 
-		}.bind(this), countdown);
+		}.bind(this), countdown);*/
 
-        this.set( 'button', 'no');
+        //this.set( 'label', 'no');
 	};
 
     Button.prototype.set = function( type, text ){
@@ -114,14 +126,21 @@
 
         textBox.innerHTML = this.text;
 
+        box.setAttribute(
+            'style',
+            'display: block;'
+        );
+
+        this.style();
+
         if( this.type === 'button') {
 
-            box.setAttribute(
-                'style',
-                'display: block;'
-            );
+            box.className = 'button';
+
         }else{
 
+            box.className = 'label';
+            box.id = 'label';
         }
     };
 
