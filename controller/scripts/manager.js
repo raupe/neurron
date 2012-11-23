@@ -8,11 +8,11 @@
 		this.channel = config.channel;
 
 		this.req = new XMLHttpRequest();
-		this.button = new controller.Button();
+		this.box = new controller.Box();
 
 
 		controller.Input.prototype.manager = this;
-		controller.Button.prototype.manager = this;
+		controller.Box.prototype.manager = this;
 	};
 
 
@@ -25,21 +25,19 @@
 			3	: this.heal
 		};
 
-		console.log(action, options);
+		// console.log(action, options);
 
 		commands[ action ].call( this, options );
 	};
-
-// this.manager.handle( config.commands.REGISTER );
 
 
 
 
 	Manager.prototype.show = function ( category ) {
 
-		var button = config.buttons[ category ];
+		var button = config.boxes[ category ];
 
-		this.button.set( button[0], button[1] ); // type - text
+		this.box.set( button[0], button[1] ); // type - text
 	};
 
 
@@ -76,18 +74,20 @@
 		}.bind(this);
 
 		// /* on remove */
-		// document.onbeforeunload = function(){
+		// document.onbeforeunload = function(){};
 
-		// };
 		this.send( 1 );
 	};
 
 
 
 
-	Manager.prototype.move = function ( starts, ends ) {
+	Manager.prototype.move = function ( params ) {
 
-        var start = { x: starts[0].clientX, y: starts[0].clientY},
+		var starts = params[0],
+			ends = params[1],
+
+			start = { x: starts[0].clientX, y: starts[0].clientY},
             end = { x: ends[0].clientX, y: ends[0].clientY},
             diffX = Math.abs(end.x - start.x),
             diffY = Math.abs(end.y - start.y),

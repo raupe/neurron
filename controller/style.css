@@ -32,7 +32,12 @@ canvas {
     border:1px solid #74b807;
     display:table;
     position: absolute;
-}.button:hover {
+
+    top: 0;
+}
+
+
+.button:hover {
      background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #77a809), color-stop(1, #89c403) );
      background:-moz-linear-gradient( center top, #77a809 5%, #89c403 100% );
      filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77a809', endColorstr='#89c403');
@@ -55,7 +60,7 @@ canvas {
      position: absolute;
  }
 
- #textBox{
+ #text{
      color:#ffffff;
      font-family:arial;
      font-size:34px;

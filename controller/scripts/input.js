@@ -10,7 +10,7 @@
 
 		this.tapped = false;
 
-		controller.Button.prototype.input = this;
+		controller.Box.prototype.input = this;
 	};
 
 
@@ -52,7 +52,7 @@
 
 	Input.prototype.handleTouch = function() {
 
-		this.cvs = cvs;
+		var cvs = this.cvs;
 
 		cvs.addEventListener('touchstart', this.start.bind(this) );
 

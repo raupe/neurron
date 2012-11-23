@@ -10,6 +10,8 @@
 			height: config.canvas.height
 		});
 
+		// handling input
+		new controller.Input();
 
 		// delegating commands
 		new controller.Manager({
@@ -17,12 +19,5 @@
 			url: 'http://' + config.server + ':' + config.port,
 			channel: channel
 		});
-
-		// handling input
-		new controller.Input();
-
-
-		new controller.Button('button' ,'Start');
-
 })();
 
