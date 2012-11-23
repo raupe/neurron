@@ -2,13 +2,24 @@
 
     var Timer = display.Timer = function(milliseconds){
 
-        this.time = 0;
+        this.timeLeft = milliseconds;
 
         this.loop();
     }
 
     Timer.prototype.loop = function() {
-        window.setTimeout(this.loop.bind(this), 1000);
-//        console.log(this.time++);
+        this.timeLeft-=1000;
+
+        var min = ~~((this.timeLeft/1000) / 60);
+        var seconds = ~~(this.timeLeft/1000) - (min * 60);
+        console.log(min+":"+seconds);
+
+
+        if (this.timeLeft >= 1000 ) {
+
+            window.setTimeout(this.loop.bind(this), 1000);
+        }
     }
 })();
+
+// todo: cleartimeout
