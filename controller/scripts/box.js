@@ -53,13 +53,13 @@
             left = Math.round((window.innerWidth/2) - (this.width/2)),
             top = Math.round(window.innerHeight/2) - (this.height/2);
 
-        element.setAttribute( 'style',
+/*        element.setAttribute( 'style',
 
             'width: '+ width +'px; ' +
             'height: '+ height +'px; ' +
             'left:'+ left +'px; ' +
             'top:'+ top +'px;'
-        );
+        );*/
     };
 
 
