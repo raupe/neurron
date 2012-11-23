@@ -26,12 +26,12 @@
 
             // manager.init(1);
 
-			manager.handle( config.protocol.START, [ 4, [
+			// manager.handle( config.protocol.START, [ 4, [
 
-                { id:1, pos:1, color:{r: 255, g: 0, b: 0} }
-   //              { id:2, pos:2, color:{r: 0, g: 255, b: 0} },
-   //              { id:3, pos:4, color:{r: 0, g: 0, b: 255} }
-            ]] );
+   //              { id:1, pos:1, color:{r: 255, g: 0, b: 0} }
+   // //              { id:2, pos:2, color:{r: 0, g: 255, b: 0} },
+   // //              { id:3, pos:4, color:{r: 0, g: 0, b: 255} }
+   //          ]] );
 
 		};
 
@@ -129,7 +129,7 @@
 
 	/* 8 */	if ( action === config.protocol.END ) {
 
-                options[0] = (data.charCodeAt(1) << 8) + data.charCodeAt(2); // Teampunktzahl
+                options[0] = (data.charCodeAt(1) << 8) + data.charCodeAt(2); // tema points
             }
 
 
