@@ -99,9 +99,11 @@
         document.getElementById('text').innerText = text;
 
         // this.style();
-        box.setAttribute( 'style', 'display: block;'  );
+        // box.setAttribute( 'style', 'display: block;'  );
 
         box.className = ( type === 'button' ) ? 'button' : 'label';
+
+        box.className += ' show';
     };
 
 
@@ -109,7 +111,8 @@
 
        var box = document.getElementById('box');
 
-       box.setAttribute( 'style', 'display: none;' );
+       // box.setAttribute( 'style', 'display: none;' );
+       box.className += ' hide';
     };
 
 
