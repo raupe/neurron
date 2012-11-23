@@ -47,7 +47,6 @@
 
 //			this.statusManager.draw(); // statusManager doesnt need to be drawn, it is drawn when something is updated
 
-
 			last = time;
 
             if (this.runningGame) {
@@ -58,10 +57,11 @@
 
 		requestAnimationFrame( function(time) {
 
-				last = time;
+			last = time;
 
-				loop.call(this, time);
-			}.bind(this) );
+			loop.call(this, time);
+
+		}.bind(this) );
 
 
 		function forAll ( collection, method, delta ) {
@@ -130,6 +130,8 @@
 	/* playerlist */
 	Manager.prototype.start = function ( params ) {
 
+		document.body.removeChild( document.getElementById("qrcode") );
+
 		this.grid.init({
 
 			lanes: params[0],
@@ -149,7 +151,9 @@
 
 		new display.Debug();
 
-        new display.Timer( 10 * 1000, "timer");
+
+
+        new display.Timer( 1 * 60 * 1000, "timer");
 	};
 
 
@@ -181,7 +185,7 @@
 
     Manager.prototype.end = function ( params ) {
 
-		console.log("end, points: " + params[0]);
+		console.log( 'end, points: ' + params[0] );
 	};
 
 
