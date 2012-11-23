@@ -7,7 +7,7 @@ window.display = {
 /* configurations */
 window.config = {
 
-	server				: 'neurron.com',
+	server				: '141.45.206.78',
 	port				: '2020',
 
 
@@ -103,7 +103,7 @@ window.config = {
 		2: {
 			type			: 'heal',
 			size			: 1*40,
-			velocity		: 0.75,
+			velocity		: 1,
 			value			:  10,
 			color			: [   0, 170,  30 ], // green
 			collisionImg	: 'collision',
