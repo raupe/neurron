@@ -117,7 +117,7 @@
 		e.preventDefault();
 		e.stopPropagation();
 
-		this.tap = false;
+		this.tapped = false;
 
 
 		var touches = e.changedTouches,
@@ -160,16 +160,12 @@
 			return;
 		}
 
-
-		var ctx = this.screen.ctx,
-
-			touches = e.changedTouches,
+		var touches = e.changedTouches,
 
 			origins = this.origins,
 			starts = this.starts,
 
 			ends = [];
-
 
 		for ( var i = 0, l = touches.length; i < l; i++ ) {
 
@@ -180,20 +176,9 @@
 
 		origins.length = starts.length = 0;
 
-		this.clear();
+		this.screen.clear();
 	};
 
-
-	Input.prototype.clear = function() {
-
-		var ctx = this.ctx;
-
-		ctx.save();
-
-		ctx.clearRect( 0 , 0 , ctx.canvas.width, ctx.canvas.height );
-
-		ctx.restore();
-	};
 
 
 	Input.prototype.cancel = function ( e ) {
