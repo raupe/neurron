@@ -161,7 +161,15 @@
                     currentPlayer.energy = 0;
                 }
                 if (currentPlayer.energy === 0) {
-                    this.points -= config.punishPoints;
+
+                    if (this.points >= config.punishPoints) {
+
+                        this.points -= config.punishPoints;
+
+                    } else {
+
+                        this.points = 0;
+                    }
                 }
             }
 
