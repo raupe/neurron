@@ -41,14 +41,15 @@
 
 
     Obstacle.prototype.change = function() {
-    	
-    	if( this.pos < this.grid.lanes ) {
-    		
+
+		if ( this.pos < this.grid.lanes ) {
+
 			this.vanish();
-    	} else {
-  
+
+		} else {
+
 			this.pos -= this.grid.lanes;
-    	}
+		}
     };
 
 
