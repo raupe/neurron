@@ -2,13 +2,13 @@
 
 	var Manager = controller.Manager = function ( config ) {
 
-		this.req = new XMLHttpRequest();
-		this.url = config.url;
+		this.id = 0; // default
 
-		this.id = 0; // defaults
+		this.url = config.url;
 		this.channel = config.channel;
 
-		this.button = new new controller.Button();
+		this.req = new XMLHttpRequest();
+		this.button = new controller.Button();
 
 
 		controller.Input.prototype.manager = this;
@@ -29,7 +29,10 @@
 
 		commands[ action ].call( this, options );
 	};
-// manager.handle( config.commands.REGISTER ); - fabian
+
+// this.manager.handle( config.commands.REGISTER );
+
+
 
 
 	Manager.prototype.show = function ( category ) {

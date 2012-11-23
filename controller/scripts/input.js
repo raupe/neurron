@@ -2,7 +2,6 @@
 
 	var Input = controller.Input = function() {
 
-        // default
 		this.cvs = this.screen.cvs;
 		this.ctx = this.screen.ctx,
 
@@ -40,6 +39,7 @@
 			this.handleKeyboard();
 		}
 	};
+
 
 	Input.prototype.handleKeyboard = function() {
 
@@ -148,8 +148,12 @@
 		e.stopPropagation();
 
 
-		var manager = this.manager;
+		var manager = this.manager,
+			touches = e.changedTouches,
+			origins = this.origins,
+			starts = this.starts,
 
+			ends = [];
 
 		if ( this.tapped ) {
 
@@ -157,15 +161,12 @@
 
 			this.tapped = false;
 
+			// ToDo: tapped animation
+			console.log('tapped !');
+
 			return;
 		}
 
-		var touches = e.changedTouches,
-
-			origins = this.origins,
-			starts = this.starts,
-
-			ends = [];
 
 		for ( var i = 0, l = touches.length; i < l; i++ ) {
 
