@@ -16,6 +16,8 @@
 
 	Button.prototype.init = function(){
 
+        //this.Button.disable();
+
 		var box = document.createElement('div');
 
         if( this.type === 'button'){
@@ -28,7 +30,7 @@
         }
 
         var textBox = document.createElement('div');
-        textBox.className = 'textBox';
+        textBox.id = 'textBox';
         textBox.innerHTML = this.text;
 
         box.appendChild( textBox );
@@ -44,7 +46,7 @@
             'top:'+this.top+'px;'
         );
 
-		box.addEventListener('touchend', this.onclick.bind(this) );
+		box.addEventListener('touchend', this.start.bind(this) );
 
 		document.body.appendChild( box );
 	};
@@ -71,29 +73,56 @@
         this.top = Math.round(window.innerHeight/2) - (this.height/2);
     };
 
-	Button.prototype.onclick = function(){
+	Button.prototype.start = function(){
+
 
 		this.manager.start();
 
+        //this.Button.enable();
 
-		this.remove(); // later: in callback
+		this.hide(); // later: in callback
 	};
 
 
-	Button.prototype.remove = function(){
+	Button.prototype.hide = function(){
 
-		var box = document.getElementById('start'),
+		var box = document.getElementById('start');
 
 			countdown = 1000;
 
-
 		setTimeout(function(){
 
-			box.parentNode.removeChild( box );
-
-			this.input.started = true;
+            box.setAttribute(
+                'style',
+                'display: none;'
+            );
 
 		}.bind(this), countdown);
+
+        this.set( 'button', 'no');
 	};
+
+    Button.prototype.set = function( type, text ){
+
+        this.type = type;
+
+        this.text = text;
+
+        var box = document.getElementById('start');
+
+        var textBox = document.getElementById('textBox');
+
+        textBox.innerHTML = this.text;
+
+        if( this.type === 'button') {
+
+            box.setAttribute(
+                'style',
+                'display: block;'
+            );
+        }else{
+
+        }
+    };
 
 })();
