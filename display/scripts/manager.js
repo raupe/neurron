@@ -144,7 +144,7 @@
 
 		new display.Debug();
 
-        new display.Timer(3 * 1000);
+        new display.Timer( 3 * 60 * 1000);
 	};
 
 
