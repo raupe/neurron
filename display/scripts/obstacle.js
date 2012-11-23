@@ -27,7 +27,6 @@
 
 		this.collisionCounter = 0;
 
-        // this.checkCollision = config.duration.moveTime / this.grid.frames;
 
 		display.Element.prototype.init.call( this, params );
 
@@ -41,7 +40,6 @@
     };
 
 
-	// since allways update moving -> after fieldstep
     Obstacle.prototype.change = function() {
 
 		this.pos -= this.grid.lanes;
@@ -49,17 +47,20 @@
 		if ( this.pos < this.grid.lanes ) {
 
 			this.vanish();
-			// this.collide();
 		}
 
     };
 
-    Obstacle.prototype.vanish = function(){
 
-		this.visible = false;
-		this.moving = false;
+    // extend animate for collision
+    Obstacle.prototype.animate = function(){
 
-		this.pool.set( this.id );
+		if ( this.collisionCounter > 0 ) {
+
+			this.collide();
+		}
+
+		display.Element.prototype.animate.call( this );
     };
 
 
@@ -73,8 +74,6 @@
 
 			this.collisionCounter++;
 
-			console.log('collicionCounter: ', this.collicionCounter );
-
 		} else {
 
 			this.collisionCounter = 0;
@@ -82,6 +81,16 @@
 			this.vanish();
 		}
     };
+
+    Obstacle.prototype.vanish = function(){
+
+		this.visible = false;
+		this.moving = false;
+
+		this.pool.set( this.id );
+    };
+
+
 
 
 })();
