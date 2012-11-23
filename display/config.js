@@ -7,7 +7,7 @@ window.display = {
 /* configurations */
 window.config = {
 
-	server				: 'neurron.com',
+	server				: 'neurrom.com',
 	port				: '2020',
 
 
