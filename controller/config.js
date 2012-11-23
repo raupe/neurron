@@ -4,7 +4,7 @@ window.controller = {};
 /* configuraitons */
 var config = {
 
-	server			: 'neurron.com',
+	server			: '141.45.201.38',
 	port			: '2020',
 
 	// basic resolution
