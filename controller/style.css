@@ -32,8 +32,6 @@ canvas {
     border:1px solid #74b807;
     display:table;
     position: absolute;
-
-    top: 0;
 }
 
 
@@ -70,6 +68,16 @@ canvas {
      text-align: center;
      display: table-cell;
      vertical-align: middle;
+ }
+
+ .hide {
+
+    display: none;
+ }
+
+ .show {
+
+    display: block;
  }
 
 
