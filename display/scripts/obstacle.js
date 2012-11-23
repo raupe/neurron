@@ -48,8 +48,8 @@
 
 		if ( this.pos < this.grid.lanes ) {
 
-			// this.vanish();
-			this.collide();
+			this.vanish();
+			// this.collide();
 		}
 
     };
