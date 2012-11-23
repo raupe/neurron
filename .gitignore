@@ -7,3 +7,12 @@
 
 # prevent workspace push
 .idea
+
+# UltraEdit backup files
+*.bak
+
+# project files
+.project
+
+# gitignore
+.gitignore

@@ -32,8 +32,10 @@
 
 		function scale(){
 
-			this.cvs.width = window.innerWidth;
-			this.cvs.height = window.innerHeight;
+//			this.cvs.width = window.innerWidth;
+//			this.cvs.height = window.innerHeight;
+            this.cvs.width = (window.innerWidth / config.factor) * (config.factor - 1); // (width / 4) * 3 | config.factor === 4
+            this.cvs.height = window.innerHeight;
 		}
 	};
 

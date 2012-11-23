@@ -129,6 +129,7 @@ height: 100%;
 background-color: #bdb76b;
     }
 
+
 /*
 .inner_wrapper {
     background-image: url("../images/neurronwire_start_00.jpg");
@@ -141,3 +142,10 @@ background-color: #bdb76b;
     margin: auto;
 }
 */
+
+#qrcode {
+    position: fixed;
+}
+#qrcode img {
+    position: fixed;
+}

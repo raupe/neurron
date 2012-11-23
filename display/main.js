@@ -1,8 +1,8 @@
 (function(){
 
-    var manager = display.AssetManager;
+    var assetManager = display.AssetManager;
 
-    manager.set( config.assets, function() {
+    assetManager.set( config.assets, function() {
 
         // console.log(assets);
 
@@ -14,14 +14,14 @@
     });
 
 
-    manager.on( 'progress', function ( e ) {
+    assetManager.on( 'progress', function ( e ) {
 
         // console.log(e.progress);
     });
 
 
 
-    display.Element.prototype.assetManager = manager;
-    display.Background.prototype.assetManager = manager;
+    display.Element.prototype.assetManager = assetManager;
+    display.Background.prototype.assetManager = assetManager;
 
 })();

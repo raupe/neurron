@@ -49,8 +49,6 @@
 
         this.diff = 0;
 
-
-
         this.check = false;
 
         this.origin = this.screen.ctx;
@@ -134,28 +132,11 @@
     };
 
 
-    // check: clockwise <- antiRing, anticlockwise -> ring
-    Element.prototype.setDir = function() {
-
-        var nextPos = this.nextPos;
-
-        if ( nextPos > this.pos ) {
-
-            this.dir = ( nextPos - this.pos) < this.grid.lanes/2 ? 'antiRing' : 'ring';
-
-        } else {
-
-            this.dir = ( this.pos - nextPos ) > this.grid.lanes/2 ? 'antiRing' : 'ring';
-        }
-    };
-
-
-
     Element.prototype.update = function ( delta ) {
 
         this.diff += delta;
 
-        if ( this.diff >= this.checkMove ) { // @julia: why not working as - 'while'
+        while ( this.diff >= this.checkMove ) {
 
             this.diff -= this.checkMove;
 
@@ -171,57 +152,22 @@
 
     Element.prototype.animate = function() {
 
-        var field = this.grid.fields[ this.pos ],
-
-            step = field[this.dir][ ~~this.counter ]; // allow floats
-
-        this.field = step;
-
-        this.counter += this.velocity;
+		var field = this.grid.fields[ this.pos ];
 
         if ( this.counter >= field[this.dir].length ) { // allow higher multiplicators
 
             this.counter = 0;
 
             this.change();
-        }
-    };
 
-
-    Element.prototype.change = function(){
-
-        if ( this.dir === 'ring' ) {
-
-            if ( this.pos%this.grid.lanes === 0 ) {
-
-                this.pos += (this.grid.lanes - 1);
-
-            } else {
-
-                this.pos--;
-            }
+            this.field = this.grid.fields[ this.pos ]; // after change
 
         } else {
 
-            if ( this.pos%this.grid.lanes === this.grid.lanes-1) {
+            this.field = field[this.dir][ ~~this.counter ]; // allow floats
 
-                this.pos -= (this.grid.lanes - 1);
-
-            } else {
-
-                this.pos++;
-            }
+            this.counter += this.velocity;
         }
-
-        if ( this.nextPos !== this.pos ) {
-
-            this.setDir();
-
-        } else {
-
-            this.moving = false;
-        }
-
     };
 
 
@@ -231,41 +177,24 @@
 
         var field = this.field;
 
-        // degree is saved per field
-        this.rotate( field.deg );
+        this.origin.save();
 
-        this.origin.drawImage(
+            this.origin.translate( field.x , field.y );
 
-                        this.img,
-                        field.x - this.size/2,
-                        field.y - this.size/2,
-                        this.size,
-                        this.size
-                    );
+            this.origin.rotate( field.angle );
+
+            this.origin.translate( -field.x , -field.y);
+
+            this.origin.drawImage(
+
+                            this.src,
+                            field.x - this.size/2 * field.scale,
+                            field.y - this.size/2 * field.scale,
+                            this.size * field.scale,
+                            this.size * field.scale
+                        );
+
+        this.origin.restore();
     };
-
-
-
-    Element.prototype.rotate = function ( deg ) {
-
-        var ctx = this.ctx;
-
-        ctx.save();
-
-            ctx.translate( ctx.canvas.width/2 - this.size/2,
-                           ctx.canvas.height/2 - this.size/2 );
-
-            ctx.rotate( deg * Math.PI / 180 ); // rad
-
-            ctx.clearRect( 0, 0, this.size, this.size ); // keep alpha != overdraw
-
-            ctx.drawImage( this.src, 0,0, this.size, this.size );
-
-        ctx.restore();
-
-        this.img = ctx.canvas;
-    };
-
-
 
 })();

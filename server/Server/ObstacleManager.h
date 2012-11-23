@@ -1,6 +1,8 @@
 #ifndef ObstacleManager_h__
 #define ObstacleManager_h__
 
+#include "Manager.h"
+
 #include "Pool.h"
 #include "Obstacle.h"
 
@@ -8,13 +10,14 @@ namespace sv
 {
 	class Grid;
 	class Game;
+	class StatusManager;
 
-	class ObstacleManager : private Pool<Obstacle>
+	class ObstacleManager : public Manager, private Pool<Obstacle>
 	{
 	public:
 		static Obstacle::Properties		GetProperties(uchar category);
 
-		ObstacleManager(Grid* grid, Game* game);
+		ObstacleManager(Game* game);
 		~ObstacleManager();
 
 		void							Reset();
@@ -23,12 +26,10 @@ namespace sv
 
 		void							UpdateLevel(ulong deltaTime);
 		Obstacle*						CreateObstacle(uchar category, uchar pos);
+		void							HandleCollision(Obstacle* obstacle);
 	private:
 		static const int				s_LevelSize;
 		static const char*				s_Level[];
-
-		Grid*							m_Grid;
-		Game*							m_Game;
 		
 		uchar							m_IdCount;
 		ulong							m_PassedTime;

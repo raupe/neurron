@@ -19,7 +19,14 @@
 
 	Manager.prototype.render = function(){
 
-		function loop ( delta ) {
+		var last = 0,
+
+			delta;
+
+
+		function loop ( time ) {
+
+			delta = time - last;
 
 			forAll( this.playerList, 'update', delta );
 
@@ -36,13 +43,20 @@
 
 			forAll( this.obstaclePool.list, 'draw' );
 
-			this.statusManager.draw();
+//			this.statusManager.draw(); // statusManager doesnt need to be drawn, it is drawn when something is updated
 
+
+			last = time;
 
 			requestAnimationFrame( loop.bind(this) );
 		}
 
-		loop.call( this, 0 );
+		requestAnimationFrame( function(time) {
+
+				last = time;
+
+				loop.call(this, time);
+			}.bind(this) );
 
 
 		function forAll ( collection, method, delta ) {
@@ -75,7 +89,7 @@
 			7	: this.collide
 		};
 
-		// console.log(action, options);
+		console.log(action, options);
 
 		commands[ action ].call( this, options );
 	};
@@ -103,19 +117,18 @@
 
 	Manager.prototype.countdown = function() {
 
-		console.log('countdown...');
+        new display.Timer( 5 * 1000, "countdown");
 	};
 
 
 	/* playerlist */
 	Manager.prototype.start = function ( params ) {
 
-
 		this.grid.init({
 
 			lanes: params[0],
-			circleOffset: 100,
-			distanceToUser: 350,
+			circleOffset: config.circleOffset,
+			distanceToUser: config.distanceToUser,
 			factor: config.factor,
 			circles: config.circles,
 			players: params[1].length
@@ -128,8 +141,9 @@
 
 		this.statusManager.init( this.playerList );
 
-
 		new display.Debug();
+
+        new display.Timer( 3 * 60 * 1000, "timer");
 	};
 
 

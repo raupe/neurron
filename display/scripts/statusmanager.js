@@ -4,6 +4,8 @@
 
 		this.points = 0;
 		this.createPanel( config.factor );
+
+        display.Debug.prototype.statusManager = this;
 	};
 
 
@@ -13,19 +15,19 @@
 
         this.fullBarWidth = this.offset / 1.6;
         this.fullBarHeight = 40;
-        this.lifeBarStartX = this.offset / 8;
-        this.colorBarStartX = this.lifeBarStartX / 2;
-        this.lifeLabelStartX = this.lifeBarStartX + this.fullBarWidth;
+        this.energyBarStartX = this.offset / 8;
+        this.colorBarStartX = this.energyBarStartX / 2;
+        this.lifeLabelStartX = this.energyBarStartX + this.fullBarWidth;
         this.startY = 140;
         this.color = 'green';
         this.distance = this.fullBarHeight + 10;
 
         this.healer = 0;
 
-		this.update();
+		this.draw();
 	};
 
-    StatusManager.prototype.update = function(){
+    StatusManager.prototype.draw = function(){
 
         this.setBackground();
         this.showPoints();
@@ -72,9 +74,9 @@
                 this.color = 'green';
             }
 
-            // lifeBars
+            // energyBars
 			ctx.fillStyle = this.color;
-			ctx.fillRect( this.lifeBarStartX, this.startY + i*this.distance, this.fullBarWidth * (currentPlayer.energy / 100), this.fullBarHeight);
+			ctx.fillRect( this.energyBarStartX, this.startY + i*this.distance, this.fullBarWidth * (currentPlayer.energy / 100), this.fullBarHeight);
 
             // lifeLabels
 			ctx.fillStyle = 'white';
@@ -83,7 +85,7 @@
 
             // colorBar
             ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
-            ctx.fillRect(this.colorBarStartX, this.startY + i*this.distance, this.lifeBarStartX/2, this.fullBarHeight);
+            ctx.fillRect(this.colorBarStartX, this.startY + i*this.distance, this.energyBarStartX/2, this.fullBarHeight);
 		}
 
 	};
@@ -94,14 +96,17 @@
 		var cvs = document.createElement('canvas'),
 			ctx = cvs.getContext('2d');
 
-		this.offset = this.screen.cvs.width / factor;
+		this.offset = (window.innerWidth / config.factor);
 
 		cvs.width = this.offset;
-		cvs.height = this.screen.cvs.height;
+		cvs.height = window.innerHeight;
 
 		this.start = this.screen.cvs.width - this.offset;
 		this.panel = ctx;
+        this.canvas = cvs;
         this.setBackground();
+
+        document.body.appendChild( this.canvas );
 	};
 
 
@@ -109,12 +114,6 @@
         this.panel.fillStyle = '#000';
 		this.panel.fillRect( 0, 0, this.panel.canvas.width, this.panel.canvas.height );
     };
-
-
-	StatusManager.prototype.draw = function(){
-
-        this.screen.ctx.drawImage( this.panel.canvas, this.start, 0 );
-	};
 
 
 	StatusManager.prototype.handleHeal = function ( playerId, playersIds ) {
@@ -137,7 +136,7 @@
             }
         }
 
-        this.update();
+        this.draw();
 	};
 
 
@@ -150,21 +149,31 @@
             currentPlayer,
             i;
 
-        if ( type == 'damage' ) {
+        if ( type === 'damage' ) {
 
             for ( i = 0; i < numberOfPlayers; i++ ){
+
                 currentPlayer = this.playerList[playersIds[i] - 1];
+
                 if (currentPlayer.energy >= value) {
                     currentPlayer.energy -= value;
                 } else {
                     currentPlayer.energy = 0;
                 }
                 if (currentPlayer.energy === 0) {
-                    this.points -= config.punishPoints;
+
+                    if (this.points >= config.punishPoints) {
+
+                        this.points -= config.punishPoints;
+
+                    } else {
+
+                        this.points = 0;
+                    }
                 }
             }
 
-        } else if ( type == 'heal' ) {
+        } else if ( type === 'heal' ) {
 
             for ( i = 0; i < numberOfPlayers; i++ ){
                 var healForEachPlayer = ~~(value / numberOfPlayers);
@@ -172,7 +181,7 @@
                 if (currentPlayer.energy <= 90) currentPlayer.energy += healForEachPlayer;
             }
 
-        } else {
+        } else { // points
 
             for ( i = 0; i < numberOfPlayers; i++ ){
                 var pointsForEachPlayer = ~~(value / numberOfPlayers);
@@ -182,7 +191,17 @@
             }
         }
 
-        this.update();
+        this.draw();
+
+        currentObstacle.vanish();
 	};
+
+     StatusManager.prototype.greet = function () {
+         console.log("hello");
+         this.playerList[0].energy = this.playerList[0].energy - 10;
+         console.log(this.playerList[0].energy);
+
+         this.draw();
+     };
 
 })();

@@ -24,7 +24,8 @@
 
 		this.origin = this.screen.ctx;
 
-		this.width = this.screen.cvs.width - this.screen.cvs.width / params.factor;
+//		this.width = this.screen.cvs.width - this.screen.cvs.width / params.factor;
+        this.width = this.screen.cvs.width;
 		this.height = this.screen.cvs.height;
 
 		this.frames = this.getFrames();
@@ -86,7 +87,12 @@
 			step,
 			dist,
 
-			temp;
+			temp,
+
+			scale,
+			scaleStep,
+
+			angle;
 
 
 		for ( circle = 0; circle < circles; circle++ ) {
@@ -95,17 +101,23 @@
 						( distanceToUser + circleOffset * circle);
 
 
-			// var h = ( a *f   ) / ( a + d * n );
+			scale = distanceToUser / ( distanceToUser + circleOffset * circle );
 
 			for ( step = 1; step <= steps; step++ ) {
 
 				x1 = Math.cos( rotation * step ) * radiusA + centerX;
 				y1 = Math.sin( rotation * step ) * radiusA + centerY;
 
-				ringPos.push({ x: x1, y: y1, h: 0, deg: 0 }); // deg, h
+				angle = rotation * step;
 
-				if ( step%frame === 0 ) {
 
+
+				if ( step%frame !== 0 ) {
+
+
+					ringPos.push({ x: x1, y: y1, scale: scale, angle: angle });
+
+				} else {
 
 					if ( fields.length < maxLength - lanes ) { // last circle check
 
@@ -114,15 +126,17 @@
 							radiusB =	( distanceToUser * outerCircleRadius ) /
 										( distanceToUser + circleOffset * ( circle + factor * dist ) );
 
+							scaleStep = distanceToUser / ( distanceToUser + circleOffset * ( circle + factor * dist ) ); // * BILDGRÖßE
+
 							x2 = Math.cos( rotation * step ) * radiusB + centerX;
 							y2 = Math.sin( rotation * step ) * radiusB + centerY;
 
-							distPos.push({ x:x2, y: y2, h: 0, deg: 0 }); // deg,h
+							distPos.push({ x:x2, y: y2, scale: scaleStep, angle: angle });
 						}
 
 					} else {
 
-						distPost = [{x: x1, y: y1, h: 0, deg: 0 }]; // deg, h
+						distPos = [{x: x1, y: y1, scale: scale, angle: angle }];
 					}
 
 
@@ -145,10 +159,7 @@
 
 							fields[temp].antiDist = fields[temp-lanes].dist.slice().reverse();
 
-                        } else {
-
-							fields[temp].antiDist = [{ x: x1,y: y1, h: 0 , deg: 0 }]; // deg, h
-                        }
+                        } 
 
 
 						if ( temp && temp % lanes === 0 ) {
@@ -164,8 +175,8 @@
 						y: y1,
 						ring: ringPos.slice().reverse(),
 						dist: distPos.slice(),
-						h: 0 ,
-						deg: 0 // deg
+						scale: scale,
+						angle: angle
 					});
 
 					distPos.length = ringPos.length = 0;
@@ -249,6 +260,7 @@
 			radius = ( distanceToUser * outerCircleRadius ) / ( distanceToUser + circleOffset * i);
 
 			// var h = ( a *f   ) / ( a + d * n );
+			//  var h = ( distanceToUser * BILDGRÖßE  ) / ( distanceToUser + circleOffset * n );
 			ctx.beginPath();
 
 			ctx.arc( width/2, height/2, radius, 0, Math.PI * 2, true );

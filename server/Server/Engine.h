@@ -5,6 +5,8 @@
 
 namespace sv
 {
+	class GameManager;
+
 	class Engine : public Singleton<Engine>
 	{
 	public:
@@ -14,6 +16,8 @@ namespace sv
 		void Run();
 	private:
 		void				HandleMsgs();
+
+		GameManager*		m_GameManager;
 	};
 }
 

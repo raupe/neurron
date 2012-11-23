@@ -14,8 +14,7 @@ Controller - Server
         2 - Spieler wird entfernt
         3 - rechts                                                          // Server: ok
         4 - links                                                           // Server: ok
-        5 - vorne
-        6 - hinten
+        5 - heal
 
 Server - Controller
 

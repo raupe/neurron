@@ -2,11 +2,13 @@
 #include "PlayerManager.h"
 
 #include "Player.h"
+#include "Grid.h"
 
 #define COLOR_MAX 10
 
-sv::PlayerManager::PlayerManager()
-: m_Color(0)
+sv::PlayerManager::PlayerManager(Game* game)
+: Manager(game)
+, m_Color(0)
 {
 }
 
@@ -14,25 +16,6 @@ sv::PlayerManager::PlayerManager()
 sv::PlayerManager::~PlayerManager()
 {
 	Reset();
-}
-
-
-sv::Player* sv::PlayerManager::AddPlayer(Grid* grid)
-{
-	//TODO test for max player number
-	uint id = m_Player.size()+1;
-	Player* player = S_NEW Player(id, m_Color++, grid, id*2);
-	if(m_Color == COLOR_MAX)
-		m_Color = 0;
-	m_Player.push_back(player);
-	return player;
-}
-
-sv::Player* sv::PlayerManager::GetPlayer(uint id)
-{
-	if(id > 0 && id <= m_Player.size())
-		return m_Player[id-1];
-	return 0;
 }
 
 void sv::PlayerManager::Reset()
@@ -47,13 +30,39 @@ void sv::PlayerManager::Reset()
 void sv::PlayerManager::Start()
 {
 	for(int i=m_Player.size()-1; i>=0; --i)
-		m_Player[i]->Start();
+	{
+		uchar pos = GetGrid()->GetStartPos(m_Player[i]->GetId());
+		m_Player[i]->Start(pos);
+	}
 }
 
 void sv::PlayerManager::Update(ulong deltaTime)
 {
 	for(int i=m_Player.size()-1; i>=0; --i)
 		m_Player[i]->Update(deltaTime);
+}
+
+
+sv::Player* sv::PlayerManager::AddPlayer()
+{
+	uint id = m_Player.size()+1;
+	if(id == PLAYER_MAX)
+		return 0;
+
+	Player* player = S_NEW Player();
+	player->Init(id, GetGrid(), m_Color++);
+	m_Player.push_back(player);
+
+	if(m_Color == COLOR_MAX)
+		m_Color = 0;
+	return player;
+}
+
+sv::Player* sv::PlayerManager::GetPlayer(uint id)
+{
+	if(id > 0 && id <= m_Player.size())
+		return m_Player[id-1];
+	return 0;
 }
 
 uchar sv::PlayerManager::GetNumber()

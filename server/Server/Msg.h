@@ -113,6 +113,20 @@ namespace sv
 		uchar			m_Pos;
 	};
 
+	class CollisionMsg : public Msg
+	{
+	public:
+		CollisionMsg(uchar obstacleId, uchar playerCount);
+		virtual ~CollisionMsg();
+
+		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
+		void			SetPlayer(uchar* playerIds);
+	private:
+		uchar			m_ObstacleId;
+		uchar			m_PlayerCount;
+		uchar*			m_PlayerIds;
+	};
+
 	//////////////////////////////////////////////////////////////////////////////////////
 
 	class ResponseStartMsg : public Msg
