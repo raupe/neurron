@@ -3,6 +3,7 @@
 #include "Server.h"
 #include "Engine.h"
 #include "InputMsgPool.h"
+#include "GameManager.h"
 
 #include "Output.h"
 #include <boost/thread.hpp>

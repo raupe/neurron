@@ -4,8 +4,10 @@
 #include "Grid.h"
 #include "Game.h"
 #include "Msg.h"
+#include "StatusManager.h"
+#include "Player.h"
 
-const int sv::ObstacleManager::s_LevelSize = 10;
+const int sv::ObstacleManager::s_LevelSize = 20;
 const char* sv::ObstacleManager::s_Level[s_LevelSize] = 
 {
 //a - ein Feld, 1, Energie minus 10%, rot
@@ -15,7 +17,7 @@ const char* sv::ObstacleManager::s_Level[s_LevelSize] =
 
 //  0         10        20
 //  012345678901234567890
-	"a   a           ",
+/*	"a   a           ",
 	"a   a           ",
 	"                ",
 	" a   a a        ",
@@ -25,6 +27,27 @@ const char* sv::ObstacleManager::s_Level[s_LevelSize] =
 	"a      a        ",
 	"aaaaaaaa        ",
 	"                ",
+	/*/
+	"                ",
+	"                ",
+	"                ",
+	"  a             ",
+	"                ",
+	"                ",
+	"                ",
+	"                ",
+	"                ",
+	"                ",
+	"                ",
+	"                ",
+	"                ",
+	"                ",
+	"                ",
+	"                ",
+	"                ",
+	"                ",
+	"                ",
+	"                ",//*/
 };
 
 sv::Obstacle::Properties sv::ObstacleManager::GetProperties(uchar category)
@@ -32,28 +55,28 @@ sv::Obstacle::Properties sv::ObstacleManager::GetProperties(uchar category)
 	Obstacle::Properties prop;
 	switch(category)
 	{
-	case 0:
+	case 1:
 		{
 			prop.m_Type = Obstacle::eObstacleType_EnergyDown;
 			prop.m_Value = 10;
 			prop.m_Size = 1;
 			prop.m_Velocity = 1;
 		} break;
-	case 1:
+	case 2:
 		{
 			prop.m_Type = Obstacle::eObstacleType_EnergyUp;
 			prop.m_Value = 10;
 			prop.m_Size = 1;
 			prop.m_Velocity = 1;
 		} break;
-	case 2:
+	case 3:
 		{
 			prop.m_Type = Obstacle::eObstacleType_PointsUp;
 			prop.m_Value = 100;
 			prop.m_Size = 1;
 			prop.m_Velocity = 1;
 		} break;
-	case 3:
+	case 4:
 		{
 			prop.m_Type = Obstacle::eObstacleType_PointsUp;
 			prop.m_Value = 50;
@@ -64,9 +87,8 @@ sv::Obstacle::Properties sv::ObstacleManager::GetProperties(uchar category)
 	return prop;
 }
 
-sv::ObstacleManager::ObstacleManager(Grid* grid, Game* game)
-: m_Grid(grid)
-, m_Game(game)
+sv::ObstacleManager::ObstacleManager(Game* game)
+: Manager(game)
 , m_IdCount(1)
 , m_PassedTime(0)
 , m_Step(0)
@@ -83,13 +105,14 @@ void sv::ObstacleManager::Reset()
 	m_IdCount = 1;
 	m_Step = 0;
 	m_PassedTime = 0;
-	FreeAll();
-	Clear();
+
+	Pool<Obstacle>::FreeAll();
+	Pool<Obstacle>::Clear();
 }
 
 void sv::ObstacleManager::Start()
 {
-	Init(160);
+	Pool<Obstacle>::Init(160);
 }
 
 void sv::ObstacleManager::Update(ulong deltaTime)
@@ -101,10 +124,10 @@ void sv::ObstacleManager::Update(ulong deltaTime)
 		iter = Next(iter);
 
 		obstacle->Update(deltaTime);
-		if( m_Grid->IsEdge(obstacle->GetPos()) )
+		if( GetGrid()->IsEdge(obstacle->GetPos()) )
 		{
-			//TODO collision
-
+			HandleCollision(obstacle);
+			obstacle->Reset();
 			Free(obstacle);
 		}
 	}
@@ -122,25 +145,26 @@ void sv::ObstacleManager::UpdateLevel(ulong deltaTime)
 		if(m_Step == s_LevelSize)
 			m_Step = 0;
 
-		for(uchar i=0; i<m_Grid->GetNumberLanes(); ++i)
+		for(uchar i=0; i<GetGrid()->GetNumberLanes(); ++i)
 		{
 			if(s_Level[m_Step][i] != ' ')
-				CreateObstacle(s_Level[m_Step][i] - 'a', i);
+				CreateObstacle(s_Level[m_Step][i] - 'a' +1, i);
 		}
 	}
 }
 
 sv::Obstacle* sv::ObstacleManager::CreateObstacle(uchar category, uchar lane)
 {
-	LOG2(DEBUG_OBSTACLES, "Obstacle created: category: %i, lane: %i", category, lane);
-
 	Obstacle* obstacle = Get();
 	Obstacle::Properties prop = GetProperties(category);
-	uchar pos = m_Grid->GetInnerPos(lane);
-	obstacle->Init(m_IdCount, m_Grid, pos, prop);
+	uchar pos = GetGrid()->GetInnerPos(lane);
+	obstacle->Init(m_IdCount, GetGrid(), prop);
+	obstacle->Start(pos);
+
+	LOG2(DEBUG_OBSTACLES, "Obstacle created: id: %i, pos: %i", m_IdCount, pos);
 
 	ObstacleMsg obstacleMsg(m_IdCount, category, pos);
-	m_Game->SendMsg(&obstacleMsg);
+	GetGame()->SendMsg(&obstacleMsg);
 
 	if(m_IdCount == 255)
 		m_IdCount = 1;
@@ -148,4 +172,24 @@ sv::Obstacle* sv::ObstacleManager::CreateObstacle(uchar category, uchar lane)
 		m_IdCount++;
 
 	return obstacle;
+}
+
+void sv::ObstacleManager::HandleCollision(Obstacle* obstacle)
+{
+	Player* player[PLAYER_MAX];
+	uchar count = 0;
+	GetGrid()->GetPlayer(obstacle->GetPos(), player, count);
+
+	if(count)
+	{
+		uchar playerIds[PLAYER_MAX];
+		for(uint i=0; i<count; ++i)
+			playerIds[i] = player[i]->GetId();
+		CollisionMsg collisionMsg(obstacle->GetId(), count);
+		collisionMsg.SetPlayer(playerIds);
+		GetGame()->SendMsg(&collisionMsg);
+
+		GetStatusManager()->CalculateCollision(obstacle, player, count);
+		LOG1(DEBUG_OBSTACLES, "Collision: id %i", obstacle->GetId());
+	}
 }

@@ -5,38 +5,40 @@
 
 namespace sv
 {
-	class Element;
+	class Player;
 
 	class Grid
 	{
-	private:
-		struct Field
-		{
-			std::vector<Element*> m_Elements;
-		};
-
 	public:
 		Grid();
 		~Grid();
-
-		void		Init(uchar numberPlayer);
+		
+		void		Reset();
+		void		Start(uchar numberPlayer);
 
 		uchar		GetInnerPos(uchar lane); 
 		bool		IsEdge(uchar pos);
+		uchar		GetStartPos(uchar id);
 		uchar		GetNumberLanes() { return m_NumberLanes; }
 
 		uchar		GetPosRight(uchar pos);
 		uchar		GetPosLeft(uchar pos);
 		uchar		GetPosOut(uchar pos);
 
-		void		AddElement(uchar pos, Element* element);
-		void		RemoveElement(uchar pos, Element* element);
+		void		AddPlayer(uchar pos, Player* player);
+		void		RemovePlayer(uchar pos, Player* player);
+		void		GetPlayer(uchar pos, Player** player, uchar& count);
 
 	private:
 		static const uchar s_MapPlayerLanes[];
+		static const uchar s_MapStartPos[][PLAYER_MAX];
 
-		Field**			m_Grid;
 		uchar			m_NumberLanes;
+		uchar			m_NumberPlayer;
+		uchar*			m_PlayerCount;
+		
+		typedef Player*	Field;
+		Field*			m_Fields;
 	};
 }
 #endif // Grid_h__

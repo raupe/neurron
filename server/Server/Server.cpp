@@ -3,8 +3,6 @@
 #include "ServerPCH.h"
 #include "Server.h"
 
-#include "GameManager.h"
-#include "Game.h"
 #include "Msg.h"
 #include "InputMsg.h"
 #include "InputMsgPool.h"
@@ -42,12 +40,10 @@ sv::Server::~Server()
 
 void sv::Server::Init()
 {
-	GameManager::Create();
 }
 
 void sv::Server::Exit()
 {
-	GameManager::Destroy();
 }
 
 void sv::Server::Run()

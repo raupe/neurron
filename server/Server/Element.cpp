@@ -12,25 +12,35 @@ sv::Element::Element()
 , m_Moving(false)
 , m_Grid(0)
 {
-
 }
 
 sv::Element::~Element()
 {
 }
 
-void sv::Element::Init(uchar id, Grid* grid, uchar pos)
+void sv::Element::Init(uchar id, Grid* grid)
 {
 	m_Id = id;
+	m_Moving = false;
 	m_Grid = grid;
+}
+
+void sv::Element::Reset()
+{
+	m_Id = 0;
+	m_Pos = 0;
+	m_NextPos = 0;
+	m_DesiredPos = 0;
+	m_PassedTime = 0;
+	m_Moving = false;
+	m_Grid = 0;
+}
+
+void sv::Element::Start(uchar pos)
+{
 	m_Pos = pos;
 	m_NextPos = m_Pos;
 	m_DesiredPos = m_Pos;
-}
-
-void sv::Element::Start()
-{
-	m_Grid->AddElement(m_Pos, this);
 }
 
 void sv::Element::Update(ulong deltaTime)
@@ -38,7 +48,7 @@ void sv::Element::Update(ulong deltaTime)
 	if(m_Moving)
 	{
 		m_PassedTime += deltaTime;
-		if(m_PassedTime > CHANGE_TIME)
+		if(m_PassedTime > GetChangeTime())
 		{
 			SetPos(m_NextPos);
 		}
@@ -94,11 +104,4 @@ uchar sv::Element::MoveOut()
 	}
 	LOG1(DEBUG_MOVEMENT, "Move out to %i", m_DesiredPos);
 	return m_DesiredPos;
-}
-
-void sv::Element::SetPos(uchar pos)
-{ 
-	m_Grid->RemoveElement(m_Pos, this);
-	m_Pos = pos;
-	m_Grid->AddElement(m_Pos, this);
 }

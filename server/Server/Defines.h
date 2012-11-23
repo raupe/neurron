@@ -1,3 +1,6 @@
+#ifndef Defines_h__
+#define Defines_h__
+
 //#ifdef WIN32
 #ifdef _DEBUG
 #define DEBUG
@@ -20,7 +23,7 @@ typedef unsigned long ulong;
 #define DEBUG_MSG false
 #define DEBUG_WEBSOCKET false
 #define DEBUG_TIME false
-#define DEBUG_FLOW false
+#define DEBUG_FLOW true
 #define DEBUG_MOVEMENT false
 #define DEBUG_OBSTACLES true
 
@@ -36,16 +39,18 @@ typedef unsigned long ulong;
 #ifdef WIN32
 #define LOG1(x,y,a) if(x) { char buf[1024]; sprintf_s(buf,y,a); sv::Output::Print(buf); }
 #define LOG2(x,y,a,b) if(x) { char buf[1024]; sprintf_s(buf,y,a,b); sv::Output::Print(buf); }
-#else
+#else // WIN32
 #define LOG1(x,y,a) if(x) { char buf[1024]; sprintf(buf,y,a); sv::Output::Print(buf); }
 #define LOG2(x,y,a,b) if(x) { char buf[1024]; sprintf(buf,y,a,b); sv::Output::Print(buf); }
-#endif
+#endif // WIN32
 
-#else
+#else // DEBUG
 
 #define ASSERT(x,y)
 #define LOG(x,y)
 #define LOG1(x,y,a)
 #define LOG2(x,y,a,b)
 
-#endif
+#endif // DEBUG
+
+#endif // Defines_h__

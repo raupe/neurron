@@ -8,11 +8,13 @@
 
 sv::Engine::Engine(void)
 {
+	m_GameManager = S_NEW GameManager();
 }
 
 
 sv::Engine::~Engine(void)
 {
+	delete(m_GameManager);
 }
 
 void sv::Engine::Run()
@@ -23,17 +25,16 @@ void sv::Engine::Run()
 		GameManager::Instance()->Update();
 	}*/
 
-	GameManager* manager = GameManager::Instance();
 	GameManager::Iterator iter;
 	while(true)
 	{
 		HandleMsgs();
 
-		iter = manager->First();
+		iter = m_GameManager->First();
 		while(iter)
 		{
-			Game* game = manager->Get(iter);
-			iter = manager->Next(iter);
+			Game* game = m_GameManager->Get(iter);
+			iter = m_GameManager->Next(iter);
 
 			game->Update();
 			HandleMsgs();
@@ -46,7 +47,6 @@ void sv::Engine::HandleMsgs()
 	std::vector<InputMsg*> msgs;
 	std::vector<uint> indecies;
 	InputMsgPool::Instance()->GetUnhandledMsgs(msgs, indecies);
-	GameManager* manager = GameManager::Instance();
 	
 	for(uint i=0; i<msgs.size(); ++i)
 	{
@@ -54,8 +54,8 @@ void sv::Engine::HandleMsgs()
 
 		if(msg->GetAction() == eContrAction_CreateGame)
 		{
-			LOG(DEBUG_FLOW, "Game created");
-			Game* game = manager->CreateGame(msg->GetSocket());
+			Game* game = m_GameManager->CreateGame(msg->GetSocket());
+			LOG1(DEBUG_FLOW, "Game created: %i", game->GetId());
 
 			InitMsg initMsg(game->GetId()); 
 			Server::Instance()->SendSocketMsg(&initMsg, msg->GetSocket());
@@ -64,13 +64,16 @@ void sv::Engine::HandleMsgs()
 		}
 		else if(msg->GetAction() == eContrAction_DeleteGame)
 		{
-			LOG(DEBUG_FLOW, "Game deleted");
-			Game* game = manager->GetGame(msg->GetChannel());
-			manager->DeleteGame(game);
+			Game* game = m_GameManager->GetGame(msg->GetChannel());
+			if(game)
+			{
+				LOG1(DEBUG_FLOW, "Game deleted: %i", game->GetId());
+				m_GameManager->DeleteGame(game);
+			}
 		}
 		else
 		{
-			Game* game = manager->GetGame(msg->GetChannel());
+			Game* game = m_GameManager->GetGame(msg->GetChannel());
 			if(game)
 			{
 				game->HandleMsg(msg);

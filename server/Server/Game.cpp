@@ -6,6 +6,7 @@
 #include "Server.h"
 #include "PlayerManager.h"
 #include "ObstacleManager.h"
+#include "StatusManager.h"
 #include "Player.h"
 #include "Grid.h"
 
@@ -19,15 +20,17 @@ sv::Game::Game()
 , m_Countdown(0)
 , m_PlayerManager(0)
 , m_Grid(0)
+, m_StatusManager(0)
 {
-	InitTime();
 	m_Grid = S_NEW Grid();
-	m_PlayerManager = S_NEW PlayerManager();
-	m_ObstacleManager = S_NEW ObstacleManager(m_Grid, this);
+	m_PlayerManager = S_NEW PlayerManager(this);
+	m_ObstacleManager = S_NEW ObstacleManager(this);
+	m_StatusManager = S_NEW StatusManager(this);
 }
 
 sv::Game::~Game()
 {
+	delete(m_StatusManager);
 	delete(m_ObstacleManager);
 	delete(m_PlayerManager);
 	delete(m_Grid);
@@ -35,11 +38,20 @@ sv::Game::~Game()
 
 void sv::Game::Init(uint id, int socket)
 {
+	Reset();
+
 	m_Id = id;
 	m_Socket = socket;
+	InitTime();
+}
 
+void sv::Game::Reset()
+{
 	m_PlayerManager->Reset();
 	m_ObstacleManager->Reset();
+	m_StatusManager->Reset();
+	m_Grid->Reset();
+
 	m_Status = eGameStatus_Wait;
 	m_Countdown = 0;
 }
@@ -61,7 +73,7 @@ void sv::Game::Update()
 			if(m_Countdown > COUNTDOWN)
 			{
 				LOG(DEBUG_FLOW, "Countdown ended");
-				StartGame();
+				Start();
 			}
 		} break;
 		case eGameStatus_Run:
@@ -79,17 +91,18 @@ void sv::Game::Update()
 	}
 }
 
-void sv::Game::StartGame()
+void sv::Game::Start()
 {
 	m_Status = eGameStatus_Run;
 	
 	uchar playerNumber = m_PlayerManager->GetNumber();
-	m_Grid->Init(playerNumber);
+
+	m_Grid->Start(playerNumber);
 	m_PlayerManager->Start();
 	m_ObstacleManager->Start();
 
-	uchar color[20]; // TODO set to max number or allocate dynamicly
-	uchar pos[20]; // TODO set to max number or allocate dynamicly
+	uchar color[PLAYER_MAX];
+	uchar pos[PLAYER_MAX];
 	m_PlayerManager->GetColors(color);
 	m_PlayerManager->GetPos(pos);
 	StartMsg startMsg(playerNumber, m_Grid->GetNumberLanes());
@@ -122,6 +135,7 @@ void sv::Game::HandleMsg(sv::InputMsg* msg)
 
 void sv::Game::HandleStartMsg(InputMsg* msg)
 {
+	bool success = false;
 	if(m_Status != eGameStatus_Run)
 	{
 		if(m_Status == eGameStatus_Wait)
@@ -133,13 +147,24 @@ void sv::Game::HandleStartMsg(InputMsg* msg)
 			CountdownMsg countdownMsg((uchar)(COUNTDOWN/1000));
 			SendMsg(&countdownMsg);
 		}
-		Player* pl = m_PlayerManager->AddPlayer(m_Grid);
-		LOG(DEBUG_FLOW, "Player added");
+		Player* pl = m_PlayerManager->AddPlayer();
+		if(pl)
+		{
+			LOG(DEBUG_FLOW, "Player added");
 
-		ResponseStartMsg response(pl->GetId(), pl->GetColor());
-		Server::Instance()->Response(&response, msg->GetSocket());
+			ResponseStartMsg response(pl->GetId(), pl->GetColor());
+			Server::Instance()->Response(&response, msg->GetSocket());
+
+			
+			success = true;
+			return;
+		}
+		else
+			LOG(DEBUG_FLOW, "Player not added");
+
+
 	}
-	else
+	if(! success)
 	{
 		ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_Failed);
 		Server::Instance()->Response(&response, msg->GetSocket());

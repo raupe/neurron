@@ -60,7 +60,7 @@
 
 				if ( state === 0 ) return;
 
-				this.show( commands[ state ] );
+				this.show( this.commands[ state ] );
 			}
 
 		}.bind(this);

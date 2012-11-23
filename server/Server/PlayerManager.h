@@ -1,6 +1,8 @@
 #ifndef PlayerManager_h__
 #define PlayerManager_h__
 
+#include "Manager.h"
+
 #include <vector>
 
 namespace sv
@@ -8,18 +10,18 @@ namespace sv
 	class Player;
 	class Grid;
 
-	class PlayerManager
+	class PlayerManager : public Manager
 	{
 	public:
-		PlayerManager();
+		PlayerManager(Game* game);
 		~PlayerManager();
 
-		Player*					AddPlayer(Grid* grid);
-		Player*					GetPlayer(uint id);
+		virtual void			Reset();
+		virtual void			Start();
+		virtual void			Update(ulong deltaTime);
 
-		void					Reset();
-		void					Start();
-		void					Update(ulong deltaTime);
+		Player*					AddPlayer();
+		Player*					GetPlayer(uint id);
 
 		// for Msgs
 		uchar					GetNumber();
