@@ -178,7 +178,9 @@
             for ( i = 0; i < numberOfPlayers; i++ ){
                 var healForEachPlayer = ~~(value / numberOfPlayers);
                 currentPlayer = this.playerList[playersIds[i] - 1];
-                if (currentPlayer.energy <= 90) currentPlayer.energy += healForEachPlayer;
+                currentPlayer.energy += healForEachPlayer;
+                
+                if (currentPlayer.energy > 100) currentPlayer.energy = 100;
             }
 
         } else { // points
@@ -187,7 +189,7 @@
                 var pointsForEachPlayer = ~~(value / numberOfPlayers);
                 currentPlayer = this.playerList[playersIds[i] - 1];
 
-                this.points += (currentPlayer.energy / 100) * pointsForEachPlayer;
+                this.points += ~~((currentPlayer.energy / 100) * pointsForEachPlayer);
             }
         }
 
