@@ -171,7 +171,7 @@
 			this.tapped = false;
 
 			// ToDo: tapped animation
-			console.log('tapped !');
+			// console.log('tapped !');
 
 			return;
 		}

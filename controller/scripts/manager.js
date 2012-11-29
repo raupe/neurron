@@ -3,6 +3,7 @@
 	var Manager = controller.Manager = function ( config ) {
 
 		this.id = 0; // default
+		this.timer = 0;
 
 		this.url = config.url;
 		this.channel = config.channel;
@@ -11,9 +12,12 @@
 		this.box = new controller.Box();
 
 
+		this.init();
+
 		controller.Input.prototype.manager = this;
 		controller.Box.prototype.manager = this;
 	};
+
 
 
 	Manager.prototype.handle = function ( action, options ) {
@@ -41,9 +45,29 @@
 	};
 
 
+	Manager.prototype.init = function(){
+
+		setInterval(function(){
+
+			this.timer++;
+
+			if ( this.timer === config.pollingTimer ) {
+
+				this.timer = 0;
+
+				this.send( 8 ); // polling - check end
+			}
+
+		}.bind(this), config.pollingTimer * 1000 );
+	};
+
+
+
 	Manager.prototype.register = function(){
 
 		if ( this.id ) return;
+
+		this.init();
 
 		this.box.hide();
 
@@ -60,7 +84,7 @@
 
 				action = data.charCodeAt(0);		// int
 
-			if ( action === config.protocol.START ) { //
+			if ( action === config.protocol.START ) {
 
 				this.id = data.charCodeAt(1);
 				var color = data.charCodeAt(2);
@@ -73,6 +97,8 @@
 				var state = data.charCodeAt(1);
 
 				if ( state === 0 ) return;
+
+				console.log('state: ', state);
 
 				this.show( state );
 			}
@@ -89,7 +115,6 @@
 
 
 	Manager.prototype.move = function ( params ) {
-
 
 			var starts = params[0],
 				ends = params[1],
@@ -124,6 +149,8 @@
 
 
 	Manager.prototype.send = function ( action )  {
+
+		this.timer = 0; // treshold
 
 		this.req.open( 'POST', this.url , true );
 
