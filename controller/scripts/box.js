@@ -67,6 +67,8 @@
     Box.prototype.init = function(){
 
         this.input.disable();
+
+        this.input.enable();
 	};
 
 
@@ -88,7 +90,7 @@
 
         this.manager.handle( config.commands.REGISTER );
 
-        this.input.enable();
+        // this.input.enable();
 
         this.hide();
     };

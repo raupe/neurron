@@ -46,8 +46,17 @@
 
 		document.addEventListener('keydown', function ( e ) {
 
-			console.log(e);
-		});
+
+			var key = e.which;
+
+
+			if ( key === 37 ) this.manager.handle( config.commands.MOVE, [ null, null, 4 ] ); // left
+			if ( key === 39 ) this.manager.handle( config.commands.MOVE, [ null, null, 3 ] ); // right
+
+			if ( key === 13 ) this.manager.handle( config.commands.REGISTER ); // return
+			if ( key === 32 ) this.manager.handle( config.commands.HEAL ); // space
+
+		}.bind(this));
 	};
 
 
