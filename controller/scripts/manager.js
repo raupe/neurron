@@ -43,6 +43,8 @@
 
 	Manager.prototype.register = function(){
 
+		this.box.hide();
+
 		/* serve response  */
 		this.req.onload = function ( t ) {
 
@@ -59,7 +61,9 @@
 			if ( action === config.protocol.START ) { //
 
 				this.id = data.charCodeAt(1);
-				this.color = data.charCodeAt(2);
+				var color = data.charCodeAt(2);
+
+				this.color = config.playerColors[ color ];
 			}
 
 			if ( action === config.protocol.STATUS ) {

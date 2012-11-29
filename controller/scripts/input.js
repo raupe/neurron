@@ -46,9 +46,7 @@
 
 		document.addEventListener('keydown', function ( e ) {
 
-
 			var key = e.which;
-
 
 			if ( key === 37 ) this.manager.handle( config.commands.MOVE, [ null, null, 4 ] ); // left
 			if ( key === 39 ) this.manager.handle( config.commands.MOVE, [ null, null, 3 ] ); // right
@@ -87,7 +85,7 @@
 
         ctx.lineWidth = 3;
 		ctx.lineCap = 'round';
-        ctx.shadowColor= '#BAE9F7';
+        ctx.shadowColor = ( this.manager && this.manager.color ) ? this.manager.color : '#BAE9F7';
         ctx.shadowBlur = 20;
 
         /*grd = ctx.createLinearGradient( 0, 0, cvs.width, cvs.height );
