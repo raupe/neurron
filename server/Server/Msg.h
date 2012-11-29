@@ -15,6 +15,7 @@ namespace sv
 		eMsgType_Heal,
 		eMsgType_Obstacle,
 		eMsgType_Collision,
+		eMsgType_End,
 
 		// Controller Msgs
 		eMsgType_Response, // Not used as msg-type
@@ -125,6 +126,17 @@ namespace sv
 		uchar			m_ObstacleId;
 		uchar			m_PlayerCount;
 		uchar*			m_PlayerIds;
+	};
+
+	class EndMsg : public Msg
+	{
+	public:
+		EndMsg(ushort points);
+		virtual ~EndMsg() {}
+
+		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
+	private:
+		ushort			m_Points;
 	};
 
 	//////////////////////////////////////////////////////////////////////////////////////

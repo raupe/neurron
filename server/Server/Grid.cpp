@@ -119,7 +119,7 @@ void sv::Grid::RemovePlayer(uchar pos, Player* player)
 	i++;
 	for(; i<count; ++i)
 	{
-		m_Fields[pos * m_NumberPlayer + i-1] = m_Fields[pos * m_NumberLanes + i];
+		m_Fields[pos * m_NumberPlayer + i-1] = m_Fields[pos * m_NumberPlayer + i];
 	}
 }
 

@@ -7,7 +7,7 @@
 #include "StatusManager.h"
 #include "Player.h"
 
-const int sv::ObstacleManager::s_LevelSize = 20;
+const int sv::ObstacleManager::s_LevelSize = 10;
 const char* sv::ObstacleManager::s_Level[s_LevelSize] = 
 {
 //a - ein Feld, 1, Energie minus 10%, rot
@@ -30,20 +30,10 @@ const char* sv::ObstacleManager::s_Level[s_LevelSize] =
 	/*/
 	"                ",
 	"                ",
-	"                ",
-	"  a             ",
-	"                ",
-	"                ",
-	"                ",
-	"                ",
-	"                ",
-	"                ",
-	"                ",
-	"                ",
-	"                ",
-	"                ",
-	"                ",
-	"                ",
+	"a               ",
+	" b              ",
+	"  c             ",
+	"   d            ",
 	"                ",
 	"                ",
 	"                ",
@@ -112,7 +102,7 @@ void sv::ObstacleManager::Reset()
 
 void sv::ObstacleManager::Start()
 {
-	Pool<Obstacle>::Init(160);
+	Pool<Obstacle>::Init(80);
 }
 
 void sv::ObstacleManager::Update(ulong deltaTime)

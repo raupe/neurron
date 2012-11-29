@@ -155,6 +155,22 @@ void sv::CollisionMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
 		Visit(m_PlayerIds[i], buffer, pos, length);
 }
 
+sv::EndMsg::EndMsg(ushort points)
+: Msg(eMsgType_End)
+, m_Points(points)
+{
+}
+
+void sv::EndMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
+{
+	Visit(m_Type, buffer, pos, length);
+	
+	uchar first = (m_Points >> 8) & 0xFF;
+	uchar second = m_Points & 0xFF;
+	Visit(first, buffer, pos, length);
+	Visit(second, buffer, pos, length);
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 sv::ResponseStartMsg::ResponseStartMsg(uchar id, uchar color)

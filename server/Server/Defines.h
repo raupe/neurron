@@ -15,17 +15,19 @@
 
 typedef unsigned int uint;
 typedef unsigned char uchar;
+typedef unsigned short ushort;
 typedef unsigned long ulong;
 
 #define LOG_ERROR true
 #define DEBUG_SERVER true
-#define DEBUG_PROTOCOLL false
+#define DEBUG_PROTOCOLL true
 #define DEBUG_MSG false
 #define DEBUG_WEBSOCKET false
 #define DEBUG_TIME false
 #define DEBUG_FLOW true
 #define DEBUG_MOVEMENT false
-#define DEBUG_OBSTACLES true
+#define DEBUG_OBSTACLES false
+#define DEBUG_POINTS false
 
 
 #ifdef DEBUG

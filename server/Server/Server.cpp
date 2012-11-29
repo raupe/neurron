@@ -95,6 +95,9 @@ void sv::Server::Run()
 		if(sConnect = accept(sListen, (sockaddr*)&addr, (socklen_t*)&addrLen))
 #endif
 		{
+			//u_long iMode=1;
+			//ioctlsocket(sConnect, FIONBIO, &iMode);
+
 			HandleConnection(sConnect);
 		}
 	}
@@ -111,17 +114,34 @@ void sv::Server::HandleConnection(int connection)
 	char message[1024];
 	memset(message, 0, sizeof(message));
 
-	recv(connection, message, sizeof(message), NULL);
+	uint pos = 0;
+	int resvLen = recv(connection, message, sizeof(message), NULL);
 	std::string msg = message;
-	LOG1(DEBUG_PROTOCOLL,"Incoming Msg:\n%s\n" , message);
-
 	sv::RequestInfo headerInfo = http.GetInfo(msg);
+
+	while(strlen(headerInfo.m_Body.c_str()) != headerInfo.m_BodyLen)
+	{
+		pos += resvLen;
+		resvLen = recv(connection, message + pos, sizeof(message) - pos, NULL);
+		std::string msg = message;
+		headerInfo = http.GetInfo(msg);
+	}
+
+	LOG1(DEBUG_PROTOCOLL,"Incoming Msg:\n%s\n" , message);
 
 	if(http.IsSocketRequest(headerInfo))
 	{
 		std::string response;
 		response = http.GetSocketHeader(headerInfo);
+		pos = 0;
+
 		SEND(connection, response.c_str(), response.length());
+		/*int sendLen = SEND(connection, response.c_str(), response.length());
+		while(sendLen > 0)
+		{
+			pos += sendLen;
+			sendLen = SEND(connection, response.c_str() + pos, response.length() - pos);
+		}*/
 		
 		LOG1(DEBUG_MSG, "Incomming key:\n%s\n", headerInfo.m_SecWebSocketKey.c_str());
 		LOG1(DEBUG_MSG, "Socket header:\n%s\n", response.c_str());

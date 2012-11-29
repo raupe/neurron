@@ -2,6 +2,7 @@
 #include "Engine.h"
 
 #include "GameManager.h"
+#include "Game.h"
 #include "InputMsg.h"
 #include "Msg.h"
 #include "Server.h"
@@ -25,18 +26,12 @@ void sv::Engine::Run()
 		GameManager::Instance()->Update();
 	}*/
 
-	GameManager::Iterator iter;
 	while(true)
 	{
 		HandleMsgs();
-
-		iter = m_GameManager->First();
-		while(iter)
+		for(int i=m_GameManager->GetSize()-1; i>=0; --i)
 		{
-			Game* game = m_GameManager->Get(iter);
-			iter = m_GameManager->Next(iter);
-
-			game->Update();
+			m_GameManager->GetGameByIndex(i)->Update();
 			HandleMsgs();
 		}
 	}

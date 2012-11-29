@@ -1,19 +1,28 @@
 #include "ServerPCH.h"
 #include "GameManager.h"
 
+#include "Game.h"
+#include <string.h>
+
 sv::GameManager::GameManager()
 : m_CountId(1)
+, m_Games(0)
+, m_UsedSize(0)
+, m_AllocSize(2)
 {
-	Init(255);
+	m_Games = static_cast<Game**>( malloc(m_AllocSize * sizeof(Game*)) );
 }
 
 sv::GameManager::~GameManager()
 {
+	for(uint i=0; i<m_UsedSize; ++i)
+		delete(m_Games[i]);
+	free(m_Games);
 }
 
 sv::Game* sv::GameManager::CreateGame(int socket)
 {
-	Game* game = Get();
+	Game* game = S_NEW Game();
 	game->Init(m_CountId, socket);
 
 	if(m_CountId == 255)
@@ -21,24 +30,43 @@ sv::Game* sv::GameManager::CreateGame(int socket)
 	else
 		m_CountId++;
 
+	if(m_UsedSize == m_AllocSize)
+	{
+		m_AllocSize *= 2;
+		m_Games = static_cast<Game**>( realloc(m_Games, m_AllocSize * sizeof(Game*)) );
+	}
+
+	m_Games[m_UsedSize++] = game;
 	return game;
 }
 
 void sv::GameManager::DeleteGame(Game* game)
 {
-	Free(game);
+	for(uint i=0; i<m_UsedSize; ++i)
+	{
+		if(m_Games[i] == game)
+		{
+			m_Games[i] = m_Games[--m_UsedSize];
+			delete(game);
+			break;
+		}
+	}
+}
+
+sv::Game* sv::GameManager::GetGameByIndex(uchar index)
+{
+	return m_Games[index];
 }
 
 
 sv::Game* sv::GameManager::GetGame(uchar id)
 {
-	Pool<Game>::Iterator iter = First();
-	while(iter)
+	for(uint i=0; i<m_UsedSize; ++i)
 	{
-		Game* game = Pool<Game>::Get(iter);
-		if(game->GetId() == id)
-			return game;
-		iter = Pool<Game>::Next(iter);
+		if(m_Games[i]->GetId() == id)
+		{
+			return m_Games[i];
+		}
 	}
 
 	ASSERT(true, "Error: sv::GameManager::GetGame : game doesn't exist");
@@ -47,11 +75,6 @@ sv::Game* sv::GameManager::GetGame(uchar id)
 
 void sv::GameManager::Update()
 {
-	Pool<Game>::Iterator iter = First();
-	while(iter)
-	{
-		Game* game = Pool<Game>::Get(iter);
-		game->Update();
-		iter = Pool<Game>::Next(iter);
-	}
+	for(uint i=0; i<m_UsedSize; ++i)
+		m_Games[i]->Update();
 }

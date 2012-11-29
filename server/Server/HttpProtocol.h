@@ -12,6 +12,8 @@ namespace sv
 		, m_Upgrade("")
 		, m_Connection("")
 		, m_SecWebSocketKey("")
+		, m_Body("")
+		, m_BodyLen(0)
 		{}
 
 		std::string			m_Method;
@@ -19,6 +21,7 @@ namespace sv
 		std::string			m_Connection;
 		std::string			m_SecWebSocketKey;
 		std::string			m_Body;
+		uchar				m_BodyLen;
 	};
 
 	class HttpProtocol
