@@ -208,3 +208,8 @@ void sv::Server::Response(Msg* msg, uint socket)
 	LOG1(DEBUG_PROTOCOLL,"Outgoing Header:\n%s\n", buffer);
 	CLOSE_SOCKET(socket);
 }
+
+void sv::Server::CloseSocket(uint socket)
+{
+	CLOSE_SOCKET(socket);
+}
