@@ -11,6 +11,7 @@
 		this.tapped = false;
 
 		controller.Box.prototype.input = this;
+        controller.Screen.prototype.input = this;
 	};
 
 
@@ -82,9 +83,9 @@
 
         grd = ctx.createLinearGradient( 0, 0, cvs.width, cvs.height );
 
-        grd.addColorStop(0, '#ffffff');
+        grd.addColorStop(0, '#000');
         grd.addColorStop(0.5, '#BAE9F7');
-        grd.addColorStop(1, '#ffffff');
+        grd.addColorStop(1, '#000');
 
 		ctx.strokeStyle = grd;
 	};
