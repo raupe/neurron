@@ -28,7 +28,7 @@
 
 			 manager.handle( config.protocol.START, [ 4, [
 
-                 { id:1, pos:1, color: config.playerColors[2]}
+                 { id:1, pos:1, color: config.playerColors[4]}
 
              ]] );
 
