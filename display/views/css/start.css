@@ -7,6 +7,9 @@ html, body {
     min-width: 760px;
     min-height: 500px;
 }
+canvas {
+    vertical-align: top;
+}
 
 .round {
     border-radius: 20px;
