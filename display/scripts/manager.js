@@ -56,7 +56,6 @@
             } else {
 
                 this.screen.clear();
-                alert("Game End");
             }
 		}
 
@@ -135,7 +134,8 @@
 	/* playerlist */
 	Manager.prototype.start = function ( params ) {
 
-		document.body.removeChild( document.getElementById("qrcode") );
+        var qrcode = document.getElementById("qrcode");
+        qrcode.style.display = "none";
 
 		this.grid.init({
 
@@ -186,10 +186,12 @@
 		this.statusManager.handleCollide( params[0], params[1] );
 	};
 
+    /* final points */
     Manager.prototype.end = function ( params ) {
 
         this.runningGame = false;
-		console.log( 'end, points: ' + params[0] );
+        this.screen.clear();
+        this.statusManager.showEnd(params[0]);
 	};
 
 
