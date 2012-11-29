@@ -84,23 +84,27 @@
 
 	Manager.prototype.move = function ( params ) {
 
-		var starts = params[0],
-			ends = params[1],
 
-			start = { x: starts[0].clientX, y: starts[0].clientY},
-            end = { x: ends[0].clientX, y: ends[0].clientY},
-            diffX = Math.abs(end.x - start.x),
-            diffY = Math.abs(end.y - start.y),
-            direction;
+			var starts = params[0],
+				ends = params[1],
+				direction = params[2];
 
-        if ( start.x > end.x ) {
+		if ( !direction ) {
 
-            direction = 4; // links
+			var start = { x: starts[0].clientX, y: starts[0].clientY},
+				end = { x: ends[0].clientX, y: ends[0].clientY},
+				diffX = Math.abs(end.x - start.x),
+				diffY = Math.abs(end.y - start.y);
 
-        } else {
+			if ( start.x > end.x ) {
 
-            direction = 3; // rechts
-        }
+				direction = 4; // links
+
+			} else {
+
+				direction = 3; // rechts
+			}
+		}
 
 		this.send( direction );
 	};
