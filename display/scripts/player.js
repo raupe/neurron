@@ -6,7 +6,7 @@
 
 		this.visible = true; // default
 
-		this.velocity = 1;
+		this.velocity = config.player.velocity;
 
 		this.energy = 100;
 

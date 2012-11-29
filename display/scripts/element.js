@@ -11,7 +11,7 @@
         // global e.g. default for player
         this.size = config.elements.size;
 
-        this.checkMove = config.duration.moveTime / this.grid.frames;
+        this.checkMove = config.duration.moveTime / this.velocity / this.grid.frames;
 
 
 
@@ -166,7 +166,7 @@
 
             this.field = field[this.dir][ ~~this.counter ]; // allow floats
 
-            this.counter += this.velocity;
+            this.counter += 1;
         }
     };
 
