@@ -11,6 +11,7 @@
 
 	StatusManager.prototype.init = function ( playerList )  {
 
+        this.points = 0;
 		this.playerList = playerList;
 
         this.fullBarWidth = this.offset / 1.6;
@@ -200,14 +201,25 @@
 
     StatusManager.prototype.showEnd = function( points ) {
 
-        endpoints = document.createElement('div');
-        endpoints.className = "endpoints";
-        endpoints.innerHTML = points;
+        var endpoints = document.getElementById("endpoints");
+
+        if ( !endpoints ) {
+
+            endpoints = document.createElement('div');
+            endpoints.className = "endpoints";
+            endpoints.id = "endpoints";
+            endpoints.innerHTML = points;
+            document.body.appendChild( endpoints );
+
+        } else {
+
+            endpoints.innerHTML = points;
+            endpoints.style.display = "block";
+        }
 
         var qrcode = document.getElementById("qrcode");
         qrcode.style.display = "block";
 
-        document.body.appendChild( endpoints );
     }
 
 

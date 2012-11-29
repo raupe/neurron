@@ -157,6 +157,10 @@
 		new display.Debug();
 
         new display.Timer( 1 * 60 * 1000, "timer");
+
+        var endpoints = document.getElementById("endpoints");
+
+        if (endpoints) endpoints.style.display = "none";
 	};
 
 
