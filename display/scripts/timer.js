@@ -46,8 +46,8 @@
         if (!timerContainer) {
 
             timerContainer = document.createElement('div');
-            timerContainer.setAttribute("id", this.type);
-            timerContainer.setAttribute("class", this.type);
+            timerContainer.id = this.type;
+            timerContainer.className = this.type;
             timerContainer.innerHTML = this.timeLeftString;
 
             document.body.appendChild( timerContainer );
