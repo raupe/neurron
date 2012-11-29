@@ -132,5 +132,10 @@ window.config = {
 			collisionSound	: 'collision'
 		}
 
-	}
+	},
+
+    playerColors: {
+        1: {r: 255,  g: 0, b:   0},
+        2: {r:   0,  g: 0, b: 255}
+    }
 };
