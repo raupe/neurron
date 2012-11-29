@@ -39,12 +39,15 @@ void sv::StatusManager::CalculateCollision(Obstacle* obstacle, Player* player[],
 				energy -= obstacle->GetValue();
 			else {
 				energy = ENERGY_MAX;
-				m_Points -= PUNISH_POINTS;
-				if(m_Points < 0)
+				if(m_Points > PUNISH_POINTS)
+					m_Points -= PUNISH_POINTS;
+				else
 					m_Points = 0;
+				LOG1(DEBUG_POINTS, "PointsDown to: %i", m_Points);
 			}
 
 			player[i]->SetEnergy(energy);
+			LOG1(DEBUG_POINTS, "EnergyDown to: %i", energy);
 		}
 		break;
 	case Obstacle::eObstacleType_EnergyUp:
@@ -55,14 +58,16 @@ void sv::StatusManager::CalculateCollision(Obstacle* obstacle, Player* player[],
 				energy = ENERGY_MAX;
 
 			player[i]->SetEnergy(energy);
+			LOG1(DEBUG_POINTS, "EnergyUp to: %i", energy);
 		}
 		break;
 	case Obstacle::eObstacleType_PointsUp:
 		for(uchar i=0; i<playerCount; ++i)
 		{
 			energy = player[i]->GetEnegery();
-			m_Points += energy * value;
+			m_Points += energy * value / 100;
 		}
+		LOG1(DEBUG_POINTS, "PointsUp to: %i", m_Points);
 		break;
 	}
 }

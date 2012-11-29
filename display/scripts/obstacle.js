@@ -36,19 +36,20 @@
 
     Obstacle.prototype.setDir = function(){
 
-		this.dir = 'antiDist';
+		this.dir = 'dist';
     };
 
 
     Obstacle.prototype.change = function() {
 
-		this.pos -= this.grid.lanes;
-
 		if ( this.pos < this.grid.lanes ) {
 
 			this.vanish();
-		}
 
+		} else {
+
+			this.pos -= this.grid.lanes;
+		}
     };
 
 

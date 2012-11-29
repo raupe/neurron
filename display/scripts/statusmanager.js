@@ -198,5 +198,17 @@
         currentObstacle.collide();
 	};
 
+    StatusManager.prototype.showEnd = function( points ) {
+
+        endpoints = document.createElement('div');
+        endpoints.className = "endpoints";
+        endpoints.innerHTML = points;
+
+        var qrcode = document.getElementById("qrcode");
+        qrcode.style.display = "block";
+
+        document.body.appendChild( endpoints );
+    }
+
 
 })();

@@ -2,14 +2,15 @@
 #define GameManager_h__
 
 #include "Singleton.h"
-#include "Game.h"
 
 #include "Pool.h"
 #include <vector>
 
 namespace sv
 {
-	class GameManager : public Pool<Game>
+	class Game;
+
+	class GameManager
 	{
 	public:
 		GameManager();
@@ -19,12 +20,17 @@ namespace sv
 		Game*	GetGame(uchar id);
 		void	DeleteGame(Game* game);
 
+		Game*	GetGameByIndex(uchar index);
+		uchar	GetSize() { return m_UsedSize; }
+
 		void	Update();
 
 	private:
-		bool	m_Lock;
-		std::vector<Game*> m_Games;
 		uchar	m_CountId;
+
+		Game**	m_Games;
+		uchar	m_AllocSize;
+		uchar	m_UsedSize;
 	};
 }
 

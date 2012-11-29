@@ -8,7 +8,7 @@
 
 sv::PlayerManager::PlayerManager(Game* game)
 : Manager(game)
-, m_Color(0)
+, m_Color(1)
 {
 }
 
@@ -24,7 +24,7 @@ void sv::PlayerManager::Reset()
 		delete(m_Player[i]);
 	m_Player.clear();
 
-	m_Color = 0;
+	m_Color = 1;
 }
 
 void sv::PlayerManager::Start()
@@ -54,7 +54,7 @@ sv::Player* sv::PlayerManager::AddPlayer()
 	m_Player.push_back(player);
 
 	if(m_Color == COLOR_MAX)
-		m_Color = 0;
+		m_Color = 1;
 	return player;
 }
 

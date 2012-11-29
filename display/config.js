@@ -8,7 +8,7 @@ window.display = {
 window.config = {
 
 
-	server				: '141.45.201.38',
+	server				: 'neurron.com',
 	port				: '2020',
 
 
@@ -132,5 +132,12 @@ window.config = {
 			collisionSound	: 'collision'
 		}
 
-	}
+	},
+
+    playerColors: {
+        1: {r: 255,  g:   0, b:   0},
+        2: {r:   0,  g:   0, b: 255},
+        3: {r:   0,  g: 255, b: 255},
+        4: {r: 255,  g: 255, b: 255}
+    }
 };

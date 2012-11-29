@@ -14,14 +14,15 @@ namespace sv
 		StatusManager(Game* game);
 		~StatusManager();
 		
-		virtual void		Reset();
-		virtual void		Start();
-		virtual void		Update(ulong deltaTime) {}
-
-		void		CalculateCollision(Obstacle* obstacle, Player* player[], uchar playerCount);
+		virtual void	Reset();
+		virtual void	Start();
+		virtual void	Update(ulong deltaTime) {}
+		
+		void			CalculateCollision(Obstacle* obstacle, Player* player[], uchar playerCount);
+		ushort			GetPoints() { return m_Points; }
 
 	private:
-		short		m_Points;
+		ushort			m_Points;
 	};
 }
 

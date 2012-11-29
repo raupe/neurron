@@ -1,6 +1,6 @@
 (function(){
 
-	var Screen = controller.Screen = function ( config ) {
+	var Screen = controller.Screen = function() {
 
 		this.createCanvas();
 

@@ -11,3 +11,8 @@ canvas {
     left: 37%;
     top: 45%;
 }
+.endpoints {
+    position: absolute;
+    left: 37%;
+    bottom: 45%;
+}

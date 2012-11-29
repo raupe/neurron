@@ -18,6 +18,7 @@ sv::Game::Game()
 : m_TimeLastMsg(0)
 , m_Status(eGameStatus_Wait)
 , m_Countdown(0)
+, m_RunTime(0)
 , m_PlayerManager(0)
 , m_Grid(0)
 , m_StatusManager(0)
@@ -80,6 +81,10 @@ void sv::Game::Update()
 		{
 			m_PlayerManager->Update(deltaTime);
 			m_ObstacleManager->Update(deltaTime);
+
+			m_RunTime += deltaTime;
+			if(m_RunTime >= PLAY_TIME)
+				End();
 		} break;
 	}
 
@@ -94,6 +99,7 @@ void sv::Game::Update()
 void sv::Game::Start()
 {
 	m_Status = eGameStatus_Run;
+	m_RunTime = 0;
 	
 	uchar playerNumber = m_PlayerManager->GetNumber();
 
@@ -109,6 +115,19 @@ void sv::Game::Start()
 	startMsg.SetColors(color);
 	startMsg.SetPos(pos);
 	SendMsg(&startMsg);
+}
+
+void sv::Game::End()
+{
+	LOG(DEBUG_FLOW, "Game ended.");
+	m_Status = eGameStatus_Wait;
+	EndMsg endMgs(m_StatusManager->GetPoints());
+	SendMsg(&endMgs);
+
+	m_Grid->Reset();
+	m_PlayerManager->Reset();
+	m_ObstacleManager->Reset();
+	m_StatusManager->Reset();
 }
 
 void sv::Game::HandleMsg(sv::InputMsg* msg)
@@ -174,7 +193,13 @@ void sv::Game::HandleStartMsg(InputMsg* msg)
 void sv::Game::HandleMoveMsg(InputMsg* msg, bool rigth)
 {
 	bool success = false;
-	if(m_Status == eGameStatus_Run)
+	if(m_Status == eGameStatus_Wait)
+	{
+		ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_NotRunning);
+		Server::Instance()->Response(&response, msg->GetSocket());
+		return;
+	}
+	else if(m_Status == eGameStatus_Run)
 	{
 		Player* player = m_PlayerManager->GetPlayer(msg->GetControllerId());
 		if(player)

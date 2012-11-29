@@ -17,8 +17,7 @@ namespace sv
 
 	class Game
 	{
-		template<class T>
-		friend class Pool;
+		friend class GameManager;
 	private:
 		enum EGameStatus
 		{
@@ -32,6 +31,7 @@ namespace sv
 		void				Reset();
 		void				Start();
 		void				Update();
+		void				End();
 		
 		uchar				GetId() { return m_Id; }
 		int					GetSocket() { return m_Socket; }
@@ -63,6 +63,9 @@ namespace sv
 
 		// countdown
 		ulong				m_Countdown;
+
+		// run
+		ulong				m_RunTime;
 
 		// connection
 		int					m_Socket;

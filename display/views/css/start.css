@@ -8,6 +8,9 @@ html, body {
     min-height: 500px;
     background-color: gray;
 }
+canvas {
+    vertical-align: top;
+}
 
 .round {
     border-radius: 20px;

@@ -5,6 +5,7 @@
 
 #ifndef WIN32
 #include <string.h>
+#include <stdlib.h>
 #endif
 
 sv::RequestInfo sv::HttpProtocol::GetInfo(const std::string msg)
@@ -24,6 +25,7 @@ sv::RequestInfo sv::HttpProtocol::GetInfo(const std::string msg)
 	info.m_Connection = HttpProtocol::GetValue("Connection: ", msg);
 	info.m_Upgrade = HttpProtocol::GetValue("Upgrade: ", msg);
 	info.m_SecWebSocketKey = HttpProtocol::GetValue("Sec-WebSocket-Key: ", msg);
+	info.m_BodyLen = (uchar)atoi(HttpProtocol::GetValue("Content-Length: ", msg).c_str());
 	
 	return info;
 }

@@ -4,15 +4,8 @@ window.controller = {};
 /* configuraitons */
 var config = {
 
-	server			: '141.45.201.38',
+	server			: 'neurron.com',
 	port			: '2020',
-
-	// basic resolution
-	canvas: {
-
-		width		: 320,
-		height		: 240
-	},
 
 	boxes: {
 
