@@ -36,3 +36,8 @@ void sv::Obstacle::Update(ulong deltaTime)
 	}
 	Element::Update(deltaTime);
 }
+
+bool sv::Obstacle::IsEdge()
+{
+	return m_PassedTime > GetChangeTime() && m_Grid->IsEdge(m_Pos);
+}

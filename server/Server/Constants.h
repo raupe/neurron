@@ -12,9 +12,10 @@
 #define NUMBER_CIRCLES 10
 
 // Element
-#define MOVE_TIME			 1200000
-#define CHANGE_TIME_PL		  600000
-#define CHANGE_TIME_OB		  900000
+#define MOVE_TIME_PL		   400000	// 0.4 sec = 1.2 / 3
+#define CHANGE_TIME_PL		   200000	// 0.2 sec
+#define MOVE_TIME_OB		  1200000	// 1.2 sec
+#define CHANGE_TIME_OB		   900000	// 0.9 sec
 
 // StatusManager
 #define ENERGY_MAX 100
