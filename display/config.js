@@ -8,7 +8,7 @@ window.display = {
 window.config = {
 
 
-	server				: '141.45.201.38',
+	server				: 'neurron.com',
 	port				: '2020',
 
 
