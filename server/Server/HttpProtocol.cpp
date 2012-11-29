@@ -20,6 +20,7 @@ sv::RequestInfo sv::HttpProtocol::GetInfo(const std::string msg)
 	if(pos != -1)
 	{
 		info.m_Body = msg.substr(pos + 4);
+		info.m_HeaderComplete = true;
 	}
 	
 	info.m_Connection = HttpProtocol::GetValue("Connection: ", msg);
@@ -50,6 +51,11 @@ bool sv::HttpProtocol::IsSocketRequest(const sv::RequestInfo& info)
 {
 	return info.m_Connection.find("Upgrade") != -1
 		&& info.m_Upgrade == "websocket";
+}
+
+bool sv::HttpProtocol::RequestComplete(const RequestInfo& info)
+{
+	return info.m_HeaderComplete && strlen(info.m_Body.c_str()) == info.m_BodyLen;
 }
 
 /*std::string	sv::HttpProtocol::GetHeader()

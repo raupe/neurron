@@ -119,7 +119,7 @@ void sv::Server::HandleConnection(int connection)
 	std::string msg = message;
 	sv::RequestInfo headerInfo = http.GetInfo(msg);
 
-	while(strlen(headerInfo.m_Body.c_str()) != headerInfo.m_BodyLen)
+	while(! http.RequestComplete(headerInfo))
 	{
 		pos += resvLen;
 		resvLen = recv(connection, message + pos, sizeof(message) - pos, NULL);

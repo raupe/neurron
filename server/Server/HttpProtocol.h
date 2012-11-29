@@ -14,6 +14,7 @@ namespace sv
 		, m_SecWebSocketKey("")
 		, m_Body("")
 		, m_BodyLen(0)
+		, m_HeaderComplete(false)
 		{}
 
 		std::string			m_Method;
@@ -22,6 +23,7 @@ namespace sv
 		std::string			m_SecWebSocketKey;
 		std::string			m_Body;
 		uchar				m_BodyLen;
+		bool				m_HeaderComplete;
 	};
 
 	class HttpProtocol
@@ -29,6 +31,7 @@ namespace sv
 	public:
 		RequestInfo	GetInfo(const std::string msg);
 		bool		IsSocketRequest(const RequestInfo& info);
+		bool		RequestComplete(const RequestInfo& info);
 		
 		//std::string	GetHeader();
 		std::string GetErrorHeader();

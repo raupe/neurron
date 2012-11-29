@@ -11,8 +11,10 @@ namespace sv
 		eContrAction_End,
 		eContrAction_Right,
 		eContrAction_Left,
-		eContrAction_Front,
-		eContrAction_Back,
+		eContrAction_Up,
+		eContrAction_Down,
+		eContrAction_Heal,
+		eContrAction_Polling,
 
 		eContrAction_Max,
 		eContrAction_CreateGame,
