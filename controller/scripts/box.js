@@ -115,7 +115,7 @@
        var box = document.getElementById('box');
 
        // box.setAttribute( 'style', 'display: none;' );
-       box.className += ' hide';
+       box.className = ' hide';
     };
 
 
