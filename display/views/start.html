@@ -5,6 +5,7 @@
 
     <link rel="stylesheet" type="text/css" href="css/normalize.css">
     <link rel="stylesheet" type="text/css" href="css/start.css">
+    <script src="http://game.neurron.com/display/scripts/_libs/jquery-1.8.3.min.js"></script>
 
 </head>
 <body>
@@ -14,19 +15,29 @@
             <div class="slider_content_wrap">
                 <div class="logo">neurron</div>
                 <div class="slider_box_wrap">
-                    <div class="button intro_button"><p>intro</p></div>
-                    <div class="button play_button"><p>how2play</p></div>
-                    <div class="button demo_button"><p>demo</p></div>
+                    <div class="button gradient intro_button"><p>intro</p></div>
+                    <div class="button gradient play_button"><p>how2play</p></div>
+                    <div class="button gradient demo_button"><p>demo</p></div>
                     <div class="dashboard round"></div>
                     <div class="screen_wrap round">
-                        <div class="screen">
+                        <div id="intro" class="screen">
                             <iframe class="video" src="http://www.youtube.com/embed/ogTIl-xzDRI" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <div id="how2play" class="screen">
+                            <iframe class="video" src="http://www.youtube.com/embed/aVb0HB6arUw" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <div id="demo" class="screen">
+                            <iframe class="video" src="http://www.youtube.com/embed/-cUB5pyPVJo" frameborder="0" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="qr_wrapper"></div>
+        <div class="qr_wrapper">
+            <div class="comic round"></div>
+            <div class="qr_code round"></div>
+            <div class="joined round"></div>
+        </div>
     </div>
 
 </body>

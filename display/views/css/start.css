@@ -6,6 +6,7 @@ html, body {
     width: 100%;
     min-width: 760px;
     min-height: 500px;
+    background-color: gray;
 }
 canvas {
     vertical-align: top;
@@ -17,12 +18,23 @@ canvas {
     -webkit-border-radius: 20px;
 }
 
+.gradient{
+    background: rgb(208,228,247); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(208,228,247,1) 0%, rgba(115,177,231,1) 24%, rgba(10,119,213,1) 50%, rgba(83,159,225,1) 79%, rgba(135,188,234,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(208,228,247,1)), color-stop(24%,rgba(115,177,231,1)), color-stop(50%,rgba(10,119,213,1)), color-stop(79%,rgba(83,159,225,1)), color-stop(100%,rgba(135,188,234,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(208,228,247,1) 0%,rgba(115,177,231,1) 24%,rgba(10,119,213,1) 50%,rgba(83,159,225,1) 79%,rgba(135,188,234,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(208,228,247,1) 0%,rgba(115,177,231,1) 24%,rgba(10,119,213,1) 50%,rgba(83,159,225,1) 79%,rgba(135,188,234,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(208,228,247,1) 0%,rgba(115,177,231,1) 24%,rgba(10,119,213,1) 50%,rgba(83,159,225,1) 79%,rgba(135,188,234,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(208,228,247,1) 0%,rgba(115,177,231,1) 24%,rgba(10,119,213,1) 50%,rgba(83,159,225,1) 79%,rgba(135,188,234,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d0e4f7', endColorstr='#87bcea',GradientType=0 ); /* IE6-9 */
+
+}
+
 .slider_wrapper {
     float: left;
     width: 75%;
     min-width: 570px;
     height: 100%;
-    background-color: gray;
 }
 
 .slider_content_wrap {
@@ -48,28 +60,28 @@ canvas {
     width: 100%;
     height:70%;
     min-height: 350px;
-    margin-top: 12%;
+    margin-top: 10%;
     position: relative;
 }
+
 .button {
     border-radius: 10px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
-    display: table;
     width: 24%;
-    height: 15%;
+    height: 10%;
     min-height: 50px;
     background-color: #dcdcdc;
     float: left;
     position: relative;
+    cursor: pointer;
     z-index: 999;
 }
 
 .button p {
+    margin-top: 10%;
     text-align: center;
-    vertical-align:middle;
-    display: table-cell;
-    font-size: 1.5em ;
+    font-size: 2.0vw ;
 }
 
 .intro_button {
@@ -113,10 +125,22 @@ canvas {
 .screen{
     width: 90%;
     height: 90%;
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-top: 10%;
+    left: 5%;
+    right: 5%;
+    top: 10%;
     position: absolute;
+}
+
+#intro{
+    display: block;
+}
+
+#how2play{
+    display: none;
+}
+
+#demo{
+    display: none;
 }
 
 .video {
@@ -125,30 +149,35 @@ canvas {
 }
 
 .qr_wrapper {
-float: right;
-width: 25%;
-min-width: 190px;
-height: 100%;
-background-color: #bdb76b;
-    }
-
-
-/*
-.inner_wrapper {
-    background-image: url("../images/neurronwire_start_00.jpg");
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    margin: 4%;
-    border: 2px solid black;
-    height: 500px;
-    width: 750px;
-    margin: auto;
+    float: right;
+    width: 25%;
+    min-width: 190px;
+    height: 100%;
 }
-*/
 
-#qrcode {
-    position: fixed;
+.comic{
+    width: 90%;
+    height:30%;
+    background-color: #ffffff;
+    margin-left: 5%;
+    position: relative;
 }
-#qrcode img {
-    position: fixed;
+
+.qr_code{
+    width: 90%;
+    height:30%;
+    min-height: 180px;
+    background-color: #ffffff;
+    margin-left: 5%;
+    margin-top: 5%;
+    position: relative;
+}
+.joined{
+    width: 90%;
+    height:20%;
+    min-height: 50px;
+    background-color: #ffffff;
+    margin-left: 5%;
+    margin-top: 5%;
+    position: relative;
 }
