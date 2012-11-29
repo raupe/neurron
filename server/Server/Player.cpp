@@ -6,6 +6,7 @@
 sv::Player::Player()
 : m_Color(0)
 , m_Energy(ENERGY_MAX)
+, m_ReviveCountdown(0)
 {
 }
 
@@ -21,6 +22,7 @@ void sv::Player::Init(uchar id, Grid* grid, uchar color)
 
 void sv::Player::Reset()
 {
+	m_ReviveCountdown = 0;
 	m_Energy = ENERGY_MAX;
 	Element::Reset();
 }
@@ -33,6 +35,15 @@ void sv::Player::Start(uchar pos)
 
 void sv::Player::Update(ulong deltaTime)
 {
+	if(m_ReviveCountdown > 0)
+	{
+		m_ReviveCountdown -= deltaTime;
+		if(m_ReviveCountdown < 0)
+		{
+			m_ReviveCountdown = 0;
+			m_Energy = ENERGY_MAX;
+		}
+	}
 	Element::Update(deltaTime);
 }
 

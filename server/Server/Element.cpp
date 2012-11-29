@@ -52,7 +52,7 @@ void sv::Element::Update(ulong deltaTime)
 		{
 			SetPos(m_NextPos);
 		}
-		if(m_PassedTime > MOVE_TIME)
+		if(m_PassedTime > GetMoveTime())
 		{
 			if(m_DesiredPos != m_Pos)
 			{
