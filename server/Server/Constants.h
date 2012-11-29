@@ -17,6 +17,9 @@
 #define MOVE_TIME_OB		  1200000	// 1.2 sec
 #define CHANGE_TIME_OB		   900000	// 0.9 sec
 
+// Player
+#define REVIVE_TIME			  5000000	// 5   sec
+
 // StatusManager
 #define ENERGY_MAX 100
 #define PUNISH_POINTS 1000

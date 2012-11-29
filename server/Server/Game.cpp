@@ -31,6 +31,7 @@ sv::Game::Game()
 
 sv::Game::~Game()
 {
+	Server::Instance()->CloseSocket(m_Socket);
 	delete(m_StatusManager);
 	delete(m_ObstacleManager);
 	delete(m_PlayerManager);

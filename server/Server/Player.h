@@ -19,8 +19,9 @@ namespace sv
 		virtual void	Update(ulong deltaTime);
 
 		uchar			GetColor() { return m_Color; }
-		uchar			GetEnegery() { return m_Energy; }
+		uchar			GetEnergy() { return m_Energy; }
 		void			SetEnergy(uchar energy) { m_Energy = energy; }
+		void			StartReviveCountdown();
 	private:
 		virtual void	SetPos(uchar pos);
 

@@ -53,3 +53,8 @@ void sv::Player::SetPos(uchar pos)
 	Element::SetPos(pos);
 	m_Grid->AddPlayer(m_Pos, this);
 }
+
+void sv::Player::StartReviveCountdown()
+{
+	m_ReviveCountdown = REVIVE_TIME;
+}
