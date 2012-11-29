@@ -43,6 +43,8 @@
 
 	Manager.prototype.register = function(){
 
+		if ( this.id ) return;
+
 		this.box.hide();
 
 		/* serve response  */
