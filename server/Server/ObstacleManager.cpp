@@ -186,9 +186,9 @@ void sv::ObstacleManager::HandleCollision(Obstacle* obstacle)
 		GetStatusManager()->CalculateCollision(obstacle, player, count);
 		LOG1(DEBUG_OBSTACLES, "Collision: id %i", obstacle->GetId());
 
-		if(obstacle->GetType() != Obstacle::eObstacleType_EnergyDown)
-		{
+	//	if(obstacle->GetType() != Obstacle::eObstacleType_EnergyDown)
+	//	{
 			DeleteObstacle(obstacle);
-		}
+	//	}
 	}
 }
