@@ -24,11 +24,11 @@
 
 			console.log('[close]');
 
-   //          manager.init(1);
+             manager.init(1);
 
 			 manager.handle( config.protocol.START, [ 4, [
 
-                 { id:1, pos:1, color:{r: 255, g: 0, b: 0} }
+                 { id:1, pos:1, color: config.playerColors[2]}
 
              ]] );
 
@@ -70,7 +70,7 @@
 
 						id		: i/2,
 						pos		: data.charCodeAt(  i),
-						color	: data.charCodeAt(1+i)
+						color	: config.playerColors[data.charCodeAt(1+i)] // ab 1, siehe config.playerColors
 					});
 				}
 
