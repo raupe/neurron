@@ -195,6 +195,12 @@
 
         this.runningGame = false;
         this.screen.clear();
+
+        this.obstaclePool.list.length = 0;
+        this.obstaclePool.pool.length = 0;
+        this.playerList.length = 0;
+
+
         this.statusManager.showEnd(params[0]);
 	};
 
