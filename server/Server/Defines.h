@@ -20,7 +20,7 @@ typedef unsigned long ulong;
 
 #define LOG_ERROR true
 #define DEBUG_SERVER true
-#define DEBUG_PROTOCOLL true
+#define DEBUG_PROTOCOLL false
 #define DEBUG_MSG false
 #define DEBUG_WEBSOCKET false
 #define DEBUG_TIME false
