@@ -5,6 +5,7 @@
 
 #ifndef WIN32
 #include <string.h>
+#include <stdlib.h>
 #endif
 
 sv::RequestInfo sv::HttpProtocol::GetInfo(const std::string msg)
