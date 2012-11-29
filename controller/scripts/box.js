@@ -80,7 +80,7 @@
         this.setStyle( box );
 
         //vm font adjustment
-        document.getElementById('text').style['z-index: 1'];
+        document.getElementById('text').style['z-index'] = 1;
 
     }.bind(this), false);
 
@@ -92,7 +92,7 @@
 
         // this.input.enable();
 
-        this.hide();
+        // this.hide();
     };
 
 
