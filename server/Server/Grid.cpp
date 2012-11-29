@@ -130,7 +130,7 @@ void sv::Grid::GetPlayer(uchar pos, Player** player, uchar& count)
 {
 	count = m_PlayerCount[pos];
 	uchar posOut = 0;
-	for(uchar i=0; pos<count; ++i)
+	for(uchar i=0; posOut<count; ++i)
 	{
 		if(m_Fields[pos * m_NumberPlayer + i]->GetEnergy())
 			player[posOut++] = m_Fields[pos * m_NumberPlayer + i];
