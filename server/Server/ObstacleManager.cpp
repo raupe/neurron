@@ -114,12 +114,10 @@ void sv::ObstacleManager::Update(ulong deltaTime)
 		iter = Next(iter);
 
 		obstacle->Update(deltaTime);
-		if( GetGrid()->IsEdge(obstacle->GetPos()) )
-		{
+		if( obstacle->IsEdge() )
 			HandleCollision(obstacle);
-			obstacle->Reset();
-			Free(obstacle);
-		}
+		if( obstacle->GetPos() == Grid::InvalidPos )
+			DeleteObstacle(obstacle);
 	}
 
 	UpdateLevel(deltaTime);
@@ -128,9 +126,9 @@ void sv::ObstacleManager::Update(ulong deltaTime)
 void sv::ObstacleManager::UpdateLevel(ulong deltaTime)
 {
 	m_PassedTime += deltaTime;
-	if(m_PassedTime > MOVE_TIME)
+	if(m_PassedTime > MOVE_TIME_OB)
 	{
-		m_PassedTime -= MOVE_TIME;
+		m_PassedTime -= MOVE_TIME_OB;
 		m_Step ++;
 		if(m_Step == s_LevelSize)
 			m_Step = 0;
@@ -163,6 +161,12 @@ sv::Obstacle* sv::ObstacleManager::CreateObstacle(uchar category, uchar lane)
 
 	return obstacle;
 }
+		
+void sv::ObstacleManager::DeleteObstacle(Obstacle* obstacle)
+{
+	obstacle->Reset();
+	Free(obstacle);
+}
 
 void sv::ObstacleManager::HandleCollision(Obstacle* obstacle)
 {
@@ -181,5 +185,10 @@ void sv::ObstacleManager::HandleCollision(Obstacle* obstacle)
 
 		GetStatusManager()->CalculateCollision(obstacle, player, count);
 		LOG1(DEBUG_OBSTACLES, "Collision: id %i", obstacle->GetId());
+
+	//	if(obstacle->GetType() != Obstacle::eObstacleType_EnergyDown)
+	//	{
+			DeleteObstacle(obstacle);
+	//	}
 	}
 }

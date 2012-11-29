@@ -90,13 +90,14 @@
         ctx.shadowColor= '#BAE9F7';
         ctx.shadowBlur = 20;
 
-        grd = ctx.createLinearGradient( 0, 0, cvs.width, cvs.height );
+        /*grd = ctx.createLinearGradient( 0, 0, cvs.width, cvs.height );
 
-        grd.addColorStop(0, '#000');
-        grd.addColorStop(0.5, '#BAE9F7');
-        grd.addColorStop(1, '#000');
+        grd.addColorStop(0, '#fff');
+        grd.addColorStop(0.5, '#fff');
+        grd.addColorStop(1, '#fff');
+        */
 
-		ctx.strokeStyle = grd;
+		ctx.strokeStyle = '#FFF';
 	};
 
 

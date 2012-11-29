@@ -28,6 +28,7 @@ namespace sv
 		virtual void	SetPos(uchar pos) { m_Pos = pos; }
 
 		virtual ulong	GetChangeTime() = 0;
+		virtual ulong	GetMoveTime() = 0;
 
 		uchar			m_Id;
 		

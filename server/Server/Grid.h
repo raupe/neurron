@@ -10,6 +10,8 @@ namespace sv
 	class Grid
 	{
 	public:
+		static const uchar InvalidPos;
+
 		Grid();
 		~Grid();
 		

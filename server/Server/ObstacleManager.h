@@ -25,11 +25,13 @@ namespace sv
 		void							Update(ulong deltaTime);
 
 		void							UpdateLevel(ulong deltaTime);
-		Obstacle*						CreateObstacle(uchar category, uchar pos);
-		void							HandleCollision(Obstacle* obstacle);
 	private:
 		static const int				s_LevelSize;
 		static const char*				s_Level[];
+
+		Obstacle*						CreateObstacle(uchar category, uchar pos);
+		void							DeleteObstacle(Obstacle* obstacle);
+		void							HandleCollision(Obstacle* obstacle);
 		
 		uchar							m_IdCount;
 		ulong							m_PassedTime;

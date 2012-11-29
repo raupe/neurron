@@ -20,6 +20,8 @@ const uchar sv::Grid::s_MapStartPos[PLAYER_MAX][PLAYER_MAX] =
 	{ 0, 2, 4, 6, 8, 10, 12, 14},
 };
 
+const uchar sv::Grid::InvalidPos = (uchar) -1;
+
 sv::Grid::Grid()
 : m_NumberLanes(0)
 , m_NumberPlayer(0)
@@ -94,7 +96,8 @@ uchar sv::Grid::GetPosLeft(uchar pos)
 
 uchar sv::Grid::GetPosOut(uchar pos)
 {
-	ASSERT(pos >= m_NumberLanes, "Moving element out of grid");
+	if(pos < m_NumberLanes)
+		return InvalidPos;
 	return pos - m_NumberLanes;
 }
 

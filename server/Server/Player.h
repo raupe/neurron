@@ -25,9 +25,11 @@ namespace sv
 		virtual void	SetPos(uchar pos);
 
 		virtual ulong	GetChangeTime() { return CHANGE_TIME_PL; }
+		virtual ulong	GetMoveTime() { return MOVE_TIME_PL; }
 
 		uchar			m_Color;
 		uchar			m_Energy;
+		ulong			m_ReviveCountdown;
 	};
 }
 
