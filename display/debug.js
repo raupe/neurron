@@ -6,7 +6,7 @@
 
 		this.addPlayerInput();
 
-		this.drawNums();
+		// this.drawNums();
 
 		// this.drawLine( 8 );
 	};
