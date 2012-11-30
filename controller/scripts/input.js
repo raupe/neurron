@@ -69,8 +69,8 @@
 			if ( key === 39 ) this.manager.send( 3 ); // right
 			if ( key === 37 ) this.manager.send( 4 ); // left
 
-			// if ( key === 38 ) this.manager.handle( config.commands.MOVE, [ null, null, 5 ] ); // top
-			// if ( key === 40 ) this.manager.handle( config.commands.MOVE, [ null, null, 6 ] ); // bottom
+			if ( key === 38 ) this.manager.send( 5 ); // top
+			if ( key === 40 ) this.manager.send( 6 ); // bottom
 
 			if ( key === 13 ) this.manager.handle( config.commands.REGISTER ); // return
 			if ( key === 32 ) this.manager.handle( config.commands.HEAL ); // space
