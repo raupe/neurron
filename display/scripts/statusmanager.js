@@ -97,7 +97,7 @@
 		var cvs = document.createElement('canvas'),
 			ctx = cvs.getContext('2d');
 
-		this.offset = (window.innerWidth / config.factor)-30; // TODO currently for chrome developer tools that the statusmanager doesnt shift
+		this.offset = (window.innerWidth / config.factor);//-30; // TODO currently for chrome developer tools that the statusmanager doesnt shift
 
 		cvs.width = this.offset;
 		cvs.height = window.innerHeight;
