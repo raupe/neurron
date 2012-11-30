@@ -119,7 +119,7 @@
 
     Element.prototype.move = function ( nextPos ) {
 
-        if ( nextPos === this.pos ) return;
+        if ( nextPos === this.nextPos ) return;
 
         this.nextPos = nextPos;
 
