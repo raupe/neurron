@@ -2,20 +2,25 @@
 
 	var Manager = controller.Manager = function ( config ) {
 
-		this.id = 0; // default
+		// default
+		this.id = 0;
 		this.timer = 0;
 
 		this.url = config.url;
 		this.channel = config.channel;
 
 		this.req = new XMLHttpRequest();
-		this.box = new controller.Box();
 
 
 		this.init();
 
-		controller.Input.prototype.manager = this;
+
+
 		controller.Box.prototype.manager = this;
+		this.box = new controller.Box();
+
+		// input reference
+		controller.Input.prototype.manager = this;
 	};
 
 
@@ -29,7 +34,7 @@
 			3	: this.heal
 		};
 
-		// console.log(action, options);
+		console.log(action, options);
 
 		commands[ action ].call( this, options );
 	};
@@ -39,9 +44,9 @@
 
 	Manager.prototype.show = function ( category ) {
 
-		var button = config.boxes[ category ];
+		var params = config.boxes[ category ];
 
-		this.box.set( button[0], button[1] ); // type - text
+		this.box.set( params[0], params[1] ); // type - text
 	};
 
 
@@ -62,6 +67,17 @@
 	};
 
 
+	// ToDo: handling on end
+	Manager.prototype.end = function(){
+
+		this.id = 0;
+
+		delete this.req;
+
+		this.req = new XMLHttpRequest();
+	};
+
+
 
 	Manager.prototype.register = function(){
 
@@ -70,6 +86,8 @@
 		this.init();
 
 		this.box.hide();
+
+        this.input.enable();
 
 		/* serve response  */
 		this.req.onload = function ( t ) {
@@ -87,9 +105,9 @@
 			if ( action === config.protocol.START ) {
 
 				this.id = data.charCodeAt(1);
-				var color = data.charCodeAt(2);
+				this.color = config.playerColors[ data.charCodeAt(2) ];
 
-				this.color = config.playerColors[ color ];
+				this.input.setStyle( this.color );
 			}
 
 			if ( action === config.protocol.STATUS ) {
@@ -97,6 +115,7 @@
 				var state = data.charCodeAt(1);
 
 				if ( state === 0 ) return;
+
 
 				// console.log('state: ', state);
 
