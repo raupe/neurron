@@ -1,7 +1,7 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 
-$empfaenger = "d.ngoviet@gmail.com";
+$empfaenger = "info@neurron.com";
 $absendername = "Neurron - Server";
 $absendermail = "info@neurron.com";
 $betreff = "Server Maybe Down";
