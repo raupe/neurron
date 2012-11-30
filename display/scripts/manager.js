@@ -70,15 +70,19 @@
 
 		function forAll ( collection, method, delta ) {
 
-			for ( var i = 0, l = collection.length, el; i < l; i++ ) {
+            var l = collection.length;
 
-				el = collection[i];
+            do {
+
+				el = collection[l];
 
 				if ( el && el.visible ) { // undefined.()
 
 					el[method]( delta );
 				}
-			}
+
+            } while ( l-- );
+
 		}
 
 	};
@@ -107,11 +111,11 @@
 
 	Manager.prototype.init = function ( channelId ) {
 
-        var qrCode = 'http://game.neurron.com/controller/?' + channelId;
+        var qrLink = 'http://game.neurron.com/controller/?' + channelId,
 
-        var element = document.getElementById('qrcode');
+            element = document.getElementById('qrcode'),
 
-        qrCode = showQRCode(qrCode, {r: 0, g: 0, b: 255});
+            qrCode = showQRCode( qrLink, {r: 0, g: 0, b: 255});
 
         if ( element.lastChild ) {
 
@@ -122,6 +126,11 @@
 			element.appendChild(qrCode);
         }
 
+        var linkBox = document.createElement('div');
+
+        linkBox.innerHTML = '<a href="'+ qrLink +'">' + qrLink + '</a>';
+
+        element.insertBefore( linkBox, qrCode.nextSibling );
 	};
 
 
