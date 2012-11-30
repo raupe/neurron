@@ -156,7 +156,7 @@
 
 		new display.Debug();
 
-        new display.Timer( countdown.gameTime * 60 * 1000, "timer");
+        new display.Timer( config.gameTime * 60 * 1000, "timer");
 
         var endpoints = document.getElementById("endpoints");
 
