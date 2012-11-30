@@ -85,7 +85,7 @@
 
         box.className += ' show';
 
-        document.getElementById('text').innerText = text;
+        document.getElementById('text').textContent = text;
 
         if ( type === 'button' ) {
 
