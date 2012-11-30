@@ -10,12 +10,28 @@
 
 		this.tapped = false;
 
+		this.init();
+
 		controller.Box.prototype.input = this;
         controller.Screen.prototype.input = this;
+        controller.Manager.prototype.input = this;
+	};
+
+
+	Input.prototype.init = function(){
+
+
+		if ( !( 'ontouchstart' in window ) ) {
+
+			this.handleKeyboard();
+		}
+
 	};
 
 
 	Input.prototype.disable = function(){
+
+		this.disabled = true;
 
 		// ToDo: remove handler - called on  set/int for button
 	};
@@ -24,6 +40,12 @@
 	Input.prototype.enable = function(){
 
 		this.addHandler();
+		this.disabled = false;
+
+		return function(){
+
+			this.disabled = false;
+		};
 	};
 
 
@@ -34,10 +56,6 @@
 			this.setStyle();
 
 			this.handleTouch();
-
-		} else {
-
-			this.handleKeyboard();
 		}
 	};
 
@@ -79,24 +97,15 @@
 
 
 	// Style settings
-	Input.prototype.setStyle = function() {
+	Input.prototype.setStyle = function ( color ) {
 
 		var ctx = this.ctx,
-			cvs = this.cvs,
-
-			grd;
+			cvs = this.cvs;
 
         ctx.lineWidth = 3;
 		ctx.lineCap = 'round';
-        ctx.shadowColor = ( this.manager && this.manager.color ) ? this.manager.color : '#BAE9F7';
+        ctx.shadowColor = color || '#BAE9F7';
         ctx.shadowBlur = 20;
-
-        /*grd = ctx.createLinearGradient( 0, 0, cvs.width, cvs.height );
-
-        grd.addColorStop(0, '#fff');
-        grd.addColorStop(0.5, '#fff');
-        grd.addColorStop(1, '#fff');
-        */
 
 		ctx.strokeStyle = '#FFF';
 	};
@@ -144,8 +153,13 @@
 			end = touches[i];
 			current = starts[i];
 
+
+
 			// ToDo: check for device property
-			ctx.lineTo( current.clientX, current.clientY, end.clientX, end.clientY );
+			if ( !this.disabled ) {
+
+				ctx.lineTo( current.clientX, current.clientY, end.clientX, end.clientY );
+			}
 
 			starts[i] = end;
 		}
