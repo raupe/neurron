@@ -6,15 +6,14 @@
 		// showing element
 		new controller.Screen();
 
-
 		// handling input
 		new controller.Input();
 
 		// delegating commands
 		new controller.Manager({
 
-			url: 'http://' + config.server + ':' + config.port,
-			channel: channel
+			url		: 'http://' + config.server + ':' + config.port,
+			channel	: channel
 		});
 })();
 
