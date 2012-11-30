@@ -171,6 +171,7 @@
 
                         this.points = 0;
                     }
+                    currentPlayer.energy = 100;
                 }
             }
 

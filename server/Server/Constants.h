@@ -18,7 +18,7 @@
 #define CHANGE_TIME_OB		   900000	// 0.9 sec
 
 // Player
-#define REVIVE_TIME			  5000000	// 5   sec
+#define REVIVE_TIME		1//	  5000000	// 5   sec
 
 // StatusManager
 #define ENERGY_MAX 100
