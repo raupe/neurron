@@ -98,7 +98,7 @@
 
 				if ( state === 0 ) return;
 
-				console.log('state: ', state);
+				// console.log('state: ', state);
 
 				this.show( state );
 			}
@@ -127,14 +127,28 @@
 				diffX = Math.abs(end.x - start.x),
 				diffY = Math.abs(end.y - start.y);
 
-			if ( start.x > end.x ) {
+			// if ( diffX > diffY ) {
 
-				direction = 4; // links
+				if ( start.x > end.x ) {
 
-			} else {
+					direction = 4; // left
 
-				direction = 3; // rechts
-			}
+				} else {
+
+					direction = 3; // right
+				}
+
+			// } else {
+
+			//		if ( start.y > end.y ) {
+
+			//		direction = 5;	// top
+
+			// } else {
+
+			//		direction = 6;	// bottom
+			// }
+
 		}
 
 		this.send( direction );

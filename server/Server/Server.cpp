@@ -80,11 +80,14 @@ void sv::Server::Run()
 	ASSERT(sListen != -1, "Couldn't create a socket.");
 
 #ifdef WIN32
-	bind(sListen, (SOCKADDR*)&addr, sizeof(addr));
+	int success = bind(sListen, (SOCKADDR*)&addr, sizeof(addr));
 #else
-	bind(sListen,(sockaddr*)&addr, addrLen);
+	int success = bind(sListen,(sockaddr*)&addr, addrLen);
 #endif
-	listen(sListen, SOMAXCONN);
+	ASSERT(success == 0, "Couldn't bind to port.");
+
+	success = listen(sListen, SOMAXCONN);
+	ASSERT(success == 0, "Couldn't listen to port.");
 
 	while(true)
 	{
