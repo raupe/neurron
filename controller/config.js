@@ -4,7 +4,7 @@ window.controller = {};
 /* configuraitons */
 var config = {
 
-	server			: '141.45.204.144',//game.neurron.com',
+	server			: 'game.neurron.com',
 	port			: '2020',
 
 	boxes: {
