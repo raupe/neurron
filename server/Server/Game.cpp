@@ -140,20 +140,20 @@ void sv::Game::HandleMsg(sv::InputMsg* msg)
 		HandleStartMsg(msg);
 		break;
 	case eContrAction_Right:
-		HandleMoveMsg(msg, true);
-		break;
 	case eContrAction_Left:
-		HandleMoveMsg(msg, false);
+	case eContrAction_Up:
+	case eContrAction_Down:
+		HandleMoveMsg(msg, msg->GetAction() - eContrAction_Right);
 		break;
 	case eContrAction_Polling:
-		if(m_Status == eGameStatus_Run)
+		if(m_Status == eGameStatus_Wait)
 		{
-			ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_Ok);
+			ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_NotRunning);
 			Server::Instance()->Response(&response, msg->GetSocket());
 		}
 		else
 		{
-			ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_NotRunning);
+			ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_Ok);
 			Server::Instance()->Response(&response, msg->GetSocket());
 		}
 		break;
@@ -203,7 +203,7 @@ void sv::Game::HandleStartMsg(InputMsg* msg)
 	}
 }
 
-void sv::Game::HandleMoveMsg(InputMsg* msg, bool rigth)
+void sv::Game::HandleMoveMsg(InputMsg* msg, uchar dir)
 {
 	bool success = false;
 	if(m_Status == eGameStatus_Wait)
@@ -218,11 +218,7 @@ void sv::Game::HandleMoveMsg(InputMsg* msg, bool rigth)
 		Player* player = m_PlayerManager->GetPlayer(msg->GetControllerId());
 		if(player)
 		{
-			uchar pos;
-			if(rigth)
-				pos = player->MoveRigth();
-			else
-				pos = player->MoveLeft();
+			uchar pos = player->Move(dir);
 			MoveMsg moveMsg(player->GetId(), pos);
 			SendMsg(&moveMsg);
 

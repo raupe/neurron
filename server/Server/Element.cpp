@@ -67,22 +67,9 @@ void sv::Element::Update(ulong deltaTime)
 	}
 }
 
-uchar sv::Element::MoveRigth()
+uchar sv::Element::Move(uchar dir)
 {
-	m_DesiredPos = m_Grid->GetPosRight(m_NextPos);
-	if(! m_Moving)
-	{
-		m_PassedTime = 0;
-		m_NextPos = m_DesiredPos;
-		m_Moving = true;
-	}
-	LOG1(DEBUG_MOVEMENT, "Move right to %i", m_DesiredPos);
-	return m_DesiredPos;
-}
-
-uchar sv::Element::MoveLeft()
-{
-	m_DesiredPos = m_Grid->GetPosLeft(m_NextPos);
+	m_DesiredPos = m_Grid->GetPos(m_NextPos, dir);
 	if(! m_Moving)
 	{
 		m_PassedTime = 0;
@@ -90,18 +77,5 @@ uchar sv::Element::MoveLeft()
 		m_Moving = true;
 	}
 	LOG1(DEBUG_MOVEMENT, "Move left to %i", m_DesiredPos);
-	return m_DesiredPos;
-}
-
-uchar sv::Element::MoveOut()
-{
-	m_DesiredPos = m_Grid->GetPosOut(m_NextPos);
-	if(! m_Moving)
-	{
-		m_PassedTime = 0;
-		m_NextPos = m_DesiredPos;
-		m_Moving = true;
-	}
-	LOG1(DEBUG_MOVEMENT, "Move out to %i", m_DesiredPos);
 	return m_DesiredPos;
 }
