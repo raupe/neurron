@@ -132,8 +132,11 @@ void sv::Grid::GetPlayer(uchar pos, Player** player, uchar& count)
 	uchar posOut = 0;
 	for(uchar i=0; posOut<count; ++i)
 	{
-		if(m_Fields[pos * m_NumberPlayer + i]->GetEnergy())
-			player[posOut++] = m_Fields[pos * m_NumberPlayer + i];
+		Player* pl = m_Fields[pos * m_NumberPlayer + i];
+		if(pl->GetEnergy())
+			player[posOut++] = pl;
+		else
+			count--;
 	}
 
 
