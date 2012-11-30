@@ -14,21 +14,24 @@ Controller - Server
         2 - Spieler wird entfernt
         3 - rechts                                                          // Server: ok
         4 - links                                                           // Server: ok
-        5 - heal
+        5 - oben
+        6 - unten
+        7 - heal
+        8 - Polling                                                         // Server: ok
+
 
 Server - Controller
-
-        0. Byte: Typ                                                        // Server: vllt
+        0. Byte: Typ                                                        // Server: ok
 
         Typ:
         1 - Start
-            1. Byte: ID                                                     // Server: vllt
-            2. Byte: Farbe                                                  // Server: vllt
+            1. Byte: ID                                                     // Server: ok
+            2. Byte: Farbe                                                  // Server: ok
         2 - Status:
             1. Byte: Status:
-                0 - OK                                                      // Server: vllt
+                0 - OK                                                      // Server: ok
                 1 - Spiel zuende
-                2 - Fehler (zB. Anmeldung wenn Spiel schon läuft)           // Server: vllt
+                2 - Fehler (zB. Anmeldung wenn Spiel schon läuft)           // Server: ok
                 3 - Spiel nicht gefunden                                    // Server: ok
 
 
@@ -44,26 +47,27 @@ Server - Display
         1 - Init
             1. Byte: channel ID                                             // Server: ok
         2 - Countdown starten
-            1. Byte: Countdown Länge                                        // Server: vllt
+            1. Byte: length                                                 // Server: ok
         3 - Spiel starten
-            1. Byte: Anzahl Spieler                                         // Server: vllt
-            2. - 2n. Byte: Farbe der Spieler                                // Server: vllt
-            3. - 2n+1. Byte: Position der Spieler                           // Server: vllt
+            1. Byte: Anzahl Spieler                                         // Server: ok
+            2. Byte: Anzahl Lanes
+            3. - 2n. Byte: Position der Spieler                             // Server: ok
+            4. - 2n+1. Byte: Farbe der Spieler                              // Server: ok
         4 - Spieler Bewegung
-            1. Byte: Spieler ID                                             // Server: vllt
-            2. Byte: nächste Position                                       // Server: vllt
+            1. Byte: Spieler ID                                             // Server: ok
+            2. Byte: nächste Position                                       // Server: ok
         5 - Heal
             1. Byte: Healer: Spieler ID
             2. Byte: Anzahl Target
             3. - n. Byte: Target: Spieler ID
         6 - Create Obstacle
-            1. Byte: Obstcle ID
-            2. Byte: Kategorie
-            3. Byte: Position
+            1. Byte: Obstcle ID                                             // Server: ok
+            2. Byte: Kategorie                                              // Server: ok
+            3. Byte: Position                                               // Server: ok
         7   - Collision
-            1. Byte: Obstacle ID
-            2. Byte: Anzahl Spieler
-            3. - n. Byte: Spieler ID
+            1. Byte: Obstacle ID                                            // Server: vllt
+            2. Byte: Anzahl Spieler                                         // Server: vllt
+            3. - n. Byte: Spieler ID                                        // Server: vllt
         8 - Spielende
             1. Byte: Teampunktzahl 1
             2. Byte: Teampunktzahl 2 // Pkt = Pkt1 * 256 + Pkt2 bzw. Pkt = Pkt1 << 8 + Pkt2
