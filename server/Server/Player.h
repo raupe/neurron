@@ -30,7 +30,7 @@ namespace sv
 
 		uchar			m_Color;
 		uchar			m_Energy;
-		ulong			m_ReviveCountdown;
+		long			m_ReviveCountdown;
 	};
 }
 
