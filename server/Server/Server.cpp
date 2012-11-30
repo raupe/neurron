@@ -124,8 +124,14 @@ void sv::Server::HandleConnection(int connection)
 
 	while(! http.RequestComplete(headerInfo))
 	{
+		LOG(DEBUG_SERVER, "Request not completet");
 		pos += resvLen;
 		resvLen = recv(connection, message + pos, sizeof(message) - pos, NULL);
+		if(resvLen == 0)
+		{
+			CLOSE_SOCKET(connection);
+			return;
+		}
 		std::string msg = message;
 		headerInfo = http.GetInfo(msg);
 	}
