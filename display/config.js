@@ -8,7 +8,7 @@ window.display = {
 window.config = {
 
 
-	server				: 'game.neurron.com',
+	server				: '141.45.204.144',//game.neurron.com',
 	port				: '2020',
 
 
@@ -63,17 +63,36 @@ window.config = {
 			background	: 'assets/background.jpg',
 
 
-			collision: {
+			collision   : {
 
 				src		: 'assets/explosion-sprite-sheet.png',
 				width	: '64'
-			}
+			},
 
-		},
+
+            pink        : {
+
+                src     : 'assets/pink-test.png',
+                width   : '57',
+                height  : '55'
+            },
+
+            coin    : {
+
+                src     : 'assets/coin-test.png',
+                width   : '29',
+                height  : '28'
+            }
+        },
+
+
 
 		audio: {
 
-			collision	: 'assets/collision-test.wav'
+			collision	: 'assets/collision-test.wav',
+
+            pink        : 'assets/pink-test.wav',
+            coin        : 'assets/coin-test.wav'
 		}
 	},
 
@@ -100,7 +119,7 @@ window.config = {
 
 		1: {
 			type			: 'damage',
-			size			: 1*80,
+			size			: 1*60,
 			velocity		: 1,
 			value			:  10,
 			color			: [ 213,  10,  50 ], // red
@@ -110,32 +129,32 @@ window.config = {
 
 		2: {
 			type			: 'heal',
-			size			: 1*80,
+			size			: 1*60,
 			velocity		: 1,
 			value			:  10,
 			color			: [   0, 170,  30 ], // green
-			collisionImg	: 'collision',
-			collisionSound	: 'collision'
+			collisionImg	: 'pink',
+			collisionSound	: 'pink'
 		},
 
 		3: {
 			type			: 'points',
-			size			: 1*80,
+			size			: 1*60,
 			velocity		: 1,
 			value			: 100,
 			color			: [ 240, 220,  10 ], // yellow
-			collisionImg	: 'collision',
-			collisionSound	: 'collision'
+			collisionImg	: 'coin',
+			collisionSound	: 'coin'
 		},
 
 		4: {
 			type			: 'points',
-			size			: 1*80,
+			size			: 1*60,
 			velocity		: 1,
 			value			: 50,
 			color			: [ 240, 220,  10 ],
-			collisionImg	: 'collision',
-			collisionSound	: 'collision'
+			collisionImg	: 'coin',
+			collisionSound	: 'coin'
 		}
 
 	},
