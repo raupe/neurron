@@ -30,7 +30,7 @@
 			3	: this.heal
 		};
 
-		console.log(action, options);
+		// console.log(action, options);
 
 		commands[ action ].call( this, options );
 	};
@@ -184,7 +184,7 @@
 
 		// encode into base64, avoiding special characters like '0'
 		var data = btoa( String.fromCharCode(  this.channel, this.id, action ) );
-		console.log('action: ', action );
+
 		this.req.setRequestHeader( 'Content-Type', 'text/plain; charset=UTF-8' );
 
 		this.req.send( data );
