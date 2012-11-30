@@ -38,7 +38,7 @@ namespace sv
 
 		void				HandleMsg(InputMsg* msg);
 		void				HandleStartMsg(InputMsg* msg);
-		void				HandleMoveMsg(InputMsg* msg, uchar dir);
+		void				HandleMoveMsg(InputMsg* msg, bool rigth);
 		void				SendMsg(Msg* msg);
 		
 		PlayerManager*		GetPlayerManager() { return m_PlayerManager; }
