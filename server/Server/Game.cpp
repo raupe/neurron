@@ -146,14 +146,14 @@ void sv::Game::HandleMsg(sv::InputMsg* msg)
 		HandleMoveMsg(msg, false);
 		break;
 	case eContrAction_Polling:
-		if(m_Status == eGameStatus_Run)
+		if(m_Status == eGameStatus_Wait)
 		{
-			ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_Ok);
+			ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_NotRunning);
 			Server::Instance()->Response(&response, msg->GetSocket());
 		}
 		else
 		{
-			ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_NotRunning);
+			ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_Ok);
 			Server::Instance()->Response(&response, msg->GetSocket());
 		}
 		break;
