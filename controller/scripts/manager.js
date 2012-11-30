@@ -12,10 +12,6 @@
 		this.req = new XMLHttpRequest();
 
 
-		this.init();
-
-
-
 		controller.Box.prototype.manager = this;
 		this.box = new controller.Box();
 
@@ -34,7 +30,7 @@
 			3	: this.heal
 		};
 
-		console.log(action, options);
+		// console.log(action, options);
 
 		commands[ action ].call( this, options );
 	};
@@ -47,12 +43,22 @@
 		var params = config.boxes[ category ];
 
 		this.box.set( params[0], params[1] ); // type - text
+
+
+		if ( category === 1 ) { // handling on end
+
+			this.id = 0;
+		}
 	};
+
+
 
 
 	Manager.prototype.init = function(){
 
-		setInterval(function(){
+		if ( this.repeat ) clearInterval( this.repeat );
+
+		this.repeat = setInterval(function(){
 
 			this.timer++;
 
@@ -63,19 +69,9 @@
 				this.send( 8 ); // polling - check end
 			}
 
-		}.bind(this), config.pollingTimer * 1000 );
+		}.bind(this), 1000 );
 	};
 
-
-	// ToDo: handling on end
-	Manager.prototype.end = function(){
-
-		this.id = 0;
-
-		delete this.req;
-
-		this.req = new XMLHttpRequest();
-	};
 
 
 
@@ -83,11 +79,13 @@
 
 		if ( this.id ) return;
 
-		this.init();
-
 		this.box.hide();
 
         this.input.enable();
+
+
+		this.init();
+
 
 		/* serve response  */
 		this.req.onload = function ( t ) {
@@ -110,14 +108,12 @@
 				this.input.setStyle( this.color );
 			}
 
+
 			if ( action === config.protocol.STATUS ) {
 
 				var state = data.charCodeAt(1);
 
 				if ( state === 0 ) return;
-
-
-				// console.log('state: ', state);
 
 				this.show( state );
 			}
@@ -135,40 +131,38 @@
 
 	Manager.prototype.move = function ( params ) {
 
-			var starts = params[0],
-				ends = params[1],
-				direction = params[2];
+		var starts = params[0],
+			ends = params[1];
 
-		if ( !direction ) {
+		if ( starts.length === 0 ) return;
 
-			var start = { x: starts[0].clientX, y: starts[0].clientY},
-				end = { x: ends[0].clientX, y: ends[0].clientY},
-				diffX = Math.abs(end.x - start.x),
-				diffY = Math.abs(end.y - start.y);
 
-			// if ( diffX > diffY ) {
+		var start = { x: starts[0].clientX, y: starts[0].clientY},
+			end = { x: ends[0].clientX, y: ends[0].clientY},
+			diffX = Math.abs(end.x - start.x),
+			diffY = Math.abs(end.y - start.y);
 
-				if ( start.x > end.x ) {
+		// if ( diffX > diffY ) {
 
-					direction = 4; // left
+			if ( start.x > end.x ) {
 
-				} else {
+				direction = 4; // left
 
-					direction = 3; // right
-				}
+			} else {
 
-			// } else {
+				direction = 3; // right
+			}
 
-			//		if ( start.y > end.y ) {
+		// } else {
 
-			//		direction = 5;	// top
+		//		if ( start.y > end.y ) {
 
-			// } else {
+		//		direction = 5;	// top
 
-			//		direction = 6;	// bottom
-			// }
+		// } else {
 
-		}
+		//		direction = 6;	// bottom
+		// }
 
 		this.send( direction );
 	};
@@ -177,7 +171,7 @@
 
 	Manager.prototype.heal = function(){
 
-		this.send( 5 );
+		// this.send( 5 );
 	};
 
 
