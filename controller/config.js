@@ -4,13 +4,13 @@ window.controller = {};
 /* configuraitons */
 var config = {
 
-	server			: 'neurron.com',
+	server			: 'game.neurron.com',
 	port			: '2020',
 
 	boxes: {
 
 		1			: [ 'button'  , 'Start the new Game'],
-		2			: [ 'label'   , 'The game is already running' ],
+		2			: [ 'label'   , 'The Game is already running' ],
 		3			: [ 'label'   , 'Game not found']
 	},
 
