@@ -18,7 +18,7 @@
         this.fullBarHeight = 40;
         this.energyBarStartX = this.offset / 8;
         this.colorBarStartX = this.energyBarStartX / 2;
-        this.lifeLabelStartX = this.energyBarStartX + this.fullBarWidth;
+        this.lifeLabelStartX = this.energyBarStartX + this.fullBarWidth + 4; // 4 offset that it doesnt catch the energybar
         this.startY = 140;
         this.color = 'green';
         this.distance = this.fullBarHeight + 10;
@@ -41,7 +41,7 @@
 			size = 40;
 
 		ctx.fillStyle = 'yellow';
-		ctx.font = 'italic ' + size + 'pt Arial';
+		ctx.font = '' + size + 'pt Comic Sans MS';
 		ctx.fillText( this.points + ' points', this.offset/5, size * 2 );
 	};
 
@@ -81,7 +81,7 @@
 
             // lifeLabels
 			ctx.fillStyle = 'white';
-			ctx.font = 'italic ' + 20 + 'pt Arial';
+			ctx.font = '' + 20 + 'pt Comic Sans MS';
 			ctx.fillText( currentPlayer.energy + ' %', this.lifeLabelStartX, (this.startY + 30) + i*this.distance );
 
             // colorBar
