@@ -44,6 +44,7 @@
 
 		this.box.set( params[0], params[1] ); // type - text
 
+		if ( this.repeat ) clearInterval( this.repeat );
 
 		if ( category === 1 ) { // handling on end
 
@@ -55,8 +56,6 @@
 
 
 	Manager.prototype.init = function(){
-
-		if ( this.repeat ) clearInterval( this.repeat );
 
 		this.repeat = setInterval(function(){
 
