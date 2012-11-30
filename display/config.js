@@ -8,8 +8,12 @@ window.display = {
 window.config = {
 
 
-	server				: 'game.neurron.com',
+//	server				: 'game.neurron.com',
+    server				: '141.45.204.144',
 	port				: '2020',
+
+    countdown           : 15,
+    gameTime            : 2,
 
 
     factor				: 4,		// offset for statusbar and grid
@@ -104,7 +108,7 @@ window.config = {
 
 		2: {
 			type			: 'heal',
-			size			: 1*40,
+			size			: 1*80,
 			velocity		: 1,
 			value			:  10,
 			color			: [   0, 170,  30 ], // green
@@ -114,7 +118,7 @@ window.config = {
 
 		3: {
 			type			: 'points',
-			size			: 1*40,
+			size			: 1*80,
 			velocity		: 1,
 			value			: 100,
 			color			: [ 240, 220,  10 ], // yellow
@@ -124,7 +128,7 @@ window.config = {
 
 		4: {
 			type			: 'points',
-			size			: 1*40,
+			size			: 1*80,
 			velocity		: 1,
 			value			: 50,
 			color			: [ 240, 220,  10 ],
