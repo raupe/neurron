@@ -32,10 +32,10 @@ typedef unsigned long ulong;
 
 #define ASSERT(x,y) if(!(x)) sv::Output::Error(y);
 
-#ifdef DEBUG
-
 #include "Output.h"
 #include "stdio.h"
+
+#ifdef DEBUG
 
 #define LOG(x,y) if(x) sv::Output::Print(y);
 

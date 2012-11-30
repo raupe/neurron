@@ -5,7 +5,6 @@
 #include "InputMsgPool.h"
 #include "GameManager.h"
 
-#include "Output.h"
 #include <boost/thread.hpp>
 #ifdef WIN32
 #include <Windows.h>
