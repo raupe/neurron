@@ -8,8 +8,7 @@ window.display = {
 window.config = {
 
 
-//	server				: 'game.neurron.com',
-    server				: '141.45.204.144',
+	server				: 'game.neurron.com',
 	port				: '2020',
 
     countdown           : 15,
