@@ -202,6 +202,7 @@
 
 
         this.statusManager.showEnd(params[0]);
+        this.statusManager.clear();
 	};
 
 

@@ -90,6 +90,8 @@
             if ( key === 52 ) {
 
                 this.manager.end([42]);
+                this.statusManager.clear();
+
             }
 
 
