@@ -127,7 +127,7 @@
 
 	Manager.prototype.countdown = function() {
 
-        new display.Timer( 5 * 1000, "countdown");
+        new display.Timer( config.countdown * 1000, "countdown");
 	};
 
 
@@ -156,7 +156,7 @@
 
 		new display.Debug();
 
-        new display.Timer( 1 * 60 * 1000, "timer");
+        new display.Timer( countdown.gameTime * 60 * 1000, "timer");
 
         var endpoints = document.getElementById("endpoints");
 
