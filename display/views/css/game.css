@@ -15,7 +15,7 @@ canvas {
 .endpoints {
     position: absolute;
     left: 37%;
-    bottom: 45%;
+    bottom: 54%;
 }
 .timer, .endpoints {
     -webkit-border-radius: 10px;
