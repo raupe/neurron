@@ -24,14 +24,13 @@
 
 			console.log('[close]');
 
-             manager.init(1);
+			var req = new XMLHttpRequest();
 
-			 manager.handle( config.protocol.START, [ 4, [
+			req.open( 'POST', config.errorURL, true );
 
-                 { id:1, pos:1, color: config.playerColors[4]}
+			req.setRequestHeader( 'Content-Type', 'text/plain; charset=UTF-8' );
 
-             ]] );
-
+			req.send( ': Socket - closed :' );
 		};
 
 

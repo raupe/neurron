@@ -11,6 +11,9 @@ window.config = {
 	server				: 'game.neurron.com',
 	port				: '2020',
 
+
+    errorURL            :  'game.neurron.com/error.php',
+
     countdown           : 15,
     gameTime            : 2,
 
