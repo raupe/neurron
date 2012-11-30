@@ -53,7 +53,7 @@
 
 		if ( 'ontouchstart' in window ) {
 
-			this.setStyle();
+			// this.setStyle();
 
 			this.handleTouch();
 		}
@@ -66,8 +66,8 @@
 
 			var key = e.which;
 
-			if ( key === 39 ) this.manager.handle( config.commands.MOVE, [ null, null, 3 ] ); // right
-			if ( key === 37 ) this.manager.handle( config.commands.MOVE, [ null, null, 4 ] ); // left
+			if ( key === 39 ) this.manager.send( 3 ); // right
+			if ( key === 37 ) this.manager.send( 4 ); // left
 
 			// if ( key === 38 ) this.manager.handle( config.commands.MOVE, [ null, null, 5 ] ); // top
 			// if ( key === 40 ) this.manager.handle( config.commands.MOVE, [ null, null, 6 ] ); // bottom
@@ -104,10 +104,11 @@
 
         ctx.lineWidth = 3;
 		ctx.lineCap = 'round';
-        ctx.shadowColor = color || '#BAE9F7';
-        ctx.shadowBlur = 20;
 
-		ctx.strokeStyle = '#FFF';
+		ctx.strokeStyle = '#fff'; //color ? 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')' : '#FFF';
+        ctx.shadowColor = color ? 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')' : '#BAE9F7';
+
+        ctx.shadowBlur = 20;
 	};
 
 
@@ -139,7 +140,6 @@
 		e.stopPropagation();
 
 		this.tapped = false;
-
 
 		var touches = e.changedTouches,
 			ctx = this.ctx,
@@ -181,17 +181,20 @@
 
 			ends = [];
 
+
+
 		if ( this.tapped ) {
 
+			// ToDo: tapped animation
 			manager.handle( config.commands.HEAL );
 
-			this.tapped = false;
-
-			// ToDo: tapped animation
-			// console.log('tapped !');
+			// console.log('tapped');
 
 			return;
 		}
+
+
+		this.tapped = false;
 
 
 		for ( var i = 0, l = touches.length; i < l; i++ ) {
