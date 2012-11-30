@@ -67,7 +67,7 @@
 
     Obstacle.prototype.collide = function(){
 
-		if ( this.collisionCounter === 0 ) this.collisionSound.play();
+		if ( this.collisionCounter === 0 && this.collisionSound ) this.collisionSound.play();
 
 		if ( this.collisionCounter < this.collisionImages.length ) {
 
