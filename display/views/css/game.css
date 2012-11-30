@@ -1,10 +1,11 @@
 canvas {
     vertical-align: top;
 }
+
 .timer {
     position: absolute;
     left: 2%;
-    bottom: 2%;
+    bottom: 4%;
 }
 .countdown {
     position: absolute;
@@ -15,4 +16,18 @@ canvas {
     position: absolute;
     left: 37%;
     bottom: 45%;
+}
+.timer, .endpoints {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+
+    background: red;
+    padding: 10px 10px;
+
+    color: white;
+    font-weight: bold;
+    font-family: Comic Sans MS;
+
+    -webkit-box-shadow:  2px 2px 2px 2px rgba(100, 100, 100, 0.6);
+    box-shadow:  2px 2px 2px 2px rgba(100, 100, 100, 0.6);
 }

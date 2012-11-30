@@ -209,12 +209,12 @@
             endpoints = document.createElement('div');
             endpoints.className = "endpoints";
             endpoints.id = "endpoints";
-            endpoints.innerHTML = points;
+            endpoints.innerHTML = "Endpoints: " + points;
             document.body.appendChild( endpoints );
 
         } else {
 
-            endpoints.innerHTML = points;
+            endpoints.innerHTML = "Endpoints: " + points;
             endpoints.style.display = "block";
         }
 
