@@ -19,9 +19,7 @@ namespace sv
 		uchar			GetId() { return m_Id; }
 		uchar			GetPos() { return m_Pos; }
 		
-		uchar			MoveRigth();
-		uchar			MoveLeft();
-		uchar			MoveOut();
+		uchar			Move(uchar dir);
 
 	protected:
 		void			Init(uchar id, Grid* grid);
