@@ -17,7 +17,7 @@ canvas {
     left: 37%;
     bottom: 54%;
 }
-.timer, .endpoints {
+.timer, .endpoints, .countdown {
     -webkit-border-radius: 10px;
     border-radius: 10px;
 
