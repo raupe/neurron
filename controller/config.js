@@ -9,9 +9,9 @@ var config = {
 
 	boxes: {
 
-		1			: [ 'button'  , 'Start the new Game'],
+		1			: [ 'button'  , 'Start a new Game' ],
 		2			: [ 'label'   , 'The Game is already running' ],
-		3			: [ 'label'   , 'Game not found']
+		3			: [ 'label'   , 'Game not found' ]
 	},
 
     pollingTimer    : 5,
