@@ -30,7 +30,7 @@
 			3	: this.heal
 		};
 
-		// console.log(action, options);
+		console.log(action, options);
 
 		commands[ action ].call( this, options );
 	};
@@ -142,7 +142,7 @@
 			diffX = Math.abs(end.x - start.x),
 			diffY = Math.abs(end.y - start.y);
 
-		// if ( diffX > diffY ) {
+		if ( diffX > diffY ) {
 
 			if ( start.x > end.x ) {
 
@@ -153,16 +153,17 @@
 				direction = 3; // right
 			}
 
-		// } else {
+		} else {
 
-		//		if ( start.y > end.y ) {
+			if ( start.y > end.y ) {
 
-		//		direction = 5;	// top
+				direction = 5;	// top
 
-		// } else {
+			} else {
 
-		//		direction = 6;	// bottom
-		// }
+				direction = 6;	// bottom
+			}
+		}
 
 		this.send( direction );
 	};
@@ -183,7 +184,7 @@
 
 		// encode into base64, avoiding special characters like '0'
 		var data = btoa( String.fromCharCode(  this.channel, this.id, action ) );
-
+		console.log('action: ', action );
 		this.req.setRequestHeader( 'Content-Type', 'text/plain; charset=UTF-8' );
 
 		this.req.send( data );
