@@ -140,10 +140,10 @@ void sv::Game::HandleMsg(sv::InputMsg* msg)
 		HandleStartMsg(msg);
 		break;
 	case eContrAction_Right:
+		HandleMoveMsg(msg, true);
+		break;
 	case eContrAction_Left:
-	case eContrAction_Up:
-	case eContrAction_Down:
-		HandleMoveMsg(msg, msg->GetAction() - eContrAction_Right);
+		HandleMoveMsg(msg, false);
 		break;
 	case eContrAction_Polling:
 		if(m_Status == eGameStatus_Wait)
@@ -203,7 +203,7 @@ void sv::Game::HandleStartMsg(InputMsg* msg)
 	}
 }
 
-void sv::Game::HandleMoveMsg(InputMsg* msg, uchar dir)
+void sv::Game::HandleMoveMsg(InputMsg* msg, bool rigth)
 {
 	bool success = false;
 	if(m_Status == eGameStatus_Wait)
@@ -218,7 +218,11 @@ void sv::Game::HandleMoveMsg(InputMsg* msg, uchar dir)
 		Player* player = m_PlayerManager->GetPlayer(msg->GetControllerId());
 		if(player)
 		{
-			uchar pos = player->Move(dir);
+			uchar pos;
+			if(rigth)
+				pos = player->MoveRigth();
+			else
+				pos = player->MoveLeft();
 			MoveMsg moveMsg(player->GetId(), pos);
 			SendMsg(&moveMsg);
 
