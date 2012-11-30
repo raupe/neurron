@@ -33,6 +33,8 @@ namespace sv
 		Iterator	Next(Iterator iterator) { return iterator->m_Next; }
 
 	private:
+		void		Resize(uint size);
+
 		uint		m_Size;
 		Entry*		m_Entries;
 		Entry*		m_FreeEntries;
@@ -92,7 +94,8 @@ void sv::Pool<T>::Clear()
 template <class T>
 T* sv::Pool<T>::Get()
 {
-	ASSERT(m_FreeEntries, "Pool too small.");
+	if(! m_FreeEntries)
+		Resize(m_Size * 2);
 
 	Entry* entry = m_FreeEntries;
 	m_FreeEntries = m_FreeEntries->m_Next;
@@ -139,5 +142,36 @@ void sv::Pool<T>::FreeAll()
 	m_UsedEntries = 0;
 }
 
+template <class T>
+void sv::Pool<T>::Resize(uint size)
+{
+	ASSERT(m_Size < size, "can't shrink pool.");
+
+	Entry* entries = static_cast<Entry*>(malloc(sizeof(Entry) * size));
+	Entry* temp = m_UsedEntries;
+
+	for(uint i=0; i<m_Size-1; ++i)
+	{
+		entries[i].m_Next = &entries[i+1];
+		entries[i].m_Object = temp->m_Object;
+		temp = temp->m_Next;
+	}
+	m_UsedEntries = &entries[0];
+	entries[m_Size-1].m_Next = 0;
+	entries[m_Size-1].m_Object = temp->m_Object;
+
+	for(uint i=m_Size; i<size-1; ++i)
+	{
+		entries[i].m_Next = &entries[i+1];
+		entries[i].m_Object = S_NEW T();
+	}
+	m_FreeEntries = &entries[m_Size];
+	entries[size-1].m_Next = 0;
+	entries[size-1].m_Object = S_NEW T();
+
+	m_Size = size;
+	free(m_Entries);
+	m_Entries = entries;
+}
 
 #endif // Pool_h__
