@@ -41,7 +41,7 @@
 			size = 40;
 
 		ctx.fillStyle = 'yellow';
-		ctx.font = '' + size + 'pt Comic Sans MS';
+		ctx.font = '' + size + 'pt Comic Sans MS'; // 'italic ' + size + 'pt Comic Sans MS';
 		ctx.fillText( this.points + ' points', this.offset/5, size * 2 );
 	};
 
