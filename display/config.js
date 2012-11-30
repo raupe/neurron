@@ -60,7 +60,7 @@ window.config = {
 			heal		: 'assets/heal.png',
 			points		: 'assets/points.png',
 
-			background	: 'assets/background.jpg',
+			background	: 'assets/background.png',
 
 
 			collision   : {
