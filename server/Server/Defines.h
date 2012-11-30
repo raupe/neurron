@@ -30,12 +30,13 @@ typedef unsigned long ulong;
 #define DEBUG_POINTS false
 
 
+#define ASSERT(x,y) if(!(x)) sv::Output::Error(y);
+
 #ifdef DEBUG
 
 #include "Output.h"
 #include "stdio.h"
 
-#define ASSERT(x,y) if(!(x)) sv::Output::Error(y);
 #define LOG(x,y) if(x) sv::Output::Print(y);
 
 #ifdef WIN32
@@ -48,7 +49,6 @@ typedef unsigned long ulong;
 
 #else // DEBUG
 
-#define ASSERT(x,y)
 #define LOG(x,y)
 #define LOG1(x,y,a)
 #define LOG2(x,y,a,b)
