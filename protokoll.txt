@@ -31,7 +31,7 @@ Server - Controller
             1. Byte: Status:
                 0 - OK                                                      // Server: ok
                 1 - Spiel zuende
-                2 - Fehler (zB. Anmeldung wenn Spiel schon läuft)           // Server: ok
+                2 - Anmeldung wenn Spiel schon läuft	    		    // Server: ok
                 3 - Spiel nicht gefunden                                    // Server: ok
 
 

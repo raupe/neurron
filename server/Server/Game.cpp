@@ -212,7 +212,8 @@ void sv::Game::HandleMoveMsg(InputMsg* msg, bool rigth)
 		Server::Instance()->Response(&response, msg->GetSocket());
 		return;
 	}
-	else if(m_Status == eGameStatus_Run)
+
+	if(m_Status == eGameStatus_Run)
 	{
 		Player* player = m_PlayerManager->GetPlayer(msg->GetControllerId());
 		if(player)
@@ -228,16 +229,9 @@ void sv::Game::HandleMoveMsg(InputMsg* msg, bool rigth)
 			success = true;
 		}
 	}
-	if(!success)
-	{
-		ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_Failed);
-		Server::Instance()->Response(&response, msg->GetSocket());
-	}
-	else
-	{
-		ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_Ok);
-		Server::Instance()->Response(&response, msg->GetSocket());
-	}
+
+	ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_Ok);
+	Server::Instance()->Response(&response, msg->GetSocket());
 }
 
 void sv::Game::SendMsg(Msg* msg)

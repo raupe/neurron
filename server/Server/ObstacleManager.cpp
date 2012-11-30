@@ -7,7 +7,7 @@
 #include "StatusManager.h"
 #include "Player.h"
 
-const int sv::ObstacleManager::s_LevelSize = 10;
+const int sv::ObstacleManager::s_LevelSize = 30;
 const char* sv::ObstacleManager::s_Level[s_LevelSize] = 
 {
 //a - ein Feld, 1, Energie minus 10%, rot
@@ -17,27 +17,36 @@ const char* sv::ObstacleManager::s_Level[s_LevelSize] =
 
 //  0         10        20
 //  012345678901234567890
-/*	"a   a           ",
-	"a   a           ",
-	"                ",
-	" a   a a        ",
-	" a   a a        ",
-	"                ",
-	"aaaaaaaa        ",
-	"a      a        ",
-	"aaaaaaaa        ",
-	"                ",
-	/*/
-	"                ",
-	"                ",
-	"a               ",
-	" b              ",
-	"  c             ",
-	"   d            ",
-	"                ",
-	"                ",
-	"                ",
-	"                ",//*/
+	"cadacadadaacadcc",
+	"   c  a  d   aaa",
+	"acacabccac a bc ",
+	"  b bcbc cb   cb",
+	"dada a adaadada ",
+	" b  dbd   a b  b",
+	"a da dd abaaba  ",
+	"dadda dab bd ddd",
+	"bca  ca aaaca   ",
+	" b  cbc   a b  b",
+    "d  a a a db d b ",
+	"  b bdbd db   db",
+	"dada a adaadadaa",
+	" b  dbd   a b  b",
+	"a da dd abaaba  ",
+	"dadda dab bd ddd",
+	"bdb  da aaada   ",
+	"  d d  d dba aaa",
+	"da a a a db d b ",
+	" b  dbd   a b  b",
+    "a ca cc abaaba  ",
+	"cbcca cab bc ddd",
+	"bda  da aaada   ",
+	" ac c  c cba aaa",
+	"c  a a a cb c b ",
+	"  b bcbc cb   cb",
+	"dada a adaadada ",
+	" b  dbd   a b  b",
+	"a da dd abaaba  ",
+	"dadda dab bd ddd",
 };
 
 sv::Obstacle::Properties sv::ObstacleManager::GetProperties(uchar category)

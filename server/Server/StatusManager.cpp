@@ -39,6 +39,8 @@ void sv::StatusManager::CalculateCollision(Obstacle* obstacle, Player* player[],
 				energy -= obstacle->GetValue();
 			else {
 				energy = 0;
+				player[i]->StartReviveCountdown();
+
 				if(m_Points > PUNISH_POINTS)
 					m_Points -= PUNISH_POINTS;
 				else
