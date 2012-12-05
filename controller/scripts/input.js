@@ -8,6 +8,10 @@
         this.origins = [];
         this.starts = [];
 
+        this.averageX = 0;
+        this.averageY = 0;
+        this.counter = 0;
+
 		this.tapped = false;
 
 		this.init();
@@ -128,6 +132,7 @@
 
 			origins.push( touches[i] );
 			starts.push( touches[i] );
+
 		}
 
 		this.ctx.beginPath();
@@ -153,7 +158,8 @@
 			end = touches[i];
 			current = starts[i];
 
-
+            this.averageX += current.pageX;
+            this.averageY += current.pageY;
 
 			// ToDo: check for device property
 			if ( !this.disabled ) {
@@ -162,9 +168,10 @@
 			}
 
 			starts[i] = end;
+            this.counter++;
 		}
 
-		ctx.stroke();
+        ctx.stroke();
 	};
 
 
@@ -202,11 +209,18 @@
 			ends.push( touches[i] );
 		}
 
-		manager.handle( config.commands.MOVE, [ origins , ends ] );
+        this.averageX = this.averageX / this.counter;
+        this.averageY = this.averageY / this.counter;
+
+		manager.handle( config.commands.MOVE, [ origins , ends , this.averageX, this.averageY] );
 
 		origins.length = starts.length = 0;
 
 		this.screen.clear();
+
+        this.averageX = 0;
+        this.averageY = 0;
+        this.counter = 0;
 	};
 
 
