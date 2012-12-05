@@ -133,6 +133,10 @@
 		var starts = params[0],
 			ends = params[1];
 
+        var averageX = params[2],
+            averageY = params[3];
+
+
 		if ( starts.length === 0 ) return;
 
 
@@ -141,30 +145,63 @@
 			diffX = Math.abs(end.x - start.x),
 			diffY = Math.abs(end.y - start.y);
 
-		if ( diffX > diffY ) {
+        var startEndX = (start.x + end.x) / 2,
+            startEndY = (start.y + end.y) / 2;
 
-			if ( start.x > end.x ) {
+        // todo direction im protokoll definieren und setzen
+		if ( diffX > diffY ) { // if horizontal or vertical
 
-				direction = 4; // left
+			if ( start.x < end.x ) { // if from left to right
+
+                if ( averageY < startEndY ) { // if clockwise or anticlockwise
+
+                    console.log("uhrzeiger");
+
+                } else {
+
+                    console.log("gegen uhrzeiger");
+                }
 
 			} else {
 
-				direction = 3; // right
+				if ( averageY > startEndY ) { // if clockwise or anticlockwise
+
+                    console.log("uhrzeiger");
+
+                } else {
+
+                    console.log("gegen uhrzeiger");
+                }
 			}
 
 		} else {
 
-			if ( start.y > end.y ) {
+			if ( start.y < end.y ) { // if from top to bottom
 
-				direction = 5;	// top
+                if ( averageX < startEndX ) { // if clockwise or anticlockwise
+
+                    console.log("gegen uhrzeiger");
+
+                } else {
+
+                    console.log("uhrzeiger");
+                }
 
 			} else {
 
-				direction = 6;	// bottom
+                 if ( averageX > startEndX ) { // if clockwise or anticlockwise
+
+                    console.log("gegen uhrzeiger");
+
+                } else {
+
+                    console.log("uhrzeiger");
+                }
+				//direction = 6;	// bottom
 			}
 		}
 
-		this.send( direction );
+		//this.send( direction );
 	};
 
 
