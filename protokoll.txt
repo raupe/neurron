@@ -18,6 +18,8 @@ Controller - Server
         6 - unten
         7 - heal
         8 - Polling                                                         // Server: ok
+        9 - Uhrzeigersinn
+        10- gegen Uhrzeigersinn
 
 
 Server - Controller
