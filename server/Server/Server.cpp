@@ -84,7 +84,18 @@ void sv::Server::Run()
 #else
 	int success = bind(sListen,(sockaddr*)&addr, addrLen);
 #endif
-	ASSERT(success == 0, "Couldn't bind to port.");
+
+	while(success != 0)
+	{
+		ASSERT(success == 0, "Couldn't bind to port. Trying again ...");
+#ifdef WIN32
+		Sleep(180000);
+		success = bind(sListen, (SOCKADDR*)&addr, sizeof(addr));
+#else
+		sleep(180);
+		success = bind(sListen,(sockaddr*)&addr, addrLen);
+#endif
+	}
 
 	success = listen(sListen, SOMAXCONN);
 	ASSERT(success == 0, "Couldn't listen to port.");

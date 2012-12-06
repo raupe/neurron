@@ -18,6 +18,8 @@ namespace sv
 			eDir_Left,
 			eDir_Up,
 			eDir_Down,
+			eDir_Clockwise,
+			eDir_AntiClockwise,
 
 			eDir_Out,
 		};
