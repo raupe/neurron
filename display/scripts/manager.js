@@ -103,7 +103,7 @@
             8   : this.end
 		};
 
-		console.log(action, options);
+//		console.log(action, options);
 
 		commands[ action ].call( this, options );
 	};
