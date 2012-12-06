@@ -130,22 +130,21 @@
 
 	Manager.prototype.move = function ( params ) {
 
-		var starts = params[0],
-			ends = params[1];
+		var start = params[0],
+			end = params[1],
 
-        var averageX = params[2],
+            averageX = params[2],
             averageY = params[3];
 
 
 		if ( starts.length === 0 ) return;
 
+            start = { x: start.clientX, y: start.clientY},
+			end = { x: end.clientX, y: end.clientY};
 
-		var start = { x: starts[0].clientX, y: starts[0].clientY},
-			end = { x: ends[0].clientX, y: ends[0].clientY},
-			diffX = Math.abs(end.x - start.x),
-			diffY = Math.abs(end.y - start.y);
-
-        var startEndX = (start.x + end.x) / 2,
+        var	diffX = Math.abs(end.x - start.x),
+			diffY = Math.abs(end.y - start.y),
+            startEndX = (start.x + end.x) / 2,
             startEndY = (start.y + end.y) / 2;
 
         // todo direction im protokoll definieren und setzen
