@@ -10,6 +10,8 @@
 
 		this.energy = 100;
 
+        this.alive = true;
+
 		this.init({
 
 			id		: params.id,
