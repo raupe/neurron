@@ -65,7 +65,7 @@
 
 				this.timer = 0;
 
-				this.send( 8 ); // polling - check end
+				this.send( 10 ); // polling - check end
 			}
 
 		}.bind(this), 1000 );
@@ -155,22 +155,22 @@
 
                 if ( averageY < startEndY ) { // if clockwise or anticlockwise
 
-                    console.log("uhrzeiger");
+                    direction = 7; // clockwise
 
                 } else {
 
-                    console.log("gegen uhrzeiger");
+                    direction = 8; // anticlockwise
                 }
 
 			} else {
 
 				if ( averageY > startEndY ) { // if clockwise or anticlockwise
 
-                    console.log("uhrzeiger");
+                    direction = 7;
 
                 } else {
 
-                    console.log("gegen uhrzeiger");
+                    direction = 8;
                 }
 			}
 
@@ -180,35 +180,34 @@
 
                 if ( averageX < startEndX ) { // if clockwise or anticlockwise
 
-                    console.log("gegen uhrzeiger");
+                    direction = 8;
 
                 } else {
 
-                    console.log("uhrzeiger");
+                    direction = 7;
                 }
 
 			} else {
 
                  if ( averageX > startEndX ) { // if clockwise or anticlockwise
 
-                    console.log("gegen uhrzeiger");
+                    direction = 8;
 
                 } else {
 
-                    console.log("uhrzeiger");
+                    direction = 7;
                 }
-				//direction = 6;	// bottom
 			}
 		}
 
-		//this.send( direction );
+		this.send( direction );
 	};
 
 
 
 	Manager.prototype.heal = function(){
 
-		// this.send( 5 );
+		// this.send( 9 );
 	};
 
 
