@@ -156,6 +156,8 @@
 
                 currentPlayer = this.playerList[playersIds[i] - 1];
 
+                currentPlayer.colorize([50, 50, 50, 80]);
+
                 if (currentPlayer.energy >= value) {
                     currentPlayer.energy -= value;
                 } else {
@@ -171,7 +173,18 @@
 
                         this.points = 0;
                     }
-                    currentPlayer.energy = 100;
+
+                    if (currentPlayer.alive) {
+
+                        currentPlayer.alive = false;
+
+                        window.setTimeout(function(){
+                            currentPlayer.alive = true;
+                            currentPlayer.colorize();
+                            currentPlayer.energy = 100;
+                            this.draw();
+                        }.bind(this), config.deadTime * 1000);
+                    }
                 }
             }
 
