@@ -69,7 +69,7 @@
     };
 
 
-    Element.prototype.colorize = function(){
+    Element.prototype.colorize = function( color ){
 
         if ( this.color ) {
 
@@ -88,9 +88,19 @@
 
                 i = size << 2;
 
-                pixels[   i ] = this.color[0];
-                pixels[ ++i ] = this.color[1];
-                pixels[ ++i ] = this.color[2];
+                if ( color ) {
+
+                    pixels[   i ] = color[0];
+                    pixels[ ++i ] = color[1];
+                    pixels[ ++i ] = color[2];
+                    if (color[3]) pixels[ ++i ] = color[3];
+
+                } else {
+
+                    pixels[   i ] = this.color[0];
+                    pixels[ ++i ] = this.color[1];
+                    pixels[ ++i ] = this.color[2];
+                }
             }
 
             this.ctx.putImageData( image, 0, 0 );
