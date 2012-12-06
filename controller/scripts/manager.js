@@ -78,7 +78,7 @@
 
 		if ( this.id ) return;
 
-		this.box.hide(); // hide for development
+        this.box.hide(); // hide for development
 
         this.input.enable();
 
@@ -147,57 +147,27 @@
             startEndX = (start.x + end.x) / 2,
             startEndY = (start.y + end.y) / 2;
 
-        // todo direction im protokoll definieren und setzen
-		if ( diffX > diffY ) { // if horizontal or vertical
+        var formula = ( end.y - start.y ) / ( end.x - start.x ) * ( averageX - start.x ) + start.y;
 
-			if ( start.x < end.x ) { // if from left to right
+        if ( end.x === start.x ) {
 
-                if ( averageY < startEndY ) { // if clockwise or anticlockwise
+            if ( end.y > start.y ) {
 
-                    direction = config.protocolCtoS.CLOCKWISE; // clockwise
+                direction = averageX > start.x ? config.protocolCtoS.CLOCKWISE : config.protocolCtoS.ANTICLOCKWISE;
 
-                } else {
+            } else {
 
-                    direction = config.protocolCtoS.ANTICLOCKWISE; // anticlockwise
-                }
+                direction = averageX < start.x ? config.protocolCtoS.CLOCKWISE : config.protocolCtoS.ANTICLOCKWISE;
+            }
 
-			} else {
+        } else if ( formula < averageY ) {
 
-				if ( averageY > startEndY ) { // if clockwise or anticlockwise
+            direction = end.x < start.x ? config.protocolCtoS.CLOCKWISE : config.protocolCtoS.ANTICLOCKWISE;
 
-                    direction = config.protocolCtoS.CLOCKWISE;
+        } else {
 
-                } else {
-
-                    direction = config.protocolCtoS.ANTICLOCKWISE;
-                }
-			}
-
-		} else {
-
-			if ( start.y < end.y ) { // if from top to bottom
-
-                if ( averageX < startEndX ) { // if clockwise or anticlockwise
-
-                    direction = config.protocolCtoS.ANTICLOCKWISE;
-
-                } else {
-
-                    direction = config.protocolCtoS.CLOCKWISE;
-                }
-
-			} else {
-
-                 if ( averageX > startEndX ) { // if clockwise or anticlockwise
-
-                    direction = config.protocolCtoS.ANTICLOCKWISE;
-
-                } else {
-
-                    direction = config.protocolCtoS.CLOCKWISE;
-                }
-			}
-		}
+            direction = end.x > start.x ? config.protocolCtoS.CLOCKWISE : config.protocolCtoS.ANTICLOCKWISE;
+        }
 
         if (direction === config.protocolCtoS.CLOCKWISE) {
             console.log("uhrzeiger");
