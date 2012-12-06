@@ -16,10 +16,10 @@ Controller - Server
         4 - links                                                           // Server: ok
         5 - oben
         6 - unten
-        7 - heal
-        8 - Polling                                                         // Server: ok
-        9 - Uhrzeigersinn
-        10- gegen Uhrzeigersinn
+        7 - Uhrzeigersinn
+        8 - gegen Uhrzeigersinn
+        9 - heal
+        10 - Polling                                                         // Server: ok
 
 
 Server - Controller
