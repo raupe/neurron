@@ -99,7 +99,7 @@
 
 				action = data.charCodeAt(0);		// int
 
-			if ( action === config.protocol.START ) {
+			if ( action === config.protocolStoC.START ) {
 
 				this.id = data.charCodeAt(1);
 				this.color = config.playerColors[ data.charCodeAt(2) ];
@@ -108,7 +108,7 @@
 			}
 
 
-			if ( action === config.protocol.STATUS ) {
+			if ( action === config.protocolStoC.STATUS ) {
 
 				var state = data.charCodeAt(1);
 
@@ -122,7 +122,7 @@
 		// /* on remove */
 		// document.onbeforeunload = function(){};
 
-		this.send( 1 );
+		this.send( config.protocolCtoS.START );
 	};
 
 
@@ -155,22 +155,22 @@
 
                 if ( averageY < startEndY ) { // if clockwise or anticlockwise
 
-                    direction = 7; // clockwise
+                    direction = config.protocolCtoS.CLOCKWISE; // clockwise
 
                 } else {
 
-                    direction = 8; // anticlockwise
+                    direction = config.protocolCtoS.ANTICLOCKWISE; // anticlockwise
                 }
 
 			} else {
 
 				if ( averageY > startEndY ) { // if clockwise or anticlockwise
 
-                    direction = 7;
+                    direction = config.protocolCtoS.CLOCKWISE;
 
                 } else {
 
-                    direction = 8;
+                    direction = config.protocolCtoS.ANTICLOCKWISE;
                 }
 			}
 
@@ -180,26 +180,26 @@
 
                 if ( averageX < startEndX ) { // if clockwise or anticlockwise
 
-                    direction = 8;
+                    direction = config.protocolCtoS.ANTICLOCKWISE;
 
                 } else {
 
-                    direction = 7;
+                    direction = config.protocolCtoS.CLOCKWISE;
                 }
 
 			} else {
 
                  if ( averageX > startEndX ) { // if clockwise or anticlockwise
 
-                    direction = 8;
+                    direction = config.protocolCtoS.ANTICLOCKWISE;
 
                 } else {
 
-                    direction = 7;
+                    direction = config.protocolCtoS.CLOCKWISE;
                 }
 			}
 		}
-
+        console.log(direction);
 		this.send( direction );
 	};
 
@@ -207,7 +207,7 @@
 
 	Manager.prototype.heal = function(){
 
-		// this.send( 9 );
+		// this.send( config.protocolCtoS.HEAL );
 	};
 
 

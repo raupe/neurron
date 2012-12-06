@@ -25,12 +25,25 @@ var config = {
 	},
 
 
-	protocol: {
+	protocolStoC: {
 
 		START		: 1,
 		STATUS		: 2
 	},
 
+    protocolCtoS: {
+
+		START           : 1,
+        DELETE          : 2,
+        RIGHT           : 3,
+        LEFT            : 4,
+        TOP             : 5,
+        BOTTOM          : 6,
+        CLOCKWISE       : 7,
+        ANTICLOCKWISE   : 8,
+        HEAL            : 9,
+        POLLING         : 10
+	},
 
     playerColors: {
 
