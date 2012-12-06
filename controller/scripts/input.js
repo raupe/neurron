@@ -6,7 +6,7 @@
 		this.ctx = this.screen.ctx,
 
         this.origin = null;
-        this.start = null;
+        this.last = null;
 
         this.averageX = 0;
         this.averageY = 0;
@@ -128,7 +128,7 @@
 		var touch = e.changedTouches[0];
 
 		this.origin = touch;
-		this.starts = touch;
+		this.last = touch;
 
         this.averageX += touch.pageX;
         this.averageY += touch.pageY;
@@ -146,17 +146,17 @@
 
 
 		var touch = e.changedTouches[0],
-			start = this.start,
+			last = this.last,
 			ctx = this.ctx;
 
 
 		// ToDo: check for device property
 		if ( !this.disabled ) {
 
-			ctx.lineTo( start.clientX, start.clientY, touch.clientX, touch.clientY );
+			ctx.lineTo( last.clientX, last.clientY, touch.clientX, touch.clientY );
 		}
 
-		this.start = touch;
+		this.last = touch;
 
 
         this.averageX += touch.pageX;

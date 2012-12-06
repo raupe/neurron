@@ -137,7 +137,7 @@
             averageY = params[3];
 
 
-		if ( starts.length === 0 ) return;
+		if ( start === 0 ) return;
 
             start = { x: start.clientX, y: start.clientY},
 			end = { x: end.clientX, y: end.clientY};
