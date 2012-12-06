@@ -134,15 +134,9 @@
 			end = params[1],
 
             averageX = params[2],
-            averageY = params[3];
+            averageY = params[3],
 
-
-		if ( start === 0 ) return;
-
-            start = { x: start.clientX, y: start.clientY},
-			end = { x: end.clientX, y: end.clientY};
-
-        var	diffX = Math.abs(end.x - start.x),
+            diffX = Math.abs(end.x - start.x),
 			diffY = Math.abs(end.y - start.y),
             startEndX = (start.x + end.x) / 2,
             startEndY = (start.y + end.y) / 2;
@@ -176,6 +170,10 @@
         }
 		this.send( direction );
 	};
+
+
+
+
 
 
 

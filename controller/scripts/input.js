@@ -125,13 +125,13 @@
 		this.tapped = true;
 
 
-		var touch = e.changedTouches[0];
+		var touch = getPos( e.changedTouches[0] );
 
 		this.origin = touch;
 		this.last = touch;
 
-        this.averageX += touch.pageX;
-        this.averageY += touch.pageY;
+        this.averageX += touch.x;
+        this.averageY += touch.y;
 
 		this.ctx.beginPath();
 	};
@@ -145,7 +145,7 @@
 		this.tapped = false;
 
 
-		var touch = e.changedTouches[0],
+		var touch = getPos( e.changedTouches[0] ),
 			last = this.last,
 			ctx = this.ctx;
 
@@ -153,14 +153,14 @@
 		// ToDo: check for device property
 		if ( !this.disabled ) {
 
-			ctx.lineTo( last.clientX, last.clientY, touch.clientX, touch.clientY );
+			ctx.lineTo( last.x, last.y, touch.x, touch.y );
 		}
 
 		this.last = touch;
 
 
-        this.averageX += touch.pageX;
-        this.averageY += touch.pageY;
+        this.averageX += touch.x;
+        this.averageY += touch.y;
         this.counter++;
 
 
@@ -175,9 +175,9 @@
 
 
 		var manager = this.manager,
-			touch = e.changedTouches[0],
+			touch = getPos( e.changedTouches[0] ),
 			origin = this.origin;
-
+			console.log(touch);
 
 		if ( this.tapped ) {
 
@@ -203,6 +203,24 @@
         this.averageY = 0;
         this.counter = 0;
 	};
+
+
+
+	function getPos ( e ) { // client x,y ?, screenX, screenY ?
+
+		if ( e.offsetX ) {
+
+			return { x: e.offsetX, y: e.offsetY };
+
+		} else if ( e.layerX ) {
+
+			return { x: e.layerX, y: e.layerY };
+
+		} else {
+
+			return { x: e.pageX, y: e.pageY };
+		}
+	}
 
 
 
