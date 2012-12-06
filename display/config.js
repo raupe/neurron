@@ -1,7 +1,8 @@
 /* global namespace */
 window.display = {
 
-	views: {}
+	views: {},
+    logic: {}
 };
 
 /* configurations */

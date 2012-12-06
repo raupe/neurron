@@ -11,8 +11,19 @@
 		';
 
 
-		return [ left, right ];
+		return {
+
+            left    : left,
+            right   : right
+        };
 
 	})();
+
+
+
+    display.logic.end = function(){
+
+
+    };
 
 })();
