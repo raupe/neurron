@@ -2,6 +2,7 @@
 #define Engine_h__
 
 #include "Singleton.h"
+#include <boost/thread.hpp>
 
 namespace sv
 {
@@ -14,10 +15,16 @@ namespace sv
 		~Engine(void);
 
 		void Run();
-	private:
-		void				HandleMsgs();
 
-		GameManager*		m_GameManager;
+		void						Continue();
+	private:
+		void						HandleMsgs();
+		
+		GameManager*				m_GameManager;
+
+		bool						m_Paused;
+		boost::mutex				m_MutexPaused;
+		boost::condition_variable	m_ConditionPaused;
 	};
 }
 

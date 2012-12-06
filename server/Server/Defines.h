@@ -28,6 +28,7 @@ typedef unsigned long ulong;
 #define DEBUG_MOVEMENT false
 #define DEBUG_OBSTACLES false
 #define DEBUG_POINTS false
+#define DEBUG_GAMELOOP true
 
 
 #define ASSERT(x,y) if(!(x)) sv::Output::Error(y);

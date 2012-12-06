@@ -6,6 +6,7 @@
 #include "Msg.h"
 #include "InputMsg.h"
 #include "InputMsgPool.h"
+#include "Engine.h"
 
 #ifdef WIN32
 #include <winsock.h>
@@ -88,11 +89,10 @@ void sv::Server::Run()
 	while(success != 0)
 	{
 		ASSERT(success == 0, "Couldn't bind to port. Trying again ...");
+		boost::this_thread::sleep(boost::posix_time::minutes(1));
 #ifdef WIN32
-		Sleep(180000);
 		success = bind(sListen, (SOCKADDR*)&addr, sizeof(addr));
 #else
-		sleep(180);
 		success = bind(sListen,(sockaddr*)&addr, addrLen);
 #endif
 	}
@@ -183,6 +183,7 @@ void sv::Server::HandleConnection(int connection)
 		msg->SetContent(buffer, length, connection);
 		InputMsgPool::Instance()->SetUnhandled(index);
 	}
+	Engine::Instance()->Continue();
 }
 
 /*
