@@ -2,7 +2,10 @@ canvas {
 
 	display: block;
 	margin: 0 auto;
-	background: #000;
+	/*background: #000;*/
+    background-image: url(background.png);
+    background-size: 100% 100%;
+
 
 	 -webkit-transform: translate3d(0,0,0);
  	 	-moz-transform: translate3d(0,0,0);
