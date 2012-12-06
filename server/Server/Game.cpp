@@ -143,6 +143,8 @@ void sv::Game::HandleMsg(sv::InputMsg* msg)
 	case eContrAction_Left:
 	case eContrAction_Up:
 	case eContrAction_Down:
+	case eContrAction_Clockwise:
+	case eContrAction_AntiClockwise:
 		HandleMoveMsg(msg, msg->GetAction() - eContrAction_Right);
 		break;
 	case eContrAction_Polling:

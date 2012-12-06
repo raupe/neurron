@@ -13,6 +13,8 @@ namespace sv
 		eContrAction_Left,
 		eContrAction_Up,
 		eContrAction_Down,
+		eContrAction_Clockwise,
+		eContrAction_AntiClockwise,
 		eContrAction_Heal,
 		eContrAction_Polling,
 

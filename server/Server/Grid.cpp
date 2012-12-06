@@ -77,7 +77,6 @@ uchar sv::Grid::GetStartPos(uchar id)
 	return s_MapStartPos[m_NumberPlayer-1][id-1];
 }
 
-// change if left/right is also possible on the inner circles!
 uchar sv::Grid::GetPos(uchar pos, uchar dir)
 {
 	switch(dir)
@@ -98,6 +97,10 @@ uchar sv::Grid::GetPos(uchar pos, uchar dir)
 		if(pos >= m_NumberLanes/4 && pos < m_NumberLanes*3/4)
 			return GetPosAntiClockwise(pos);
 		return GetPosClockwise(pos);
+	case eDir_Clockwise:
+		return GetPosClockwise(pos);
+	case eDir_AntiClockwise:
+		return GetPosAntiClockwise(pos);
 	case eDir_Out:
 		if(pos < m_NumberLanes)
 			return InvalidPos;
@@ -107,6 +110,7 @@ uchar sv::Grid::GetPos(uchar pos, uchar dir)
 	}
 }
 
+// change if left/right is also possible on the inner circles!
 uchar sv::Grid::GetPosClockwise(uchar pos)
 {
 	if(pos+1 < m_NumberLanes)
