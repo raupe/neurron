@@ -147,6 +147,9 @@ void sv::Game::HandleMsg(sv::InputMsg* msg)
 	case eContrAction_AntiClockwise:
 		HandleMoveMsg(msg, msg->GetAction() - eContrAction_Right);
 		break;
+	case eContrAction_Heal:
+		HandleHealMsg(msg);
+		break;
 	case eContrAction_Polling:
 		if(m_Status == eGameStatus_Wait)
 		{
@@ -174,6 +177,7 @@ void sv::Game::HandleStartMsg(InputMsg* msg)
 	{
 		if(m_Status == eGameStatus_Wait)
 		{
+			GetDeltaTime();
 			m_Countdown = 0;
 			m_Status = eGameStatus_Countdown;
 			LOG(DEBUG_FLOW, "Countdown started");
@@ -224,6 +228,57 @@ void sv::Game::HandleMoveMsg(InputMsg* msg, uchar dir)
 			MoveMsg moveMsg(player->GetId(), pos);
 			SendMsg(&moveMsg);
 
+			success = true;
+		}
+	}
+
+	ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_Ok);
+	Server::Instance()->Response(&response, msg->GetSocket());
+}
+
+void sv::Game::HandleHealMsg(InputMsg* msg)
+{
+	bool success = false;
+	if(m_Status == eGameStatus_Wait)
+	{
+		ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_NotRunning);
+		Server::Instance()->Response(&response, msg->GetSocket());
+		return;
+	}
+	
+	if(m_Status == eGameStatus_Run)
+	{
+		Player* player = m_PlayerManager->GetPlayer(msg->GetControllerId());
+		if(player)
+		{			
+			Player* target[PLAYER_MAX];
+			uchar count = 0;
+			GetGrid()->GetPlayer(player->GetPos(), target, count);
+			
+			uchar pos = 0;
+			for(uchar i=0; pos<count; ++i)
+			{
+				Player* pl = target[i];
+
+				if(pl->GetEnergy() && pl != player)
+					target[pos++] = pl;
+				else
+					count--;
+			}
+
+			if(count)
+			{
+				bool possible = m_StatusManager->CalculateHeal(player, target, count);
+				if(possible)
+				{
+					uchar targetIds[PLAYER_MAX];
+					for(uint i=0; i<count; ++i)
+						targetIds[i] = target[i]->GetId();
+					HealMsg healMsg(player->GetId(), count);
+					healMsg.SetTargets(targetIds);
+					SendMsg(&healMsg);
+				}
+			}
 			success = true;
 		}
 	}

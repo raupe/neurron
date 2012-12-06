@@ -99,7 +99,6 @@ void sv::Server::Run()
 
 	success = listen(sListen, SOMAXCONN);
 	ASSERT(success == 0, "Couldn't listen to port.");
-	ASSERT(success != 0, "Server started.");
 
 	while(true)
 	{

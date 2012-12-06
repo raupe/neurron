@@ -31,13 +31,18 @@ void sv::Engine::Run()
 		LOG(DEBUG_GAMELOOP, "Start loop.");
 		// Game Loop
 		HandleMsgs();
-		uchar numGames = m_GameManager->GetSize();
-		while(numGames > 0)
+		uchar runningGames = m_GameManager->GetSize();
+		while(runningGames > 0)
 		{
-			numGames = m_GameManager->GetSize();
+			uchar numGames = m_GameManager->GetSize();
+			runningGames = 0;
 			for(uchar i=0; i < numGames; ++i)
 			{
-				m_GameManager->GetGameByIndex(i)->Update();
+				Game* game = m_GameManager->GetGameByIndex(i);
+				game->Update();
+				if(game->IsRunning())
+					runningGames++;
+
 				HandleMsgs();
 			}
 		}
@@ -49,7 +54,6 @@ void sv::Engine::Run()
 			m_Paused = true;
 			while(m_Paused)
 			{
-				LOG(DEBUG_GAMELOOP, "Pause continue");
 				m_ConditionPaused.wait(lock);
 			}
 			LOG(DEBUG_GAMELOOP, "Pause end.");
@@ -107,9 +111,7 @@ void sv::Engine::HandleMsgs()
 
 void sv::Engine::Continue()
 {
-	LOG(DEBUG_GAMELOOP, "Call Continue");
 	boost::unique_lock<boost::mutex> lock(m_MutexPaused);
 	m_Paused = false;
 	m_ConditionPaused.notify_all();
-	LOG(DEBUG_GAMELOOP, "Call Continue End");
 }
