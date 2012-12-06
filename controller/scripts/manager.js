@@ -78,7 +78,7 @@
 
 		if ( this.id ) return;
 
-		this.box.hide();
+		this.box.hide(); // hide for development
 
         this.input.enable();
 
@@ -199,7 +199,12 @@
                 }
 			}
 		}
-        console.log(direction);
+
+        if (direction === config.protocolCtoS.CLOCKWISE) {
+            console.log("uhrzeiger");
+        } else {
+            console.log("gegen uhrzeiger");
+        }
 		this.send( direction );
 	};
 
@@ -207,7 +212,8 @@
 
 	Manager.prototype.heal = function(){
 
-		// this.send( config.protocolCtoS.HEAL );
+		this.send( config.protocolCtoS.HEAL );
+        console.log("heal");
 	};
 
 

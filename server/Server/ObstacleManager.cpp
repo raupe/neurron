@@ -7,7 +7,7 @@
 #include "StatusManager.h"
 #include "Player.h"
 
-const int sv::ObstacleManager::s_LevelSize = 30;
+const int sv::ObstacleManager::s_LevelSize = 1;//30;
 const char* sv::ObstacleManager::s_Level[s_LevelSize] = 
 {
 //a - ein Feld, 1, Energie minus 10%, rot
@@ -17,7 +17,7 @@ const char* sv::ObstacleManager::s_Level[s_LevelSize] =
 
 //  0         10        20
 //  012345678901234567890
-	"cadacadadaacadcc",
+/*	"cadacadadaacadcc",
 	"   c  a  d   aaa",
 	"acacabccac a bc ",
 	"  b bcbc cb   cb",
@@ -46,7 +46,8 @@ const char* sv::ObstacleManager::s_Level[s_LevelSize] =
 	"dada a adaadada ",
 	" b  dbd   a b  b",
 	"a da dd abaaba  ",
-	"dadda dab bd ddd",
+	"dadda dab bd ddd", */
+	"a               ",
 };
 
 sv::Obstacle::Properties sv::ObstacleManager::GetProperties(uchar category)
@@ -182,6 +183,17 @@ void sv::ObstacleManager::HandleCollision(Obstacle* obstacle)
 	Player* player[PLAYER_MAX];
 	uchar count = 0;
 	GetGrid()->GetPlayer(obstacle->GetPos(), player, count);
+
+	uchar pos = 0;
+	for(uchar i=0; pos<count; ++i)
+	{
+		Player* pl = player[i];
+
+		if(pl->GetEnergy())
+			player[pos++] = pl;
+		else
+			count--;
+	}
 
 	if(count)
 	{

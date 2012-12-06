@@ -110,6 +110,34 @@ void sv::MoveMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
 	Visit(m_Pos, buffer, pos, length);
 }
 
+sv::HealMsg::HealMsg(uchar playerId, uchar targetCount)
+: Msg(eMsgType_Heal)
+, m_PlayerId(playerId)
+, m_TagetCount(targetCount)
+{
+	m_TagetIds = static_cast<uchar*>( malloc(m_TagetCount * sizeof(uchar)) );
+}
+
+sv::HealMsg::~HealMsg()
+{
+	free(m_TagetIds);
+}
+
+void sv::HealMsg::SetTargets(uchar* targetIds)
+{
+	memcpy(m_TagetIds, targetIds, m_TagetCount);
+}
+
+void sv::HealMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
+{
+	Visit(m_Type, buffer, pos, length);
+	
+	Visit(m_PlayerId, buffer, pos, length);
+	Visit(m_TagetCount, buffer, pos, length);
+	for(uchar i=0; i<m_TagetCount; ++i)
+		Visit(m_TagetIds[i], buffer, pos, length);
+}
+
 sv::ObstacleMsg::ObstacleMsg(uchar obstacleId, uchar category, uchar pos)
 : Msg(eMsgType_Obstacle)
 , m_ObstacleId(obstacleId)

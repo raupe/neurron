@@ -159,8 +159,9 @@
             for ( i = 0; i < numberOfPlayers; i++ ){
 
                 currentPlayer = this.playerList[playersIds[i] - 1];
-
-                currentPlayer.colorize([50, 50, 50, 80]);
+                if (!currentPlayer.alive) {
+                    currentPlayer.revive();
+                }
 
                 if (currentPlayer.energy >= value) {
                     currentPlayer.energy -= value;
@@ -181,12 +182,14 @@
                     if (currentPlayer.alive) {
 
                         currentPlayer.alive = false;
+                        currentPlayer.colorize([50, 50, 50]);
 
                         window.setTimeout(function(){
-                            currentPlayer.alive = true;
-                            currentPlayer.colorize();
-                            currentPlayer.energy = 100;
-                            this.draw();
+                            if (!currentPlayer.alive) {
+
+                                currentPlayer.revive();
+                                this.draw();
+                            }
                         }.bind(this), config.deadTime * 1000);
                     }
                 }
@@ -197,6 +200,11 @@
             for ( i = 0; i < numberOfPlayers; i++ ){
                 var healForEachPlayer = ~~(value / numberOfPlayers);
                 currentPlayer = this.playerList[playersIds[i] - 1];
+
+                if (!currentPlayer.alive) {
+                    currentPlayer.revive();
+                }
+
                 currentPlayer.energy += healForEachPlayer;
 
                 if (currentPlayer.energy > 100) currentPlayer.energy = 100;
@@ -207,6 +215,10 @@
             for ( i = 0; i < numberOfPlayers; i++ ){
                 var pointsForEachPlayer = ~~(value / numberOfPlayers);
                 currentPlayer = this.playerList[playersIds[i] - 1];
+
+                if (!currentPlayer.alive) {
+                    currentPlayer.revive();
+                }
 
                 this.points += ~~((currentPlayer.energy / 100) * pointsForEachPlayer);
             }

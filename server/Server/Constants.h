@@ -18,10 +18,11 @@
 #define CHANGE_TIME_OB		  1100000	// 0.9 sec
 
 // Player
-#define REVIVE_TIME		1//	  5000000	// 5   sec
+#define REVIVE_TIME			  5000000	// 5   sec
 
 // StatusManager
 #define ENERGY_MAX 100
 #define PUNISH_POINTS 1000
+#define HEAL_ENERGY 10
 
 #endif // Constants_h__

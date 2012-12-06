@@ -16,6 +16,7 @@
         this.createButton();
 
         this.set( type, text );
+//        this.manager.handle( config.commands.REGISTER ); // uncomment for dev
 	};
 
 
