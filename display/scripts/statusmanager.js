@@ -107,7 +107,11 @@
         this.canvas = cvs;
         this.setBackground();
 
-        document.body.appendChild( this.canvas );
+        cvs.className = 'hide';
+        cvs.id = 'StatusManager';
+
+        // document.body.appendChild( cvs );
+        document.getElementById('container-right').appendChild( cvs );
 	};
 
 
