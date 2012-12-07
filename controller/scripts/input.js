@@ -15,7 +15,6 @@
 		this.tapped = false;
 
 		this.init();
-//        this.setStyle({r: 255, g: 0, b: 0}); // for development
 
 		controller.Box.prototype.input = this;
         controller.Screen.prototype.input = this;
