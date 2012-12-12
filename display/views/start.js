@@ -5,30 +5,40 @@
 
 $(document).ready(function(){
 
-    var autoSlide = true;
-
     var duration = {
         intro : 700,
-        how2play : 500,
-        demo : 600
+        how2play : 300,
+        demo : 100
     };
 
-    //caroussel auto slider
-    var caroussel = function(){
+    var items = $(".screen_wrap li"),
 
-        var items = $(".screen_wrap li").length;
+        itemsLength = items.length;
 
-        console.log( $("li").get(1).attr('id') );
+    //set time out
+    var timeOut = function( itemList, itemsLength, duration){
 
-        /*while(autoSlide){
+        var currentLength = itemsLength,
 
-            setTimeout(function() {
+            currentItem = $(itemList).attr('id');
+            durationTime = duration[currentItem];
 
+        setTimeout(function() {
 
-            }, 1);
+            console.log($(itemList).attr('id') +'  '+ duration[currentItem]);
 
-        }*/
+            if( (currentLength-1) > 0){
+
+                timeOut($(itemList).next(), (currentLength-1), duration);
+            }else{
+                var itemsReset = items;
+                    itemsLength = itemsReset.length;
+
+                timeOut($(itemsReset)[0], itemsLength, duration);
+            }
+        }, durationTime);
     }
 
-    caroussel();
+    timeOut($(items[0]), itemsLength, duration);
+
 });
