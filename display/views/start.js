@@ -11,34 +11,36 @@ $(document).ready(function(){
         demo : 100
     };
 
-    var items = $(".screen_wrap li"),
+    var $items = $(".screen_wrap li"),
 
-        itemsLength = items.length;
+        counter = 0,
+
+        itemsLength = $items.length;
+
 
     //set time out
-    var timeOut = function( itemList, itemsLength, duration){
+    var timeOut = function( item, counter, duration){
 
-        var currentLength = itemsLength,
+        var itemCounter = counter,
 
-            currentItem = $(itemList).attr('id');
+            currentItem = $(item).attr('id'),
+
             durationTime = duration[currentItem];
 
         setTimeout(function() {
 
-            console.log($(itemList).attr('id') +'  '+ duration[currentItem]);
+           console.log(currentItem +'  '+ durationTime);
 
-            if( (currentLength-1) > 0){
+           if( (++itemCounter) < itemsLength){
 
-                timeOut($(itemList).next(), (currentLength-1), duration);
-            }else{
-                var itemsReset = items;
-                    itemsLength = itemsReset.length;
-
-                timeOut($(itemsReset)[0], itemsLength, duration);
-            }
-        }, durationTime);
+               timeOut($items[itemCounter], itemCounter, duration);
+           }else{
+               itemCounter = 0;
+               timeOut($items[0],itemCounter, duration);
+           }
+       }, durationTime);
     }
 
-    timeOut($(items[0]), itemsLength, duration);
+    timeOut($items[0], counter, duration);
 
 });
