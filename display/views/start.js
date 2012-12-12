@@ -19,27 +19,25 @@ $(document).ready(function(){
 
 
     //set time out
-    var timeOut = function( item, counter, duration){
+    var timeOut = function(){
 
-        var itemCounter = counter,
+        var currentId = $items[counter].id,
 
-            currentItem = $(item).attr('id'),
-
-            durationTime = duration[currentItem];
+            durationTime = duration[currentId];
 
         setTimeout(function() {
 
-           console.log(currentItem +'  '+ durationTime);
+           console.log(currentId +'  '+ durationTime);
 
-            itemCounter++;
+            counter++;
 
-           if( (itemCounter) >= itemsLength) itemCounter = 0;
+           if( (counter) >= itemsLength) counter = 0;
 
-            timeOut($items[itemCounter],itemCounter, duration);
+            timeOut();
 
        }, durationTime);
     }
 
-    timeOut($items[0], counter, duration);
+    timeOut();
 
 });
