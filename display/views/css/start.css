@@ -1,6 +1,7 @@
 html, body {
     height: 100%;
 }
+
 .content_wrapper {
     height: 100%;
     width: 100%;
@@ -8,14 +9,18 @@ html, body {
     min-height: 500px;
     background-color: gray;
 }
+
 canvas {
+
     vertical-align: top;
+    background-color: #fff;
 }
 
 .round {
-    border-radius: 20px;
-    -moz-border-radius: 20px;
-    -webkit-border-radius: 20px;
+
+     -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+             border-radius: 20px;
 }
 
 .gradient{
@@ -181,4 +186,10 @@ canvas {
     margin-left: 5%;
     margin-top: 5%;
     position: relative;
+}
+
+
+.show {
+
+    display: block;
 }

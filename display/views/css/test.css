@@ -1,3 +1,18 @@
 #qrcode {
     position: fixed;
+    /*position: absolute;*/
+    /*top: 0;*/
+    /*z-index: 1000;*/
+}
+
+#StatusManager {
+
+    position: absolute;l
+}
+
+.wrapper {
+
+    position: relative;
+    height: 100%;
+    width: 100%;
 }

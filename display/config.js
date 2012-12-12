@@ -1,7 +1,8 @@
 /* global namespace */
 window.display = {
 
-	views: {}
+	views: {},
+    logic: {}
 };
 
 /* configurations */
@@ -21,7 +22,7 @@ window.config = {
     factor				: 4,		// offset for statusbar and grid
     amountToHeal		: 10,		// how much a player can heal
     punishPoints		: 1000,
-    deadTime            : 10,
+    deadTime            : 5,
 
 
 

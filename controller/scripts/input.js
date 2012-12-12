@@ -5,8 +5,8 @@
 		this.cvs = this.screen.cvs;
 		this.ctx = this.screen.ctx,
 
-        this.origins = [];
-        this.starts = [];
+        this.origin = null;
+        this.last = null;
 
         this.averageX = 0;
         this.averageY = 0;
@@ -124,16 +124,13 @@
 		this.tapped = true;
 
 
-		var touches = e.changedTouches,
-			origins = this.origins,
-			starts = this.starts;
+		var touch = getPos( e.changedTouches[0] );
 
-		for ( var i = 0, l = touches.length; i < l; i++ ) {
+		this.origin = touch;
+		this.last = touch;
 
-			origins.push( touches[i] );
-			starts.push( touches[i] );
-
-		}
+        this.averageX += touch.x;
+        this.averageY += touch.y;
 
 		this.ctx.beginPath();
 	};
@@ -146,30 +143,25 @@
 
 		this.tapped = false;
 
-		var touches = e.changedTouches,
-			ctx = this.ctx,
 
-			starts = this.starts,
-			current,
-			end;
+		var touch = getPos( e.changedTouches[0] ),
+			last = this.last,
+			ctx = this.ctx;
 
-		for ( var i = 0, l = touches.length; i < l; i++ ) {
 
-			end = touches[i];
-			current = starts[i];
+		// ToDo: check for device property
+		if ( !this.disabled ) {
 
-            this.averageX += current.pageX;
-            this.averageY += current.pageY;
-
-			// ToDo: check for device property
-			if ( !this.disabled ) {
-
-				ctx.lineTo( current.clientX, current.clientY, end.clientX, end.clientY );
-			}
-
-			starts[i] = end;
-            this.counter++;
+			ctx.lineTo( last.x, last.y, touch.x, touch.y );
 		}
+
+		this.last = touch;
+
+
+        this.averageX += touch.x;
+        this.averageY += touch.y;
+        this.counter++;
+
 
         ctx.stroke();
 	};
@@ -182,20 +174,14 @@
 
 
 		var manager = this.manager,
-			touches = e.changedTouches,
-			origins = this.origins,
-			starts = this.starts,
-
-			ends = [];
-
-
+			touch = getPos( e.changedTouches[0] ),
+			origin = this.origin;
+			console.log(touch);
 
 		if ( this.tapped ) {
 
 			// ToDo: tapped animation
 			manager.handle( config.commands.HEAL );
-
-			// console.log('tapped');
 
 			return;
 		}
@@ -204,24 +190,36 @@
 		this.tapped = false;
 
 
-		for ( var i = 0, l = touches.length; i < l; i++ ) {
-
-			ends.push( touches[i] );
-		}
-
         this.averageX = this.averageX / this.counter;
         this.averageY = this.averageY / this.counter;
 
-		manager.handle( config.commands.MOVE, [ origins , ends , this.averageX, this.averageY] );
-
-		origins.length = starts.length = 0;
+		manager.handle( config.commands.MOVE, [ origin, touch, this.averageX, this.averageY ] );
 
 		this.screen.clear();
+
 
         this.averageX = 0;
         this.averageY = 0;
         this.counter = 0;
 	};
+
+
+
+	function getPos ( e ) { // client x,y ?, screenX, screenY ?
+
+		if ( e.offsetX ) {
+
+			return { x: e.offsetX, y: e.offsetY };
+
+		} else if ( e.layerX ) {
+
+			return { x: e.layerX, y: e.layerY };
+
+		} else {
+
+			return { x: e.pageX, y: e.pageY };
+		}
+	}
 
 
 

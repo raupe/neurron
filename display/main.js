@@ -11,6 +11,15 @@
         new display.Manager();
 
         new display.Connection();
+
+
+
+
+
+
+
+        display.show( 'start' );
+
     });
 
 

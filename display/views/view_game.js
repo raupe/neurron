@@ -1,17 +1,25 @@
 (function(){
 
-	display.views.start = (function(){
+    display.views.game = (function(){
 
-		var left = '\
-		\
-		',
 
-		right = '\
-		\
-		';
+        var right = '<div id="qrcode"></div>';
 
-		return [ left, right ];
+        return {
 
-	})();
+            right: right
+        };
+
+
+    })();
+
+    display.logic.game = function(){
+
+        var $Screen = $('#Screen'),
+            $StatusManager = $('#StatusManager');
+
+        $Screen.toggleClass('hide show');
+        $StatusManager.toggleClass('hide show');
+    };
 
 })();

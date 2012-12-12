@@ -25,7 +25,11 @@
 
 		scale.apply( this );
 
-		document.body.appendChild( this.cvs );
+		this.cvs.id = 'Screen';
+		this.cvs.className = 'hide';
+
+		// document.body.appendChild( this.cvs );
+		document.getElementById('container-left').appendChild( this.cvs );
 
 		window.addEventListener('resize', scale.bind(this) );
 		window.addEventListener('orientationchange', scale.bind(this) );

@@ -100,6 +100,21 @@ namespace sv
 		uchar			m_Pos;
 	};
 
+	class HealMsg : public Msg
+	{
+	public:
+		HealMsg(uchar playerId, uchar targetCount);
+		virtual ~HealMsg();
+
+		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
+		void			SetTargets(uchar* targetIds);
+
+	private:
+		uchar			m_PlayerId;
+		uchar			m_TagetCount;
+		uchar*			m_TagetIds;
+	};
+
 	class ObstacleMsg : public Msg
 	{
 	public:

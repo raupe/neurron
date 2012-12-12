@@ -31,3 +31,8 @@ canvas {
     -webkit-box-shadow:  2px 2px 2px 2px rgba(100, 100, 100, 0.6);
     box-shadow:  2px 2px 2px 2px rgba(100, 100, 100, 0.6);
 }
+
+.hide {
+
+    display: none;
+}

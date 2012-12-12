@@ -1,17 +1,27 @@
 (function(){
 
-	display.views.start = (function(){
+	display.views.load = (function(){
 
-		var left = '\
-		\
-		',
+		var left = '1111111111left',
 
-		right = '\
-		\
-		';
 
-		return [ left, right ];
+
+            right = 'right22222222';
+
+
+        return {
+
+            left    : left,
+            right   : right
+        };
 
 	})();
+
+
+
+    display.logic.load = function(){
+
+        display.show( 'game' );
+    };
 
 })();

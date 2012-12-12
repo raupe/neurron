@@ -73,3 +73,23 @@ void sv::StatusManager::CalculateCollision(Obstacle* obstacle, Player* player[],
 		break;
 	}
 }
+
+bool sv::StatusManager::CalculateHeal(Player* player, Player* target[], uchar targetCount)
+{
+	if(player->GetEnergy() <= HEAL_ENERGY)
+		return false;
+
+	player->SetEnergy(player->GetEnergy() - HEAL_ENERGY);
+	LOG1(DEBUG_POINTS, "Heal: Energy down to: %i", player->GetEnergy());
+
+	uchar value = HEAL_ENERGY / targetCount;
+	for(uchar i=0; i<targetCount; ++i)
+	{
+		target[i]->SetEnergy(target[i]->GetEnergy() + value);
+		if(target[i]->GetEnergy() > ENERGY_MAX)
+			target[i]->SetEnergy(ENERGY_MAX);
+		LOG1(DEBUG_POINTS, "Heal: Energy up to: %i", target[i]->GetEnergy());
+	}
+
+	return true;
+}

@@ -75,5 +75,11 @@
         }
     };
 
+    Player.prototype.revive = function() {
+        this.alive = true;
+        this.colorize();
+        this.energy = 100;
+    }
+
 
 })();

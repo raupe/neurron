@@ -39,12 +39,16 @@ namespace sv
 		void				HandleMsg(InputMsg* msg);
 		void				HandleStartMsg(InputMsg* msg);
 		void				HandleMoveMsg(InputMsg* msg, uchar dir);
+		void				HandleHealMsg(InputMsg* msg);
+
 		void				SendMsg(Msg* msg);
 		
 		PlayerManager*		GetPlayerManager() { return m_PlayerManager; }
 		ObstacleManager*	GetObstacleManager() { return m_ObstacleManager; }
 		StatusManager*		GetStatusManager() { return m_StatusManager; }
 		Grid*				GetGrid() { return m_Grid; }
+
+		bool				IsRunning() { return m_Status != eGameStatus_Wait; }
 		
 	private:
 		Game();

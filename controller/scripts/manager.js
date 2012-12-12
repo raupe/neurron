@@ -1,229 +1,198 @@
 (function(){
 
-	var Manager = controller.Manager = function ( config ) {
+    var Manager = controller.Manager = function ( config ) {
 
-		// default
-		this.id = 0;
-		this.timer = 0;
+        // default
+        this.id = 0;
+        this.timer = 0;
 
-		this.url = config.url;
-		this.channel = config.channel;
+        this.url = config.url;
+        this.channel = config.channel;
 
-		this.req = new XMLHttpRequest();
-
-
-		controller.Box.prototype.manager = this;
-		this.box = new controller.Box();
-
-		// input reference
-		controller.Input.prototype.manager = this;
-	};
+        this.req = new XMLHttpRequest();
 
 
+        controller.Box.prototype.manager = this;
+        this.box = new controller.Box();
 
-	Manager.prototype.handle = function ( action, options ) {
-
-		var commands = {
-
-			1	: this.register,
-			2	: this.move,
-			3	: this.heal
-		};
-
-		// console.log(action, options);
-
-		commands[ action ].call( this, options );
-	};
+        // input reference
+        controller.Input.prototype.manager = this;
+    };
 
 
 
+    Manager.prototype.handle = function ( action, options ) {
 
-	Manager.prototype.show = function ( category ) {
+        var commands = {
 
-		var params = config.boxes[ category ];
+            1   : this.register,
+            2   : this.move,
+            3   : this.heal
+        };
 
-		this.box.set( params[0], params[1] ); // type - text
+        // console.log(action, options);
 
-		if ( this.repeat ) clearInterval( this.repeat );
-
-		if ( category === 1 ) { // handling on end
-
-			this.id = 0;
-		}
-	};
+        commands[ action ].call( this, options );
+    };
 
 
 
 
-	Manager.prototype.init = function(){
+    Manager.prototype.show = function ( category ) {
 
-		this.repeat = setInterval(function(){
+        var params = config.boxes[ category ];
 
-			this.timer++;
+        this.box.set( params[0], params[1] ); // type - text
 
-			if ( this.timer === config.pollingTimer ) {
+        if ( this.repeat ) clearInterval( this.repeat );
 
-				this.timer = 0;
+        if ( category === 1 ) { // handling on end
 
-				this.send( 10 ); // polling - check end
-			}
-
-		}.bind(this), 1000 );
-	};
+            this.id = 0;
+        }
+    };
 
 
 
 
-	Manager.prototype.register = function(){
+    Manager.prototype.init = function(){
 
-		if ( this.id ) return;
+        this.repeat = setInterval(function(){
 
-		this.box.hide();
+            this.timer++;
+
+            if ( this.timer === config.pollingTimer ) {
+
+                this.timer = 0;
+
+                this.send( 10 ); // polling - check end
+            }
+
+        }.bind(this), 1000 );
+    };
+
+
+
+
+    Manager.prototype.register = function(){
+
+        if ( this.id ) return;
+
+        this.box.hide(); // hide for development
 
         this.input.enable();
 
 
-		this.init();
+        this.init();
 
 
-		/* serve response  */
-		this.req.onload = function ( t ) {
+        /* serve response  */
+        this.req.onload = function ( t ) {
 
-			var res = t.currentTarget.responseText,
+            var res = t.currentTarget.responseText,
 
-				temp = res.length%4,				// shorten to 4
+                temp = res.length%4,                // shorten to 4
 
-				msg = res.substr( 0, res.length - temp ),
+                msg = res.substr( 0, res.length - temp ),
 
-				data = atob( msg ),					// base64 -> string
+                data = atob( msg ),                 // base64 -> string
 
-				action = data.charCodeAt(0);		// int
+                action = data.charCodeAt(0);        // int
 
-			if ( action === config.protocolStoC.START ) {
+            if ( action === config.protocolStoC.START ) {
 
-				this.id = data.charCodeAt(1);
-				this.color = config.playerColors[ data.charCodeAt(2) ];
+                this.id = data.charCodeAt(1);
+                this.color = config.playerColors[ data.charCodeAt(2) ];
 
-				this.input.setStyle( this.color );
-			}
-
-
-			if ( action === config.protocolStoC.STATUS ) {
-
-				var state = data.charCodeAt(1);
-
-				if ( state === 0 ) return;
-
-				this.show( state );
-			}
-
-		}.bind(this);
-
-		// /* on remove */
-		// document.onbeforeunload = function(){};
-
-		this.send( config.protocolCtoS.START );
-	};
+                this.input.setStyle( this.color );
+            }
 
 
+            if ( action === config.protocolStoC.STATUS ) {
 
+                var state = data.charCodeAt(1);
 
-	Manager.prototype.move = function ( params ) {
+                if ( state === 0 ) return;
 
-		var starts = params[0],
-			ends = params[1];
+                this.show( state );
+            }
 
-        var averageX = params[2],
-            averageY = params[3];
+        }.bind(this);
 
+        // /* on remove */
+        // document.onbeforeunload = function(){};
 
-		if ( starts.length === 0 ) return;
-
-
-		var start = { x: starts[0].clientX, y: starts[0].clientY},
-			end = { x: ends[0].clientX, y: ends[0].clientY},
-			diffX = Math.abs(end.x - start.x),
-			diffY = Math.abs(end.y - start.y);
-
-        var startEndX = (start.x + end.x) / 2,
-            startEndY = (start.y + end.y) / 2;
-
-        // todo direction im protokoll definieren und setzen
-		if ( diffX > diffY ) { // if horizontal or vertical
-
-			if ( start.x < end.x ) { // if from left to right
-
-                if ( averageY < startEndY ) { // if clockwise or anticlockwise
-
-                    direction = config.protocolCtoS.CLOCKWISE; // clockwise
-
-                } else {
-
-                    direction = config.protocolCtoS.ANTICLOCKWISE; // anticlockwise
-                }
-
-			} else {
-
-				if ( averageY > startEndY ) { // if clockwise or anticlockwise
-
-                    direction = config.protocolCtoS.CLOCKWISE;
-
-                } else {
-
-                    direction = config.protocolCtoS.ANTICLOCKWISE;
-                }
-			}
-
-		} else {
-
-			if ( start.y < end.y ) { // if from top to bottom
-
-                if ( averageX < startEndX ) { // if clockwise or anticlockwise
-
-                    direction = config.protocolCtoS.ANTICLOCKWISE;
-
-                } else {
-
-                    direction = config.protocolCtoS.CLOCKWISE;
-                }
-
-			} else {
-
-                 if ( averageX > startEndX ) { // if clockwise or anticlockwise
-
-                    direction = config.protocolCtoS.ANTICLOCKWISE;
-
-                } else {
-
-                    direction = config.protocolCtoS.CLOCKWISE;
-                }
-			}
-		}
-        console.log(direction);
-		this.send( direction );
-	};
+        this.send( config.protocolCtoS.START );
+    };
 
 
 
-	Manager.prototype.heal = function(){
 
-		// this.send( config.protocolCtoS.HEAL );
-	};
+    Manager.prototype.move = function ( params ) {
+
+        var start = params[0],
+            end = params[1],
+
+            averageX = params[2],
+            averageY = params[3],
+
+            formula = ( end.y - start.y ) / ( end.x - start.x ) * ( averageX - start.x ) + start.y;
+
+        if ( end.x === start.x ) {
+
+            if ( end.y > start.y ) {
+
+                direction = averageX > start.x ? config.protocolCtoS.CLOCKWISE : config.protocolCtoS.ANTICLOCKWISE;
+
+            } else {
+
+                direction = averageX < start.x ? config.protocolCtoS.CLOCKWISE : config.protocolCtoS.ANTICLOCKWISE;
+            }
+        // console.log('1: ', direction);
+        } else if ( formula < averageY ) {
+
+            direction = end.x < start.x ? config.protocolCtoS.CLOCKWISE : config.protocolCtoS.ANTICLOCKWISE;
+            // console.log('2: ', direction);
+
+        } else {
+            direction = end.x > start.x ? config.protocolCtoS.CLOCKWISE : config.protocolCtoS.ANTICLOCKWISE;
+            // console.log('3: ', direction);
+        }
+        // console.log('dir:', direction);
+        if (direction === config.protocolCtoS.CLOCKWISE) {
+            console.log("uhrzeiger");
+        } else {
+            console.log("gegen uhrzeiger");
+        }
+        this.send( direction );
+    };
 
 
-	Manager.prototype.send = function ( action )  {
 
-		this.timer = 0; // treshold
 
-		this.req.open( 'POST', this.url , true );
 
-		// encode into base64, avoiding special characters like '0'
-		var data = btoa( String.fromCharCode(  this.channel, this.id, action ) );
 
-		this.req.setRequestHeader( 'Content-Type', 'text/plain; charset=UTF-8' );
 
-		this.req.send( data );
-	};
+    Manager.prototype.heal = function(){
+
+        this.send( config.protocolCtoS.HEAL );
+        console.log("heal");
+    };
+
+
+    Manager.prototype.send = function ( action )  {
+
+        this.timer = 0; // treshold
+
+        this.req.open( 'POST', this.url + '?t=' + Date.now(), true );
+
+        // encode into base64, avoiding special characters like '0'
+        var data = btoa( String.fromCharCode(  this.channel, this.id, action ) );
+
+        this.req.setRequestHeader( 'Content-Type', 'text/plain; charset=UTF-8' );
+
+        this.req.send( data );
+    };
 
 
 })();

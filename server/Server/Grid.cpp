@@ -155,6 +155,9 @@ void sv::Grid::RemovePlayer(uchar pos, Player* player)
 void sv::Grid::GetPlayer(uchar pos, Player** player, uchar& count)
 {
 	count = m_PlayerCount[pos];
+	memcpy(player, &m_Fields[pos * m_NumberPlayer], count * sizeof(Player*));
+	
+	/*
 	uchar posOut = 0;
 	for(uchar i=0; posOut<count; ++i)
 	{
@@ -164,7 +167,6 @@ void sv::Grid::GetPlayer(uchar pos, Player** player, uchar& count)
 		else
 			count--;
 	}
+	*/
 
-
-	//memcpy(player, &m_Fields[pos * m_NumberPlayer], count * sizeof(Player*));
 }
