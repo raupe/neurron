@@ -31,13 +31,12 @@ $(document).ready(function(){
 
            console.log(currentItem +'  '+ durationTime);
 
-           if( (++itemCounter) < itemsLength){
+            itemCounter++;
 
-               timeOut($items[itemCounter], itemCounter, duration);
-           }else{
-               itemCounter = 0;
-               timeOut($items[0],itemCounter, duration);
-           }
+           if( (itemCounter) >= itemsLength) itemCounter = 0;
+
+            timeOut($items[itemCounter],itemCounter, duration);
+
        }, durationTime);
     }
 
