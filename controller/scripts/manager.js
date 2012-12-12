@@ -184,7 +184,7 @@
 
         this.timer = 0; // treshold
 
-        this.req.open( 'POST', this.url , true );
+        this.req.open( 'POST', this.url + '?t=' + Date.now(), true );
 
         // encode into base64, avoiding special characters like '0'
         var data = btoa( String.fromCharCode(  this.channel, this.id, action ) );
