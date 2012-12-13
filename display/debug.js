@@ -87,11 +87,15 @@
 
 			if ( key === 51 )  this.manager.handle( 6, [ 1, 1, 15 ]);	// 3
 
-            if ( key === 52 ) {
+            if ( key === 52 ) { // 4
 
                 this.manager.end([42]);
                 this.statusManager.clear();
 
+            }
+
+            if ( key=== 53 ) { // 5
+                this.manager.handle( 1, [1]);
             }
 
 
