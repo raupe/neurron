@@ -124,8 +124,11 @@ void sv::Server::HandleConnection(int connection)
 {
 	LOG(DEBUG_SERVER, "Connection found\n");
 
-	int timeout = 300000; // 5 min
-	setsockopt(connection, SOL_SOCKET, SO_RCVTIMEO, (char*) &timeout, sizeof(int));
+	timeval timeout;
+	timeout.tv_sec = 120;
+	timeout.tv_usec = 0;
+
+	setsockopt(connection, SOL_SOCKET, SO_RCVTIMEO, (char*) &timeout, sizeof(timeout));
 
 	char message[1024];
 	message[0] = 0;
