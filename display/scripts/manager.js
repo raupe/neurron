@@ -115,7 +115,7 @@
 
             element = document.getElementById('qrcode'),
 
-            qrCode = showQRCode( qrLink, {r: 0, g: 0, b: 255});
+            qrCode = showQRCode( qrLink, {r: 0, g: 0, b: 0});
 
         if ( element.lastChild ) {
 
@@ -127,24 +127,33 @@
         }
 
         var linkBox = document.createElement('div');
-
+        linkBox.className = "qr_link";
         linkBox.innerHTML = '<a href="'+ qrLink +'">' + qrLink + '</a>';
 
         element.insertBefore( linkBox, qrCode.nextSibling );
 	};
 
+	/* playerId */
+	Manager.prototype.countdown = function ( params )  {
 
-	Manager.prototype.countdown = function() {
+		if ( !this.timer ) {
 
-        new display.Timer( config.countdown * 1000, "countdown");
+			this.timer = new display.Timer( params[0] * 1000, 'countdown' );
+		}
+
+		// action: show color
+		console.log('[player]: ', params[1] );
 	};
 
 
 	/* playerlist */
 	Manager.prototype.start = function ( params ) {
 
-        var qrcode = document.getElementById("qrcode");
-        qrcode.style.display = "none";
+		// reset timer
+		this.timer = null;
+
+//        var qrcode = document.getElementById("qrcode");
+//        qrcode.style.display = "none";
 
 		this.grid.init({
 

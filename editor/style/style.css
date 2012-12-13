@@ -1,0 +1,196 @@
+
+html, body {
+
+    margin      : 0;
+    padding     : 0;
+    height      : 100%;
+}
+
+body {
+
+    color       : #eee;
+    background  : #333;
+}
+
+
+
+.container {
+
+    padding-top: 3%;
+
+    height      : 80%;
+    width       : 80%;
+}
+
+
+
+.center {
+
+    margin: 0 auto;
+    display: block;
+}
+
+
+
+
+.input {
+
+    /*padding: 10% 0;*/
+    float: left;
+    /*background: red;*/
+    width: 50%;
+    height: 100%;
+}
+
+.left {
+
+    float: left;
+}
+
+
+.right {
+
+    float: right;
+}
+
+
+.output {
+
+    /*padding: 10% 0;*/
+	float: right;
+    /*background: blue;*/
+
+    width: 50%;
+    height: 100%;
+}
+
+
+.square {
+
+    width: 25px;
+    height: 25px;
+    color: black;
+    font-size: 1.6em;
+    text-align: center;
+}
+
+.red { background-color: red; }
+.green { background-color: green; }
+.yellow { background-color: yellow; }
+.white { background-color: white; }
+.black { background-color: black; }
+
+
+
+label {
+
+    float: left;
+    margin-left: 20px;
+    margin-right: 2px;
+}
+
+
+fieldset {
+
+    border: none;
+    margin-bottom: 10px;
+}
+
+legend {
+
+    font-size: 16px;
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+
+
+input {
+
+    width: 40px;
+    text-align: center;
+}
+
+
+.ml-10 { margin-left: 10px;}
+.ml-20 { margin-left: 20px;}
+
+.mt-10 { margin-top: 10px;}
+.mt-20 { margin-top: 20px;}
+
+.mr-10 { margin-right: 10px;}
+.mr-20 { margin-right: 20px;}
+
+.mb-10 { margin-bottom: 10px;}
+.mb-20 { margin-bottom: 20px;}
+
+
+
+/* .slider */
+
+
+
+canvas {
+
+    border: 1px solid black;
+    margin: 0 auto;
+    display: block;
+    /*background: #fff;*/
+}
+
+
+
+/* Start of "Micro clearfix" */
+/*
+.cf { zoom: 1; }
+.cf:before,
+.cf:after { content: ""; display: table; }
+.cf:after { clear: both; }
+*/
+/* End of "Micro clearfix" */
+
+
+.display-in {
+
+    cursor: pointer;
+}
+
+
+
+
+ul {
+
+    vertical-align: baseline;
+    list-style: none;
+}
+
+ul.line {
+
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+
+ul.line > li {
+
+    display: inline;
+}
+
+
+.box {
+
+    padding: 10px;
+    background-color: orange;
+    cursor: pointer;
+}
+
+.active {
+
+    background-color: #e50;
+}
+
+
+.invisible {
+
+    visibility: hidden;
+}

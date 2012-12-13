@@ -78,7 +78,7 @@
 
         if ( this.id ) return;
 
-//        this.box.hide(); // hide for development
+        this.box.hide(); // uncomment for development
 
         this.input.enable();
 
@@ -229,7 +229,7 @@
                 }
             }
         }
-        
+
         if (direction === config.protocolCtoS.CLOCKWISE) {
             console.log("uhrzeiger");
         } else {

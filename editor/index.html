@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<title>neurron - Editor</title>
+	<meta charset="utf-8">
+
+	<meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+	<meta name="title" content="neurron - Editor" />
+	<meta name="description" content="Create levels." />
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+	<link rel="stylesheet" type="text/css" href="style/normalize.css">
+	<link rel="stylesheet" type="text/css" href="style/style.css">
+
+</head>
+<body>
+
+
+	<div class="center container">
+
+		<div id="input" class="input">
+
+			<div class="controls">
+
+				<fieldset>
+
+					<legend>Settings</legend>
+
+
+					<div>
+						<label for="players" class="mr-20">Players:</label>
+
+						<ul id="players" class="line">
+							<li class="box">1</li>
+							<li class="box">2</li>
+							<li class="box">3</li>
+							<li class="box active">4</li>
+							<li class="box">5</li>
+							<li class="box">6</li>
+							<li class="box">7</li>
+							<li class="box">8</li>
+						</ul>
+
+					</div>
+
+
+					<br>
+					<br>
+
+
+					<div class="left">
+						<label for="red"><div class="square red">a</div></label>
+						<input id="red" type="number" min="0" value="14">
+					</div>
+
+					<div class="left">
+						<label for="green"><div class="square green">b</div></label>
+						<input id="green" type="number" min="0" value="4">
+					</div>
+
+					<div class="left">
+						<label for="yellow"><div class="square yellow">c</div></label>
+						<input id="yellow" type="number" min="0" value="8">
+					</div>
+
+					<div class="left">
+						<label for="white"><div class="square white">d</div></label>
+						<input id="white" type="number" min="0" value="2">
+					</div>
+
+					<div class="left">
+						<label for="black"><div class="square black"> </div></label>
+						<input id="black" type="number" min="0" value="8">
+					</div>
+
+					<br/>
+					<br/>
+
+					<div>Total: <span id="total">28</span></div>
+
+				</fieldset>
+
+				<button id="random">change</button>
+
+				<button id="clear" class="right">clear</button>
+
+			</div>
+
+			<br>
+
+			<div id="display-in" class="display-in"></div>
+
+		</div>
+
+
+
+		<div id="output" class="output">
+
+			<div class="controls">
+
+				<fieldset>
+					<br><br><br><br><br><br><br>
+				</fieldset>
+
+				<button class="invisible">change</button>
+				<button class="invisible">clear</button>
+
+			</div>
+
+			<br>
+			<br>
+
+			<div id="display-out">
+
+				<textarea cols="60" rows="17" id="result"></textarea>
+
+			</div>
+
+		</div>
+
+	</div>
+
+
+	<script src="scripts/config.js"></script>
+
+	<script src="scripts/shufflebag.js"></script>
+
+
+	<script src="scripts/setup.js"></script>
+	<script src="scripts/handle.js"></script>
+	<script src="scripts/input.js"></script>
+
+</body>
+</html>

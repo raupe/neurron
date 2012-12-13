@@ -188,15 +188,14 @@ void sv::Game::HandleStartMsg(InputMsg* msg)
 
 			LOG(DEBUG_FLOW, "Player added");
 
-			ResponseStartMsg response(pl->GetId(), pl->GetColor());
-			Server::Instance()->Response(&response, msg->GetSocket());
-
-			
-			success = true;
-			return;
-
 			JoinCountdownMsg joinCountdownMsg((uchar)(COUNTDOWN/1000), pl->GetColor());
 			SendMsg(&joinCountdownMsg);
+
+			ResponseStartMsg response(pl->GetId(), pl->GetColor());
+			Server::Instance()->Response(&response, msg->GetSocket());
+						
+			success = true;
+			return;
 		}
 		else
 			LOG(DEBUG_FLOW, "Player not added");
