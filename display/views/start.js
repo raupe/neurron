@@ -11,9 +11,9 @@ $(document).ready(function(){
         demo : 4000
     };
 
-    var $items = $(".screen_wrap li"),
+    var $items = $("#screen_wrap li"),
 
-        $buttons = $(".slider_box_wrap li"),
+        $buttons = $("#slider_box_wrap li"),
 
         timer = 0;
 
