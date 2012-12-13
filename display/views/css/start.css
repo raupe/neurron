@@ -8,7 +8,6 @@ html, body {
     height: 100%;
     width: 100%;
     min-width: 760px;
-    min-height: 500px;
     background-color: gray;
 }
 
@@ -25,7 +24,7 @@ canvas {
              border-radius: 20px;
 }
 
-.gradient{
+.button_color{
     background: rgb(96,164,215); /* Old browsers */
     background: -moz-linear-gradient(top,  rgba(96,164,215,1) 0%, rgba(14,73,155,1) 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(96,164,215,1)), color-stop(100%,rgba(14,73,155,1))); /* Chrome,Safari4+ */
@@ -36,7 +35,7 @@ canvas {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#60a4d7', endColorstr='#0e499b',GradientType=0 ); /* IE6-9 */
 
 }
-.gradient:hover{
+.button_color:hover, .button_active{
     background: rgb(135,224,253); /* Old browsers */
     background: -moz-linear-gradient(top,  rgba(135,224,253,1) 0%, rgba(83,203,241,1) 25%, rgba(6,132,211,1) 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(135,224,253,1)), color-stop(25%,rgba(83,203,241,1)), color-stop(100%,rgba(6,132,211,1))); /* Chrome,Safari4+ */
@@ -47,8 +46,6 @@ canvas {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#87e0fd', endColorstr='#0684d3',GradientType=0 ); /* IE6-9 */
 
 }
-
-
 
 .slider_wrapper {
     float: left;

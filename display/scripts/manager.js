@@ -152,8 +152,8 @@
 		// reset timer
 		this.timer = null;
 
-        var qrcode = document.getElementById("qrcode");
-        qrcode.style.display = "none";
+//        var qrcode = document.getElementById("qrcode");
+//        qrcode.style.display = "none";
 
 		this.grid.init({
 
