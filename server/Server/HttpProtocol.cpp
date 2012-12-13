@@ -55,7 +55,7 @@ bool sv::HttpProtocol::IsSocketRequest(const sv::RequestInfo& info)
 
 bool sv::HttpProtocol::RequestComplete(const RequestInfo& info)
 {
-	return info.m_HeaderComplete && strlen(info.m_Body.c_str()) == info.m_BodyLen;
+	return info.m_HeaderComplete && strlen(info.m_Body.c_str()) <= info.m_BodyLen;
 }
 
 /*std::string	sv::HttpProtocol::GetHeader()
