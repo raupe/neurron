@@ -115,7 +115,7 @@
 
             element = document.getElementById('qrcode'),
 
-            qrCode = showQRCode( qrLink, {r: 0, g: 0, b: 255});
+            qrCode = showQRCode( qrLink, {r: 0, g: 0, b: 0});
 
         if ( element.lastChild ) {
 
@@ -127,7 +127,7 @@
         }
 
         var linkBox = document.createElement('div');
-
+        linkBox.className = "qr_link";
         linkBox.innerHTML = '<a href="'+ qrLink +'">' + qrLink + '</a>';
 
         element.insertBefore( linkBox, qrCode.nextSibling );

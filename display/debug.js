@@ -95,6 +95,7 @@
             }
 
             if ( key=== 53 ) { // 5
+                console.log("hi");
                 this.manager.handle( 1, [1]);
             }
 
