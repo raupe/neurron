@@ -37,7 +37,7 @@
 			this.background.update( delta );
 
 
-			this.screen.clear(); // prototype
+			this.screen.clear();
 
 			this.background.draw();
 
@@ -45,7 +45,7 @@
 
 			forAll( this.obstaclePool.list, 'draw' );
 
-//			this.statusManager.draw(); // statusManager doesnt need to be drawn, it is drawn when something is updated
+
 
 			last = time;
 
