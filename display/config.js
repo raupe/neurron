@@ -67,7 +67,7 @@ window.config = {
 			player_7		: 'assets/player/player_7.png',
 			player_8		: 'assets/player/player_8.png',
 
-			player_dead		: 'assets/player/player_dead',
+			player_dead		: 'assets/player/player_dead.png',
 
 
 
