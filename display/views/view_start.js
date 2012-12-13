@@ -12,15 +12,9 @@
                 <div class="button gradient demo_button"><p>demo</p></div>\
                 <div class="dashboard round"></div>\
                 <ul class="screen_wrap round">\
-                    <li id="intro" class="screen js_screen">\
-                        <iframe class="video" src="http://www.youtube.com/embed/ogTIl-xzDRI" frameborder="0" allowfullscreen></iframe>\
-                    </li>\
-                    <li id="how2play" class="screen js_screen">\
-                        <iframe class="video" src="http://www.youtube.com/embed/aVb0HB6arUw" frameborder="0" allowfullscreen></iframe>\
-                    </li>\
-                    <li id="demo" class="screen js_screen">\
-                        <iframe class="video" src="http://www.youtube.com/embed/-cUB5pyPVJo" frameborder="0" allowfullscreen></iframe>\
-                    </li>\
+                    <li id="intro" class="screen js_screen"></li>\
+                    <li id="how2play" class="screen js_screen"></li>\
+                    <li id="demo" class="screen js_screen"></li>\
                 </ul>\
             </div>\
         </div>\

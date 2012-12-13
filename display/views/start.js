@@ -5,30 +5,39 @@
 
 $(document).ready(function(){
 
-    var autoSlide = true;
-
     var duration = {
         intro : 700,
-        how2play : 500,
-        demo : 600
+        how2play : 300,
+        demo : 100
     };
 
-    //caroussel auto slider
-    var caroussel = function(){
+    var $items = $(".screen_wrap li"),
 
-        var items = $(".screen_wrap li").length;
+        counter = 0,
 
-        console.log( $("li").get(1).attr('id') );
-
-        /*while(autoSlide){
-
-            setTimeout(function() {
+        itemsLength = $items.length;
 
 
-            }, 1);
+    //set time out
+    var timeOut = function(){
 
-        }*/
+        var currentId = $items[counter].id,
+
+            durationTime = duration[currentId];
+
+        setTimeout(function() {
+
+           console.log(currentId +'  '+ durationTime);
+
+            counter++;
+
+           if( (counter) >= itemsLength) counter = 0;
+
+            timeOut();
+
+       }, durationTime);
     }
 
-    caroussel();
+    timeOut();
+
 });
