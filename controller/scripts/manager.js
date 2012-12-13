@@ -133,8 +133,6 @@
         var start = params[0],
             end = params[1],
 
-            averageX = params[2],
-            averageY = params[3],
             betweens = params[4];
 
 
@@ -158,11 +156,10 @@
             between.x = betweens[i].x;
             between.y = betweens[i].y;
 
-            sX = ((-between.x * m2) + between.y + (start.x * m1) - start.y) / (m1 - m2)
-            sY = m2 * (sX - between.x) + between.y
+            sX = ((-between.x * m2) + between.y + (start.x * m1) - start.y) / (m1 - m2);
+            sY = m2 * (sX - between.x) + between.y;
 
             difference = (between.x - sX) * (between.x - sX) + (between.y - sY) * (between.y - sY);
-            Math.sqrt(difference)
 
             if ( diffX > diffY ) {
 
