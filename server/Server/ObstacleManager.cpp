@@ -7,6 +7,10 @@
 #include "StatusManager.h"
 #include "Player.h"
 
+#include <iostream>
+#include <fstream>
+
+/*
 const int sv::ObstacleManager::s_LevelSize = 1;//30;
 const char* sv::ObstacleManager::s_Level[s_LevelSize] = 
 {
@@ -46,9 +50,10 @@ const char* sv::ObstacleManager::s_Level[s_LevelSize] =
 	"dada a adaadada ",
 	" b  dbd   a b  b",
 	"a da dd abaaba  ",
-	"dadda dab bd ddd", */
+	"dadda dab bd ddd", * /
 	"a               ",
 };
+*/
 
 sv::Obstacle::Properties sv::ObstacleManager::GetProperties(uchar category)
 {
@@ -92,12 +97,18 @@ sv::ObstacleManager::ObstacleManager(Game* game)
 , m_IdCount(1)
 , m_PassedTime(0)
 , m_Step(0)
+, m_LevelSize(0)
+, m_Level(0)
 {
+	ParseLevel();
 }
 
 
 sv::ObstacleManager::~ObstacleManager()
 {
+	for(uint i=0; i<m_LevelSize; i++)
+		free(m_Level[i]);
+	free(m_Level);
 }
 
 void sv::ObstacleManager::Reset()
@@ -140,13 +151,13 @@ void sv::ObstacleManager::UpdateLevel(ulong deltaTime)
 	{
 		m_PassedTime -= MOVE_TIME_OB;
 		m_Step ++;
-		if(m_Step == s_LevelSize)
+		if(m_Step == m_LevelSize)
 			m_Step = 0;
 
 		for(uchar i=0; i<GetGrid()->GetNumberLanes(); ++i)
 		{
-			if(s_Level[m_Step][i] != ' ')
-				CreateObstacle(s_Level[m_Step][i] - 'a' +1, i);
+			if(m_Level[m_Step][i] != ' ')
+				CreateObstacle(m_Level[m_Step][i] - 'a' +1, i);
 		}
 	}
 }
@@ -211,5 +222,54 @@ void sv::ObstacleManager::HandleCollision(Obstacle* obstacle)
 	//	{
 			DeleteObstacle(obstacle);
 	//	}
+	}
+}
+
+void sv::ObstacleManager::ParseLevel(){
+	std::ifstream inFile;
+	inFile.open("../Level/default.lvl");
+
+	bool success = ! inFile.fail();
+	if(success)
+	{
+		char lane = 0;
+		char step = 0;
+		char c = inFile.get();
+
+		char line[LANE_MAX];
+		char* level[1024];
+
+		while(inFile.good() && lane < sizeof(level))
+		{
+			while(c != '\n' && c != '\r')
+			{
+				if(step < 16)
+					line[step++] = c;
+				
+				c = inFile.get();
+			}
+
+			if(step > 0)
+			{
+				level[lane] = (char*) malloc(LANE_MAX * sizeof(char));
+				memcpy(level[lane], line, LANE_MAX * sizeof(char));
+
+				lane++;
+			}
+			step = 0;
+
+			c = inFile.get();
+		}
+
+		m_LevelSize = lane;
+		m_Level = (char**) malloc(lane * sizeof(char*));
+		memcpy(m_Level, level, lane * sizeof(char*));
+	}
+	else
+	{
+		m_LevelSize = 1;
+		m_Level = (char**) malloc(1 * sizeof(char*));
+		m_Level[0] = (char*) malloc(LANE_MAX * sizeof(char));
+		memset(m_Level[0], ' ', LANE_MAX * sizeof(char));
 	}
 }

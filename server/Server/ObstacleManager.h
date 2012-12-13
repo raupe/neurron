@@ -26,8 +26,12 @@ namespace sv
 
 		void							UpdateLevel(ulong deltaTime);
 	private:
-		static const int				s_LevelSize;
-		static const char*				s_Level[];
+//		static const int				s_LevelSize;
+//		static const char*				s_Level[];
+
+		void							ParseLevel();
+		uint							m_LevelSize;
+		char**							m_Level;
 
 		Obstacle*						CreateObstacle(uchar category, uchar pos);
 		void							DeleteObstacle(Obstacle* obstacle);
