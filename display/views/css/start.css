@@ -47,7 +47,7 @@ canvas {
 
 }
 
-.slider_wrapper {
+.main_wrapper {
     float: left;
     width: 75%;
     min-width: 570px;
@@ -168,7 +168,7 @@ canvas {
     height: 95%;
 }
 
-.qr_wrapper {
+.side_wrapper {
     float: right;
     width: 25%;
     min-width: 190px;
