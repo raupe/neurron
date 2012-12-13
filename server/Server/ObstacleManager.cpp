@@ -10,6 +10,14 @@
 #include <iostream>
 #include <fstream>
 
+#ifdef WIN32
+#include <direct.h>
+#define GetWorkingDir _getcwd
+#else
+#include <unistd.h>
+#define GetWorkingDir getcwd
+#endif
+
 /*
 const int sv::ObstacleManager::s_LevelSize = 1;//30;
 const char* sv::ObstacleManager::s_Level[s_LevelSize] = 
@@ -226,8 +234,21 @@ void sv::ObstacleManager::HandleCollision(Obstacle* obstacle)
 }
 
 void sv::ObstacleManager::ParseLevel(){
+	char dir[1024];
+	GetWorkingDir(dir, sizeof(dir));
+
+	int pos = strlen(dir) - 2;
+	while(pos >= 0 && dir[pos] != '/' && dir[pos] != '\\')
+		pos--;
+	
+#ifdef WIN32
+	sprintf_s(dir + pos + 1, sizeof(dir) - pos - 1, "%s%c%s", "Level", dir[pos], "default.lvl");
+#else
+	sprintf(dir + pos + 1, "%s%c%s", "Level", dir[pos], "default.lvl");
+#endif
+
 	std::ifstream inFile;
-	inFile.open("../Level/default.lvl");
+	inFile.open(dir);
 
 	bool success = ! inFile.fail();
 	if(success)
