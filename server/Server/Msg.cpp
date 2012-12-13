@@ -42,17 +42,19 @@ void sv::InitMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
 	Visit(m_Channel, buffer, pos, length);
 }
 
-sv::CountdownMsg::CountdownMsg(uchar length)
-: Msg(eMsgType_Countdown)
+sv::JoinCountdownMsg::JoinCountdownMsg(uchar length, uchar color)
+: Msg(eMsgType_JoinCountdown)
 , m_Length(length)
+, m_Color(color)
 {
 }
 
-void sv::CountdownMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
+void sv::JoinCountdownMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
 {
 	Visit(m_Type, buffer, pos, length);
 	
 	Visit(m_Length, buffer, pos, length);
+	Visit(m_Color, buffer, pos, length);
 }
 
 sv::StartMsg::StartMsg(uchar pos, uchar lanes)
