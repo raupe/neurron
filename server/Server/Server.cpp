@@ -8,6 +8,8 @@
 #include "InputMsgPool.h"
 #include "Engine.h"
 
+#include <boost/thread.hpp>
+
 #ifdef WIN32
 #include <winsock.h>
 
@@ -109,7 +111,7 @@ void sv::Server::Run()
 		if(sConnect = accept(sListen, (sockaddr*)&addr, (socklen_t*)&addrLen))
 #endif
 		{
-			HandleConnection(sConnect);
+			boost::thread connectionThread(boost::bind(&sv::Server::HandleConnection, this, sConnect));
 		}
 	}
 
@@ -122,7 +124,7 @@ void sv::Server::HandleConnection(int connection)
 {
 	LOG(DEBUG_SERVER, "Connection found\n");
 
-	int timeout = 5000; // 5 sec
+	int timeout = 30000; // 30 sec
 	setsockopt(connection, SOL_SOCKET, SO_RCVTIMEO, (char*) &timeout, sizeof(int));
 
 	char message[1024];
