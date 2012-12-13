@@ -58,30 +58,48 @@ window.config = {
 
 			player		: 'assets/player.png',
 
-			damage		: 'assets/damage.png',
-			heal		: 'assets/heal.png',
-			points		: 'assets/points.png',
+
+			// player
+			player_1		: 'assets/player/player_1.png',
+			player_2		: 'assets/player/player_2.png',
+			player_3		: 'assets/player/player_3.png',
+			player_4		: 'assets/player/player_4.png',
+			player_5		: 'assets/player/player_5.png',
+			player_6		: 'assets/player/player_6.png',
+			player_7		: 'assets/player/player_7.png',
+			player_8		: 'assets/player/player_8.png',
+
+			player_dead		: 'assets/player/player_dead',
+
+
+
+			// obstacle
+			damage		: 'assets/damage/damage.png',
+			heal		: 'assets/heal/heal.png',
+			points		: 'assets/points/points.png',
+
 
 			background	: 'assets/background.png',
 
 
+			// animations
 			collision   : {
 
-				src		: 'assets/explosion-sprite-sheet.png',
+				src		: 'assets/damage/explosion-sprite-sheet.png',
 				width	: '64'
 			},
 
 
             pink        : {
 
-                src     : 'assets/pink-test.png',
+                src     : 'assets/heal/pink-test.png',
                 width   : '57',
                 height  : '55'
             },
 
             coin    : {
 
-                src     : 'assets/coin-test.png',
+                src     : 'assets/points/coin-test.png',
                 width   : '29',
                 height  : '28'
             }
@@ -91,10 +109,9 @@ window.config = {
 
 		audio: {
 
-			collision	: 'assets/collision-test.wav',
-
-            pink        : 'assets/pink-test.wav',
-            coin        : 'assets/coin-test.wav'
+			collision	: 'assets/damage/collision-test.wav',
+            pink        : 'assets/heal/pink-test.wav',
+            coin        : 'assets/points/coin-test.wav'
 		}
 	},
 
