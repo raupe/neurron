@@ -2,13 +2,13 @@
 
 	var Player = display.Player = function ( params ) {
 
-		this.type = 'player';
+		this.type = 'player_'+params.id;
 
-		this.visible = true; // default
+        this.velocity = config.player.velocity;
 
-		this.velocity = config.player.velocity;
+        this.visible = true;
 
-		this.energy = 100;
+        this.energy = 100;
 
         this.alive = true;
 
@@ -75,11 +75,19 @@
         }
     };
 
+
+
+    Player.prototype.fade = function(){
+
+        this.src = this.assetManager.get('image', 'player_dead' );
+    };
+
     Player.prototype.revive = function() {
+
         this.alive = true;
         this.colorize();
         this.energy = 100;
-    }
+    };
 
 
 })();
