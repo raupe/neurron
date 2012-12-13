@@ -9,7 +9,7 @@ namespace sv
 	{
 		eMsgType_Polling,
 		eMsgType_Init = 1,
-		eMsgType_Countdown,
+		eMsgType_JoinCountdown,
 		eMsgType_Start,
 		eMsgType_Move,
 		eMsgType_Heal,
@@ -58,15 +58,16 @@ namespace sv
 		uchar			m_Channel;
 	};
 
-	class CountdownMsg : public Msg
+	class JoinCountdownMsg : public Msg
 	{
 	public:
-		CountdownMsg(uchar length);
-		virtual ~CountdownMsg() {}
+		JoinCountdownMsg(uchar length, uchar color);
+		virtual ~JoinCountdownMsg() {}
 
 		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
 	private:
 		uchar			m_Length;
+		uchar			m_Color;
 	};
 
 	class StartMsg : public Msg

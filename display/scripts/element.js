@@ -20,7 +20,7 @@
 
         this.createCanvas();
 
-        this.colorize();
+        // this.colorize();
 
         this.register();
     };

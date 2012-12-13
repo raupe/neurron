@@ -78,7 +78,7 @@
 
         if ( this.id ) return;
 
-        this.box.hide(); // hide for development
+//        this.box.hide(); // hide for development
 
         this.input.enable();
 
@@ -135,30 +135,101 @@
 
             averageX = params[2],
             averageY = params[3],
+            betweens = params[4];
 
-            formula = ( end.y - start.y ) / ( end.x - start.x ) * ( averageX - start.x ) + start.y;
 
-        if ( end.x === start.x ) {
+        var	diffX = Math.abs(end.x - start.x),
+			diffY = Math.abs(end.y - start.y);
+        var between = {},
+            sX, sY,
+            m1, m2,
+            difference = 0,
+            sum = 0,
+            direction = 0;
 
-            if ( end.y > start.y ) {
+        // direction = config.protocolCtoS.ANTICLOCKWISE;
 
-                direction = averageX > start.x ? config.protocolCtoS.CLOCKWISE : config.protocolCtoS.ANTICLOCKWISE;
+        m1 = (end.y - start.y) / ( end.x - start.x ),
+        m2 = -1/m1;
+
+        var blength = betweens.length;
+        for ( var i = 0; i < blength; i++ ) {
+
+            between.x = betweens[i].x;
+            between.y = betweens[i].y;
+
+            sX = ((-between.x * m2) + between.y + (start.x * m1) - start.y) / (m1 - m2)
+            sY = m2 * (sX - between.x) + between.y
+
+            difference = (between.x - sX) * (between.x - sX) + (between.y - sY) * (between.y - sY);
+            Math.sqrt(difference)
+
+            if ( diffX > diffY ) {
+
+                if ( start.x > end.x ) {
+
+                    difference *= between.y > sY ? 1 : -1;
+
+                } else {
+
+                    difference *= between.y < sY ? 1 : -1;
+                }
+
+            } else if ( diffX < diffY ) {
+
+                if ( start.y < end.y ) {
+
+                    difference *= between.x > sX ? 1: -1;
+
+                } else {
+
+                    difference *= between.x < sX ? 1: -1;
+                }
+            }
+
+            sum += difference;
+        }
+        console.log("end",sum);
+
+        if ( diffX > diffY ) {
+
+            if ( start.x > end.x ) {
+
+                if (sum > 0) {
+                    direction = config.protocolCtoS.CLOCKWISE;
+                } else {
+                    direction = config.protocolCtoS.ANTICLOCKWISE;
+                }
 
             } else {
 
-                direction = averageX < start.x ? config.protocolCtoS.CLOCKWISE : config.protocolCtoS.ANTICLOCKWISE;
+                if (sum < 0) {
+                    direction = config.protocolCtoS.ANTICLOCKWISE;
+                } else {
+                    direction = config.protocolCtoS.CLOCKWISE;
+                }
             }
-        // console.log('1: ', direction);
-        } else if ( formula < averageY ) {
 
-            direction = end.x < start.x ? config.protocolCtoS.CLOCKWISE : config.protocolCtoS.ANTICLOCKWISE;
-            // console.log('2: ', direction);
+        } else if ( diffX < diffY ) {
 
-        } else {
-            direction = end.x > start.x ? config.protocolCtoS.CLOCKWISE : config.protocolCtoS.ANTICLOCKWISE;
-            // console.log('3: ', direction);
+            if ( start.y < end.y ) {
+
+                if (sum < 0) {
+                    direction = config.protocolCtoS.ANTICLOCKWISE;
+                } else {
+                    direction = config.protocolCtoS.CLOCKWISE;
+                }
+
+            } else {
+
+                if (sum > 0) {
+                    direction = config.protocolCtoS.CLOCKWISE;
+                } else {
+                    direction = config.protocolCtoS.ANTICLOCKWISE;
+                }
+            }
         }
-        // console.log('dir:', direction);
+        
         if (direction === config.protocolCtoS.CLOCKWISE) {
             console.log("uhrzeiger");
         } else {
@@ -166,10 +237,6 @@
         }
         this.send( direction );
     };
-
-
-
-
 
 
 

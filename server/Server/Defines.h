@@ -19,7 +19,7 @@ typedef unsigned short ushort;
 typedef unsigned long ulong;
 
 #define LOG_ERROR true
-#define DEBUG_SERVER false
+#define DEBUG_SERVER true
 #define DEBUG_PROTOCOLL false
 #define DEBUG_MSG false
 #define DEBUG_WEBSOCKET false
@@ -27,7 +27,7 @@ typedef unsigned long ulong;
 #define DEBUG_FLOW false
 #define DEBUG_MOVEMENT false
 #define DEBUG_OBSTACLES false
-#define DEBUG_POINTS true
+#define DEBUG_POINTS false
 #define DEBUG_GAMELOOP false
 
 

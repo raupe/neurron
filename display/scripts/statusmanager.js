@@ -182,9 +182,11 @@
                     if (currentPlayer.alive) {
 
                         currentPlayer.alive = false;
-                        currentPlayer.colorize([50, 50, 50]);
+                        // currentPlayer.colorize([50, 50, 50]);
+                        currentPlayer.fade();
 
-                        window.setTimeout(function(){
+
+                        setTimeout(function(){
                             if (!currentPlayer.alive) {
 
                                 currentPlayer.revive();

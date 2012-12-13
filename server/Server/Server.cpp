@@ -8,6 +8,8 @@
 #include "InputMsgPool.h"
 #include "Engine.h"
 
+#include <boost/thread.hpp>
+
 #ifdef WIN32
 #include <winsock.h>
 
@@ -109,10 +111,7 @@ void sv::Server::Run()
 		if(sConnect = accept(sListen, (sockaddr*)&addr, (socklen_t*)&addrLen))
 #endif
 		{
-			//u_long iMode=1;
-			//ioctlsocket(sConnect, FIONBIO, &iMode);
-
-			HandleConnection(sConnect);
+			boost::thread connectionThread(boost::bind(&sv::Server::HandleConnection, this, sConnect));
 		}
 	}
 
@@ -125,26 +124,33 @@ void sv::Server::HandleConnection(int connection)
 {
 	LOG(DEBUG_SERVER, "Connection found\n");
 
+	int timeout = 300000; // 5 min
+	setsockopt(connection, SOL_SOCKET, SO_RCVTIMEO, (char*) &timeout, sizeof(int));
+
 	char message[1024];
-	memset(message, 0, sizeof(message));
+	message[0] = 0;
 
 	uint pos = 0;
-	int resvLen = recv(connection, message, sizeof(message), NULL);
-	std::string msg = message;
-	sv::RequestInfo headerInfo = http.GetInfo(msg);
+	int recvLen;
+	std::string msg;
+	sv::RequestInfo headerInfo;
 
 	while(! http.RequestComplete(headerInfo))
 	{
-		LOG(DEBUG_SERVER, "Request not completet");
-		pos += resvLen;
-		resvLen = recv(connection, message + pos, sizeof(message) - pos, NULL);
-		if(resvLen == 0)
+		recvLen = recv(connection, message + pos, sizeof(message) - pos, NULL);
+
+		if(recvLen == 0 || recvLen == -1)
 		{
+			LOG(DEBUG_SERVER, "Connection closed before complete.");
 			CLOSE_SOCKET(connection);
 			return;
 		}
+		
+		pos += recvLen;
 		std::string msg = message;
 		headerInfo = http.GetInfo(msg);
+
+		LOG(DEBUG_SERVER && !http.RequestComplete(headerInfo), "Request not completet");
 	}
 
 	LOG1(DEBUG_PROTOCOLL,"Incoming Msg:\n%s\n" , message);
@@ -185,17 +191,6 @@ void sv::Server::HandleConnection(int connection)
 	}
 	Engine::Instance()->Continue();
 }
-
-/*
-void sv::Server::SendSocketMsg(const char* msg, uint length, uint socket)
-{
-	uchar bufferMsg[1024];
-	std::memcpy(bufferMsg, msg, length);
-
-	std::string str = http.GetSocketMsg(bufferMsg, length);
-	SEND(socket, str.c_str(), length);
-}
-*/
 
 bool sv::Server::SendSocketMsg(Msg* msg, uint socket)
 {

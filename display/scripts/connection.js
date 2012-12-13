@@ -61,13 +61,14 @@
 				options[0] = data.charCodeAt(2); // amount of lanes
 
 
-				var players = [];
+				var players = [],
+					counter = 1;
 
 				for ( i = 3; i < l+3; i += 2 ) {
 
 					players.push({
 
-						id		: i/2,
+						id		: counter++,
 						pos		: data.charCodeAt(  i),
 						color	: config.playerColors[data.charCodeAt(1+i)] // ab 1, siehe config.playerColors
 					});
