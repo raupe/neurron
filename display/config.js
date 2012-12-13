@@ -58,16 +58,16 @@ window.config = {
 
 
 			// player
-			player_1		: 'assets/player/player_1.png',
-			player_2		: 'assets/player/player_2.png',
-			player_3		: 'assets/player/player_3.png',
-			player_4		: 'assets/player/player_4.png',
-			player_5		: 'assets/player/player_5.png',
-			player_6		: 'assets/player/player_6.png',
-			player_7		: 'assets/player/player_7.png',
-			player_8		: 'assets/player/player_8.png',
+			player_1	: 'assets/player/player_1.png',
+			player_2	: 'assets/player/player_2.png',
+			player_3	: 'assets/player/player_3.png',
+			player_4	: 'assets/player/player_4.png',
+			player_5	: 'assets/player/player_5.png',
+			player_6	: 'assets/player/player_6.png',
+			player_7	: 'assets/player/player_7.png',
+			player_8	: 'assets/player/player_8.png',
 
-			player_dead		: 'assets/player/player_dead.png',
+			player_dead	: 'assets/player/player_dead.png',
 
 
 
