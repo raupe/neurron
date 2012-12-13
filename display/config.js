@@ -56,8 +56,6 @@ window.config = {
 
 		image: {
 
-			player		: 'assets/player.png',
-
 
 			// player
 			player_1		: 'assets/player/player_1.png',
