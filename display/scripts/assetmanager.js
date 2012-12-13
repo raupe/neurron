@@ -53,32 +53,32 @@
 
 		function detectIDB() {
 
-			if ( !window.indexedDB ) {
+			// if ( !window.indexedDB ) {
 
-				if ( window.mozIndexedDB ) {
+			//	if ( window.mozIndexedDB ) {
 
-					window.indexedDB = window.mozIndexedDB;
+			//		window.indexedDB = window.mozIndexedDB;
 
-				} else if ( window.webkitIndexedDB ) {
+			//	} else if ( window.webkitIndexedDB ) {
 
-					window.indexedDB =  window.webkitIndexedDB;
+			//		window.indexedDB =  window.webkitIndexedDB;
 
-					IDBCursor = webkitIDBCursor;
-					IDBDatabaseException = webkitIDBDatabaseException;
-					IDBRequest = webkitIDBRequest;
-					IDBKeyRange = webkitIDBKeyRange;
-					IDBTransaction = webkitIDBTransaction;
+			//		IDBCursor = webkitIDBCursor;
+			//		IDBDatabaseException = webkitIDBDatabaseException;
+			//		IDBRequest = webkitIDBRequest;
+			//		IDBKeyRange = webkitIDBKeyRange;
+			//		IDBTransaction = webkitIDBTransaction;
 
-				} else {
+			//	} else {
 
-					throw Error('IndexedDB is currently not supported by your browser.');
-				}
-			}
+			//		throw Error('IndexedDB is currently not supported by your browser.');
+			//	}
+			// }
 
-			if ( !window.indexedDB.deleteDatabase ) {
+			// if ( !window.indexedDB.deleteDatabase ) {
 
-				throw Error('IndexedDB is currently not supported by your browser.');
-			}
+			//  throw Error('IndexedDB is currently not supported by your browser.');
+			// }
 
 			return true;
 		}

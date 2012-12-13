@@ -133,15 +133,24 @@
         element.insertBefore( linkBox, qrCode.nextSibling );
 	};
 
+	/* playerId */
+	Manager.prototype.countdown = function ( params )  {
 
-	Manager.prototype.countdown = function() {
+		if ( !this.timer ) {
 
-        new display.Timer( config.countdown * 1000, "countdown");
+			this.timer = new display.Timer( params[0] * 1000, 'countdown' );
+		}
+
+		// action: show color
+		console.log('[player]: ', params[1] );
 	};
 
 
 	/* playerlist */
 	Manager.prototype.start = function ( params ) {
+
+		// reset timer
+		this.timer = null;
 
         var qrcode = document.getElementById("qrcode");
         qrcode.style.display = "none";

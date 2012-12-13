@@ -54,6 +54,13 @@
 			}
 
 
+			if ( action === config.protocol.COUNTDOWN ) {
+
+				options[0] = data.charCodeAt(1); // time
+				options[1] = data.charCodeAt(2); // playerID
+			}
+
+
 	/* 3 */	if ( action === config.protocol.START ) {
 
 				l = 2 * data.charCodeAt(1); // amount of players
