@@ -78,7 +78,7 @@
 
 		if ( this.id ) return;
 
-        this.box.hide(); // hide for development
+//        this.box.hide(); // hide for development
 
         this.input.enable();
 
@@ -134,39 +134,105 @@
 			end = params[1],
 
             averageX = params[2],
-            averageY = params[3];
+            averageY = params[3],
+            betweens = params[4];
 
 
 		if ( start === 0 ) return;
 
-            start = { x: start.clientX, y: start.clientY},
-			end = { x: end.clientX, y: end.clientY};
+            start = { x: start.pageX, y: start.pageY},
+			end = { x: end.pageX, y: end.pageY};
 
         var	diffX = Math.abs(end.x - start.x),
-			diffY = Math.abs(end.y - start.y),
-            startEndX = (start.x + end.x) / 2,
-            startEndY = (start.y + end.y) / 2;
+			diffY = Math.abs(end.y - start.y);
 
-        var formula = ( end.y - start.y ) / ( end.x - start.x ) * ( averageX - start.x ) + start.y;
+        var between = {},
+            sX, sY,
+            m1, m2,
+            difference = 0,
+            sum = 0;
 
-        if ( end.x === start.x ) {
+        // direction = config.protocolCtoS.ANTICLOCKWISE;
 
-            if ( end.y > start.y ) {
+        m1 = (end.y - start.y) / ( end.x - start.x ),
+        m2 = -1/m1;
 
-                direction = averageX > start.x ? config.protocolCtoS.CLOCKWISE : config.protocolCtoS.ANTICLOCKWISE;
+        var blength = betweens.length;
+        for ( var i = 0; i < blength; i++ ) {
+
+            between.x = betweens[i].pageX;
+            between.y = betweens[i].pageY;
+
+            sX = ((-between.x * m2) + between.y + (start.x * m1) - start.y) / (m1 - m2)
+            sY = m2 * (sX - between.x) + between.y
+
+            difference = (between.x - sX) * (between.x - sX) + (between.y - sY) * (between.y - sY);
+            Math.sqrt(difference)
+
+            if ( diffX > diffY ) {
+
+                if ( start.x > end.x ) {
+
+                    difference *= between.y > sY ? 1 : -1;
+
+                } else {
+
+                    difference *= between.y < sY ? 1 : -1;
+                }
+
+            } else if ( diffX < diffY ) {
+
+                if ( start.y < end.y ) {
+
+                    difference *= between.x > sX ? 1: -1;
+
+                } else {
+
+                    difference *= between.x < sX ? 1: -1;
+                }
+            }
+
+            sum += difference;
+        }
+        console.log("end",sum);
+
+        if ( diffX > diffY ) {
+
+            if ( start.x > end.x ) {
+
+                if (sum > 0) {
+                    direction = config.protocolCtoS.CLOCKWISE;
+                } else {
+                    direction = config.protocolCtoS.ANTICLOCKWISE;
+                }
 
             } else {
 
-                direction = averageX < start.x ? config.protocolCtoS.CLOCKWISE : config.protocolCtoS.ANTICLOCKWISE;
+                if (sum < 0) {
+                    direction = config.protocolCtoS.ANTICLOCKWISE;
+                } else {
+                    direction = config.protocolCtoS.CLOCKWISE;
+                }
             }
 
-        } else if ( formula < averageY ) {
+        } else if ( diffX < diffY ) {
 
-            direction = end.x < start.x ? config.protocolCtoS.CLOCKWISE : config.protocolCtoS.ANTICLOCKWISE;
+            if ( start.y < end.y ) {
 
-        } else {
+                if (sum < 0) {
+                    direction = config.protocolCtoS.ANTICLOCKWISE;
+                } else {
+                    direction = config.protocolCtoS.CLOCKWISE;
+                }
 
-            direction = end.x > start.x ? config.protocolCtoS.CLOCKWISE : config.protocolCtoS.ANTICLOCKWISE;
+            } else {
+
+                if (sum > 0) {
+                    direction = config.protocolCtoS.CLOCKWISE;
+                } else {
+                    direction = config.protocolCtoS.ANTICLOCKWISE;
+                }
+            }
         }
 
         if (direction === config.protocolCtoS.CLOCKWISE) {
@@ -197,7 +263,7 @@
 
 		this.req.setRequestHeader( 'Content-Type', 'text/plain; charset=UTF-8' );
 
-		this.req.send( data );
+//		this.req.send( data );
 	};
 
 
