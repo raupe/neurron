@@ -15,7 +15,7 @@ window.config = {
 
     errorURL            :  'http://neurron.com/notify/error.php',
 
-    countdown           : 15,
+    // countdown           : 15,
     gameTime            : 2,
 
 
