@@ -33,7 +33,7 @@ Server - Controller
             1. Byte: Status:
                 0 - OK                                                      // Server: ok
                 1 - Spiel zuende
-                2 - Anmeldung wenn Spiel schon läuft	    		    // Server: ok
+                2 - Anmeldung wenn Spiel schon läuft	    		    	// Server: ok
                 3 - Spiel nicht gefunden                                    // Server: ok
 
 
@@ -48,8 +48,11 @@ Server - Display
     Aktionen:
         1 - Init
             1. Byte: channel ID                                             // Server: ok
-        2 - Countdown starten
-            1. Byte: length                                                 // Server: ok
+//      2 - Countdown starten
+//          1. Byte: length                                                 // Server: ok
+        2 - Spieler joined, Countdown starten
+        	1. Byte. length
+        	2. Farbe des Spielers
         3 - Spiel starten
             1. Byte: Anzahl Spieler                                         // Server: ok
             2. Byte: Anzahl Lanes

@@ -175,19 +175,17 @@ void sv::Game::HandleStartMsg(InputMsg* msg)
 	bool success = false;
 	if(m_Status != eGameStatus_Run)
 	{
-		if(m_Status == eGameStatus_Wait)
-		{
-			GetDeltaTime();
-			m_Countdown = 0;
-			m_Status = eGameStatus_Countdown;
-			LOG(DEBUG_FLOW, "Countdown started");
-
-			CountdownMsg countdownMsg((uchar)(COUNTDOWN/1000));
-			SendMsg(&countdownMsg);
-		}
 		Player* pl = m_PlayerManager->AddPlayer();
 		if(pl)
 		{
+			if(m_Status == eGameStatus_Wait)
+			{
+				GetDeltaTime();
+				m_Countdown = 0;
+				m_Status = eGameStatus_Countdown;
+				LOG(DEBUG_FLOW, "Countdown started");
+			}
+
 			LOG(DEBUG_FLOW, "Player added");
 
 			ResponseStartMsg response(pl->GetId(), pl->GetColor());
@@ -196,6 +194,9 @@ void sv::Game::HandleStartMsg(InputMsg* msg)
 			
 			success = true;
 			return;
+
+			JoinCountdownMsg joinCountdownMsg((uchar)(COUNTDOWN/1000), pl->GetColor());
+			SendMsg(&joinCountdownMsg);
 		}
 		else
 			LOG(DEBUG_FLOW, "Player not added");
