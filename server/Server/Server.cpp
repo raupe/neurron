@@ -131,7 +131,7 @@ void sv::Server::HandleConnection(int connection)
 	setsockopt(connection, SOL_SOCKET, SO_RCVTIMEO, (char*) &timeout, sizeof(timeout));
 
 	char message[1024];
-	message[0] = 0;
+	memset(message, 0, sizeof(message));
 
 	uint pos = 0;
 	int recvLen;
