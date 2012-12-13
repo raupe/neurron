@@ -38,7 +38,7 @@ void sv::Player::Update(ulong deltaTime)
 	if(m_ReviveCountdown > 0)
 	{
 		m_ReviveCountdown -= deltaTime;
-		if(m_ReviveCountdown < 0)
+		if(m_ReviveCountdown <= 0)
 		{
 			m_ReviveCountdown = 0;
 			m_Energy = ENERGY_MAX;

@@ -188,7 +188,7 @@ void sv::Game::HandleStartMsg(InputMsg* msg)
 
 			LOG(DEBUG_FLOW, "Player added");
 
-			JoinCountdownMsg joinCountdownMsg((uchar)(COUNTDOWN/1000), pl->GetColor());
+			JoinCountdownMsg joinCountdownMsg((uchar)(COUNTDOWN/1000000), pl->GetColor());
 			SendMsg(&joinCountdownMsg);
 
 			ResponseStartMsg response(pl->GetId(), pl->GetColor());

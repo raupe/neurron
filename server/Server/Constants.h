@@ -25,4 +25,7 @@
 #define PUNISH_POINTS 1000
 #define HEAL_ENERGY 10
 
+// ObstacleManager
+#define LANE_MAX 16
+
 #endif // Constants_h__
