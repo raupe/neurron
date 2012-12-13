@@ -7,6 +7,7 @@
 
         this.origin = null;
         this.last = null;
+        this.between = [];
 
         this.averageX = 0;
         this.averageY = 0;
@@ -58,7 +59,7 @@
 
 		if ( 'ontouchstart' in window ) {
 
-			// this.setStyle();
+			 this.setStyle();
 
 			this.handleTouch();
 		}
@@ -107,7 +108,7 @@
 		var ctx = this.ctx,
 			cvs = this.cvs;
 
-        ctx.lineWidth = 3;
+        ctx.lineWidth = 10;
 		ctx.lineCap = 'round';
 
 		ctx.strokeStyle = '#fff'; //color ? 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')' : '#FFF';
@@ -149,7 +150,7 @@
 			last = this.last,
 			ctx = this.ctx;
 
-
+        this.between.push(touch);
 		// ToDo: check for device property
 		if ( !this.disabled ) {
 
@@ -194,11 +195,11 @@
         this.averageX = this.averageX / this.counter;
         this.averageY = this.averageY / this.counter;
 
-		manager.handle( config.commands.MOVE, [ origin, touch, this.averageX, this.averageY ] );
+		manager.handle( config.commands.MOVE, [ origin, touch, this.averageX, this.averageY, this.between ] );
 
 		this.screen.clear();
 
-
+        this.between.length = 0;
         this.averageX = 0;
         this.averageY = 0;
         this.counter = 0;
