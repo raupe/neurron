@@ -7,7 +7,7 @@
         this.timeLeftString = "";
         this.appendTo = document.getElementById(appendTo);
 
-        if (!appendTo) this.appendTo = document.body;
+        if (!appendTo) this.appendTo = document.body; // if 3rd arguement is not passing, body is default to append
 
         this.loop();
     };
