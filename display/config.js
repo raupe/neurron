@@ -2,7 +2,8 @@
 window.display = {
 
 	views: {},
-    logic: {}
+    logic: {},
+    load_view: {}
 };
 
 /* configurations */
