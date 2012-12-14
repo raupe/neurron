@@ -34,9 +34,26 @@
             element.appendChild(image);
     };
 
-    display.load_view.clearPlayerNums = function(){
+    display.load_view.clearLoadScene = function(){
         display.load_view.playerNums = 0;
+        var element = document.getElementById("load_bar");
+            element.className -= "load_hide";
     };
+
+    display.load_view.hideLoadBar = function() {
+        var element = document.getElementById("load_bar");
+            element.className += "load_hide";
+    }
+
+    display.load_view.greetTeam = function() {
+        var element = document.getElementById("load_countdown_timer"),
+            greetBox = document.createElement("span");
+
+        greetBox.innerHTML = "Hi Neurrons";
+        element.appendChild(greetBox);
+    }
+
+    display.load_view.greetTeam();
 
     display.logic.load = function(){
 
