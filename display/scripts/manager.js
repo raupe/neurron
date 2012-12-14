@@ -147,7 +147,7 @@
 
         var linkBox = document.createElement('div');
         linkBox.className = "qr_link";
-        linkBox.innerHTML = '<a href="'+ qrLink +'">' + qrLink + '</a>';
+        linkBox.innerHTML = '<a target="_blank" href="'+ qrLink +'">' + qrLink + '</a>';
 
         element.insertBefore( linkBox, qrCode.nextSibling );
 	};
@@ -158,6 +158,8 @@
 	 * @return {[type]} [description]
 	 */
 	Manager.prototype.teamname = function() {
+
+		display.show( 'load' );
 
 		// show a box -> teamname will be entered
 		console.log('teamname will be entered');
@@ -183,11 +185,16 @@
 	 */
 	Manager.prototype.countdown = function ( params )  {
 
-		display.show( 'load' );
+        /*TODO: call load scene before countdown, after name input call
+         *display.load_view.hideLoadBar() to hide load bar and call display.load_view.greetTeam()
+         *when countdown starts to greet the team :) */
+		if ( display.current !== 'load' ) display.show( 'load' );
+        display.load_view.hideLoadBar();
+        display.load_view.greetTeam();
 
-		new display.Timer( params[0] * 1000, 'countdown', 'load_countdown_timer' );
+		this.timer = new display.Timer( params[0] * 1000, 'countdown', "load_countdown_timer");
+
 		display.teamname = params[1];
-
 		console.log('team-name: ', display.teamname );
 	};
 
@@ -209,7 +216,7 @@
 	 * @return {[type]}        [description]
 	 */
 	Manager.prototype.start = function ( params ) {
-
+        display.load_view.clearLoadScene();
         display.show( 'game' );
 
 		this.grid.init({

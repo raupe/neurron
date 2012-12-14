@@ -24,7 +24,6 @@
         this.distance = this.fullBarHeight + 10;
 
         this.healer = 0;
-
 		this.draw();
 	};
 
@@ -42,7 +41,7 @@
 
 		ctx.fillStyle = 'yellow';
 		ctx.font = '' + size + 'pt Comic Sans MS'; // 'italic ' + size + 'pt Comic Sans MS';
-		ctx.fillText( this.points + ' points', this.offset/5, size * 2 );
+		ctx.fillText( this.points + ' points', this.offset/6, size * 2 );
 	};
 
 	StatusManager.prototype.showLifeBars = function () {
@@ -95,10 +94,10 @@
 	StatusManager.prototype.createPanel = function ( factor ) {
 
 		var cvs = document.createElement('canvas'),
-			ctx = cvs.getContext('2d');
+			ctx = cvs.getContext('2d'),
+            container_right = document.getElementById('container-right');
 
-		this.offset = (window.innerWidth / config.factor);//-30; // TODO currently for chrome developer tools that the statusmanager doesnt shift
-
+        this.offset = container_right.offsetWidth;
 		cvs.width = this.offset;
 		cvs.height = window.innerHeight;
 
@@ -111,7 +110,7 @@
         cvs.id = 'StatusManager';
 
         // document.body.appendChild( cvs );
-        document.getElementById('container-right').appendChild( cvs );
+        container_right.appendChild( cvs );
 	};
 
 

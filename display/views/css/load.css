@@ -1,4 +1,9 @@
 .load_background {
-    width: 100%;
-    height: 80%;
+    height: 90%;
+}
+.load_background_wrapper {
+    text-align: center;
+}
+.load_hide {
+    display: none;
 }

@@ -123,6 +123,8 @@
 		e.preventDefault();
 		e.stopPropagation();
 
+        this.screen.clear();
+
 		this.tapped = true;
 
 
@@ -196,7 +198,6 @@
 
 		manager.handle( config.commands.MOVE, [ origin, touch, this.averageX, this.averageY, this.between ] );
 
-		this.screen.clear();
 
         this.between.length = 0;
         this.averageX = 0;
