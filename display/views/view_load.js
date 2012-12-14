@@ -5,7 +5,9 @@
 		var left = '<div class="load_background_wrapper">\
                     <img class="load_background" src="assets/views/load/load_background.jpg"/>\
                 </div>\
-                <div id="load_countdown_timer"></div>',
+                <div id="load_countdown_timer">\
+                    <img id="load_bar" src="assets/views/load/load.gif"/>\
+                </div>',
 
 
 
@@ -43,7 +45,7 @@
     display.load_view.hideLoadBar = function() {
         var element = document.getElementById("load_bar");
             element.className += "load_hide";
-    }
+    };
 
     display.load_view.greetTeam = function() {
         var element = document.getElementById("load_countdown_timer"),
@@ -51,9 +53,7 @@
 
         greetBox.innerHTML = "Hi Neurrons";
         element.appendChild(greetBox);
-    }
-
-    display.load_view.greetTeam();
+    };
 
     display.logic.load = function(){
 
