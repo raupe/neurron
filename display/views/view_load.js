@@ -38,8 +38,11 @@
 
     display.load_view.clearLoadScene = function(){
         display.load_view.playerNums = 0;
-        var element = document.getElementById("load_bar");
-            element.className -= "load_hide";
+        var loadBar = document.getElementById("load_bar"),
+            load_countdown_timer = document.getElementById("load_countdown_timer");
+
+        loadBar.className -= "load_hide"; // show loadBar
+        load_countdown_timer.removeChild(document.getElementById("load_greet")); // remove Team greeting
     };
 
     display.load_view.hideLoadBar = function() {
@@ -50,8 +53,9 @@
     display.load_view.greetTeam = function() {
         var element = document.getElementById("load_countdown_timer"),
             greetBox = document.createElement("span");
+            greetBox.id = "load_greet";
 
-        greetBox.innerHTML = "Hi Neurrons";
+        greetBox.innerHTML = "Hi Neurrons"; // TODO: modify with config.teamname or something like that
         element.appendChild(greetBox);
     };
 

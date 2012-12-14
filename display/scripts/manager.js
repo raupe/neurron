@@ -145,7 +145,12 @@
 
 		if ( !this.timer ) {
 
+            /*TODO: call load scene before countdown, after name input call
+             *display.load_view.hideLoadBar() to hide load bar and call display.load_view.greetTeam()
+             *when countdown starts to greet the team :) */
 			display.show( 'load' );
+            display.load_view.hideLoadBar();
+            display.load_view.greetTeam();
 			this.timer = new display.Timer( params[0] * 1000, 'countdown', "load_countdown_timer");
 
 		}
