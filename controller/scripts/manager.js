@@ -1,5 +1,9 @@
 (function(){
 
+    /**
+     * [Manager description]
+     * @param {[type]} config [description]
+     */
     var Manager = controller.Manager = function ( config ) {
 
         // default
@@ -21,23 +25,11 @@
 
 
 
-    Manager.prototype.handle = function ( action, options ) {
-
-        var commands = {
-
-            1   : this.register,
-            2   : this.move,
-            3   : this.heal
-        };
-
-        // console.log(action, options);
-
-        commands[ action ].call( this, options );
-    };
-
-
-
-
+    /**
+     * [show description]
+     * @param  {[type]} category [description]
+     * @return {[type]}          [description]
+     */
     Manager.prototype.show = function ( category ) {
 
         var params = config.boxes[ category ];
@@ -53,8 +45,10 @@
     };
 
 
-
-
+    /**
+     * [init description]
+     * @return {[type]} [description]
+     */
     Manager.prototype.init = function(){
 
         this.repeat = setInterval(function(){
@@ -65,7 +59,7 @@
 
                 this.timer = 0;
 
-                this.send( 10 ); // polling - check end
+                this.send( config.protocolCtoS.POLLING );
             }
 
         }.bind(this), 1000 );
@@ -73,12 +67,63 @@
 
 
 
+    /**
+     * [handle description]
+     * @param  {[type]} action  [description]
+     * @param  {[type]} options [description]
+     * @return {[type]}         [description]
+     */
+    Manager.prototype.handle = function ( action, options ) {
 
-    Manager.prototype.register = function(){
+        var commands = {
+
+            2   : this.teamname,
+            1   : this.register,
+            3   : this.move,
+            4   : this.heal
+        };
+
+        // console.log(action, options);
+
+        commands[ action ].call( this, options );
+    };
+
+
+    /**
+     * [teamname description]
+     * @return {[type]} [description]
+     */
+    Manager.prototype.teamname = function(){
+
+        // teamname will be entered - box = input element
+
+        setTimeout( function(){
+
+
+            // var teamname = 'test';
+            // console.log('teamname: ', teamname );
+            // this.send( config.protocolCtoS.TEAMNAME, teamname );
+
+        }.bind(this), 2000 );
+
+
+        // this.show(4); // teamform
+
+        // send first register, but with flag, so that the display can show the loading -> enter name
+        this.register( 1 );
+    };
+
+
+
+    /**
+     * [register description]
+     * @return {[type]} [description]
+     */
+    Manager.prototype.register = function( name ) {
 
         if ( this.id ) return;
 
-        this.box.hide(); // uncomment for development
+        this.box.hide(); // comment for development
 
         this.input.enable();
 
@@ -122,12 +167,16 @@
         // /* on remove */
         // document.onbeforeunload = function(){};
 
-        this.send( config.protocolCtoS.START );
+        this.send( config.protocolCtoS.REGISTER, name );
     };
 
 
 
-
+    /**
+     * [move description]
+     * @param  {[type]} params [description]
+     * @return {[type]}        [description]
+     */
     Manager.prototype.move = function ( params ) {
 
         var start = params[0],
@@ -236,27 +285,40 @@
     };
 
 
-
+    /**
+     * [heal description]
+     * @return {[type]} [description]
+     */
     Manager.prototype.heal = function(){
 
         this.send( config.protocolCtoS.HEAL );
-        console.log("heal");
     };
 
 
-    Manager.prototype.send = function ( action )  {
+    /**
+     * [send description]
+     * @param  {[type]} action [description]
+     * @param  {[type]} option [description]
+     * @return {[type]}        [description]
+     */
+    Manager.prototype.send = function ( action, option )  {
 
         this.timer = 0; // treshold
 
         this.req.open( 'POST', this.url + '?t=' + Date.now(), true );
 
-        // encode into base64, avoiding special characters like '0'
-        var data = btoa( String.fromCharCode(  this.channel, this.id, action ) );
+        // console.log( action, option );
+
+        // encode into base64, avoiding special characters like '0' // nur null nicht
+        var data = String.fromCharCode( this.channel, this.id, action ) + ( option || '' );
+
+        data = btoa( data );
 
         this.req.setRequestHeader( 'Content-Type', 'text/plain; charset=UTF-8' );
 
         this.req.send( data );
     };
+
 
 
 })();

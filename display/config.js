@@ -10,7 +10,7 @@ window.display = {
 window.config = {
 
 
-	server				: 'game.neurron.com',
+	server				: '141.45.201.22',//'game.neurron.com',
 	port				: '2020',
 
 
@@ -120,15 +120,19 @@ window.config = {
 	protocol: {
 
 		POLLING			: 0,
-
 		INIT			: 1,
-		COUNTDOWN		: 2,
-		START			: 3,
-		MOVE			: 4,
-		HEAL			: 5,
-		CREATE			: 6,
-		COLLISION		: 7,
-        END             : 8
+
+		TEAMNAME		: 2,
+		CANCEL			: 3,
+		COUNTDOWN		: 4,
+		JOINED			: 5,
+		START			: 6,
+
+		MOVE			: 7,
+		HEAL			: 8,
+		CREATE			: 9,
+		COLLISION		: 10,
+        END             : 11
 	},
 
 

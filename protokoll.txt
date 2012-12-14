@@ -50,20 +50,21 @@ Server - Display
     Aktionen:
         1 - Init
             1. Byte: channel ID                                             // Server: ok, Display: ok
-            
+
         2 - Name wird eingegeben											// Server: vllt
         3 - Abbruch															// Server: vllt
         4 - Countdown starten												// Server: vllt
         	1. Byte. length
-        	2. Name 
+        	2. Name
         5 - Spieler joined													// Server: vllt
+
         	1. Byte: Spieler ID
         	2. Byte: Spieler Farbe
         6 - Spiel starten													// Server: vllt
             1. Byte: Anzahl Spieler
             2. Byte: Anzahl Lanes
             3. - n. Byte: Position der Spieler
-            
+
         7 - Spieler Bewegung
             1. Byte: Spieler ID                                             // Server: ok, Display: ok
             2. Byte: nächste Position                                       // Server: ok, Display: ok
@@ -79,6 +80,6 @@ Server - Display
             1. Byte: Obstacle ID                                            // Server: ok, Display: ok
             2. Byte: Anzahl Spieler                                         // Server: ok, Display: ok
             3. - n. Byte: Spieler ID                                        // Server: ok, Display: ok
-       11 - Spielende														// Server: ok, Display: ok 
+       11 - Spielende														// Server: ok, Display: ok
             1. Byte: Teampunktzahl 1
             2. Byte: Teampunktzahl 2 // Pkt = Pkt1 * 256 + Pkt2 bzw. Pkt = Pkt1 << 8 + Pkt2
