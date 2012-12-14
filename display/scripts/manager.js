@@ -128,7 +128,7 @@
 
         var linkBox = document.createElement('div');
         linkBox.className = "qr_link";
-        linkBox.innerHTML = '<a href="'+ qrLink +'">' + qrLink + '</a>';
+        linkBox.innerHTML = '<a target="_blank" href="'+ qrLink +'">' + qrLink + '</a>';
 
         element.insertBefore( linkBox, qrCode.nextSibling );
 	};
