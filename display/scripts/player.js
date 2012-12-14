@@ -20,7 +20,7 @@
 		});
 	};
 
-    Player.prototype = new display.Element();
+    Player.prototype = Object.create( display.Element.prototype );
 
 
     // check: clockwise <- antiRing, anticlockwise -> ring

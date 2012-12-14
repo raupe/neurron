@@ -5,7 +5,7 @@
 		this.init( params );
 	};
 
-    Obstacle.prototype = new display.Element();
+    Obstacle.prototype = Object.create( display.Element.prototype );
 
 
     // extend Element init
