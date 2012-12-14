@@ -1,10 +1,13 @@
 (function(){
 
-    var Timer = display.Timer = function ( milliseconds, type ){
+    var Timer = display.Timer = function ( milliseconds, type , appendTo){
 
         this.timeLeft = milliseconds;
         this.type = type;
         this.timeLeftString = "";
+        this.appendTo = document.getElementById(appendTo);
+
+        if (!appendTo) this.appendTo = document.body;
 
         this.loop();
     };
@@ -23,7 +26,7 @@
         } else {
 
             var timerContainer = document.getElementById(this.type);
-            document.body.removeChild(timerContainer);
+//            this.appendTo.removeChild(timerContainer);
         }
     };
 
@@ -50,7 +53,7 @@
             timerContainer.className = this.type;
             timerContainer.innerHTML = this.timeLeftString;
 
-            document.body.appendChild( timerContainer );
+            this.appendTo.appendChild( timerContainer );
 
         } else {
 
