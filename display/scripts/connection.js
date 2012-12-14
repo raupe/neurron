@@ -45,7 +45,7 @@
 				i, l;								// iterator
 
 
-			if ( action === config.protocol.POLLING ) return;
+	/* 0 */	if ( action === config.protocol.POLLING ) return;
 
 
 	/* 1 */	if ( action === config.protocol.INIT ) {
@@ -53,31 +53,38 @@
 				options[0] = data.charCodeAt(1); // channel ID
 			}
 
+	/* 2 - team name will be entered */
 
-			if ( action === config.protocol.COUNTDOWN ) {
+	/* 3 - cancel the game */
 
-				options[0] = data.charCodeAt(1); // time
-				options[1] = data.charCodeAt(2); // playerID
+	/* 4 */if ( action === config.protocol.COUNTDOWN ) {
+
+				options[0] = data.charCodeAt(1);	// time
+				options[1] = data.substr(1);		// teamname
+			}
+
+	/* 5 */ if ( action === config.protocol.JOINED ) {
+
+				options[0] = data.charCodeAt(1); // playerID
+				options[1] = data.charCodeAt(2); // playerColor
 			}
 
 
-	/* 3 */	if ( action === config.protocol.START ) {
+	/* 6 */	if ( action === config.protocol.START ) {
 
-				l = 2 * data.charCodeAt(1); // amount of players
+				l = data.charCodeAt(1);				// amount of players
 
-				options[0] = data.charCodeAt(2); // amount of lanes
-
+				options[0] = data.charCodeAt(2);	// amount of lanes
 
 				var players = [],
 					counter = 1;
 
-				for ( i = 3; i < l+3; i += 2 ) {
+				for ( i = 3; i < l+3; i++ ) {
 
 					players.push({
 
 						id		: counter++,
-						pos		: data.charCodeAt(  i),
-						color	: config.playerColors[data.charCodeAt(1+i)] // ab 1, siehe config.playerColors
+						pos		: data.charCodeAt(i)
 					});
 				}
 
@@ -85,14 +92,14 @@
 			}
 
 
-	/* 4 */	if ( action === config.protocol.MOVE ) {
+	/* 7 */	if ( action === config.protocol.MOVE ) {
 
 				options[0] = data.charCodeAt(1); // player ID
 				options[1] = data.charCodeAt(2); // next pos
 			}
 
 
-	/* 5 */	if ( action === config.protocol.HEAL ) {
+	/* 8 */	if ( action === config.protocol.HEAL ) {
 
 				options[0] = data.charCodeAt(1); // player ID
 
@@ -109,7 +116,7 @@
 			}
 
 
-	/* 6 */	if ( action === config.protocol.CREATE ) {
+	/* 9 */	if ( action === config.protocol.CREATE ) {
 
 				options[0] = data.charCodeAt(1); // obstacle ID
 				options[1] = data.charCodeAt(2); // category
@@ -117,7 +124,7 @@
 			}
 
 
-	/* 7 */	if ( action === config.protocol.COLLISION ) {
+	/* 10 */	if ( action === config.protocol.COLLISION ) {
 
 				options[0] = data.charCodeAt(1); // obstacle ID
 
@@ -133,9 +140,9 @@
 				options[1] = playerIds;
 			}
 
-	/* 8 */	if ( action === config.protocol.END ) {
+	/* 11 */if ( action === config.protocol.END ) {
 
-                options[0] = (data.charCodeAt(1) << 8) + data.charCodeAt(2); // tema points
+                options[0] = (data.charCodeAt(1) << 8) + data.charCodeAt(2); // team points
             }
 
 
