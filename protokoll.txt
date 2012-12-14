@@ -2,39 +2,41 @@ Controller - Server
 
     [channel] [controllerId] [aktionen]
 
-        1. Byte: Channel                1 - 255                             // Server: ok
-        2. Byte: ControllerId           1 - 255                             // Server: ok
-        3. Byte: Aktion                 1 - 255                             // Server: ok
+        0. Byte: Channel                1 - 255                             // Server: ok, Controller: ok
+        1. Byte: ControllerId           1 - 255                             // Server: ok, Controller: ok
+        2. Byte: Aktion                 1 - 255                             // Server: ok, Controller: ok
 
         immer:
                 0 - unbekannt
 
         Aktionen:
-        1 - Spieler erstellen vom Controller || Farbe und Nummer wird vom Server geschickt // Server: ok
-        2 - Spieler wird entfernt
-        3 - rechts                                                          // Server: ok
-        4 - links                                                           // Server: ok
-        5 - oben
-        6 - unten
-        7 - Uhrzeigersinn
-        8 - gegen Uhrzeigersinn
-        9 - heal
-        10 - Polling                                                         // Server: ok
+        1 - Spieler erstellen vom Controller || Farbe und Nummer wird vom Server geschickt
+        	3. Byte: with Name? 1 = ja, 0 = nein
+        2 - Teamname
+        	3 - n. Byte: Name (Base 64)
+        3 - rechts                                                          // Server: ok, Controller: ok
+        4 - links                                                           // Server: ok, Controller: ok
+        5 - oben                                                            // Server: ok, Controller: ok
+        6 - unten                                                           // Server: ok, Controller: ok
+        7 - Uhrzeigersinn                                                   // Server: ok, Controller: ok
+        8 - gegen Uhrzeigersinn                                             // Server: ok, Controller: ok
+        9 - heal                                                           	// Server: ok, Controller: ok
+        10 - Polling                                                        // Server: ok, Controller: ok
 
 
 Server - Controller
-        0. Byte: Typ                                                        // Server: ok
+        0. Byte: Typ                                                        // Server: ok, Controller: ok
 
         Typ:
         1 - Start
-            1. Byte: ID                                                     // Server: ok
-            2. Byte: Farbe                                                  // Server: ok
+            1. Byte: ID                                                     // Server: ok, Controller: ok
+            2. Byte: Farbe                                                  // Server: ok, Controller: ok
         2 - Status:
             1. Byte: Status:
-                0 - OK                                                      // Server: ok
-                1 - Spiel zuende
-                2 - Anmeldung wenn Spiel schon läuft	    		    	// Server: ok
-                3 - Spiel nicht gefunden                                    // Server: ok
+                0 - OK                                                      // Server: ok, Controller: ok
+                1 - Spiel zuende											// Server: ok, Controller: ok
+                2 - Anmeldung wenn Spiel schon läuft	    		    	// Server: ok, Controller: ok
+                3 - Spiel nicht gefunden                                    // Server: ok, Controller: ok
 
 
 
@@ -42,37 +44,41 @@ Server - Controller
 Server - Display
 
     [aktion] [daten]
-    0. Byte: Aktion                                                         // Server: ok
+    0. Byte: Aktion                                                         // Server: ok, Display: ok
     nächste Bytes: Daten
 
     Aktionen:
         1 - Init
-            1. Byte: channel ID                                             // Server: ok
-//      2 - Countdown starten
-//          1. Byte: length                                                 // Server: ok
-        2 - Spieler joined, Countdown starten
+            1. Byte: channel ID                                             // Server: ok, Display: ok
+            
+        2 - Name wird eingegeben
+        3 - Abbruch
+        4 - Countdown starten
         	1. Byte. length
-        	2. Farbe des Spielers
-        3 - Spiel starten
-            1. Byte: Anzahl Spieler                                         // Server: ok
+        	2. Name 
+        5 - Spieler joined
+        	1. Byte: Spieler ID
+        	2. Byte: Spieler Farbe
+        6 - Spiel starten
+            1. Byte: Anzahl Spieler
             2. Byte: Anzahl Lanes
-            3. - 2n. Byte: Position der Spieler                             // Server: ok
-            4. - 2n+1. Byte: Farbe der Spieler                              // Server: ok
-        4 - Spieler Bewegung
-            1. Byte: Spieler ID                                             // Server: ok
-            2. Byte: nächste Position                                       // Server: ok
-        5 - Heal
+            3. - n. Byte: Position der Spieler
+            
+        7 - Spieler Bewegung
+            1. Byte: Spieler ID                                             // Server: ok, Display: ok
+            2. Byte: nächste Position                                       // Server: ok, Display: ok
+        8 - Heal															// Server: ok, Display: ok
             1. Byte: Healer: Spieler ID
             2. Byte: Anzahl Target
             3. - n. Byte: Target: Spieler ID
-        6 - Create Obstacle
-            1. Byte: Obstcle ID                                             // Server: ok
-            2. Byte: Kategorie                                              // Server: ok
-            3. Byte: Position                                               // Server: ok
-        7   - Collision
-            1. Byte: Obstacle ID                                            // Server: vllt
-            2. Byte: Anzahl Spieler                                         // Server: vllt
-            3. - n. Byte: Spieler ID                                        // Server: vllt
-        8 - Spielende
+        9 - Create Obstacle
+            1. Byte: Obstcle ID                                             // Server: ok, Display: ok
+            2. Byte: Kategorie                                              // Server: ok, Display: ok
+            3. Byte: Position                                               // Server: ok, Display: ok
+       10 - Collision
+            1. Byte: Obstacle ID                                            // Server: ok, Display: ok
+            2. Byte: Anzahl Spieler                                         // Server: ok, Display: ok
+            3. - n. Byte: Spieler ID                                        // Server: ok, Display: ok
+       11 - Spielende														// Server: ok, Display: ok 
             1. Byte: Teampunktzahl 1
             2. Byte: Teampunktzahl 2 // Pkt = Pkt1 * 256 + Pkt2 bzw. Pkt = Pkt1 << 8 + Pkt2
