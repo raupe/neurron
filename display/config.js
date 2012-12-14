@@ -16,8 +16,7 @@ window.config = {
 
     errorURL            :  'http://neurron.com/notify/error.php',
 
-    // countdown           : 15,
-    gameTime            : 2,
+    gameTime            : 2,		// Minutes
 
 
     factor				: 4,		// offset for statusbar and grid
@@ -114,6 +113,8 @@ window.config = {
 		}
 	},
 
+
+	viewAssets: 'assets/views/',
 
 
 	// magic numbers
