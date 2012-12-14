@@ -158,8 +158,8 @@
 
 	/* playerlist */
 	Manager.prototype.start = function ( params ) {
-
-        display.show( 'game' );
+        display.load_view.clearPlayerNums();
+//        display.show( 'game' );
 		// reset timer
 		this.timer = null;
 
