@@ -82,18 +82,26 @@ uchar sv::Grid::GetPos(uchar pos, uchar dir)
 	switch(dir)
 	{
 	case eDir_Rigth:
+		if((pos + 1) * 2 == m_NumberLanes || pos + 1 == m_NumberLanes)
+			return pos;
 		if(pos < m_NumberLanes / 2)
 			return GetPosAntiClockwise(pos);
 		return GetPosClockwise(pos);
 	case eDir_Left:
+		if((pos + 1) * 2 == m_NumberLanes || pos + 1 == m_NumberLanes)
+			return pos;
 		if(pos < m_NumberLanes / 2)
 			return GetPosClockwise(pos);
 		return GetPosAntiClockwise(pos);
 	case eDir_Up:
+		if((pos + 1) * 4 == m_NumberLanes || (pos + 1) * 4 == m_NumberLanes * 3)
+			return pos;
 		if(pos >= m_NumberLanes/4 && pos < m_NumberLanes*3/4)
 			return GetPosClockwise(pos);
 		return GetPosAntiClockwise(pos);
 	case eDir_Down:
+		if((pos + 1) * 4 == m_NumberLanes || (pos + 1) * 4 == m_NumberLanes * 3)
+			return pos;
 		if(pos >= m_NumberLanes/4 && pos < m_NumberLanes*3/4)
 			return GetPosAntiClockwise(pos);
 		return GetPosClockwise(pos);
