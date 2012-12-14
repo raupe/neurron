@@ -95,11 +95,10 @@
 	StatusManager.prototype.createPanel = function ( factor ) {
 
 		var cvs = document.createElement('canvas'),
-			ctx = cvs.getContext('2d');
+			ctx = cvs.getContext('2d'),
+            container_right = document.getElementById('container-right');;
 
-		this.offset = (window.innerWidth / config.factor);//-30; // TODO currently for chrome developer tools that the statusmanager doesnt shift
-
-		cvs.width = this.offset;
+		cvs.width = container_right.offsetWidth;
 		cvs.height = window.innerHeight;
 
 		this.start = this.screen.cvs.width - this.offset;
@@ -111,7 +110,7 @@
         cvs.id = 'StatusManager';
 
         // document.body.appendChild( cvs );
-        document.getElementById('container-right').appendChild( cvs );
+        container_right.appendChild( cvs );
 	};
 
 
