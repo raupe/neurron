@@ -55,7 +55,7 @@
             greetBox = document.createElement("span");
             greetBox.id = "load_greet";
 
-        greetBox.innerHTML = "Hi " + display.teamname + "Neurrons"; // TODO: modify with config.teamname or something like that
+        greetBox.innerHTML = "Hi " + display.teamname; // TODO: modify with config.teamname or something like that
         element.appendChild(greetBox);
     };
 
