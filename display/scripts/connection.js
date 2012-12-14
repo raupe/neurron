@@ -30,7 +30,7 @@
 
 			req.setRequestHeader( 'Content-Type', 'text/plain; charset=UTF-8' );
 
-			req.send( ': Socket - closed :' );
+//			req.send( ': Socket - closed :' );
 		};
 
 
