@@ -1,5 +1,8 @@
 (function(){
 
+	/**
+	 * [Input description]
+	 */
 	var Input = controller.Input = function() {
 
 		this.cvs = this.screen.cvs;
@@ -25,12 +28,10 @@
 
 	Input.prototype.init = function(){
 
-
 		if ( !( 'ontouchstart' in window ) ) {
 
 			this.handleKeyboard();
 		}
-
 	};
 
 
@@ -58,7 +59,7 @@
 
 		if ( 'ontouchstart' in window ) {
 
-			 this.setStyle();
+			this.setStyle();
 
 			this.handleTouch();
 		}
