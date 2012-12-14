@@ -45,32 +45,32 @@
 				i, l;								// iterator
 
 
-	/* 0 */	if ( action === config.protocol.POLLING ) return;
+	/*  0 */if ( action === config.protocol.POLLING ) return;
 
 
-	/* 1 */	if ( action === config.protocol.INIT ) {
+	/*  1 */if ( action === config.protocol.INIT ) {
 
 				options[0] = data.charCodeAt(1); // channel ID
 			}
 
-	/* 2 - team name will be entered */
+	/*  2 - team name will be entered */
 
-	/* 3 - cancel the game */
+	/*  3 - cancel the game */
 
-	/* 4 */if ( action === config.protocol.COUNTDOWN ) {
+	/*  4 */if ( action === config.protocol.COUNTDOWN ) {
 
 				options[0] = data.charCodeAt(1);	// time
-				options[1] = data.substr(1);		// teamname
+				options[1] = data.substr(2);		// teamname
 			}
 
-	/* 5 */ if ( action === config.protocol.JOINED ) {
+	/*  5 */if ( action === config.protocol.JOINED ) {
 
 				options[0] = data.charCodeAt(1); // playerID
 				options[1] = data.charCodeAt(2); // playerColor
 			}
 
 
-	/* 6 */	if ( action === config.protocol.START ) {
+	/*  6 */if ( action === config.protocol.START ) {
 
 				l = data.charCodeAt(1);				// amount of players
 
@@ -92,14 +92,14 @@
 			}
 
 
-	/* 7 */	if ( action === config.protocol.MOVE ) {
+	/*  7 */if ( action === config.protocol.MOVE ) {
 
 				options[0] = data.charCodeAt(1); // player ID
 				options[1] = data.charCodeAt(2); // next pos
 			}
 
 
-	/* 8 */	if ( action === config.protocol.HEAL ) {
+	/*  8 */if ( action === config.protocol.HEAL ) {
 
 				options[0] = data.charCodeAt(1); // player ID
 
@@ -116,7 +116,7 @@
 			}
 
 
-	/* 9 */	if ( action === config.protocol.CREATE ) {
+	/*  9 */if ( action === config.protocol.CREATE ) {
 
 				options[0] = data.charCodeAt(1); // obstacle ID
 				options[1] = data.charCodeAt(2); // category
@@ -124,7 +124,7 @@
 			}
 
 
-	/* 10 */	if ( action === config.protocol.COLLISION ) {
+	/* 10 */if ( action === config.protocol.COLLISION ) {
 
 				options[0] = data.charCodeAt(1); // obstacle ID
 
