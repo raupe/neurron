@@ -77,8 +77,8 @@
 
         var commands = {
 
-            2   : this.teamname,
-            1   : this.register,
+            1   : this.teamname,
+            2   : this.register,
             3   : this.move,
             4   : this.heal
         };
@@ -100,9 +100,9 @@
         setTimeout( function(){
 
 
-            // var teamname = 'test';
-            // console.log('teamname: ', teamname );
-            // this.send( config.protocolCtoS.TEAMNAME, teamname );
+            var teamname = 'test';
+            console.log('teamname: ', teamname );
+            this.send( config.protocolCtoS.TEAMNAME, teamname );
 
         }.bind(this), 2000 );
 
