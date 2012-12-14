@@ -113,7 +113,7 @@
 
         var qrLink = 'http://game.neurron.com/controller/?' + channelId,
 
-            element = document.getElementById('qrcode'),
+            element = document.getElementById('qr_code'),
 
             qrCode = showQRCode( qrLink, {r: 0, g: 0, b: 0});
 
@@ -133,12 +133,21 @@
         element.insertBefore( linkBox, qrCode.nextSibling );
 	};
 
+
+	Manager.prototype.name = function ( params ) {
+
+		// receive name + show
+	};
+
+
 	/* playerId */
 	Manager.prototype.countdown = function ( params )  {
 
 		if ( !this.timer ) {
 
 			this.timer = new display.Timer( params[0] * 1000, 'countdown' );
+
+			display.show( 'load' );
 		}
 
 		// action: show color
@@ -151,9 +160,6 @@
 
 		// reset timer
 		this.timer = null;
-
-//        var qrcode = document.getElementById("qrcode");
-//        qrcode.style.display = "none";
 
 		this.grid.init({
 
@@ -218,9 +224,10 @@
         this.obstaclePool.pool.length = 0;
         this.playerList.length = 0;
 
-
         this.statusManager.showEnd(params[0]);
         this.statusManager.clear();
+
+        display.show( 'end' );
 	};
 
 
