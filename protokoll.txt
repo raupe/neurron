@@ -11,8 +11,8 @@ Controller - Server
 
         Aktionen:
         1 - Spieler erstellen vom Controller || Farbe und Nummer wird vom Server geschickt
-            3. Byte: with Name? 1 = ja, 0 = nein
-        2 - Teamname
+        	3. Byte: with Name? 1 = ja, 0 = nein							// Server: vllt
+        2 - Teamname														// Server: vllt
         	3 - n. Byte: Name (Base 64)
         3 - rechts                                                          // Server: ok, Controller: ok
         4 - links                                                           // Server: ok, Controller: ok
@@ -51,15 +51,16 @@ Server - Display
         1 - Init
             1. Byte: channel ID                                             // Server: ok, Display: ok
 
-        2 - Name wird eingegeben
-        3 - Abbruch
-        4 - Countdown starten
+        2 - Name wird eingegeben											// Server: vllt
+        3 - Abbruch															// Server: vllt
+        4 - Countdown starten												// Server: vllt
         	1. Byte. length
         	2. Name
-        5 - Spieler joined
+        5 - Spieler joined													// Server: vllt
+
         	1. Byte: Spieler ID
         	2. Byte: Spieler Farbe
-        6 - Spiel starten
+        6 - Spiel starten													// Server: vllt
             1. Byte: Anzahl Spieler
             2. Byte: Anzahl Lanes
             3. - n. Byte: Position der Spieler

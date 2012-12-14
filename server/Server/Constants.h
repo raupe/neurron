@@ -5,6 +5,7 @@
 
 // Game
 #define POLLING_RATE		 10000000	// 20 sec
+#define	NAME_TIME			120000000	//  2 min
 #define COUNTDOWN			 15000000	// 15 sec
 #define PLAY_TIME			120000000	//  2 min
 
