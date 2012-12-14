@@ -145,19 +145,21 @@
 
 		if ( !this.timer ) {
 
-			this.timer = new display.Timer( params[0] * 1000, 'countdown' );
-
 			display.show( 'load' );
+			this.timer = new display.Timer( params[0] * 1000, 'countdown', "load_countdown_timer");
+
 		}
 
 		// action: show color
 		console.log('[player]: ', params[1] );
+        display.load_view.showNewPlayer();
 	};
 
 
 	/* playerlist */
 	Manager.prototype.start = function ( params ) {
 
+        display.show( 'game' );
 		// reset timer
 		this.timer = null;
 
