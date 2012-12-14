@@ -24,7 +24,6 @@
         this.distance = this.fullBarHeight + 10;
 
         this.healer = 0;
-
 		this.draw();
 	};
 
@@ -42,7 +41,7 @@
 
 		ctx.fillStyle = 'yellow';
 		ctx.font = '' + size + 'pt Comic Sans MS'; // 'italic ' + size + 'pt Comic Sans MS';
-		ctx.fillText( this.points + ' points', this.offset/5, size * 2 );
+		ctx.fillText( this.points + ' points', this.offset/6, size * 2 );
 	};
 
 	StatusManager.prototype.showLifeBars = function () {
@@ -98,7 +97,8 @@
 			ctx = cvs.getContext('2d'),
             container_right = document.getElementById('container-right');;
 
-		cvs.width = container_right.offsetWidth;
+        this.offset = container_right.offsetWidth;
+		cvs.width = this.offset;
 		cvs.height = window.innerHeight;
 
 		this.start = this.screen.cvs.width - this.offset;
