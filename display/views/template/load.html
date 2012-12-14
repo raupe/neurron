@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <link rel="stylesheet" type="text/css" href="css/normalize.css">
-        <link rel="stylesheet" type="text/css" href="css/load.css">
+        <link rel="stylesheet" type="text/css" href="../css/normalize.css">
+        <link rel="stylesheet" type="text/css" href="../css/start.css">
+        <link rel="stylesheet" type="text/css" href="../css/game.css">
+        <link rel="stylesheet" type="text/css" href="../css/fix.css">
+        <link rel="stylesheet" type="text/css" href="../css/load.css">
     </head>
     <body>
         <div class="content_wrapper">
             <div id="container-left" class="main_wrapper">
-                <img class="load_background" src="assets/views/load/load_background.jpg"/>
+                <img class="load_background" src="../../assets/views/load/load_background.jpg"/>
+                <div id="load_countdown_timer"></div>
             </div>
-            <div id="container-right" class="side_wrapper"></div>
+            <div id="container-right" class="side_wrapper">
+                <div id="load_register_status">
+
+                </div>
+            </div>
         </div>
         <script src="http://game.neurron.com/display/scripts/_libs/jquery-1.8.3.min.js"></script>
-        <script src="view_load.js"></script>
+        <script src="../../config.js"></script>
+        <script src="../view_load.js"></script>
     </body>
 </html>
