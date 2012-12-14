@@ -2,6 +2,7 @@
 #include "InputMsg.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 sv::InputMsg::InputMsg()
 : m_Data(0)
