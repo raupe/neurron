@@ -42,40 +42,68 @@ void sv::InitMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
 	Visit(m_Channel, buffer, pos, length);
 }
 
-sv::JoinCountdownMsg::JoinCountdownMsg(uchar length, uchar color)
-: Msg(eMsgType_JoinCountdown)
-, m_Length(length)
-, m_Color(color)
+sv::NameMsg::NameMsg()
+: Msg(eMsgType_Name)
 {
 }
 
-void sv::JoinCountdownMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
+void sv::NameMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
+{
+	Visit(m_Type, buffer, pos, length);
+}
+
+sv::AbortMsg::AbortMsg()
+: Msg(eMsgType_Abort)
+{
+}
+
+void sv::AbortMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
+{
+	Visit(m_Type, buffer, pos, length);
+}
+
+sv::CountdownMsg::CountdownMsg(uchar length, const std::string& name)
+: Msg(eMsgType_Countdown)
+, m_Length(length)
+, m_Name(name)
+{
+}
+
+void sv::CountdownMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
 {
 	Visit(m_Type, buffer, pos, length);
 	
 	Visit(m_Length, buffer, pos, length);
+	for(uint i=0; i<m_Name.length(); ++i)
+		Visit(m_Name[i], buffer, pos, length);
+}
+
+sv::JoinMsg::JoinMsg(uchar id, uchar color)
+: Msg(eMsgType_Join)
+, m_Id(id)
+, m_Color(color)
+{
+}
+
+void sv::JoinMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
+{
+	Visit(m_Type, buffer, pos, length);
+	
+	Visit(m_Id, buffer, pos, length);
 	Visit(m_Color, buffer, pos, length);
 }
 
-sv::StartMsg::StartMsg(uchar pos, uchar lanes)
+sv::StartMsg::StartMsg(uchar number, uchar lanes)
 : Msg(eMsgType_Start)
-, m_Number(pos)
+, m_Number(number)
 , m_NumberLanes(lanes)
 {
-	m_Colors = (uchar*) malloc(m_Number * sizeof(uchar));
 	m_Pos = (uchar*) malloc(m_Number * sizeof(uchar));
 }
 
 sv::StartMsg::~StartMsg()
 {
-	free(m_Colors);
 	free(m_Pos);
-}
-
-void sv::StartMsg::SetColors(uchar* colors)
-{
-	for(uint i=0; i< m_Number; ++i)
-		m_Colors[i] = colors[i];
 }
 
 void sv::StartMsg::SetPos(uchar* pos)
@@ -93,7 +121,6 @@ void sv::StartMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
 	for(uint i=0; i< m_Number; ++i)
 	{
 		Visit(m_Pos[i], buffer, pos, length);
-		Visit(m_Colors[i], buffer, pos, length);
 	}
 }
 

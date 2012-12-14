@@ -22,24 +22,19 @@ namespace sv
 		enum EGameStatus
 		{
 			eGameStatus_Wait,
+			eGameStatus_Name,
 			eGameStatus_Countdown,
 			eGameStatus_Run,
 		};
 
 	public:
 		void				Init(uint id, int socket);
-		void				Reset();
-		void				Start();
 		void				Update();
-		void				End();
 		
 		uchar				GetId() { return m_Id; }
 		int					GetSocket() { return m_Socket; }
 
 		void				HandleMsg(InputMsg* msg);
-		void				HandleStartMsg(InputMsg* msg);
-		void				HandleMoveMsg(InputMsg* msg, uchar dir);
-		void				HandleHealMsg(InputMsg* msg);
 
 		void				SendMsg(Msg* msg);
 		
@@ -57,19 +52,27 @@ namespace sv
 		void				InitTime();
 		ulong				GetDeltaTime();
 
+		void				HandleStartMsg(InputMsg* msg);
+		void				HandleNameMsg(InputMsg* msg);
+		void				HandleMoveMsg(InputMsg* msg, uchar dir);
+		void				HandleHealMsg(InputMsg* msg);
+		
+		void				StartName();
+		void				StartCountdown();
+		void				Start();
+		void				End();
+		void				Abort();
+
 		// general
 		uchar				m_Id;
+		std::string			m_Name;
 		uchar				m_Status;
 		PlayerManager*		m_PlayerManager;
 		ObstacleManager*	m_ObstacleManager;
 		StatusManager*		m_StatusManager;
 		Grid*				m_Grid;
 
-		// countdown
-		ulong				m_Countdown;
-
-		// run
-		ulong				m_RunTime;
+		ulong				m_Duration;
 
 		// connection
 		int					m_Socket;

@@ -46,7 +46,7 @@ void sv::PlayerManager::Update(ulong deltaTime)
 sv::Player* sv::PlayerManager::AddPlayer()
 {
 	uint id = m_Player.size()+1;
-	if(id == PLAYER_MAX)
+	if(id > PLAYER_MAX)
 		return 0;
 
 	Player* player = S_NEW Player();

@@ -9,9 +9,10 @@ var config = {
 
 	boxes: {
 
-		1			: [ 'button'  , 'Start a new Game' ],
-		2			: [ 'label'   , 'The Game is already running' ],
-		3			: [ 'label'   , 'Game not found' ]
+		1			: [ 'button'  , 'Start a new game' ],
+		2			: [ 'label'   , 'The game is already running' ],
+		3			: [ 'label'   , 'Game not found' ],
+        4           : [ 'form'    , 'Enter a teamname:' ]
 	},
 
     pollingTimer    : 5,
@@ -19,9 +20,10 @@ var config = {
 
 	commands:	{
 
-		REGISTER	: 1,
-		MOVE		: 2,
-		HEAL		: 3
+        TEAMNAME    : 1,
+		REGISTER	: 2,
+		MOVE		: 3,
+		HEAL		: 4
 	},
 
 
@@ -31,10 +33,11 @@ var config = {
 		STATUS		: 2
 	},
 
+
     protocolCtoS: {
 
-		START           : 1,
-        DELETE          : 2,
+		REGISTER        : 1,
+        TEAMNAME        : 2,
         RIGHT           : 3,
         LEFT            : 4,
         TOP             : 5,

@@ -9,8 +9,13 @@ namespace sv
 	{
 		eMsgType_Polling,
 		eMsgType_Init = 1,
-		eMsgType_JoinCountdown,
+
+		eMsgType_Name,
+		eMsgType_Abort,
+		eMsgType_Countdown,
+		eMsgType_Join,
 		eMsgType_Start,
+
 		eMsgType_Move,
 		eMsgType_Heal,
 		eMsgType_Obstacle,
@@ -58,15 +63,45 @@ namespace sv
 		uchar			m_Channel;
 	};
 
-	class JoinCountdownMsg : public Msg
+	class NameMsg : public Msg
 	{
 	public:
-		JoinCountdownMsg(uchar length, uchar color);
-		virtual ~JoinCountdownMsg() {}
+		NameMsg();
+		virtual ~NameMsg() {}
+
+		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
+	};
+
+	class AbortMsg : public Msg
+	{
+	public:
+		AbortMsg();
+		virtual ~AbortMsg() {}
+
+		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
+	};
+
+	class CountdownMsg : public Msg
+	{
+	public:
+		CountdownMsg(uchar length, const std::string& name);
+		virtual ~CountdownMsg() {}
 
 		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
 	private:
 		uchar			m_Length;
+		std::string		m_Name;
+	};
+
+	class JoinMsg : public Msg
+	{
+	public:
+		JoinMsg(uchar id, uchar color);
+		virtual ~JoinMsg() {}
+
+		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
+	private:
+		uchar			m_Id;
 		uchar			m_Color;
 	};
 
@@ -78,13 +113,11 @@ namespace sv
 
 		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
 
-		void			SetColors(uchar* colors);
 		void			SetPos(uchar* pos);
 
 	private:
 		uchar			m_Number;
 		uchar			m_NumberLanes;
-		uchar*			m_Colors;
 		uchar*			m_Pos;
 	};
 
@@ -176,7 +209,7 @@ namespace sv
 		{
 			eResponseStatus_Ok,
 			eResponseStatus_NotRunning,
-			eResponseStatus_Failed,
+			eResponseStatus_AlreadyRunning,
 			eResponseStatus_NoGame,
 		};
 

@@ -2,7 +2,7 @@
 
 	var Player = display.Player = function ( params ) {
 
-		this.type = 'player_'+params.id;
+		this.type = 'player_' + params.id;
 
         this.velocity = config.player.velocity;
 
@@ -16,7 +16,7 @@
 
 			id		: params.id,
 			pos		: params.pos,
-			color	: [ params.color.r, params.color.g, params.color.b ]
+			color	: config.playerColors[ params.id ]
 		});
 	};
 
@@ -85,7 +85,6 @@
     Player.prototype.revive = function() {
 
         this.alive = true;
-        this.colorize();
         this.energy = 100;
     };
 
