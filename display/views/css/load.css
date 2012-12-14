@@ -4,3 +4,6 @@
 .load_background_wrapper {
     text-align: center;
 }
+.load_hide {
+    display: none;
+}
