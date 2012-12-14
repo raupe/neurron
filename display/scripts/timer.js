@@ -7,7 +7,7 @@
         this.timeLeftString = "";
         this.appendTo = document.getElementById(appendTo);
 
-        if (!appendTo) this.appendTo = document.body;
+        if (!appendTo) this.appendTo = document.body; // if 3rd arguement is not passing, body is default to append
 
         this.loop();
     };
@@ -26,7 +26,7 @@
         } else {
 
             var timerContainer = document.getElementById(this.type);
-//            this.appendTo.removeChild(timerContainer);
+            this.appendTo.removeChild(timerContainer);
         }
     };
 
