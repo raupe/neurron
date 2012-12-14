@@ -235,16 +235,22 @@ void sv::ObstacleManager::HandleCollision(Obstacle* obstacle)
 
 void sv::ObstacleManager::ParseLevel(){
 	char dir[1024];
-	GetWorkingDir(dir, sizeof(dir));
+#ifdef WIN32
+	GetModuleFileName(0, dir, sizeof(dir));
+#else
+	readlink("/proc/self/exe", dir, sizeof(dir))
+#endif
 
-	int pos = strlen(dir) - 2;
+	int pos = strlen(dir) - 1;
 	while(pos >= 0 && dir[pos] != '/' && dir[pos] != '\\')
 		pos--;
+
+	char seperator = dir[pos];
 	
 #ifdef WIN32
-	sprintf_s(dir + pos + 1, sizeof(dir) - pos - 1, "%s%c%s", "Level", dir[pos], "default.lvl");
+	sprintf_s(dir + pos + 1, sizeof(dir) - pos - 1, "..%cLevel%cdefault.lvl", seperator, seperator);
 #else
-	sprintf(dir + pos + 1, "%s%c%s", "Level", dir[pos], "default.lvl");
+	sprintf(dir + pos + 1, "..%cLevel%cdefault.lvl", seperator, seperator);
 #endif
 
 	std::ifstream inFile;

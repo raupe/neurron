@@ -24,7 +24,7 @@ typedef unsigned long ulong;
 #define DEBUG_MSG false
 #define DEBUG_WEBSOCKET false
 #define DEBUG_TIME false
-#define DEBUG_FLOW false
+#define DEBUG_FLOW true
 #define DEBUG_MOVEMENT false
 #define DEBUG_OBSTACLES false
 #define DEBUG_POINTS false
@@ -41,10 +41,10 @@ typedef unsigned long ulong;
 #define LOG(x,y) if(x) sv::Output::Print(y);
 
 #ifdef WIN32
-#define LOG1(x,y,a) if(x) { char buf[1024]; sprintf_s(buf,y,a); sv::Output::Print(buf); }
+#define LOG1(x,y,a) if(x) { char buf[1024]; sprintf_s(buf,sizeof(buf),y,a); sv::Output::Print(buf); }
 #define LOG2(x,y,a,b) if(x) { char buf[1024]; sprintf_s(buf,y,a,b); sv::Output::Print(buf); }
 #else // WIN32
-#define LOG1(x,y,a) if(x) { char buf[1024]; sprintf(buf,y,a); sv::Output::Print(buf); }
+#define LOG1(x,y,a) if(x) { char buf[1024]; sprintf(buf,sizeof(buf),y,a); sv::Output::Print(buf); }
 #define LOG2(x,y,a,b) if(x) { char buf[1024]; sprintf(buf,y,a,b); sv::Output::Print(buf); }
 #endif // WIN32
 
