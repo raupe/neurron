@@ -81,10 +81,12 @@
     Box.prototype.set = function( type, text ){
 
         var box = document.getElementById('box');
+            // form = document.getElementById('form');
 
-        box.className = ( type === 'button' ) ? 'button' : 'label';
+        // if (form) form.className += ' hide';
 
-        box.className += ' show';
+        // box.className = ( type === 'button' ) ? 'button' : 'label';
+        box.className = type + ' show';
 
         document.getElementById('text').textContent = text;
 
@@ -94,12 +96,24 @@
 
             this.addListener();
         }
+
+        // if ( type === 'form' ) {
+
+        //     if ( !form ) {
+
+        //         form = document.createElement('input');
+        //         form.type = 'name';
+        //         box.appendChild( form );
+        //     }
+
+        //     form.className = 'form show';
+        // }
     };
 
 
     Box.prototype.hide = function(){
 
-       document.getElementById('box').className = ' hide';
+       document.getElementById('box').className = ' hide'; // +=
     };
 
 
