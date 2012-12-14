@@ -194,8 +194,7 @@
 
 		this.timer = new display.Timer( params[0] * 1000, 'countdown', "load_countdown_timer");
 
-		display.teamname = params[1];
-		console.log('team-name: ', display.teamname );
+		display.teamname = params[1] ? 'Team ' + params[1] : 'Neurrons';
 	};
 
 
@@ -303,7 +302,7 @@
      */
     Manager.prototype.end = function ( params ) {
 
-        display.show( 'end' );
+        // display.show( 'end' );
 
         this.runningGame = false;
         this.screen.clear();
