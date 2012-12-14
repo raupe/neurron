@@ -2,11 +2,11 @@
 
 	display.views.load = (function(){
 
-		var left = '1111111111left',
+		var left = '<img src="assets/views/load/load_background.jpg"/>',
 
 
 
-            right = 'right22222222';
+            right = 'right';
 
 
         return {
@@ -18,10 +18,9 @@
 	})();
 
 
-
     display.logic.load = function(){
 
-        display.show( 'game' );
+//        display.show( 'game' );
     };
 
 })();
