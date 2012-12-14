@@ -26,7 +26,7 @@
         } else {
 
             var timerContainer = document.getElementById(this.type);
-//            this.appendTo.removeChild(timerContainer);
+            this.appendTo.removeChild(timerContainer);
         }
     };
 
