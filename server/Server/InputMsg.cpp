@@ -1,6 +1,8 @@
 #include "ServerPCH.h"
 #include "InputMsg.h"
 
+#include <stdlib.h>
+
 sv::InputMsg::InputMsg()
 : m_Data(0)
 {
