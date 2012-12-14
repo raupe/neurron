@@ -238,7 +238,7 @@ void sv::ObstacleManager::ParseLevel(){
 #ifdef WIN32
 	GetModuleFileName(0, dir, sizeof(dir));
 #else
-	readlink("/proc/self/exe", dir, sizeof(dir))
+	readlink("/proc/self/exe", dir, sizeof(dir));
 #endif
 
 	int pos = strlen(dir) - 1;

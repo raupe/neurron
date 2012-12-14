@@ -42,9 +42,9 @@ typedef unsigned long ulong;
 
 #ifdef WIN32
 #define LOG1(x,y,a) if(x) { char buf[1024]; sprintf_s(buf,sizeof(buf),y,a); sv::Output::Print(buf); }
-#define LOG2(x,y,a,b) if(x) { char buf[1024]; sprintf_s(buf,y,a,b); sv::Output::Print(buf); }
+#define LOG2(x,y,a,b) if(x) { char buf[1024]; sprintf_s(buf,sizeof(buf),y,a,b); sv::Output::Print(buf); }
 #else // WIN32
-#define LOG1(x,y,a) if(x) { char buf[1024]; sprintf(buf,sizeof(buf),y,a); sv::Output::Print(buf); }
+#define LOG1(x,y,a) if(x) { char buf[1024]; sprintf(buf,y,a); sv::Output::Print(buf); }
 #define LOG2(x,y,a,b) if(x) { char buf[1024]; sprintf(buf,y,a,b); sv::Output::Print(buf); }
 #endif // WIN32
 
