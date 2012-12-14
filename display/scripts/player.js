@@ -16,7 +16,7 @@
 
 			id		: params.id,
 			pos		: params.pos,
-			color	: [ params.color.r, params.color.g, params.color.b ]
+			color	: config.playerColors[ params.id ]//[ params.color.r, params.color.g, params.color.b ]
 		});
 	};
 
@@ -85,7 +85,7 @@
     Player.prototype.revive = function() {
 
         this.alive = true;
-        this.colorize();
+        // this.colorize();
         this.energy = 100;
     };
 
