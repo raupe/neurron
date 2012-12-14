@@ -185,16 +185,14 @@
 	 */
 	Manager.prototype.countdown = function ( params )  {
 
-        /*TODO: call load scene before countdown, after name input call
-         *display.load_view.hideLoadBar() to hide load bar and call display.load_view.greetTeam()
-         *when countdown starts to greet the team :) */
 		if ( display.current !== 'load' ) display.show( 'load' );
-        display.load_view.hideLoadBar();
-        display.load_view.greetTeam();
 
 		this.timer = new display.Timer( params[0] * 1000, 'countdown', "load_countdown_timer");
 
 		display.teamname = params[1] ? 'Team ' + params[1] : 'Neurrons';
+
+        display.load_view.hideLoadBar();
+        display.load_view.greetTeam();
 	};
 
 
@@ -247,10 +245,9 @@
 	};
 
 
-	/* playerId - nextPos */
 	/**
 	 * [move description]
-	 * @param  {[type]} params [description]
+	 * @param  {[type]} params [description]  playerId - nextPos
 	 * @return {[type]}        [description]
 	 */
 	Manager.prototype.move = function ( params ) {
@@ -259,10 +256,9 @@
 	};
 
 
-	/* playerId - targets */
 	/**
 	 * [heal description]
-	 * @param  {[type]} params [description]
+	 * @param  {[type]} params [description] playerId - targets
 	 * @return {[type]}        [description]
 	 */
 	Manager.prototype.heal = function ( params ) {
@@ -271,10 +267,9 @@
 	};
 
 
-	/* obstacleId - category - start */
 	/**
 	 * [create description]
-	 * @param  {[type]} params [description]
+	 * @param  {[type]} params [description] obstacleId - category - start
 	 * @return {[type]}        [description]
 	 */
 	Manager.prototype.create = function ( params ) {
@@ -294,10 +289,11 @@
 		this.statusManager.handleCollide( params[0], params[1] );
 	};
 
-    /* final points */
+
+
     /**
      * [end description]
-     * @param  {[type]} params [description]
+     * @param  {[type]} params [description] final points
      * @return {[type]}        [description]
      */
     Manager.prototype.end = function ( params ) {
