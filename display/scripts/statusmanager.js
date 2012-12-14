@@ -95,7 +95,7 @@
 
 		var cvs = document.createElement('canvas'),
 			ctx = cvs.getContext('2d'),
-            container_right = document.getElementById('container-right');;
+            container_right = document.getElementById('container-right');
 
         this.offset = container_right.offsetWidth;
 		cvs.width = this.offset;
