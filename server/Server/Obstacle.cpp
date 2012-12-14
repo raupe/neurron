@@ -32,7 +32,8 @@ void sv::Obstacle::Update(ulong deltaTime)
 {
 	if(! m_Moving)
 	{
-		Move(Grid::eDir_Out);
+		uchar pos;
+		Move(Grid::eDir_Out, pos);
 	}
 	Element::Update(deltaTime);
 }

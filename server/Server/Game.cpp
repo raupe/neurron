@@ -211,7 +211,6 @@ void sv::Game::HandleStartMsg(InputMsg* msg)
 
 void sv::Game::HandleMoveMsg(InputMsg* msg, uchar dir)
 {
-	bool success = false;
 	if(m_Status == eGameStatus_Wait)
 	{
 		ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_NotRunning);
@@ -224,11 +223,12 @@ void sv::Game::HandleMoveMsg(InputMsg* msg, uchar dir)
 		Player* player = m_PlayerManager->GetPlayer(msg->GetControllerId());
 		if(player)
 		{
-			uchar pos = player->Move(dir);
-			MoveMsg moveMsg(player->GetId(), pos);
-			SendMsg(&moveMsg);
-
-			success = true;
+			uchar pos;
+			if(player->Move(dir, pos))
+			{
+				MoveMsg moveMsg(player->GetId(), pos);
+				SendMsg(&moveMsg);
+			}
 		}
 	}
 
