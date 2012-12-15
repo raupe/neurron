@@ -43,6 +43,9 @@
         var loadBar = document.getElementById('load_bar'),
             load_countdown_timer = document.getElementById('load_countdown_timer');
 
+        // remove images
+        document.getElementById('load_register_status').innerHTML = '';
+
         // loadBar.className -= 'load_hide'; // show loadBar
         load_countdown_timer.removeChild( document.getElementById('load_greet') ); // remove Team greeting
     };
