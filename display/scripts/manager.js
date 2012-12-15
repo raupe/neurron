@@ -160,9 +160,6 @@
 	Manager.prototype.teamname = function() {
 
 		display.show( 'load' );
-
-		// show a box -> teamname will be entered
-		console.log('teamname will be entered');
 	};
 
 
@@ -187,9 +184,9 @@
 
 		if ( display.current !== 'load' ) display.show( 'load' );
 
-		this.timer = new display.Timer( params[0] * 1000, 'countdown', "load_countdown_timer");
+		new display.Timer( params[0] * 1000, 'countdown', 'load_countdown_timer');
 
-		display.teamname = params[1] ? 'Team ' + params[1] : 'Neurrons';
+		display.teamname = params[1] ? params[1] : '';
 
         display.load_view.hideLoadBar();
         display.load_view.greetTeam();
@@ -213,8 +210,10 @@
 	 * @return {[type]}        [description]
 	 */
 	Manager.prototype.start = function ( params ) {
-        display.load_view.clearLoadScene();
+
         display.show( 'game' );
+
+        display.load_view.clearLoadScene();
 
 		this.grid.init({
 
@@ -298,7 +297,7 @@
      */
     Manager.prototype.end = function ( params ) {
 
-        // display.show( 'end' );
+        display.show( 'end' );
 
         this.runningGame = false;
         this.screen.clear();
