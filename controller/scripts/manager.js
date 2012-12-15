@@ -1,222 +1,194 @@
 (function(){
 
-    /**
-     * [Manager description]
-     * @param {[type]} config [description]
-     */
-    var Manager = controller.Manager = function ( config ) {
+	/**
+	 * [Manager description]
+	 * @param {[type]} config [description]
+	 */
+	var Manager = controller.Manager = function ( config ) {
 
-        // default
-        this.id = 0;
-        this.timer = 0;
+		// default
+		this.id = 0;
+		this.timer = 0;
 
-        this.url = config.url;
-        this.channel = config.channel;
+		this.url = config.url;
+		this.channel = config.channel;
 
-        this.req = new XMLHttpRequest();
+		this.req = new XMLHttpRequest();
 
 
-        controller.Box.prototype.manager = this;
-        this.box = new controller.Box();
+		controller.Box.prototype.manager = this;
+		this.box = new controller.Box();
 
-        // input reference
-        controller.Input.prototype.manager = this;
-    };
 
+		// input reference
+		controller.Input.prototype.manager = this;
+	};
 
 
-    /**
-     * [show description]
-     * @param  {[type]} category [description]
-     * @return {[type]}          [description]
-     */
-    Manager.prototype.show = function ( category ) {
 
-        var params = config.boxes[ category ];
+	/**
+	 * [show description]
+	 * @param  {[type]} category [description]
+	 * @return {[type]}          [description]
+	 */
+	Manager.prototype.showBox = function ( category ) {
 
-        this.box.set( params[0], params[1] ); // type - text
+		if ( this.repeat ) clearInterval( this.repeat );
 
-        if ( this.repeat ) clearInterval( this.repeat );
+		if ( category === 1 ) { // handling on end
 
-        if ( category === 1 ) { // handling on end
+			this.box.cancel();
 
-            this.id = 0;
-        }
-    };
+			this.id = 0;
 
+		} else {
 
-    /**
-     * [init description]
-     * @return {[type]} [description]
-     */
-    Manager.prototype.init = function(){
+			this.box.label( category );
+		}
 
-        this.repeat = setInterval(function(){
+	};
 
-            this.timer++;
 
-            if ( this.timer === config.pollingTimer ) {
+	/**
+	 * [init description]
+	 * @return {[type]} [description]
+	 */
+	Manager.prototype.init = function(){
 
-                this.timer = 0;
+		this.repeat = setInterval(function(){
 
-                this.send( config.protocolCtoS.POLLING );
-            }
+			this.timer++;
 
-        }.bind(this), 1000 );
-    };
+			if ( this.timer === config.pollingTimer ) {
 
+				this.timer = 0;
 
+				this.send( config.protocolCtoS.POLLING );
+			}
 
-    /**
-     * [handle description]
-     * @param  {[type]} action  [description]
-     * @param  {[type]} options [description]
-     * @return {[type]}         [description]
-     */
-    Manager.prototype.handle = function ( action, options ) {
+		}.bind(this), 1000 );
+	};
 
-        var commands = {
 
-            1   : this.teamname,
-            2   : this.register,
-            3   : this.move,
-            4   : this.heal
-        };
 
-        // console.log(action, options);
+	/**
+	 * [handle description]
+	 * @param  {[type]} action  [description]
+	 * @param  {[type]} options [description]
+	 * @return {[type]}         [description]
+	 */
+	Manager.prototype.handle = function ( action, options ) {
 
-        commands[ action ].call( this, options );
-    };
+		var commands = {
 
+			// 1   : this.teamname,
+			1   : this.register,
+			2   : this.move,
+			3   : this.heal
+		};
 
-    /**
-     * [teamname description]
-     * @return {[type]} [description]
-     */
-    Manager.prototype.teamname = function(){
+		// console.log(action, options);
 
-        // teamname will be entered - box = input element
+		commands[ action ].call( this, options );
+	};
 
-        setTimeout( function(){
 
+	/**
+	 * [register description]
+	 * @return {[type]} [description]
+	 */
+	Manager.prototype.register = function( name ) {
 
-            var teamname = 'test';
-            console.log('teamname: ', teamname );
-            this.send( config.protocolCtoS.TEAMNAME, teamname );
+		if ( this.id ) return;
 
-        }.bind(this), 2000 );
+		// this.box.hide(); // comment for development
 
+		this.input.enable();
 
-        // this.show(4); // teamform
+		this.init();
 
-        // send first register, but with flag, so that the display can show the loading -> enter name
-        this.register( 1 );
-    };
 
+		/* serve response  */
+		this.req.onload = function ( t ) {
 
+			var res = t.currentTarget.responseText,
 
-    /**
-     * [register description]
-     * @return {[type]} [description]
-     */
-    Manager.prototype.register = function( name ) {
+				temp = res.length%4,                // shorten to 4
 
-        if ( this.id ) return;
+				msg = res.substr( 0, res.length - temp ),
 
-        this.box.hide(); // comment for development
+				data = atob( msg ),                 // base64 -> string
 
-        this.input.enable();
+				action = data.charCodeAt(0);        // int
 
+			if ( action === config.protocolStoC.START ) {
 
-        this.init();
+				this.id = data.charCodeAt(1);
+				this.color = config.playerColors[ data.charCodeAt(2) ];
 
+				this.input.setStyle( this.color );
+			}
 
-        /* serve response  */
-        this.req.onload = function ( t ) {
 
-            var res = t.currentTarget.responseText,
+			if ( action === config.protocolStoC.STATUS ) {
 
-                temp = res.length%4,                // shorten to 4
+				var state = data.charCodeAt(1);
 
-                msg = res.substr( 0, res.length - temp ),
+				if ( state === 0 ) return;
 
-                data = atob( msg ),                 // base64 -> string
+				this.showBox( state );
+			}
 
-                action = data.charCodeAt(0);        // int
+		}.bind(this);
 
-            if ( action === config.protocolStoC.START ) {
+		this.send( config.protocolCtoS.REGISTER, name );
+	};
 
-                this.id = data.charCodeAt(1);
-                this.color = config.playerColors[ data.charCodeAt(2) ];
 
-                this.input.setStyle( this.color );
-            }
 
+	/**
+	 * [move description]
+	 * @param  {[type]} params [description]
+	 * @return {[type]}        [description]
+	 */
+	Manager.prototype.move = function ( params ) {
 
-            if ( action === config.protocolStoC.STATUS ) {
+		controller.move( this, params );
+	};
 
-                var state = data.charCodeAt(1);
 
-                if ( state === 0 ) return;
+	/**
+	 * [heal description]
+	 * @return {[type]} [description]
+	 */
+	Manager.prototype.heal = function(){
 
-                this.show( state );
-            }
+		this.send( config.protocolCtoS.HEAL );
+	};
 
-        }.bind(this);
 
-        // /* on remove */
-        // document.onbeforeunload = function(){};
+	/**
+	 * [send description]
+	 * @param  {[type]} action [description]
+	 * @param  {[type]} option [description]
+	 * @return {[type]}        [description]
+	 */
+	Manager.prototype.send = function ( action, option )  {
 
-        this.send( config.protocolCtoS.REGISTER, name );
-    };
+		this.timer = 0; // treshold
 
+		this.req.open( 'POST', this.url + '?t=' + Date.now(), true );
 
+		// console.log('action: ', action, '- option: ', option);
 
-    /**
-     * [move description]
-     * @param  {[type]} params [description]
-     * @return {[type]}        [description]
-     */
-    Manager.prototype.move = function ( params ) {
+		// encode into base64, avoiding special characters like '0' // nur null nicht
+		var data = String.fromCharCode( this.channel, this.id, action ) + ( option || '' );
 
-        controller.move( this, params );
-    };
+		data = btoa( data );
 
+		this.req.setRequestHeader( 'Content-Type', 'text/plain; charset=UTF-8' );
 
-    /**
-     * [heal description]
-     * @return {[type]} [description]
-     */
-    Manager.prototype.heal = function(){
-
-        this.send( config.protocolCtoS.HEAL );
-    };
-
-
-    /**
-     * [send description]
-     * @param  {[type]} action [description]
-     * @param  {[type]} option [description]
-     * @return {[type]}        [description]
-     */
-    Manager.prototype.send = function ( action, option )  {
-
-        this.timer = 0; // treshold
-
-        this.req.open( 'POST', this.url + '?t=' + Date.now(), true );
-
-        // console.log( action, option );
-
-        // encode into base64, avoiding special characters like '0' // nur null nicht
-        var data = String.fromCharCode( this.channel, this.id, action ) + ( option || '' );
-
-        data = btoa( data );
-
-        this.req.setRequestHeader( 'Content-Type', 'text/plain; charset=UTF-8' );
-
-        this.req.send( data );
-    };
-
-
+		this.req.send( data );
+	};
 
 })();
