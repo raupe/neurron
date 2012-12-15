@@ -8,21 +8,21 @@
 		this.cvs = this.screen.cvs;
 		this.ctx = this.screen.ctx,
 
-        this.origin = null;
-        this.last = null;
-        this.between = [];
+		this.origin = null;
+		this.last = null;
+		this.between = [];
 
-        this.averageX = 0;
-        this.averageY = 0;
-        this.counter = 0;
+		this.averageX = 0;
+		this.averageY = 0;
+		this.counter = 0;
 
 		this.tapped = false;
 
 		this.init();
 
 		controller.Box.prototype.input = this;
-        controller.Screen.prototype.input = this;
-        controller.Manager.prototype.input = this;
+		controller.Screen.prototype.input = this;
+		controller.Manager.prototype.input = this;
 	};
 
 
@@ -31,38 +31,27 @@
 		if ( !( 'ontouchstart' in window ) ) {
 
 			this.handleKeyboard();
-		}
-	};
 
-
-	Input.prototype.disable = function(){
-
-		this.disabled = true;
-
-		// ToDo: remove handler - called on  set/int for button
-	};
-
-
-	Input.prototype.enable = function(){
-
-		this.addHandler();
-		this.disabled = false;
-
-		return function(){
-
-			this.disabled = false;
-		};
-	};
-
-
-	Input.prototype.addHandler = function(){
-
-		if ( 'ontouchstart' in window ) {
+		} else {
 
 			this.setStyle();
 
 			this.handleTouch();
 		}
+
+	};
+
+
+	Input.prototype.disable = function(){
+
+		// ToDo: remove handler - called on  set/int for button
+		this.disabled = true;
+	};
+
+
+	Input.prototype.enable = function(){
+
+		this.disabled = false;
 	};
 
 
@@ -108,13 +97,13 @@
 		var ctx = this.ctx,
 			cvs = this.cvs;
 
-        ctx.lineWidth = 10;
+		ctx.lineWidth = 10;
 		ctx.lineCap = 'round';
 
 		ctx.strokeStyle = '#fff'; //color ? 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')' : '#FFF';
-        ctx.shadowColor = color ? 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')' : '#BAE9F7';
+		ctx.shadowColor = color ? 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')' : '#BAE9F7';
 
-        ctx.shadowBlur = 20;
+		ctx.shadowBlur = 20;
 	};
 
 
@@ -123,7 +112,7 @@
 		e.preventDefault();
 		e.stopPropagation();
 
-        this.screen.clear();
+		this.screen.clear();
 
 		this.tapped = true;
 
@@ -133,8 +122,8 @@
 		this.origin = touch;
 		this.last = touch;
 
-        this.averageX += touch.x;
-        this.averageY += touch.y;
+		this.averageX += touch.x;
+		this.averageY += touch.y;
 
 		this.ctx.beginPath();
 	};
@@ -147,12 +136,12 @@
 
 		this.tapped = false;
 
-
 		var touch = getPos( e.changedTouches[0] ),
 			last = this.last,
 			ctx = this.ctx;
 
-        this.between.push(touch);
+		this.between.push(touch);
+
 		// ToDo: check for device property
 		if ( !this.disabled ) {
 
@@ -162,12 +151,12 @@
 		this.last = touch;
 
 
-        this.averageX += touch.x;
-        this.averageY += touch.y;
-        this.counter++;
+		this.averageX += touch.x;
+		this.averageY += touch.y;
+		this.counter++;
 
 
-        ctx.stroke();
+		ctx.stroke();
 	};
 
 
@@ -193,16 +182,16 @@
 		this.tapped = false;
 
 
-        this.averageX = this.averageX / this.counter;
-        this.averageY = this.averageY / this.counter;
+		this.averageX = this.averageX / this.counter;
+		this.averageY = this.averageY / this.counter;
 
 		manager.handle( config.commands.MOVE, [ origin, touch, this.averageX, this.averageY, this.between ] );
 
 
-        this.between.length = 0;
-        this.averageX = 0;
-        this.averageY = 0;
-        this.counter = 0;
+		this.between.length = 0;
+		this.averageX = 0;
+		this.averageY = 0;
+		this.counter = 0;
 	};
 
 
