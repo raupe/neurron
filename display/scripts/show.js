@@ -8,20 +8,23 @@
 
 	display.show = function ( id ) {
 
+        var left, right,
+            view = display.views[ id ],
+            temp;
+
         if ( display.current ) {
 
-            document.getElementById( display.current + '-l' ).className = 'hide';
-            document.getElementById( display.current + '-r' ).className = 'hide';
+            left = document.getElementById( display.current + '-l' );
+            if ( left ) left.className = 'hide';
+
+            right = document.getElementById( display.current + '-r' );
+            if ( right ) right.className = 'hide';
         }
 
         display.current = id;
 
-        var left = document.getElementById( id + '-l' ),
-            right = document.getElementById( id + '-r' ),
-
-            view = display.views[ id ],
-            temp;
-
+        left = document.getElementById( id + '-l' );
+        right = document.getElementById( id + '-r' );
 
         if ( left ) {
 
@@ -50,7 +53,11 @@
             containerRight.appendChild( temp );
         }
 
+        // setTimeout( function(){
+
         display.logic[ id ]();
+
+        // }, 16.7); // innerHTML ?
 	};
 
 })();
