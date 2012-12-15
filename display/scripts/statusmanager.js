@@ -41,7 +41,9 @@
 
 		ctx.fillStyle = 'yellow';
 		ctx.font = '' + size + 'pt Comic Sans MS'; // 'italic ' + size + 'pt Comic Sans MS';
-		ctx.fillText( this.points + ' points', this.offset/6, size * 2 );
+
+        // firefly symbol instead 'points' or $ ?
+        ctx.fillText( ( display.teamname || 'Total' ) + ': ' + this.points + ' $', this.offset/6, size * 2 ); //' points'
 	};
 
 	StatusManager.prototype.showLifeBars = function () {
@@ -106,8 +108,8 @@
         this.canvas = cvs;
         this.setBackground();
 
+        cvs.id = 'game-r'; // statusManager
         cvs.className = 'hide';
-        cvs.id = 'StatusManager';
 
         // document.body.appendChild( cvs );
         container_right.appendChild( cvs );
@@ -181,11 +183,11 @@
                     if (currentPlayer.alive) {
 
                         currentPlayer.alive = false;
-                        // currentPlayer.colorize([50, 50, 50]);
                         currentPlayer.fade();
 
 
                         setTimeout(function(){
+
                             if (!currentPlayer.alive) {
 
                                 currentPlayer.revive();
@@ -247,11 +249,7 @@
             endpoints.innerHTML = "Endpoints: " + points;
             endpoints.style.display = "block";
         }
-
-        var qrcode = document.getElementById("qrcode");
-        qrcode.style.display = "block";
-
-    }
+    };
 
     StatusManager.prototype.clear = function(){
 
