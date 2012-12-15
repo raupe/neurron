@@ -1,149 +1,265 @@
 (function(){
 
-    /**
-     * [Box description]
-     */
+	/**
+	 * [Box description]
+	 */
 	var Box = controller.Box = function() {
 
-        var type = 'button',
-            text = 'Start';
+		this.visible = {
 
-        this.width = 200;
-        this.height = 100;
-        this.left = 0;
-        this.top = 0;
+			box:    false,
+			top:    false,
+			center: false,
+			bottom: false
+		};
 
-        this.disabled = false;
+		this.listen();
 
-
-        this.createButton();
-
-        this.set( type, text );
-//        this.manager.handle( config.commands.REGISTER ); // uncomment for dev
+		this.cancel();
 	};
 
 
-    /**
-     * [ description]
-     * @param  {[type]}
-     * @return {[type]}   [description]
-     */
-    window.addEventListener('orientationchange', function() {
+	/**
+	 * [unset description]
+	 * @return {[type]} [description]
+	 */
+	Box.prototype.unsetAll = function(){
 
-        document.getElementById('text').style['z-index'] = 1;
-
-    }.bind(this) );
-
-
-
-    /**
-     * [createButton description]
-     * @return {[type]} [description]
-     */
-    Box.prototype.createButton = function(){
-
-        var box = document.createElement('div');
-
-        box.id = 'box';
+		this.hide( 'box' );
+		this.hide( 'top' );
+		this.hide( 'center' );
+		this.hide( 'bottom' );
+	};
 
 
-        var text = document.createElement('div');
+	/**
+	 * [show description]
+	 * @return {[type]} [description]
+	 */
+	Box.prototype.show = function ( id ) {
 
-        text.id = 'text';
+		removeClass( document.getElementById( id ), 'hide' );
 
-        box.appendChild( text );
-
-        document.body.appendChild( box );
-    };
-
-
-    /**
-     * [click description]
-     * @return {[type]} [description]
-     */
-	Box.prototype.click = function(){
-
-        if ( !this.disabled ) { // no proper remove...
-
-            this.manager.handle( config.commands.REGISTER );
-
-            this.removeListener();
-        }
-
-    };
+		this.visible[ id ] = true;
+	};
 
 
-    /**
-     * [addListener description]
-     */
-    Box.prototype.addListener = function(){
+	/**
+	 * [hide description]
+	 * @return {[type]} [description]
+	 */
+	Box.prototype.hide = function ( id ) {
 
-        this.disabled = false;
+		// document.getElementById( id ).className += ' hide';
+		addClass( document.getElementById( id ), 'hide' );
 
-        document.getElementById('box').addEventListener('touchend', this.click.bind(this) );
-    };
-
-
-    /**
-     * [removeListener description]
-     * @return {[type]} [description]
-     */
-    Box.prototype.removeListener = function(){
-
-        this.disabled = true;
-
-        document.getElementById('box').removeEventListener('touchend', this.temp );
-    };
+		this.visible[ id ] = false;
+	};
 
 
 
-    /**
-     * [set description]
-     * @param {[type]} type [description]
-     * @param {[type]} text [description]
-     */
-    Box.prototype.set = function( type, text ){
 
-        var box = document.getElementById('box');
-            form = document.getElementById('form');
+	/**
+	 * [set description]
+	 * @param {[type]} id       [description]
+	 * @param {[type]} category [description]
+	 */
+	Box.prototype.set = function ( id, category ) {
 
-        if (form) form.className += ' hide';
+		var element = document.getElementById( id );
 
-        // box.className = ( type === 'button' ) ? 'button' : 'label';
-        box.className = type + ' show';
+		if ( !this.visible.box ) this.show('box');
+		if ( !this.visible[ id ] ) this.show( id );
 
-        document.getElementById('text').textContent = text;
+		this.changeBehaviour( element, category[0], category[2] );
 
-        if ( type === 'button' ) {
-
-            this.input.disable();
-
-            this.addListener();
-        }
-
-        if ( type === 'form' ) {
-
-            if ( !form ) {
-
-                form = document.createElement('input');
-                form.type = 'name';
-                box.appendChild( form );
-            }
-
-            form.className = 'form show';
-        }
-    };
+		element.textContent = category[1];
+		// element.children[0].textContent = category[1];
+	};
 
 
-    /**
-     * [hide description]
-     * @return {[type]} [description]
-     */
-    Box.prototype.hide = function(){
+	/**
+	 * [setAttributes description]
+	 * @param {[type]} element [description]
+	 * @param {[type]} type    [description]
+	 */
+	Box.prototype.changeBehaviour = function ( element, type, fn ) {
 
-       document.getElementById('box').className = ' hide'; // +=
-    };
+		// ToDo: add styling classes
+
+		// if ( type === 'label' ) {}
+
+		if ( type === 'button' ) {
+
+			element.setAttribute( 'data-fn', fn );
+		}
+
+		if ( type === 'form' ) {
+
+			var form = document.getElementById('form');
+
+			if ( !form ) {
+
+				form = document.createElement('div');
+
+				form.innerHTML = '\
+				<input id="input" type="name" class="input">\
+				<br>\
+				<div>\
+					<button id="confirm" data-fn="confirm">Confirm</button>\
+					<button id="cancel" data-fn="cancel">Cancel</button>\
+				</div>\
+				';
+				form.className = 'form';
+				form.id = 'form';
+
+				setTimeout(function(){ // needs time to parse-create the innerHTML
+
+					element.appendChild( form );
+
+					document.getElementById('input').addEventListener('keyup', function ( e ) {
+
+						if ( e.which === 13) this.confirm();
+
+					}.bind(this) );
+
+				}.bind(this), 16.7);
+
+			} else {
+
+				this.show( 'form' );
+			}
+
+		}
+	};
+
+
+	/**
+	 * [listen description]
+	 * @param  {[type]}   element [description]
+	 * @param  {Function} fn      [description]
+	 * @return {[type]}           [description]
+	 */
+	Box.prototype.listen = function() {
+
+		document.getElementById('box').addEventListener('touchend', function ( e ) {
+
+			var trg = e.target;
+
+			if ( trg.hasAttribute( 'data-fn' ) ) {
+
+				this[ trg.getAttribute('data-fn') ]();
+			}
+
+		}.bind(this));
+	};
+
+
+	/**
+	 * [confirm description]
+	 * @return {[type]} [description]
+	 */
+	Box.prototype.confirm = function(){ // teamname
+
+		var value = document.getElementById('input').value;
+
+		if ( value ) {
+
+			this.unsetAll();
+
+			this.input.enable();
+
+			this.manager.send( config.protocolCtoS.TEAMNAME, value );
+		}
+
+	};
+
+
+	Box.prototype.label = function ( category ) {
+
+		this.unsetAll();
+
+		if ( !this.input.disabled ) this.input.disable();
+
+		this.show( 'box' );
+
+		this.set( 'center', config.boxes[ category ] );
+	};
+
+
+	/**
+	 * [cancel description]
+	 * @return {[type]} [description]
+	 */
+	Box.prototype.cancel = function(){ // original
+
+		this.unsetAll();
+
+		if ( !this.input.disabled ) this.input.disable();
+
+		this.show( 'box' );
+
+		this.set( 'top', config.boxes[ 4 ] );       // teamname
+		this.set( 'bottom', config.boxes[ 5 ] );    // without
+	};
+
+
+	/**
+	 * [askTeamname description]
+	 * @return {[type]} [description]
+	 */
+	Box.prototype.askTeamname = function(){
+
+		this.unsetAll();
+
+		this.show( 'box' );
+
+		this.set( 'top', config.boxes[ 6 ] );    // label
+		this.set( 'bottom', config.boxes[ 7 ] ); // form
+
+		this.manager.handle( config.commands.REGISTER, 1 );
+	};
+
+
+	/**
+	 * [goCountdown description]
+	 * @return {[type]} [description]
+	 */
+	Box.prototype.goCountdown = function(){
+
+		this.unsetAll();
+
+		this.manager.handle( config.commands.REGISTER );
+	};
+
+
+
+	function hasClass(ele,cls) {
+		return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+	}
+	function addClass(ele,cls) {
+		if (!hasClass(ele,cls)) ele.className += " "+cls;
+	}
+	function removeClass(ele,cls) {
+		// if (hasClass(ele,cls)) {
+		var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+		ele.className=ele.className.replace(reg,' ');
+		// }
+	}
 
 
 
 })();
+
+
+/**
+	 * [ description]
+	 * @param  {[type]}
+	 * @return {[type]}   [description]
+	 */
+	// window.addEventListener('orientationchange', function() {
+
+	//     document.getElementById('text').style['z-index'] = 1;
+
+	// }.bind(this) );
+
