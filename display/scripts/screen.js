@@ -25,7 +25,7 @@
 
 		scale.apply( this );
 
-		this.cvs.id = 'Screen';
+		this.cvs.id = 'game-l';// screen
 		this.cvs.className = 'hide';
 
 		// document.body.appendChild( this.cvs );
