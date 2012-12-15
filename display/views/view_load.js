@@ -43,7 +43,7 @@
         var loadBar = document.getElementById('load_bar'),
             load_countdown_timer = document.getElementById('load_countdown_timer');
 
-        loadBar.className -= 'load_hide'; // show loadBar
+        // loadBar.className -= 'load_hide'; // show loadBar
         load_countdown_timer.removeChild( document.getElementById('load_greet') ); // remove Team greeting
     };
 
@@ -58,8 +58,8 @@
             greetBox = document.createElement('span');
 
         greetBox.id = 'load_greet';
-
-        greetBox.innerHTML = 'Hi ' + display.teamname;
+// 'Team ' +  ''Neurrons';
+        greetBox.innerHTML = 'Hi ' + ( display.teamname ? 'Team ' + display.teamname : 'Neurrons' );
         element.appendChild(greetBox);
     };
 
