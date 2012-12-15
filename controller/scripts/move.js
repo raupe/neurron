@@ -34,8 +34,9 @@
 			between.y = betweens[i].y;
 
 			sX = ((-between.x * m2) + between.y + (start.x * m1) - start.y) / (m1 - m2);
+			// sX = ( ((-between.x * m2) + between.y + (start.x * m1) - start.y) / (m1 - m2) ) || 0;
 			sY = m2 * (sX - between.x) + between.y;
-
+			// console.log('sX: ', sX);
 			difference = (between.x - sX) * (between.x - sX) + (between.y - sY) * (between.y - sY);
 
 			if ( diffX > diffY ) {
