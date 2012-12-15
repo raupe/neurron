@@ -84,6 +84,8 @@
 
     Player.prototype.revive = function() {
 
+        this.src = this.assetManager.get('image', this.type );
+
         this.alive = true;
         this.energy = 100;
     };
