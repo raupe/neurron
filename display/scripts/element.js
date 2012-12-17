@@ -14,13 +14,9 @@
         this.checkMove = config.duration.moveTime / this.velocity / this.grid.frames;
 
 
-
-
         this.setup( params );
 
         this.createCanvas();
-
-        // this.colorize();
 
         this.register();
     };
@@ -53,7 +49,14 @@
 
         this.origin = this.screen.ctx;
 
-        this.src = this.assetManager.get('image', this.type );
+
+        this.spriteCounter = 0;
+
+        this.stepper = 10;
+
+        this.spriteImages = this.assetManager.get('image', this.type );
+
+        this.src = ( this.spriteImages instanceof Array ) ? this.spriteImages[0] : this.spriteImages;
     };
 
 
@@ -66,52 +69,6 @@
         cvs.height = this.size;
 
         this.ctx = ctx;
-    };
-
-
-    Element.prototype.colorize = function( color ){
-
-        // if ( this.color ) {
-
-        //     this.ctx.drawImage( this.src, 0,0, this.size, this.size );
-
-
-        //     var image = this.ctx.getImageData( 0, 0, this.size, this.size ),
-
-        //         size = image.width * image.height + 1,
-
-        //         pixels = image.data,
-
-        //         i;
-
-        //     while ( --size ) {
-
-        //         i = size << 2;
-
-        //         if ( color ) {
-
-        //             pixels[   i ] = color[0];
-        //             pixels[ ++i ] = color[1];
-        //             pixels[ ++i ] = color[2];
-        //             if (color[3]) pixels[ ++i ] = color[3];
-
-        //         } else {
-
-        //             pixels[   i ] = this.color[0];
-        //             pixels[ ++i ] = this.color[1];
-        //             pixels[ ++i ] = this.color[2];
-        //         }
-        //     }
-
-        //     this.ctx.putImageData( image, 0, 0 );
-
-
-        //     image = new Image();
-
-        //     image.src = this.ctx.canvas.toDataURL('img/png');
-
-        //     this.src = image;
-        // }
     };
 
 
@@ -142,6 +99,7 @@
     };
 
 
+
     Element.prototype.update = function ( delta ) {
 
         this.diff += delta;
@@ -150,12 +108,30 @@
 
             this.diff -= this.checkMove;
 
+            if ( !--this.stepper ) {
+
+                this.stepper = 10;
+
+                this.changeSprite();
+            }
+
+
             if ( this.moving ) {
 
                 this.animate();
             }
         }
+    };
 
+
+    Element.prototype.changeSprite = function(){
+
+        if ( this.spriteImages instanceof Array ) {
+
+            this.spriteCounter = ( this.spriteCounter+1 < this.spriteImages.length ) ? this.spriteCounter+1 : 0;
+
+            this.src = this.spriteImages[ this.spriteCounter ];
+        }
     };
 
 
