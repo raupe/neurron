@@ -58,7 +58,15 @@ window.config = {
 
 
 			// player
-			player_1	: 'assets/player/player_1.png',
+			// player_1	: 'assets/player/player_1.png',
+
+			player_1	: {
+
+				src		: 'assets/player/ronny/ronny_sheet.png',
+				width	: '60'
+			},
+
+
 			player_2	: 'assets/player/player_2.png',
 			player_3	: 'assets/player/player_3.png',
 			player_4	: 'assets/player/player_4.png',
