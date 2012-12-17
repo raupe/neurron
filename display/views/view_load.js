@@ -46,13 +46,13 @@
         // remove images
         document.getElementById('load_register_status').innerHTML = '';
 
-        // loadBar.className -= 'load_hide'; // show loadBar
+        loadBar.className = ''; // show loadBar
         load_countdown_timer.removeChild( document.getElementById('load_greet') ); // remove Team greeting
     };
 
     display.load_view.hideLoadBar = function() {
 
-        document.getElementById('load_bar').className += 'load_hide';
+        document.getElementById('load_bar').className = 'load_hide';
     };
 
     display.load_view.greetTeam = function() {
