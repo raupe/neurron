@@ -79,12 +79,16 @@
 
     Player.prototype.fade = function(){
 
-        this.src = this.assetManager.get('image', 'player_dead' );
+        this.spriteImages = this.assetManager.get('image', 'player_dead' );
+
+        this.spriteCounter = 0;
     };
 
     Player.prototype.revive = function() {
 
-        this.src = ( this.spriteImages instanceof Array ) ? this.spriteImages[0] : this.spriteImages;
+        this.spriteImages = this.assetManager.get('image', this.type );
+
+        this.spriteCounter = 0;
 
         this.alive = true;
         this.energy = 100;
