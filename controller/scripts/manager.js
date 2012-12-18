@@ -124,9 +124,10 @@
 			if ( action === config.protocolStoC.START ) {
 
 				this.id = data.charCodeAt(1);
-				this.color = config.playerColors[ data.charCodeAt(2) ];
 
-				this.input.setStyle( this.color );
+				this.input.color = config.playerColors[ data.charCodeAt(2) ];
+
+				this.input.setStyle();
 			}
 
 
