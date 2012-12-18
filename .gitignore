@@ -16,3 +16,7 @@
 
 # gitignore
 .gitignore
+
+
+# single sprites
+/display/assets/sprites
