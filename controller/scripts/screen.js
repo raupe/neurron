@@ -28,7 +28,7 @@
 		this.cvs.width = window.innerWidth;
 		this.cvs.height = window.innerHeight;
 
-        if(this.input) this.input.setStyle();
+        if ( this.input ) this.input.setStyle();
 	};
 
 

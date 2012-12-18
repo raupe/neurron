@@ -18,6 +18,8 @@
 
 		this.tapped = false;
 
+		this.color = null;
+
 		this.init();
 
 		controller.Box.prototype.input = this;
@@ -92,10 +94,12 @@
 
 
 	// Style settings
-	Input.prototype.setStyle = function ( color ) {
+	Input.prototype.setStyle = function() {
 
 		var ctx = this.ctx,
-			cvs = this.cvs;
+			cvs = this.cvs,
+
+			color = this.color;
 
 		ctx.lineWidth = 10;
 		ctx.lineCap = 'round';
