@@ -49,7 +49,7 @@ window.config = {
 
 	elements: {
 
-		size			: 40
+		size			: 80
 	},
 
 	assets: {
