@@ -110,7 +110,7 @@
 
             if ( !--this.stepper ) {
 
-                this.stepper = 10;
+                this.stepper = 4;
 
                 this.changeSprite();
             }
