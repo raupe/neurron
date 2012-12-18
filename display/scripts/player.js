@@ -84,7 +84,7 @@
 
     Player.prototype.revive = function() {
 
-        this.src = this.assetManager.get('image', this.type );
+        this.src = ( this.spriteImages instanceof Array ) ? this.spriteImages[0] : this.spriteImages;
 
         this.alive = true;
         this.energy = 100;
