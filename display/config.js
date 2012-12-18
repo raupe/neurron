@@ -56,27 +56,16 @@ window.config = {
 
 		image: {
 
-
-			// player
-			// player_1	: 'assets/player/player_1.png',
-
-			player_1	: {
-
-				src		: 'assets/player/ronny/ronny_sheet.png',
-				width	: '60'
-			},
-
-
-			player_2	: 'assets/player/player_2.png',
-			player_3	: 'assets/player/player_3.png',
-			player_4	: 'assets/player/player_4.png',
-			player_5	: 'assets/player/player_5.png',
-			player_6	: 'assets/player/player_6.png',
-			player_7	: 'assets/player/player_7.png',
-			player_8	: 'assets/player/player_8.png',
-
-			player_dead	: 'assets/player/player_dead.png',
-
+            // player
+			player_1	: { src: 'assets/player/ron_blue_80.png', width: '80' }, // red
+            player_2    : { src: 'assets/player/ron_blue_80.png', width: '80' }, // blue
+            player_3    : { src: 'assets/player/ron_blue_80.png', width: '80' }, // green
+            player_4    : { src: 'assets/player/ron_blue_80.png', width: '80' }, // yellow
+            player_5    : { src: 'assets/player/ron_blue_80.png', width: '80' }, // lila
+            player_6    : { src: 'assets/player/ron_blue_80.png', width: '80' }, // orange
+            player_7    : { src: 'assets/player/ron_blue_80.png', width: '80' }, // turq
+            player_8    : { src: 'assets/player/ron_blue_80.png', width: '80' }, // pink
+            player_dead : { src: 'assets/player/ron_blue_80.png', width: '80' },
 
 
 			// obstacle
@@ -197,21 +186,15 @@ window.config = {
 	},
 
 
-
     playerColors: {
-        1: {r: 255,  g:   0, b:   0},
-        2: {r: 255,  g: 255, b:   0},
-        3: {r: 255,  g:   0, b: 255},
-        4: {r:   0,  g: 255, b:   0},
-        5: {r:   0,  g: 255, b: 255},
-        6: {r:   0,  g:   0, b: 255},
-        7: {r:   0,  g:   0, b: 255},
-        8: {r: 128,  g:   0, b:   0},
-        9: {r: 128,  g: 128, b:   0},
-        10: {r: 128,  g:   0, b: 128},
-        11: {r:   0,  g: 128, b:   0},
-        12: {r:   0,  g: 128, b: 128},
-        13: {r:   0,  g:   0, b: 128},
-        14: {r:   0,  g:   0, b: 128}
+
+        1:  { r: 246,   g:  91,  b:  98 }, // red
+        2:  { r:  83,   g: 102,  b: 243 }, // blue
+        3:  { r: 162,   g: 251,  b:  91 }, // green
+        4:  { r: 250,   g: 235,  b:  64 }, // yellow
+        5:  { r: 223,   g: 105,  b: 254 }, // lila
+        6:  { r: 255,   g: 182,  b: 106 }, // orange
+        7:  { r: 144,   g: 216,  b: 255 }, // turq
+        8:  { r: 255,   g: 121,  b: 198 }  // pink
     }
 };
