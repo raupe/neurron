@@ -161,21 +161,23 @@
 
     Element.prototype.draw = function() {
 
-        var field = this.field;
+        var field = this.field,
+        	x = field.x + this.grid.getTranslateX(field.radius),
+        	y = field.y + this.grid.getTranslateY(field.radius);
 
         this.origin.save();
 
-            this.origin.translate( field.x , field.y );
+            this.origin.translate( x , y );
 
             this.origin.rotate( field.angle );
 
-            this.origin.translate( -field.x , -field.y);
+            this.origin.translate( -x , -y);
 
             this.origin.drawImage(
 
                             this.src,
-                            field.x - this.size/2 * field.scale,
-                            field.y - this.size/2 * field.scale,
+                            x - this.size/2 * field.scale,
+                            y - this.size/2 * field.scale,
                             this.size * field.scale,
                             this.size * field.scale
                         );

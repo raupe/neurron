@@ -37,10 +37,16 @@
 		this.distanceToUser = params.distanceToUser;
 		this.circleOffset = params.circleOffset;
 		this.outerCircleRadius = this.height/2;
+		this.maxRadius = Math.sqrt(this.width * this.width + this.height * this.height) / 2;
 
 		// placement
 		this.posX = 0;
 		this.posY = 0;
+		
+		this.transX = 0;
+		this.transY = 0;
+		this.transXDest = 0;
+		this.transYDest = 0;
 	};
 
 	Grid.prototype.getFrames = function(){
@@ -115,7 +121,7 @@
 				if ( step%frame !== 0 ) {
 
 
-					ringPos.push({ x: x1, y: y1, scale: scale, angle: angle });
+					ringPos.push({ x: x1, y: y1, scale: scale, angle: angle, radius: radiusA });
 
 				} else {
 
@@ -129,7 +135,7 @@
 						x2 = Math.cos( rotation * step ) * radiusB + centerX;
 						y2 = Math.sin( rotation * step ) * radiusB + centerY;
 
-						distPos.push({ x:x2, y: y2, scale: scaleStep, angle: angle });
+						distPos.push({ x:x2, y: y2, scale: scaleStep, angle: angle, radius: radiusB });
 					}
 
 
@@ -163,7 +169,8 @@
 						ring: ringPos.slice().reverse(),
 						dist: distPos.slice(),
 						scale: scale,
-						angle: angle
+						angle: angle,
+						radius: radiusA
 					});
 
 					distPos.length = ringPos.length = 0;
@@ -200,9 +207,29 @@
 	};
 
 
-	Grid.prototype.update = function(){
-
-		this.draw();
+	Grid.prototype.update = function(delta){
+		
+		var diff = 0.0001 * delta;
+		
+		if(this.transX === this.transXDest) {
+			this.transXDest = Math.random()/4 - 0.125;
+		} else if (this.transX + diff < this.transXDest) {
+			this.transX += diff;
+		} else if (this.transX - diff > this.transXDest) {
+			this.transX -= diff;
+		} else {
+			this.transX = this.transXDest;	
+		}
+		
+		if(this.transY === this.transYDest) {
+			this.transYDest = Math.random()/4 - 0.125;
+		} else if (this.transY + diff < this.transYDest) {
+			this.transY += diff;
+		} else if (this.transY - diff > this.transYDest) {
+			this.transY -= diff;
+		} else {
+			this.transY = this.transYDest;	
+		}
 	};
 
 
@@ -287,6 +314,13 @@
 			ctx.stroke();
 		}
 	};
-
+	
+	Grid.prototype.getTranslateX = function(radius) {
+		return this.transX * (this.maxRadius - radius);
+	};
+	
+	Grid.prototype.getTranslateY = function(radius) {
+		return this.transY * (this.maxRadius - radius);
+	};
 
 })();

@@ -42,6 +42,7 @@
 			forAll( this.obstaclePool.list, 'update', delta );
 
 			this.background.update( delta );
+			this.grid.update( delta );
 
 
 			this.screen.clear();
