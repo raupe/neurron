@@ -147,9 +147,12 @@
 
 
 	StatusManager.prototype.handleCollide = function ( obstacleId, playersIds ) {
+        console.log(obstacleId);
 
-        var currentObstacle = this.pool.list[obstacleId],
-            type = currentObstacle.type,
+        var currentObstacle = this.pool.list[obstacleId];
+        console.log(currentObstacle);
+
+        var type = currentObstacle.type,
             value = currentObstacle.value,
             numberOfPlayers = playersIds.length,
             currentPlayer,
