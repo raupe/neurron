@@ -19,14 +19,17 @@
 	Screen.prototype.createCanvas = function(){
 
 		var div = document.createElement('div'),
-			cvs = document.createElement('canvas');
+			cvs = document.createElement('canvas'),
+			sub = document.createElement('canvas');
 
-		this.ctx = cvs.getContext('2d');
 		this.cvs = cvs;
+		this.ctx = cvs.getContext('2d');
+
+		this.sub = sub;
+		this.stx = sub.getContext('2d');
+
 
 		cvs.id = 'screen';
-
-
 
 		div.id = 'game-l';
 		div.className = 'hide';
@@ -36,12 +39,7 @@
 
 		scale.apply( this );
 
-
-
 		document.getElementById('container-left').appendChild( div );
-
-
-
 
 
 		window.addEventListener('resize', scale.bind(this) );
@@ -49,10 +47,8 @@
 
 		function scale(){
 
-//			this.cvs.width = window.innerWidth;
-//			this.cvs.height = window.innerHeight;
-            this.cvs.width = (window.innerWidth / config.factor) * (config.factor - 1); // (width / 4) * 3 | config.factor === 4
-            this.cvs.height = window.innerHeight;
+            this.sub = this.cvs.width = (window.innerWidth / config.factor) * (config.factor - 1); // (width / 4) * 3 | config.factor === 4
+            this.sub = this.cvs.height = window.innerHeight;
 		}
 	};
 
