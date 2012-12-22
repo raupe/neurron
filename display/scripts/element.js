@@ -1,9 +1,7 @@
 (function(){
 
-    var Element = display.Element = function(){
-
-        // ToDo: check why created two instances first ( should get sice, checkMove )
-    };
+    // ToDo: check why created two instances first ( should get sice, checkMove )
+    var Element = display.Element = function(){};
 
 
     Element.prototype.init = function ( params ) {
@@ -13,10 +11,7 @@
 
         this.checkMove = config.duration.moveTime / this.velocity / this.grid.frames;
 
-
         this.setup( params );
-
-        this.createCanvas();
 
         this.register();
     };
@@ -52,7 +47,9 @@
 
         this.spriteCounter = 0;
 
-        this.stepper = 10;
+        this.stepRate = this.getStep();
+
+        this.stepsLeft = this.stepRate;
 
         this.spriteImages = this.assetManager.get('image', this.type );
 
@@ -60,15 +57,16 @@
     };
 
 
-    Element.prototype.createCanvas = function(){
+    Element.prototype.getStep = function(){
 
-        var cvs = document.createElement('canvas'),
-            ctx = cvs.getContext('2d');
+        var ms;
 
-        cvs.width = this.size;
-        cvs.height = this.size;
+        if ( this.type === 'heal' )     ms = 4;
+        if ( this.type === 'points' )   ms = 4;
+        if ( this.type === 'damage' )   ms = 4;
+        if ( this.isPlayer )            ms = 4 + ~~(this.id/2 + 0.5);
 
-        this.ctx = ctx;
+        return ms;
     };
 
 
@@ -99,7 +97,6 @@
     };
 
 
-
     Element.prototype.update = function ( delta ) {
 
         this.diff += delta;
@@ -108,9 +105,9 @@
 
             this.diff -= this.checkMove;
 
-            if ( !--this.stepper ) {
+            if ( !--this.stepsLeft ) {
 
-                this.stepper = 4;
+                this.stepsLeft = this.stepRate;
 
                 this.changeSprite();
             }
@@ -135,7 +132,6 @@
     };
 
 
-
     Element.prototype.animate = function() {
 
 		var field = this.grid.fields[ this.pos ];
@@ -157,13 +153,11 @@
     };
 
 
-
-
     Element.prototype.draw = function() {
 
         var field = this.field,
-        	x = field.x + this.grid.getTranslateX(field.radius),
-        	y = field.y + this.grid.getTranslateY(field.radius);
+            x = field.x + this.grid.getTranslateX(field.radius),
+            y = field.y + this.grid.getTranslateY(field.radius);
 
         this.origin.save();
 
@@ -171,7 +165,7 @@
 
             this.origin.rotate( field.angle );
 
-            this.origin.translate( -x , -y);
+            this.origin.translate( -x , -y );
 
             this.origin.drawImage(
 
