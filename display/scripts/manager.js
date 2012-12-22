@@ -124,33 +124,49 @@
 		commands[ action ].call( this, options );
 	};
 
+
 	/**
 	 * [init description]
-	 * @param  {[type]} params [description]
+	 * @param  {[type]} params [description]		|| channelId
 	 * @return {[type]}        [description]
 	 */
 	Manager.prototype.init = function ( params ) {
 
-        var qrLink = 'http://game.neurron.com/controller/?' + params[0],
+        var link = 'http://game.neurron.com/controller/?' + params[0],
 
-            element = document.getElementById('qr_code'),
+			element = document.getElementById('qr_code'),
 
-            qrCode = showQRCode( qrLink, { r: 14, g: 73, b: 155 });
+			qrCode = showQRCode( link, { r: 14, g: 73, b: 155 }),
 
-        if ( element.lastChild ) {
+			xhr = new XMLHttpRequest();
 
-			element.replaceChild(qrCode, element.lastChild);
+		// link shortener: is.gd
+		xhr.onload = function ( t ) {
 
-        } else {
+			var shortUrl = JSON.parse( t.currentTarget.responseText ).shorturl,
 
-			element.appendChild(qrCode);
-        }
+				linkBox = document.createElement('div');
 
-        var linkBox = document.createElement('div');
-        linkBox.className = "qr_link";
-        linkBox.innerHTML = '<a target="_blank" href="'+ qrLink +'">' + qrLink + '</a>';
+			if ( element.lastChild ) {
 
-        element.insertBefore( linkBox, qrCode.nextSibling );
+				element.replaceChild( qrCode, element.lastChild );
+
+			} else {
+
+				element.appendChild( qrCode );
+			}
+
+			linkBox.className = "qr_link";
+			linkBox.innerHTML = '<a target="_blank" href="'+ link +'">' + shortUrl + '</a>';
+
+			element.insertBefore( linkBox, qrCode.nextSibling );
+		};
+
+        xhr.open('GET', 'http://is.gd/create.php?format=json&url=' + encodeURI( link ), true );
+
+		xhr.setRequestHeader( 'Content-Type', 'text/plain; charset=UTF-8' );
+
+        xhr.send();
 	};
 
 
