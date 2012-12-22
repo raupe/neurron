@@ -23,6 +23,7 @@
 
         display.current = id;
 
+
         left = document.getElementById( id + '-l' );
         right = document.getElementById( id + '-r' );
 
@@ -30,34 +31,30 @@
 
             left.className = 'show';
 
-        } else if ( view.left ) {
+        } else if (view && view.left ) {
 
             temp = document.createElement('div');
             temp.innerHTML = view.left;
             temp.id = id + '-l';
-            temp.className = 'wrapper';
+            temp.className = 'show';//wrapper';
             containerLeft.appendChild( temp );
         }
-
 
         if ( right ) {
 
             right.className = 'show';
 
-        } else if ( view.right ) {
+        } else if ( view && view.right ) {
 
             temp = document.createElement('div');
             temp.innerHTML = view.right;
             temp.id = id + '-r';
-            temp.className = 'wrapper';
+            temp.className = 'show';//wrapper';
             containerRight.appendChild( temp );
         }
 
-        // setTimeout( function(){
 
-        display.logic[ id ]();
-
-        // }, 16.7); // innerHTML ?
+        if ( display.logic[ id ] ) display.logic[ id ]();
 	};
 
 })();
