@@ -19,6 +19,7 @@
 
 		display.Connection.prototype.manager = this;
 		display.Debug.prototype.manager = this;
+		display.StatusManager.prototype.manager = this;
 	};
 
 

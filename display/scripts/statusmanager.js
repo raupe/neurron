@@ -2,6 +2,8 @@
 
     var StatusManager = display.StatusManager = function() {
 
+        this.originStep = 0.5;// 0.2
+
         this.points = 0;
         this.createPanel( config.factor );
 
@@ -24,8 +26,30 @@
         this.distance = this.fullBarHeight + 10;
 
         this.healer = 0;
-        this.draw();
+
+        this.render();
     };
+
+
+    StatusManager.prototype.render = function(){
+
+        function loop() {
+
+            this.draw();
+
+            if ( this.manager.runningGame ) {
+
+                requestAnimationFrame( loop.bind(this) );
+
+            } else {
+
+                this.clear();
+            }
+        }
+
+        loop.call(this);
+    };
+
 
     StatusManager.prototype.draw = function(){
 
@@ -74,18 +98,23 @@
                 this.color = 'green';
             }
 
-            // energyBars
-            ctx.fillStyle = this.color;
-            ctx.fillRect( this.energyBarStartX, this.startY + i*this.distance, this.fullBarWidth * (currentPlayer.energy / 100), this.fullBarHeight);
+            // colorBar
+            ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
+            ctx.fillRect(this.colorBarStartX, this.startY + i*this.distance, this.energyBarStartX/2, this.fullBarHeight);
 
             // lifeLabels
             ctx.fillStyle = 'white';
             ctx.font = '' + 20 + 'pt Comic Sans MS';
             ctx.fillText( currentPlayer.energy + ' %', this.lifeLabelStartX, (this.startY + 30) + i*this.distance );
 
-            // colorBar
-            ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
-            ctx.fillRect(this.colorBarStartX, this.startY + i*this.distance, this.energyBarStartX/2, this.fullBarHeight);
+            // energyBars
+            ctx.fillStyle = this.color;
+            ctx.fillRect( this.energyBarStartX, this.startY + i*this.distance, this.fullBarWidth * ( (currentPlayer.energy - currentPlayer.diffEnergy) / 100), this.fullBarHeight);
+            // ctx.fillRect( this.energyBarStartX, this.startY + i*this.distance, this.fullBarWidth * ( currentPlayer.energy / 100 ), this.fullBarHeight);
+
+            if ( currentPlayer.diffEnergy === 0 ) this.animationStep = this.originStep; // default
+            if ( currentPlayer.diffEnergy > 0 ) currentPlayer.diffEnergy -= this.animationStep;
+            if ( currentPlayer.diffEnergy < 0 ) currentPlayer.diffEnergy += this.animationStep;
         }
 
     };
@@ -106,12 +135,12 @@
         this.start = this.screen.cvs.width - this.offset;
         this.panel = ctx;
         this.canvas = cvs;
+
         this.setBackground();
 
 
         cvs.id = 'statusmanager';
         div.appendChild( cvs );
-
 
         div.id = 'game-r';
         div.className = 'hide';
@@ -138,11 +167,17 @@
         if (this.healer.energy > amountToHeal) {
 
             this.healer.energy -= amountToHeal;
+            this.healer.diffEnergy = -amountToHeal;
 
             for ( i = 0; i < numberOfPlayers; i++) {
 
                 currentPlayer = this.playerList[playersIds[i] - 1];
-                if (currentPlayer.energy <= 90) currentPlayer.energy += healForEachPlayer;
+
+                if ( currentPlayer.energy <= 90 ) {
+
+                    currentPlayer.energy += healForEachPlayer;
+                    currentPlayer.diffEnergy = healForEachPlayer;
+                }
             }
         }
 
@@ -165,15 +200,23 @@
             for ( i = 0; i < numberOfPlayers; i++ ){
 
                 currentPlayer = this.playerList[playersIds[i] - 1];
-                if (!currentPlayer.alive) {
-                    currentPlayer.revive();
-                }
+
+                if ( !currentPlayer.alive ) currentPlayer.revive();
+
 
                 if (currentPlayer.energy >= value) {
+
                     currentPlayer.energy -= value;
+
                 } else {
+
                     currentPlayer.energy = 0;
                 }
+
+                currentPlayer.diffEnergy = -value;
+
+
+
                 if (currentPlayer.energy === 0) {
 
                     if (this.points >= config.punishPoints) {
@@ -196,8 +239,11 @@
                             if (!currentPlayer.alive) {
 
                                 currentPlayer.revive();
+                                this.animationStep = 2;// 5;
+
                                 this.draw();
                             }
+
                         }.bind(this), config.deadTime * 1000);
                     }
                 }
@@ -206,16 +252,17 @@
         } else if ( type === 'heal' ) {
 
             for ( i = 0; i < numberOfPlayers; i++ ){
+
                 var healForEachPlayer = ~~(value / numberOfPlayers);
                 currentPlayer = this.playerList[playersIds[i] - 1];
 
-                if (!currentPlayer.alive) {
-                    currentPlayer.revive();
-                }
+                if ( !currentPlayer.alive ) currentPlayer.revive();
 
                 currentPlayer.energy += healForEachPlayer;
 
-                if (currentPlayer.energy > 100) currentPlayer.energy = 100;
+                if ( currentPlayer.energy > 100 ) currentPlayer.energy = 100;
+
+                currentPlayer.diffEnergy = currentPlayer.energy < 100 ? healForEachPlayer : 0;
             }
 
         } else { // points
@@ -224,9 +271,7 @@
                 var pointsForEachPlayer = ~~(value / numberOfPlayers);
                 currentPlayer = this.playerList[playersIds[i] - 1];
 
-                if (!currentPlayer.alive) {
-                    currentPlayer.revive();
-                }
+                if ( !currentPlayer.alive ) currentPlayer.revive();
 
                 this.points += ~~((currentPlayer.energy / 100) * pointsForEachPlayer);
             }

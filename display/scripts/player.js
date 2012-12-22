@@ -2,6 +2,8 @@
 
 	var Player = display.Player = function ( params ) {
 
+        this.isPlayer = true;
+
 		this.type = 'player_' + params.id;
 
         this.velocity = config.player.velocity;
@@ -9,6 +11,8 @@
         this.visible = true;
 
         this.energy = 100;
+
+        this.diffEnergy = 0;
 
         this.alive = true;
 
@@ -80,18 +84,17 @@
     Player.prototype.fade = function(){
 
         this.spriteImages = this.assetManager.get('image', 'player_dead' );
-
         this.spriteCounter = 0;
     };
 
     Player.prototype.revive = function() {
 
         this.spriteImages = this.assetManager.get('image', this.type );
-
         this.spriteCounter = 0;
 
         this.alive = true;
         this.energy = 100;
+        this.diffEnergy = 100;
     };
 
 
