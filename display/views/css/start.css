@@ -52,6 +52,7 @@ canvas {
     width: 75%;
     min-width: 570px;
     height: 100%;
+    /*background-color: #000;*/
 }
 
 .slider_content_wrap {
@@ -62,9 +63,9 @@ canvas {
     margin-right: auto;
 }
 .logo {
-    border-radius: 0px 0px 20px 20px;
-    -moz-border-radius: 0px 0px 20px 20px;
-    -webkit-border-radius: 0px 0px 20px 20px;
+    -moz-border-radius: 0 0 20px 20px;
+    -webkit-border-radius: 0 0 20px 20px;
+    border-radius: 0 0 20px 20px;
     width: 35%;
     min-width: 270px;
     height: 15%;
@@ -82,9 +83,9 @@ canvas {
 }
 
 .button {
-    border-radius: 10px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
+    border-radius: 10px;
     width: 24%;
     height: 14%;
     min-height: 50px;
@@ -173,6 +174,7 @@ canvas {
     width: 25%;
     min-width: 190px;
     height: 100%;
+    /*background-color: #000;*/
 }
 
 .info{
@@ -197,3 +199,4 @@ canvas {
 
     display: block;
 }
+
