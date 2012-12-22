@@ -212,6 +212,7 @@ canvas {
     background: linear-gradient(to bottom, rgb(255, 121, 198) 1%, rgb(235, 41, 188) 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5366f3', endColorstr='#0a1aa1',GradientType=0 ); /* IE6-9 */
 }
+/*
 .side_wrapper {
     float: right;
     width: 25%;
@@ -234,10 +235,10 @@ canvas {
     background-color: #ffffff;
     margin-left: 5%;
     margin-top: 5%;
-    position: relative;
 }
 
 .show {
 
     display: block;
 }
+*/
