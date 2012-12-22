@@ -1,18 +1,18 @@
 (function(){
 
-	var StatusManager = display.StatusManager = function() {
-
-		this.points = 0;
-		this.createPanel( config.factor );
-
-        display.Debug.prototype.statusManager = this;
-	};
-
-
-	StatusManager.prototype.init = function ( playerList )  {
+    var StatusManager = display.StatusManager = function() {
 
         this.points = 0;
-		this.playerList = playerList;
+        this.createPanel( config.factor );
+
+        display.Debug.prototype.statusManager = this;
+    };
+
+
+    StatusManager.prototype.init = function ( playerList )  {
+
+        this.points = 0;
+        this.playerList = playerList;
 
         this.fullBarWidth = this.offset / 1.6;
         this.fullBarHeight = 40;
@@ -24,8 +24,8 @@
         this.distance = this.fullBarHeight + 10;
 
         this.healer = 0;
-		this.draw();
-	};
+        this.draw();
+    };
 
     StatusManager.prototype.draw = function(){
 
@@ -34,28 +34,28 @@
         this.showLifeBars();
     };
 
-	StatusManager.prototype.showPoints = function () {
+    StatusManager.prototype.showPoints = function () {
 
-		var ctx = this.panel,
-			size = 40;
+        var ctx = this.panel,
+            size = 40;
 
-		ctx.fillStyle = 'yellow';
-		ctx.font = '' + size + 'pt Comic Sans MS'; // 'italic ' + size + 'pt Comic Sans MS';
+        ctx.fillStyle = 'yellow';
+        ctx.font = '' + size + 'pt Comic Sans MS'; // 'italic ' + size + 'pt Comic Sans MS';
 
         // firefly symbol instead 'points' or $ ?
         ctx.fillText( ( display.teamname || 'Total' ) + ': ' + this.points + ' $', this.offset/6, size * 2 ); //' points'
-	};
+    };
 
-	StatusManager.prototype.showLifeBars = function () {
+    StatusManager.prototype.showLifeBars = function () {
 
-		var ctx = this.panel,
-			playerList = this.playerList,
+        var ctx = this.panel,
+            playerList = this.playerList,
             currentPlayer,
             r,
             g,
             b;
 
-		for ( var i = 0, l = playerList.length; i < l; i++ ){
+        for ( var i = 0, l = playerList.length; i < l; i++ ){
 
             currentPlayer = playerList[i];
 
@@ -77,52 +77,66 @@
             }
 
             // energyBars
-			ctx.fillStyle = this.color;
-			ctx.fillRect( this.energyBarStartX, this.startY + i*this.distance, this.fullBarWidth * (currentPlayer.energy / 100), this.fullBarHeight);
+            ctx.fillStyle = this.color;
+            ctx.fillRect( this.energyBarStartX, this.startY + i*this.distance, this.fullBarWidth * (currentPlayer.energy / 100), this.fullBarHeight);
 
             // lifeLabels
-			ctx.fillStyle = 'white';
-			ctx.font = '' + 20 + 'pt Comic Sans MS';
-			ctx.fillText( currentPlayer.energy + ' %', this.lifeLabelStartX, (this.startY + 30) + i*this.distance );
+            ctx.fillStyle = 'white';
+            ctx.font = '' + 20 + 'pt Comic Sans MS';
+            ctx.fillText( currentPlayer.energy + ' %', this.lifeLabelStartX, (this.startY + 30) + i*this.distance );
 
             // colorBar
             ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
             ctx.fillRect(this.colorBarStartX, this.startY + i*this.distance, this.energyBarStartX/2, this.fullBarHeight);
-		}
+        }
 
-	};
+    };
 
 
-	StatusManager.prototype.createPanel = function ( factor ) {
+    StatusManager.prototype.createPanel = function ( factor ) {
 
-		var cvs = document.createElement('canvas'),
-			ctx = cvs.getContext('2d'),
+ // temp = document.createElement('div');
+ //                temp.innerHTML = view.left;
+ //                temp.id = id + '-l';
+ //                temp.className = 'wrapper';
+ //                containerLeft.appendChild( temp );
+
+
+        var div = document.createElement('div'),
+
+            cvs = document.createElement('canvas'),
+            ctx = cvs.getContext('2d'),
             container_right = document.getElementById('container-right');
 
         this.offset = container_right.offsetWidth;
-		cvs.width = this.offset;
-		cvs.height = window.innerHeight;
+        cvs.width = this.offset;
+        cvs.height = window.innerHeight;
 
-		this.start = this.screen.cvs.width - this.offset;
-		this.panel = ctx;
+        this.start = this.screen.cvs.width - this.offset;
+        this.panel = ctx;
         this.canvas = cvs;
         this.setBackground();
 
-        cvs.id = 'game-r'; // statusManager
-        cvs.className = 'hide';
+
+        cvs.id = 'statusmanager';
+        div.appendChild( cvs );
+
+
+        div.id = 'game-r'; // statusManager
+        div.className = 'hide';
 
         // document.body.appendChild( cvs );
-        container_right.appendChild( cvs );
-	};
+        container_right.appendChild( div );
+    };
 
 
     StatusManager.prototype.setBackground = function () {
         this.panel.fillStyle = '#000';
-		this.panel.fillRect( 0, 0, this.panel.canvas.width, this.panel.canvas.height );
+        this.panel.fillRect( 0, 0, this.panel.canvas.width, this.panel.canvas.height );
     };
 
 
-	StatusManager.prototype.handleHeal = function ( playerId, playersIds ) {
+    StatusManager.prototype.handleHeal = function ( playerId, playersIds ) {
 
         var numberOfPlayers = playersIds.length,
             amountToHeal = config.amountToHeal,
@@ -143,10 +157,10 @@
         }
 
         this.draw();
-	};
+    };
 
 
-	StatusManager.prototype.handleCollide = function ( obstacleId, playersIds ) {
+    StatusManager.prototype.handleCollide = function ( obstacleId, playersIds ) {
 
         var currentObstacle = this.pool.list[obstacleId],
 
@@ -231,7 +245,7 @@
         this.draw();
 
         currentObstacle.collide();
-	};
+    };
 
     StatusManager.prototype.showEnd = function( points ) {
 
@@ -254,8 +268,8 @@
 
     StatusManager.prototype.clear = function(){
 
-		this.panel.clearRect( 0,0, this.canvas.width, this.canvas.height );
-	};
+        this.panel.clearRect( 0,0, this.canvas.width, this.canvas.height );
+    };
 
 
 })();

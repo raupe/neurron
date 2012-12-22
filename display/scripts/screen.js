@@ -18,18 +18,31 @@
 
 	Screen.prototype.createCanvas = function(){
 
-		var canvas = document.createElement('canvas');
+		var div = document.createElement('div'),
+			cvs = document.createElement('canvas');
 
-		this.ctx = canvas.getContext('2d');
-		this.cvs = canvas;
+		this.ctx = cvs.getContext('2d');
+		this.cvs = cvs;
+
+		cvs.id = 'screen';
+
+
+
+		div.id = 'game-l';
+		div.className = 'hide';
+
+		div.appendChild( cvs );
+
 
 		scale.apply( this );
 
-		this.cvs.id = 'game-l';// screen
-		this.cvs.className = 'hide';
 
-		// document.body.appendChild( this.cvs );
-		document.getElementById('container-left').appendChild( this.cvs );
+
+		document.getElementById('container-left').appendChild( div );
+
+
+
+
 
 		window.addEventListener('resize', scale.bind(this) );
 		window.addEventListener('orientationchange', scale.bind(this) );
