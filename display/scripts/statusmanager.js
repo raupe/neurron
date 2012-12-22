@@ -51,17 +51,15 @@
         var ctx = this.panel,
             playerList = this.playerList,
             currentPlayer,
-            r,
-            g,
-            b;
+            r, g, b;
 
         for ( var i = 0, l = playerList.length; i < l; i++ ){
 
             currentPlayer = playerList[i];
 
-            r = currentPlayer.color[0];
-            g = currentPlayer.color[1];
-            b = currentPlayer.color[2];
+            r = currentPlayer.color.r;
+            g = currentPlayer.color.g;
+            b = currentPlayer.color.b;
 
             if (currentPlayer.energy <= config.colorLimits.red) {
 
@@ -95,13 +93,6 @@
 
     StatusManager.prototype.createPanel = function ( factor ) {
 
- // temp = document.createElement('div');
- //                temp.innerHTML = view.left;
- //                temp.id = id + '-l';
- //                temp.className = 'wrapper';
- //                containerLeft.appendChild( temp );
-
-
         var div = document.createElement('div'),
 
             cvs = document.createElement('canvas'),
@@ -122,10 +113,9 @@
         div.appendChild( cvs );
 
 
-        div.id = 'game-r'; // statusManager
+        div.id = 'game-r';
         div.className = 'hide';
 
-        // document.body.appendChild( cvs );
         container_right.appendChild( div );
     };
 
