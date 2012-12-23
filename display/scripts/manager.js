@@ -69,7 +69,6 @@
 
             } else {
 
-				this.statusManager.clear();
                 this.screen.clear();
             }
 		}
@@ -139,10 +138,9 @@
 	Manager.prototype.init = function ( params ) {
 
         var link = 'http://game.neurron.com/controller/?' + params[0],
+			qrCode = showQRCode( link, { r: 14, g: 73, b: 155 }),
 
 			element = document.getElementById('qr_code'),
-
-			qrCode = showQRCode( link, { r: 14, g: 73, b: 155 }),
 
 			xhr = new XMLHttpRequest();
 
@@ -153,19 +151,14 @@
 
 				linkBox = document.createElement('div');
 
-			if ( element.lastChild ) {
-
-				element.replaceChild( qrCode, element.lastChild );
-
-			} else {
-
-				element.appendChild( qrCode );
-			}
-
 			linkBox.className = "qr_link";
 			linkBox.innerHTML = '<a target="_blank" href="'+ link +'">' + shortUrl + '</a>';
 
+			element.appendChild( qrCode );
 			element.insertBefore( linkBox, qrCode.nextSibling );
+
+			// set visible
+			element.className = 'qr_code round';
 		};
 
         xhr.open('GET', 'http://is.gd/create.php?format=json&url=' + encodeURI( link ), true );
