@@ -92,22 +92,22 @@
 	};
 
 
-
 	// Style settings
-	Input.prototype.setStyle = function() {
+	Input.prototype.setStyle = function(){
+
+		this.screen.setBackground( this.color );
 
 		var ctx = this.ctx,
-			cvs = this.cvs,
 
-			color = this.color;
+			color = config.playerColors[ this.color ];
 
 		ctx.lineWidth = 10;
 		ctx.lineCap = 'round';
 
-		ctx.strokeStyle = '#fff'; //color ? 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')' : '#FFF';
-		ctx.shadowColor = color ? 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')' : '#BAE9F7';
+		ctx.strokeStyle = '#fff';
 
 		ctx.shadowBlur = 20;
+		ctx.shadowColor = color ? 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')' : '#BAE9F7';
 	};
 
 
@@ -116,10 +116,7 @@
 		e.preventDefault();
 		e.stopPropagation();
 
-		this.screen.clear();
-
 		this.tapped = true;
-
 
 		var touch = getPos( e.changedTouches[0] );
 
@@ -191,6 +188,7 @@
 
 		manager.handle( config.commands.MOVE, [ origin, touch, this.averageX, this.averageY, this.between ] );
 
+		this.screen.clear();
 
 		this.between.length = 0;
 		this.averageX = 0;
@@ -200,7 +198,7 @@
 
 
 
-	function getPos ( e ) { // client x,y ?, screenX, screenY ?
+	function getPos ( e ) {
 
 		if ( e.offsetX ) {
 

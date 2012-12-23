@@ -125,7 +125,7 @@
 
 				this.id = data.charCodeAt(1);
 
-				this.input.color = config.playerColors[ data.charCodeAt(2) ];
+				this.input.color = data.charCodeAt(2);
 
 				this.input.setStyle();
 			}
@@ -144,7 +144,6 @@
 
 		this.send( config.protocolCtoS.REGISTER, name );
 	};
-
 
 
 	/**
