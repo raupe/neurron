@@ -36,7 +36,13 @@
 
 		function loop ( time ) {
 
-			delta = time - last;
+			delta	= time - last;
+			last	= time;
+
+
+			this.statusManager.draw();
+
+
 
 			forAll( this.playerList, 'update', delta );
 
@@ -56,14 +62,14 @@
 
 
 
-			last = time;
 
-            if (this.runningGame) {
+            if ( this.runningGame ) {
 
                 requestAnimationFrame( loop.bind(this) );
 
             } else {
 
+				this.statusManager.clear();
                 this.screen.clear();
             }
 		}
@@ -91,7 +97,6 @@
 				}
 
             } while ( l-- );
-
 		}
 
 	};
