@@ -32,7 +32,7 @@
 		cvs.id = 'screen';
 
 		div.id = 'game-l';
-		div.className = 'hide';
+		div.className = 'wrapper hide';
 
 		div.appendChild( cvs );
 

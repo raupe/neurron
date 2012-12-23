@@ -15,10 +15,10 @@
         if ( display.current ) {
 
             left = document.getElementById( display.current + '-l' );
-            if ( left ) left.className = 'hide';
+            if ( left ) $(left).toggleClass('show hide');
 
             right = document.getElementById( display.current + '-r' );
-            if ( right ) right.className = 'hide';
+            if ( right ) $(right).toggleClass('show hide');
         }
 
         display.current = id;
@@ -29,27 +29,27 @@
 
         if ( left ) {
 
-            left.className = 'show';
+            $(left).toggleClass('show hide');
 
-        } else if (view && view.left ) {
+        } else if ( view && view.left ) {
 
             temp = document.createElement('div');
             temp.innerHTML = view.left;
             temp.id = id + '-l';
-            temp.className = 'show';//wrapper';
+            temp.className = 'wrapper show';
             containerLeft.appendChild( temp );
         }
 
         if ( right ) {
 
-            right.className = 'show';
+            $(right).toggleClass('show hide');
 
         } else if ( view && view.right ) {
 
             temp = document.createElement('div');
             temp.innerHTML = view.right;
             temp.id = id + '-r';
-            temp.className = 'show';//wrapper';
+            temp.className = 'wrapper show';
             containerRight.appendChild( temp );
         }
 
