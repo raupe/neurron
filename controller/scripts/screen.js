@@ -37,7 +37,11 @@
 
 		var cvs = this.cvs;
 
-		if ( colorId ) {
+		if ( !colorId ) {
+
+			cvs.style['background'] = '#000';
+
+		} else {
 
 			var bvs = document.createElement('canvas'),
 				btx = bvs.getContext('2d'),
@@ -46,9 +50,9 @@
 				width	= 10,
 				opacity = 0.7,
 				height	= width * 20,
-				steps	= 60,
-				value	= 255/steps,
-				time	= 200;// 500;
+				steps	= 100,	// 60
+				time	= 200,	// 500
+				value	= 255/steps;
 
 			bvs.width = this.cvs.width;
 			bvs.height = this.cvs.height;
@@ -70,15 +74,16 @@
 			btx.fillStyle = '#000';
 			btx.fillRect( 0, cy - height/2, bvs.width, height);
 
+			// smoother with pre-calculations
+			var frames = new Array( steps );
+
+			createBackgrounds();
+
 			setTimeout( fade, time );
-
-		} else {
-
-			cvs.style['background'] = '#000';
 		}
 
 
-		function fade() {
+		function createBackgrounds() {
 
 			var img = btx.getImageData( 0, 0, bvs.width, bvs.height ),
 
@@ -90,9 +95,19 @@
 
 			btx.putImageData( img, 0, 0 );
 
-			cvs.style['background'] = 'url(' + bvs.toDataURL('image/png') + ') no-repeat #000';
+			frames[steps] = bvs.toDataURL('image/png');
 
-			if ( steps-- ) setTimeout( fade, time );
+			if ( steps-- ) createBackgrounds();
+		}
+
+		function fade(){
+
+			if ( frames.length ) {
+
+				cvs.style['background'] = 'url(' + frames.pop() + ') no-repeat #000';
+
+				setTimeout( fade, time );
+			}
 		}
 	};
 
