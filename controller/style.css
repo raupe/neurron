@@ -3,7 +3,6 @@ canvas {
     display: block;
     margin: 0 auto;
 
-    background: url(background.png) no-repeat #000;
     background-size: 100% auto;
 
 
@@ -22,17 +21,17 @@ canvas {
 
 
 .button {
-    -moz-box-shadow:inset 0px 1px 0px 0px #a4e271;
-    -webkit-box-shadow:inset 0px 1px 0px 0px #a4e271;
-    box-shadow:inset 0px 1px 0px 0px #a4e271;
+    -moz-box-shadow:inset 0 1px 0 0 #a4e271;
+    -webkit-box-shadow:inset 0 1px 0 0 #a4e271;
+    box-shadow:inset 0 1px 0 0 #a4e271;
     background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #89c403), color-stop(1, #77a809) );
     background:-moz-linear-gradient( center top, #89c403 5%, #77a809 100% );
     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#89c403', endColorstr='#77a809');
     background-color:#89c403;
-    -moz-border-radius:12px;
     -webkit-border-radius:12px;
+    -moz-border-radius:12px;
     border-radius:12px;
-    border:1px solid #74b807;
+    border: 1px solid #74b807;
     position: absolute;
     width: 50%;
     height: 50%;
