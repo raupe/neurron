@@ -66,7 +66,7 @@
         if ( this.type === 'heal' )     ms = 4;
         if ( this.type === 'points' )   ms = 4;
         if ( this.type === 'damage' )   ms = 4;
-        if ( this.isPlayer )            ms = 4 + ~~(this.id/2 + 0.5);
+        if ( this.isPlayer )            ms = 4 + ~~(this.id + 0.5);
 
         return ms;
     };
