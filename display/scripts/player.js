@@ -10,11 +10,13 @@
 
         this.visible = true;
 
+        this.alive = true;
         this.energy = 100;
-
         this.diffEnergy = 0;
 
-        this.alive = true;
+
+        this.deadSprites = this.assetManager.get('image', 'player_dead' );
+        this.transSprite = this.assetManager.get('image', 'player_trans' );
 
 		this.init({
 
@@ -81,15 +83,18 @@
 
 
 
-    Player.prototype.fade = function(){
+    Player.prototype.die = function(){
 
-        this.spriteImages = this.assetManager.get('image', 'player_dead' );
+        this.spriteImages = this.deadSprites;
         this.spriteCounter = 0;
+
+        this.alive = false;
     };
+
 
     Player.prototype.revive = function() {
 
-        this.spriteImages = this.assetManager.get('image', this.type );
+        this.spriteImages = this.originSprites;
         this.spriteCounter = 0;
 
         this.alive = true;

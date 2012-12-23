@@ -1,310 +1,345 @@
 (function(){
 
-    var StatusManager = display.StatusManager = function() {
+	var StatusManager = display.StatusManager = function() {
 
-        this.originStep = 0.5;// 0.2
+		this.originStep = 0.5;// 0.2
 
-        this.points = 0;
-        this.createPanel( config.factor );
+		this.points = 0;
+		this.createPanel( config.factor );
 
-        display.Debug.prototype.statusManager = this;
-    };
+		display.Debug.prototype.statusManager = this;
+	};
 
 
-    StatusManager.prototype.init = function ( playerList )  {
+	StatusManager.prototype.init = function ( playerList )  {
 
-        this.points = 0;
-        this.playerList = playerList;
+		this.points = 0;
+		this.playerList = playerList;
 
-        this.fullBarWidth = this.offset / 1.6;
-        this.fullBarHeight = 40;
-        this.energyBarStartX = this.offset / 8;
-        this.colorBarStartX = this.energyBarStartX / 2;
-        this.lifeLabelStartX = this.energyBarStartX + this.fullBarWidth + 4; // 4 offset that it doesnt catch the energybar
-        this.startY = 140;
-        this.color = 'green';
-        this.distance = this.fullBarHeight + 10;
+		this.fullBarWidth = this.offset / 1.6;
+		this.fullBarHeight = 40;
+		this.energyBarStartX = this.offset / 8;
+		this.colorBarStartX = this.energyBarStartX / 2;
+		this.lifeLabelStartX = this.energyBarStartX + this.fullBarWidth + 4; // 4 offset that it doesnt catch the energybar
+		this.startY = 140;
+		this.color = 'green';
+		this.distance = this.fullBarHeight + 10;
 
-        this.healer = 0;
+		this.healer = 0;
+	};
 
-        this.render();
-    };
 
+	StatusManager.prototype.draw = function(){
 
-    StatusManager.prototype.render = function(){
+		this.setBackground();
 
-        function loop() {
+		this.showPoints();
 
-            this.draw();
+		this.showLifeBars();
+	};
 
-            if ( this.manager.runningGame ) {
 
-                requestAnimationFrame( loop.bind(this) );
+	StatusManager.prototype.showPoints = function () {
 
-            } else {
+		var ctx = this.panel,
+			size = 40;
 
-                this.clear();
-            }
-        }
+		ctx.fillStyle = 'yellow';
+		ctx.font = '' + size + 'pt Comic Sans MS'; // 'italic ' + size + 'pt Comic Sans MS';
 
-        loop.call(this);
-    };
+		// firefly symbol instead 'points' or $ ?
+		ctx.fillText( ( display.teamname || 'Total' ) + ': ' + this.points + ' $', this.offset/6, size * 2 ); //' points'
+	};
 
 
-    StatusManager.prototype.draw = function(){
+	StatusManager.prototype.showLifeBars = function () {
 
-        this.setBackground();
-        this.showPoints();
-        this.showLifeBars();
-    };
+		var ctx = this.panel,
+			playerList = this.playerList,
+			currentPlayer,
+			r, g, b;
 
-    StatusManager.prototype.showPoints = function () {
+		for ( var i = 0, l = playerList.length; i < l; i++ ){
 
-        var ctx = this.panel,
-            size = 40;
+			currentPlayer = playerList[i];
 
-        ctx.fillStyle = 'yellow';
-        ctx.font = '' + size + 'pt Comic Sans MS'; // 'italic ' + size + 'pt Comic Sans MS';
+			r = currentPlayer.color.r;
+			g = currentPlayer.color.g;
+			b = currentPlayer.color.b;
 
-        // firefly symbol instead 'points' or $ ?
-        ctx.fillText( ( display.teamname || 'Total' ) + ': ' + this.points + ' $', this.offset/6, size * 2 ); //' points'
-    };
+			if (currentPlayer.energy <= config.colorLimits.red) {
 
-    StatusManager.prototype.showLifeBars = function () {
+				this.color = 'red';
 
-        var ctx = this.panel,
-            playerList = this.playerList,
-            currentPlayer,
-            r, g, b;
+			} else if ( currentPlayer.energy <= config.colorLimits.orange ) {
 
-        for ( var i = 0, l = playerList.length; i < l; i++ ){
+				this.color = 'orange';
 
-            currentPlayer = playerList[i];
+			} else {
 
-            r = currentPlayer.color.r;
-            g = currentPlayer.color.g;
-            b = currentPlayer.color.b;
+				this.color = 'green';
+			}
 
-            if (currentPlayer.energy <= config.colorLimits.red) {
+			// colorBar
+			ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
+			ctx.fillRect(this.colorBarStartX, this.startY + i*this.distance, this.energyBarStartX/2, this.fullBarHeight);
 
-                this.color = 'red';
+			// lifeLabels
+			ctx.fillStyle = 'white';
+			ctx.font = '' + 20 + 'pt Comic Sans MS';
+			ctx.fillText( currentPlayer.energy + ' %', this.lifeLabelStartX, (this.startY + 30) + i*this.distance );
 
-            } else if ( currentPlayer.energy <= config.colorLimits.orange ) {
+			// energyBars
+			ctx.fillStyle = this.color;
+			ctx.fillRect( this.energyBarStartX, this.startY + i*this.distance, this.fullBarWidth * ( (currentPlayer.energy - currentPlayer.diffEnergy) / 100), this.fullBarHeight);
+			// ctx.fillRect( this.energyBarStartX, this.startY + i*this.distance, this.fullBarWidth * ( currentPlayer.energy / 100 ), this.fullBarHeight);
 
-                this.color = 'orange';
+			if ( currentPlayer.diffEnergy === 0 ) currentPlayer.animationStep = this.originStep; // default
+			if ( currentPlayer.diffEnergy > 0 ) currentPlayer.diffEnergy -= currentPlayer.animationStep;
+			if ( currentPlayer.diffEnergy < 0 ) currentPlayer.diffEnergy += currentPlayer.animationStep;
+		}
 
-            } else {
+	};
 
-                this.color = 'green';
-            }
 
-            // colorBar
-            ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
-            ctx.fillRect(this.colorBarStartX, this.startY + i*this.distance, this.energyBarStartX/2, this.fullBarHeight);
+	StatusManager.prototype.createPanel = function ( factor ) {
 
-            // lifeLabels
-            ctx.fillStyle = 'white';
-            ctx.font = '' + 20 + 'pt Comic Sans MS';
-            ctx.fillText( currentPlayer.energy + ' %', this.lifeLabelStartX, (this.startY + 30) + i*this.distance );
+		var div = document.createElement('div'),
 
-            // energyBars
-            ctx.fillStyle = this.color;
-            ctx.fillRect( this.energyBarStartX, this.startY + i*this.distance, this.fullBarWidth * ( (currentPlayer.energy - currentPlayer.diffEnergy) / 100), this.fullBarHeight);
-            // ctx.fillRect( this.energyBarStartX, this.startY + i*this.distance, this.fullBarWidth * ( currentPlayer.energy / 100 ), this.fullBarHeight);
+			cvs = document.createElement('canvas'),
+			ctx = cvs.getContext('2d'),
+			container_right = document.getElementById('container-right');
 
-            if ( currentPlayer.diffEnergy === 0 ) this.animationStep = this.originStep; // default
-            if ( currentPlayer.diffEnergy > 0 ) currentPlayer.diffEnergy -= this.animationStep;
-            if ( currentPlayer.diffEnergy < 0 ) currentPlayer.diffEnergy += this.animationStep;
-        }
+		this.offset = container_right.offsetWidth;
+		cvs.width = this.offset;
+		cvs.height = window.innerHeight;
 
-    };
+		this.start = this.screen.cvs.width - this.offset;
+		this.panel = ctx;
+		this.canvas = cvs;
 
+		this.setBackground();
 
-    StatusManager.prototype.createPanel = function ( factor ) {
 
-        var div = document.createElement('div'),
+		cvs.id = 'statusmanager';
+		div.appendChild( cvs );
 
-            cvs = document.createElement('canvas'),
-            ctx = cvs.getContext('2d'),
-            container_right = document.getElementById('container-right');
+		div.id = 'game-r';
+		div.className = 'wrapper hide';
 
-        this.offset = container_right.offsetWidth;
-        cvs.width = this.offset;
-        cvs.height = window.innerHeight;
+		container_right.appendChild( div );
+	};
 
-        this.start = this.screen.cvs.width - this.offset;
-        this.panel = ctx;
-        this.canvas = cvs;
 
-        this.setBackground();
+	StatusManager.prototype.setBackground = function () {
+		this.panel.fillStyle = '#000';
+		this.panel.fillRect( 0, 0, this.panel.canvas.width, this.panel.canvas.height );
+	};
 
 
-        cvs.id = 'statusmanager';
-        div.appendChild( cvs );
+	StatusManager.prototype.handleHeal = function ( playerId, playersIds ) {
 
-        div.id = 'game-r';
-        div.className = 'hide';
+		var numberOfPlayers = playersIds.length,
+			amountToHeal = config.amountToHeal,
+			healForEachPlayer = ~~(amountToHeal / numberOfPlayers),
+			currentPlayer,  i;
 
-        container_right.appendChild( div );
-    };
+		this.healer = this.playerList[playerId - 1];
 
+		if (this.healer.energy > amountToHeal) {
 
-    StatusManager.prototype.setBackground = function () {
-        this.panel.fillStyle = '#000';
-        this.panel.fillRect( 0, 0, this.panel.canvas.width, this.panel.canvas.height );
-    };
+			this.healer.energy -= amountToHeal;
+			this.healer.diffEnergy = -amountToHeal;
 
+			for ( i = 0; i < numberOfPlayers; i++) {
 
-    StatusManager.prototype.handleHeal = function ( playerId, playersIds ) {
+				currentPlayer = this.playerList[playersIds[i] - 1];
 
-        var numberOfPlayers = playersIds.length,
-            amountToHeal = config.amountToHeal,
-            healForEachPlayer = ~~(amountToHeal / numberOfPlayers),
-            currentPlayer,  i;
+				if ( currentPlayer.energy <= 90 ) {
 
-        this.healer = this.playerList[playerId - 1];
+					currentPlayer.energy += healForEachPlayer;
+					currentPlayer.diffEnergy = healForEachPlayer;
+				}
+			}
+		}
 
-        if (this.healer.energy > amountToHeal) {
+		// this.draw();
+	};
 
-            this.healer.energy -= amountToHeal;
-            this.healer.diffEnergy = -amountToHeal;
 
-            for ( i = 0; i < numberOfPlayers; i++) {
+	StatusManager.prototype.handleCollide = function ( obstacleId, playersIds ) {
 
-                currentPlayer = this.playerList[playersIds[i] - 1];
+		var currentObstacle = this.pool.list[obstacleId],
 
-                if ( currentPlayer.energy <= 90 ) {
+			type = currentObstacle.type,
+			value = currentObstacle.value,
+			numberOfPlayers = playersIds.length,
+			currentPlayer,
+			i;
 
-                    currentPlayer.energy += healForEachPlayer;
-                    currentPlayer.diffEnergy = healForEachPlayer;
-                }
-            }
-        }
+		if ( type === 'damage' ) {
 
-        this.draw();
-    };
+			for ( i = 0; i < numberOfPlayers; i++ ){
 
+				currentPlayer = this.playerList[playersIds[i] - 1];
 
-    StatusManager.prototype.handleCollide = function ( obstacleId, playersIds ) {
+				if ( !currentPlayer.alive ) currentPlayer.revive();
 
-        var currentObstacle = this.pool.list[obstacleId],
 
-            type = currentObstacle.type,
-            value = currentObstacle.value,
-            numberOfPlayers = playersIds.length,
-            currentPlayer,
-            i;
+				if (currentPlayer.energy >= value) {
 
-        if ( type === 'damage' ) {
+					currentPlayer.energy -= value;
 
-            for ( i = 0; i < numberOfPlayers; i++ ){
+				} else {
 
-                currentPlayer = this.playerList[playersIds[i] - 1];
+					currentPlayer.energy = 0;
+				}
 
-                if ( !currentPlayer.alive ) currentPlayer.revive();
+				currentPlayer.diffEnergy = -value;
 
 
-                if (currentPlayer.energy >= value) {
 
-                    currentPlayer.energy -= value;
+				if (currentPlayer.energy === 0) {
 
-                } else {
+					if (this.points >= config.punishPoints) {
 
-                    currentPlayer.energy = 0;
-                }
+						this.points -= config.punishPoints;
 
-                currentPlayer.diffEnergy = -value;
+					} else {
 
+						this.points = 0;
+					}
 
+					if ( currentPlayer.alive ) {
 
-                if (currentPlayer.energy === 0) {
+						currentPlayer.die();
 
-                    if (this.points >= config.punishPoints) {
+						fading.call( this, currentPlayer );
+					}
+				}
+			}
 
-                        this.points -= config.punishPoints;
+		} else if ( type === 'heal' ) {
 
-                    } else {
+			for ( i = 0; i < numberOfPlayers; i++ ){
 
-                        this.points = 0;
-                    }
+				var healForEachPlayer = ~~(value / numberOfPlayers);
+				currentPlayer = this.playerList[playersIds[i] - 1];
 
-                    if (currentPlayer.alive) {
+				if ( !currentPlayer.alive ) currentPlayer.revive();
 
-                        currentPlayer.alive = false;
-                        currentPlayer.fade();
+				currentPlayer.energy += healForEachPlayer;
 
+				if ( currentPlayer.energy > 100 ) currentPlayer.energy = 100;
 
-                        setTimeout(function(){
+				currentPlayer.diffEnergy = currentPlayer.energy < 100 ? healForEachPlayer : 0;
+			}
 
-                            if (!currentPlayer.alive) {
+		} else { // points
 
-                                currentPlayer.revive();
-                                this.animationStep = 2;// 5;
+			for ( i = 0; i < numberOfPlayers; i++ ){
+				var pointsForEachPlayer = ~~(value / numberOfPlayers);
+				currentPlayer = this.playerList[playersIds[i] - 1];
 
-                                this.draw();
-                            }
+				if ( !currentPlayer.alive ) currentPlayer.revive();
 
-                        }.bind(this), config.deadTime * 1000);
-                    }
-                }
-            }
+				this.points += ~~((currentPlayer.energy / 100) * pointsForEachPlayer);
+			}
+		}
 
-        } else if ( type === 'heal' ) {
+		// this.draw();
 
-            for ( i = 0; i < numberOfPlayers; i++ ){
+		currentObstacle.collide();
 
-                var healForEachPlayer = ~~(value / numberOfPlayers);
-                currentPlayer = this.playerList[playersIds[i] - 1];
 
-                if ( !currentPlayer.alive ) currentPlayer.revive();
+		function fading ( player ) {
 
-                currentPlayer.energy += healForEachPlayer;
+			var steps = 100,
 
-                if ( currentPlayer.energy > 100 ) currentPlayer.energy = 100;
+				timer = 0,
 
-                currentPlayer.diffEnergy = currentPlayer.energy < 100 ? healForEachPlayer : 0;
-            }
+				add = config.deadTime / steps,
 
-        } else { // points
+				duration = add * 1000;
 
-            for ( i = 0; i < numberOfPlayers; i++ ){
-                var pointsForEachPlayer = ~~(value / numberOfPlayers);
-                currentPlayer = this.playerList[playersIds[i] - 1];
 
-                if ( !currentPlayer.alive ) currentPlayer.revive();
+			function check(){
 
-                this.points += ~~((currentPlayer.energy / 100) * pointsForEachPlayer);
-            }
-        }
+				timer += add;
 
-        this.draw();
+				if ( timer >= config.deadTime ) {
 
-        currentObstacle.collide();
-    };
+					player.revive();
 
-    StatusManager.prototype.showEnd = function( points ) {
+					player.animationStep = 2; // 5;
 
-        var endpoints = document.getElementById("endpoints");
+				} else {
 
-        if ( !endpoints ) {
+					if (
+							// timer > 0*add  && timer <  5*add || // 5 trans
+							// timer > 10*add && timer < 15*add ||
+							// timer > 20*add && timer < 25*add ||
+							// timer > 30*add && timer < 35*add ||
 
-            endpoints = document.createElement('div');
-            endpoints.className = "endpoints";
-            endpoints.id = "endpoints";
-            endpoints.innerHTML = "Endpoints: " + points;
-            document.body.appendChild( endpoints );
+							timer > 40*add && timer < 44*add || // 4 trans
+							timer > 48*add && timer < 52*add ||
+							timer > 54*add && timer < 58*add ||
+							timer > 62*add && timer < 66*add ||
 
-        } else {
+							timer > 70*add && timer < 72*add || // 2-3 trans
+							timer > 73*add && timer < 76*add ||
+							timer > 77*add && timer < 79*add ||
+							timer > 80*add && timer < 82*add ||
+							timer > 83*add && timer < 86*add ||
+							timer > 87*add && timer < 89*add ||
+							timer > 90*add && timer < 92*add ||
+							timer > 93*add && timer < 96*add ||
+							timer > 97*add && timer < 99*add
+						) {
 
-            endpoints.innerHTML = "Endpoints: " + points;
-            endpoints.style.display = "block";
-        }
-    };
+						player.src = player.transSprite;
+						player.spriteImages = null;
 
-    StatusManager.prototype.clear = function(){
+					} else {
 
-        this.panel.clearRect( 0,0, this.canvas.width, this.canvas.height );
-    };
+						player.spriteImages = player.deadSprites;
+					}
+
+					setTimeout( check, duration );
+				}
+			}
+
+			//config.deadTime * 1000
+			setTimeout( check, duration );
+		}
+
+	};
+
+
+	StatusManager.prototype.showEnd = function( points ) {
+
+		var endpoints = document.getElementById("endpoints");
+
+		if ( !endpoints ) {
+
+			endpoints = document.createElement('div');
+			endpoints.className = "endpoints";
+			endpoints.id = "endpoints";
+			endpoints.innerHTML = "Endpoints: " + points;
+			document.body.appendChild( endpoints );
+
+		} else {
+
+			endpoints.innerHTML = "Endpoints: " + points;
+			endpoints.style.display = "block";
+		}
+	};
+
+
+	StatusManager.prototype.clear = function(){
+
+		this.panel.clearRect( 0,0, this.canvas.width, this.canvas.height );
+	};
 
 
 })();

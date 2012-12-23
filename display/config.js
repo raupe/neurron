@@ -57,15 +57,16 @@ window.config = {
 		image: {
 
             // player
-			player_1	: { src: 'assets/player/ron_red_80.png',    width: '80' }, // red
-            player_2    : { src: 'assets/player/ron_blue_80.png',   width: '80' }, // blue
-            player_3    : { src: 'assets/player/ron_green_80.png',  width: '80' }, // green
-            player_4    : { src: 'assets/player/ron_yellow_80.png', width: '80' }, // yellow
-            player_5    : { src: 'assets/player/ron_lila_80.png',   width: '80' }, // lila
-            player_6    : { src: 'assets/player/ron_orange_80.png', width: '80' }, // orange
-            player_7    : { src: 'assets/player/ron_turq_80.png',   width: '80' }, // turq
-            player_8    : { src: 'assets/player/ron_pink_80.png',   width: '80' }, // pink
-            player_dead : { src: 'assets/player/ron_grey_80.png',   width: '80' }, // grey
+			player_1	: { src:	'assets/player/ron_red_80.png',    width: '80' },	// red
+            player_2    : { src:	'assets/player/ron_blue_80.png',   width: '80' },	// blue
+            player_3    : { src:	'assets/player/ron_green_80.png',  width: '80' },	// green
+            player_4    : { src:	'assets/player/ron_yellow_80.png', width: '80' },	// yellow
+            player_5    : { src:	'assets/player/ron_lila_80.png',   width: '80' },	// lila
+            player_6    : { src:	'assets/player/ron_orange_80.png', width: '80' },	// orange
+            player_7    : { src:	'assets/player/ron_turq_80.png',   width: '80' },	// turq
+            player_8    : { src:	'assets/player/ron_pink_80.png',   width: '80' },	// pink
+            player_dead : { src:	'assets/player/ron_grey_80.png',   width: '80' },	// grey
+            player_trans:			'assets/player/trans.gif',							// trans
 
 
 			// obstacle

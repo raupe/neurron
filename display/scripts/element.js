@@ -51,7 +51,9 @@
 
         this.stepsLeft = this.stepRate;
 
-        this.spriteImages = this.assetManager.get('image', this.type );
+        this.originSprites = this.assetManager.get('image', this.type );
+
+        this.spriteImages = this.originSprites;
 
         this.src = ( this.spriteImages instanceof Array ) ? this.spriteImages[0] : this.spriteImages;
     };
@@ -111,7 +113,6 @@
 
                 this.changeSprite();
             }
-
 
             if ( this.moving ) {
 
