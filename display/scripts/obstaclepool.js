@@ -36,10 +36,10 @@
 	};
 
 
-	ObstaclePool.prototype.set = function ( id ) { // transfer to pool
+	ObstaclePool.prototype.set = function ( obj ) { // transfer to pool
 
-		this.pool.push( this.list[id] );
-		delete this.list[id];
+		delete this.list[obj.id];
+		this.pool.push( obj );
 	};
 
 })();

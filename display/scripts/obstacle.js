@@ -5,6 +5,7 @@
 		this.init( params );
 	};
 
+
     Obstacle.prototype = Object.create( display.Element.prototype );
 
 
@@ -21,9 +22,8 @@
 
 		this.velocity = params.velocity;
 
-		this.collisionSound = this.assetManager.get( 'audio', params.collisionSound );
-
-		this.collisionImages = this.assetManager.get( 'image', params.collisionImg );
+		this.collisionSound = this.assetManager.get('audio', params.collisionSound );
+		this.collisionImages = this.assetManager.get('image', params.collisionImg );
 
 		this.collisionCounter = 0;
 
@@ -42,7 +42,7 @@
 
     Obstacle.prototype.change = function() {
 
-		if ( this.pos < this.grid.lanes ) {
+		if ( this.pos < this.grid.lanes ) { // vanish too fast ?
 
 			this.vanish();
 
@@ -83,15 +83,14 @@
 		}
     };
 
+
     Obstacle.prototype.vanish = function(){
 
 		this.visible = false;
 		this.moving = false;
 
-		this.pool.set( this.id );
+		this.pool.set( this );
     };
-
-
 
 
 })();

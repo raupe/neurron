@@ -214,7 +214,7 @@
 
 						currentPlayer.die();
 
-						fading.call( this, currentPlayer );
+						this.fading( currentPlayer );
 					}
 				}
 			}
@@ -250,69 +250,67 @@
 		// this.draw();
 
 		currentObstacle.collide();
+	};
 
 
-		function fading ( player ) {
+	StatusManager.prototype.fading = function ( player ) {
 
-			var steps = 100,
+		var steps = 100,
+			timer = 0,
 
-				timer = 0,
+			add = config.deadTime / steps,
+			duration = add * 1000;
 
-				add = config.deadTime / steps,
+		function check(){
 
-				duration = add * 1000;
+			timer += add;
 
+			if ( timer >= config.deadTime ) {
 
-			function check(){
+				player.revive();
 
-				timer += add;
+				player.animationStep = 2; // 5;
 
-				if ( timer >= config.deadTime ) {
+			} else {
 
-					player.revive();
+				if (
+						timer > 0*add  && timer < 10*add || // 5 trans
+						// timer > 10*add && timer < 15*add ||
+						// timer > 20*add && timer < 25*add ||
+						// timer > 30*add && timer < 35*add ||
+						timer > 20*add  && timer < 25*add ||
 
-					player.animationStep = 2; // 5;
+						timer > 40*add && timer < 44*add || // 4 trans
+						timer > 48*add && timer < 52*add ||
+						timer > 54*add && timer < 58*add ||
+						timer > 62*add && timer < 66*add ||
+						timer > 68*add && timer < 69*add ||
+
+						timer > 70*add && timer < 72*add || // 2-3 trans
+						timer > 73*add && timer < 76*add ||
+						timer > 77*add && timer < 79*add ||
+						timer > 80*add && timer < 82*add ||
+						timer > 83*add && timer < 86*add ||
+						timer > 87*add && timer < 89*add ||
+						timer > 90*add && timer < 92*add ||
+						timer > 93*add && timer < 96*add ||
+						timer > 97*add && timer < 99*add
+					) {
+
+					player.src = player.transSprite;
+					player.spriteImages = null;
 
 				} else {
 
-					if (
-							// timer > 0*add  && timer <  5*add || // 5 trans
-							// timer > 10*add && timer < 15*add ||
-							// timer > 20*add && timer < 25*add ||
-							// timer > 30*add && timer < 35*add ||
-
-							timer > 40*add && timer < 44*add || // 4 trans
-							timer > 48*add && timer < 52*add ||
-							timer > 54*add && timer < 58*add ||
-							timer > 62*add && timer < 66*add ||
-
-							timer > 70*add && timer < 72*add || // 2-3 trans
-							timer > 73*add && timer < 76*add ||
-							timer > 77*add && timer < 79*add ||
-							timer > 80*add && timer < 82*add ||
-							timer > 83*add && timer < 86*add ||
-							timer > 87*add && timer < 89*add ||
-							timer > 90*add && timer < 92*add ||
-							timer > 93*add && timer < 96*add ||
-							timer > 97*add && timer < 99*add
-						) {
-
-						player.src = player.transSprite;
-						player.spriteImages = null;
-
-					} else {
-
-						player.spriteImages = player.deadSprites;
-					}
-
-					setTimeout( check, duration );
+					player.spriteImages = player.deadSprites;
 				}
-			}
 
-			//config.deadTime * 1000
-			setTimeout( check, duration );
+				setTimeout( check, duration );
+			}
 		}
 
+		//config.deadTime * 1000
+		setTimeout( check, duration );
 	};
 
 
