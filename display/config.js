@@ -197,5 +197,17 @@ window.config = {
         6:  { r: 255,   g: 182,  b: 106 }, // orange
         7:  { r: 144,   g: 216,  b: 255 }, // turq
         8:  { r: 255,   g: 121,  b: 198 }  // pink
-    }
+    },
+
+    colors: {
+
+		1: 'red',
+		2: 'blue',
+		3: 'green',
+		4: 'yellow',
+		5: 'lila',
+		6: 'orange',
+		7: 'turkey',
+		8: 'pink'
+	}
 };

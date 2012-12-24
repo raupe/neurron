@@ -314,23 +314,55 @@
 	};
 
 
-	StatusManager.prototype.showEnd = function( points ) {
+	StatusManager.prototype.showEnd = function( points, share, competition ) {
 
-		var endpoints = document.getElementById("endpoints");
+		// highscore
+		document.getElementById('score_value').children[0].textContent = points; // <h1>
 
-		if ( !endpoints ) {
+		// diagram
+		var stylesheet = document.styleSheets[ document.styleSheets.length-1 ],
 
-			endpoints = document.createElement('div');
-			endpoints.className = "endpoints";
-			endpoints.id = "endpoints";
-			endpoints.innerHTML = "Endpoints: " + points;
-			document.body.appendChild( endpoints );
+			rules = stylesheet.cssRules.length, // || stylesheet.rules,
 
-		} else {
+			colors = config.colors,
 
-			endpoints.innerHTML = "Endpoints: " + points;
-			endpoints.style.display = "block";
+			length = share.length,
+
+			current,	// temp
+			i;			// iterator
+
+		for ( i = 0; i < length; i++ ) {
+
+			current = share[i];
+
+			stylesheet.insertRule( '.'+ colors[current.color] + '{\
+										width: ' + current.perc + '%;\
+									}', rules + i );
 		}
+
+		// legends
+		var legends = document.getElementById('legends').children[0], // <table>
+
+			ranking = '<tbody>';
+
+		length = competition.length;
+
+		for ( i = 0; i < length; i++ ) {
+
+			current = competition[i];
+
+			ranking += '\
+				<tr>\
+					<td>' + current.rank + '</td>\
+					<td>' + current.name + '</td>\
+					<td>' + current.score + '</td>\
+				</tr>\
+			';
+		}
+
+		ranking += '</tbody>';
+
+		legends.innerHTML = ranking;
 	};
 
 

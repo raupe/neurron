@@ -252,9 +252,9 @@
 
         new display.Timer( config.gameTime * 60 * 1000, 'timer' );
 
-        var endpoints = document.getElementById('endpoints');
+        // var endpoints = document.getElementById('endpoints');
 
-        if (endpoints) endpoints.style.display = 'none';
+        // if ( endpoints ) endpoints.style.display = 'none';
 
 		new display.Debug();
 	};
@@ -308,12 +308,41 @@
 
     /**
      * [end description]
-     * @param  {[type]} params [description] final points
+     * @param  {[type]} params [description]		|| points, share, competition
      * @return {[type]}        [description]
      */
     Manager.prototype.end = function ( params ) {
 
         display.show( 'end' );
+
+
+        // [{ color: <colorId>, perc: <perc> }, ...]
+        params[1] = [
+
+			{ color: 1, perc: '20'	},
+			{ color: 2, perc: '11'	},
+			// { color: 2, perc: '50'	},
+			{ color: 3, perc: '8'	},
+			{ color: 4, perc: '17'	},
+			{ color: 5, perc: '5'	},
+			// { color: 5, perc: '20'	},
+			{ color: 6, perc: '13'	},
+			{ color: 7, perc: '10'	},
+			{ color: 8, perc: '15'	}
+			// { color: 8, perc: '30'	}
+        ];
+
+        // [{ rank: <rank>, name: <name>, score: <score> }, ...]
+        params[2] = [
+
+			{ rank: '01', name: 'Team Raupe',	score: '12000' },
+			{ rank: '02', name: 'Marzi Team',	score: '-2000' },
+			{ rank: '03', name: 'Gang of Four', score: '175' }
+		];
+
+
+        this.statusManager.showEnd( params[0], params[1], params[2] );
+
 
         this.runningGame = false;
         this.screen.clear();
@@ -322,7 +351,6 @@
         this.obstaclePool.pool.length = 0;
         this.playerList.length = 0;
 
-        this.statusManager.showEnd(params[0]);
         this.statusManager.clear();
 	};
 
