@@ -15,7 +15,7 @@
 
 		this.listen();
 
-		this.cancel();
+		this.start();
 	};
 
 
@@ -187,11 +187,26 @@
 	};
 
 
+
 	/**
 	 * [cancel description]
 	 * @return {[type]} [description]
 	 */
-	Box.prototype.cancel = function(){ // original
+	Box.prototype.cancel = function(){
+
+		// better handle/command ?
+		this.manager.send( config.protocolCtoS.CANCEL );
+
+		this.start();
+	};
+
+
+
+	/**
+	 * [start description]
+	 * @return {[type]} [description]
+	 */
+	Box.prototype.start = function(){ // original
 
 		this.unsetAll();
 
@@ -204,6 +219,21 @@
 	};
 
 
+
+
+	/**
+	 * [requestLead description]
+	 * @return {[type]} [description]
+	 */
+	Box.prototype.requestLead = function(){
+
+		this.unsetAll();
+
+		this.manager.handle( config.commands.REGISTER, 1 );
+	};
+
+
+	// will be shown on success message from server -> else handled as normal 'without'
 	/**
 	 * [askTeamname description]
 	 * @return {[type]} [description]
@@ -216,8 +246,6 @@
 
 		this.set( 'top', config.boxes[ 6 ] );    // label
 		this.set( 'bottom', config.boxes[ 7 ] ); // form
-
-		this.manager.handle( config.commands.REGISTER, 1 );
 	};
 
 
@@ -235,11 +263,15 @@
 
 
 	function hasClass(ele,cls) {
+
 		return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
 	}
+
 	function addClass(ele,cls) {
+
 		if (!hasClass(ele,cls)) ele.className += " "+cls;
 	}
+
 	function removeClass(ele,cls) {
 		// if (hasClass(ele,cls)) {
 		var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
@@ -247,19 +279,4 @@
 		// }
 	}
 
-
-
 })();
-
-
-/**
-	 * [ description]
-	 * @param  {[type]}
-	 * @return {[type]}   [description]
-	 */
-	// window.addEventListener('orientationchange', function() {
-
-	//     document.getElementById('text').style['z-index'] = 1;
-
-	// }.bind(this) );
-

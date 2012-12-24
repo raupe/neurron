@@ -9,19 +9,16 @@ var config = {
 
 	boxes: {
 
-		// enter name
-		// without name
 		// 1			: [ 'button'  , 'Start a new game' ],
 		2			: [ 'label'		, 'The game is already running !'					],
 		3			: [ 'label'		, 'Game not found !'								],
 
-		4			: [ 'button'	, 'Enter a teamname'				, 'askTeamname'	],
+		4			: [ 'button'	, 'Enter a teamname'				, 'requestLead' ],
 		5			: [ 'button'	, 'Without a name'					, 'goCountdown'	],
 
 		6			: [ 'label'		, 'How should your team be called ?'				],
 		7			: [ 'form'		, ''								, 'goCountdown'	]
 	},
-
 	pollingTimer    : 5,
 
 
@@ -38,6 +35,8 @@ var config = {
 
 		START		: 1,
 		STATUS		: 2
+
+		//, FEEDBACK	: 3
 	},
 
 
@@ -53,6 +52,8 @@ var config = {
 		ANTICLOCKWISE   : 8,
 		HEAL            : 9,
 		POLLING         : 10
+
+		// ,CANCEL			: 11
 	},
 
 

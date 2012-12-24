@@ -101,8 +101,6 @@
 
 		if ( this.id ) return;
 
-		// this.box.hide(); // comment for development
-
 		this.input.enable();
 
 		this.init();
@@ -130,7 +128,6 @@
 				this.input.setStyle();
 			}
 
-
 			if ( action === config.protocolStoC.STATUS ) {
 
 				var state = data.charCodeAt(1);
@@ -139,6 +136,17 @@
 
 				this.showBox( state );
 			}
+
+			if ( action === config.protocolStoC.FEEDBACK ) {
+
+				var answer = data.charCodeAt(1);
+
+				// permit to insert a form name
+				//if ( answer === 1 ) this.box.askTeamname();
+				//if ( answer === 2 ) this.box.goCountdown();
+			}
+
+
 
 		}.bind(this);
 
