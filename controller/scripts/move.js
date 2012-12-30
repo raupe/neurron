@@ -33,15 +33,23 @@
 			between.x = betweens[i].x;
 			between.y = betweens[i].y;
 
-			sX = ((-between.x * m2) + between.y + (start.x * m1) - start.y) / (m1 - m2);
-			// sX = ( ((-between.x * m2) + between.y + (start.x * m1) - start.y) / (m1 - m2) ) || 0;
-			sY = m2 * (sX - between.x) + between.y;
-			// console.log('sX: ', sX);
-			difference = (between.x - sX) * (between.x - sX) + (between.y - sY) * (between.y - sY);
+            if ( (end.y - start.y && end.x - start.x) !== 0 ){
+
+                sX = ((-between.x * m2) + between.y + (start.x * m1) - start.y) / (m1 - m2);
+                sY = m2 * (sX - between.x) + between.y;
+
+                difference = (between.x - sX) * (between.x - sX) + (between.y - sY) * (between.y - sY);
+            }
 
 			if ( diffX > diffY ) {
 
-				if ( start.x > end.x ) {
+                if ( start.y === end.y ) {
+
+                    difference = start.y - between.y;
+                    difference *= start.x < end.x ? 1 : -1;
+
+                }
+				else if ( start.x > end.x ) {
 
 					difference *= between.y > sY ? 1 : -1;
 
@@ -52,7 +60,13 @@
 
 			} else if ( diffX < diffY ) {
 
-				if ( start.y < end.y ) {
+                if ( start.x === end.x ) {
+
+                    difference = start.x - between.x;
+                    difference *= start.y > end.y ? 1 : -1;
+
+                }
+				else if ( start.y < end.y ) {
 
 					difference *= between.x > sX ? 1: -1;
 
@@ -65,56 +79,36 @@
 			sum += difference;
 		}
 
-		console.log('end: ',sum);
+//		console.log('end: ',sum);
 
 		if ( diffX > diffY ) {
 
-			if ( start.x > end.x ) {
+            if ( start.y === end.y ) {
 
-				if ( sum > 0 ) {
+                direction = sum > 0 ? config.protocolCtoS.CLOCKWISE : config.protocolCtoS.ANTICLOCKWISE;
 
-					direction = config.protocolCtoS.CLOCKWISE;
+            } else if ( start.x > end.x ) {
 
-				} else {
-
-					direction = config.protocolCtoS.ANTICLOCKWISE;
-				}
+                direction = sum > 0 ? config.protocolCtoS.CLOCKWISE : config.protocolCtoS.ANTICLOCKWISE;
 
 			} else {
 
-				if ( sum < 0 ) {
-
-					direction = config.protocolCtoS.ANTICLOCKWISE;
-
-				} else {
-
-					direction = config.protocolCtoS.CLOCKWISE;
-				}
+                direction = sum < 0 ? config.protocolCtoS.ANTICLOCKWISE : config.protocolCtoS.CLOCKWISE;
 			}
 
 		} else if ( diffX < diffY ) {
 
-			if ( start.y < end.y ) {
+            if ( start.x === end.x ) {
 
-				if ( sum < 0 ) {
+                direction = sum > 0 ? config.protocolCtoS.CLOCKWISE : config.protocolCtoS.ANTICLOCKWISE;
 
-					direction = config.protocolCtoS.ANTICLOCKWISE;
+            } else if ( start.y < end.y ) {
 
-				} else {
-
-					direction = config.protocolCtoS.CLOCKWISE;
-				}
+				direction = sum < 0 ? config.protocolCtoS.ANTICLOCKWISE : config.protocolCtoS.CLOCKWISE;
 
 			} else {
 
-				if (sum > 0) {
-
-					direction = config.protocolCtoS.CLOCKWISE;
-
-				} else {
-
-					direction = config.protocolCtoS.ANTICLOCKWISE;
-				}
+				direction = sum > 0 ? config.protocolCtoS.CLOCKWISE : config.protocolCtoS.ANTICLOCKWISE;
 			}
 		}
 
@@ -129,7 +123,6 @@
 
 		manager.send( direction );
 	}
-
 
 	controller.move = move;
 
