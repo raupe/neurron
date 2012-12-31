@@ -1,5 +1,8 @@
 (function(){
 
+    var $container = $('#container'),
+        $body = $(document.body);
+
 	display.views.load = (function(){
 
 		var left = '\
@@ -10,8 +13,7 @@
             <img id="load_bar" src="assets/views/load/load.gif"/>\
         </div>',
 
-        right = '<div id="load_register_status"></div>';
-
+        right = '<div id="load_register_status" class="joined round"></div>';
 
         return {
 
@@ -61,11 +63,16 @@
             greetBox = document.createElement('span');
 
         greetBox.id = 'load_greet';
+        greetBox.className = 'greetings';
 // 'Team ' +  ''Neurrons';
         greetBox.innerHTML = 'Hi ' + ( display.teamname ? 'Team ' + display.teamname : 'Neurrons' );
         element.appendChild(greetBox);
     };
 
-    display.logic.load = function(){};
+    display.logic.load = function(){
+
+        $container.addClass('bg-black');
+        $body.addClass('bg-black');
+    };
 
 })();

@@ -1,10 +1,16 @@
 (function(){
 
+    var $container = $('#container'),
+        $body = $(document.body);
+
 	display.views.end = (function(){
 
 		var left = '\
 		<div class="main_content_wrap">\
-            <div class="logo">neurron</div>\
+            <div class="logo">\
+                <img src="/style/images/neurron_logo.png" width="356" height="113" alt="neurron logo" />\
+                <div class="subtitle">END OF THE TUNNEL</div>\
+            </div>\
             <div id="score_wrap" class="score_wrap">\
                 <div class="score_item">\
                     <h2>high score</h2>\
@@ -53,6 +59,10 @@
 
 	})();
 
-    display.logic.end = function(){};
+    display.logic.end = function(){
+
+        $container.removeClass('bg-black');
+        $body.removeClass('bg-black');
+    };
 
 })();
