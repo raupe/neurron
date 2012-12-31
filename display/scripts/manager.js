@@ -149,10 +149,12 @@
 
 			var shortUrl = JSON.parse( t.currentTarget.responseText ).shorturl,
 
-				linkBox = document.createElement('div');
+				linkBox = document.createElement('a');
 
+			linkBox.href = link;
+			linkBox.textContent = shortUrl;
 			linkBox.className = "qr_link";
-			linkBox.innerHTML = '<a target="_blank" href="'+ link +'">' + shortUrl + '</a>';
+			linkBox.target = "_blank";
 
 			element.appendChild( qrCode );
 			element.insertBefore( linkBox, qrCode.nextSibling );
