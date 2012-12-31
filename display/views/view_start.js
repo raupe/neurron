@@ -17,9 +17,10 @@
 				<div class="dashboard round"></div>\
 				<ul id="screen_wrap" class="screen_wrap round">\
 					<li id="intro" class="screen js_screen">\
-						<video src="/assets/views/start/test.mp4"\
-								poster="/assets/views/load/load_background.jpg" controls preload="auto">\
-							The browser does\'t support this video...\
+						<video poster="/assets/views/load/load_background.jpg" controls preload="auto">\
+							<source src="/assets/views/start/test.mp4" type="video/mp4" />\
+							<source src="/assets/views/start/test.ogv" type="video/ogg" />\
+							The browser does\'t support any of the provided formats...\
 						</video>\
 					</li>\
 					<li id="how2play" class="screen js_screen">\
