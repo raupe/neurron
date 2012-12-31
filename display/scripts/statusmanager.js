@@ -5,7 +5,7 @@
 		this.originStep = 0.5;// 0.2
 
 		this.points = 0;
-		this.createPanel( config.factor );
+		this.createPanel();
 
 		display.Debug.prototype.statusManager = this;
 	};
@@ -102,15 +102,15 @@
 	};
 
 
-	StatusManager.prototype.createPanel = function ( factor ) {
+	StatusManager.prototype.createPanel = function() {
 
 		var div = document.createElement('div'),
-
 			cvs = document.createElement('canvas'),
 			ctx = cvs.getContext('2d'),
 			container_right = document.getElementById('container-right');
 
-		this.offset = container_right.offsetWidth;
+
+		this.offset = container_right.offsetWidth - 1; // ToDo
 		cvs.width = this.offset;
 		cvs.height = window.innerHeight;
 
