@@ -20,9 +20,9 @@ body{
     height: 100%;
     width: 100%;
     min-width: 760px;
-	   	
+
 	background-image: url(../images/neurron_banner.png);
-	background-position:right top; 
+	background-position:right top;
 	background-repeat: no-repeat;
 	background-size:50% auto;
 
@@ -71,7 +71,7 @@ canvas {
     width: 75%;
     min-width: 570px;
     height: 100%;
- 
+
     position: relative;
 }
 
@@ -218,18 +218,27 @@ canvas {
     background-color: #ffffff;
     padding: 10px;
 	position: relative;
-	max-width: 300px;
-	margin: 5%;
+
+	/*max-width: 300px;*/
+	/*margin: 5%;*/
+
+    width: 80%;
+    margin: 0 auto;
 }
 
 .qr_code img{
 	width: 100%;
+
+    display: block;
+    margin: 0 auto;
 }
 
 .qr_link {
-
-    position: relative;
-    left: 20%;
+    display: block;
+    padding-top: 2px;
+    text-align: center;
+    font-size: 20px;
+    border-top: 2px solid #eee;
 }
 
 .show {
@@ -237,3 +246,11 @@ canvas {
     display: block;
 }
 
+
+
+a {
+
+    text-decoration: none;
+    font-weight: bold;
+    color: #000;
+}
