@@ -17,8 +17,10 @@
 				<div class="dashboard round"></div>\
 				<ul id="screen_wrap" class="screen_wrap round">\
 					<li id="intro" class="screen js_screen">\
-						<!--<iframe class="video" src="http://www.youtube.com/embed/ogTIl-xzDRI" frameborder="0" allowfullscreen></iframe>-->\
-						<img class="video"  src="http://www.browserhits.de/screenshots/original/2011/09/league_of_legends_05.jpg" />\
+						<video src="/assets/views/start/test.mp4"\
+								poster="/assets/views/load/load_background.jpg" controls preload="auto">\
+							The browser does\'t support this video...\
+						</video>\
 					</li>\
 					<li id="how2play" class="screen js_screen">\
 						<img class="video"  src="http://company.zynga.com/nfs/files-0925-01/coasterville_flat_0.png" />\
@@ -47,20 +49,25 @@
 
 	})();
 
+	// Cached DOM
+	var video;
 
 	display.logic.start = function(){
 
-		$(document).ready(function(){
+		if ( !video ) video = $('#intro').children()[0];
+
+		$(video).on('loadedmetadata', function(){
 
 			var duration = {
-				intro : 4000,
-				how2play : 4000,
-				demo : 4000
-			};
 
-			var $items = $(".screen_wrap li"),
+					intro : ~~(video.duration*1000), // 4000
+					how2play : 4000,
+					demo : 4000
+				},
 
-				$buttons = $(".slider_box_wrap li"),
+				$items = $("#screen_wrap li"),
+
+				$buttons = $("#slider_box_wrap li"),
 
 				timer = 0;
 
@@ -77,6 +84,7 @@
 				timeOut();
 
 			});
+
 			//set time out
 			var timeOut = function(){
 
@@ -88,26 +96,33 @@
 				$($buttons[counter]).addClass('button_active');
 				//$buttons[counter].className += " button_active";
 
+				// if ( currentId === 'intro' ) video.play();
+
+				if ( video.currentTime !== 0 ) {
+
+					video.pause();
+					video.currentTime = 0;
+				}
+
+
 				timer = setTimeout(function() {
 
-				   //console.log(currentId +'  '+ durationTime);
 					$($items[counter]).fadeOut();
 					$($buttons[counter]).removeClass('button_active');
-					//$buttons[counter].className += " button_active";
 					counter++;
 
-				   if( (counter) >= itemsLength) counter = 0;
+					if( counter >= itemsLength ) counter = 0;
 
 					timeOut();
 
-			   }, durationTime);
+				}, durationTime);
 			};
 
 			timeOut();
+
 		});
 
 	};
-
 
 
 })();
