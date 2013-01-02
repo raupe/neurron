@@ -89,9 +89,7 @@ Server - Display
 			  1. Byte: Prozent
 
 			m+ [ 0 bis 2]
-			  0. Byte: Length
-              1-k. Byte: Name
-
-              k+1. Byte: Score 1
-              k+2. Byte: Score 2
+			  0. Byte: Länge des Namen
+			  1. Byte: Name
+			  2.+ 3. Byte: Score
 

@@ -181,11 +181,20 @@ namespace sv
 	{
 	public:
 		EndMsg(ushort points);
-		virtual ~EndMsg() {}
+		virtual ~EndMsg();
+
+		void			SetPercent(uchar index, uchar colors, uchar percent);
+		void			SetHighscore(uchar index, std::string names, ushort points);
 
 		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
 	private:
 		ushort			m_Points;
+
+		uchar			m_Colors[PLAYER_MAX];
+		uchar			m_Percents[PLAYER_MAX];
+
+		char**			m_HighscoreNames;
+		ushort			m_HighscorePoints[3];
 	};
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -193,13 +202,14 @@ namespace sv
 	class ResponseStartMsg : public Msg
 	{
 	public:
-		ResponseStartMsg(uchar id, uchar color);
+		ResponseStartMsg(uchar id, uchar color, bool enterName);
 		virtual ~ResponseStartMsg() {}
 
 		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
 	private:
 		uchar			m_Id;
 		uchar			m_Color;
+		uchar			m_EnterName;
 	};
 	
 	class ResponseStatusMsg : public Msg

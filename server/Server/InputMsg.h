@@ -9,6 +9,7 @@ namespace sv
 		eContrAction_Undifined,
 		eContrAction_Start,
 		eContrAction_Name,
+		eContrAction_Abort,
 		eContrAction_Right,
 		eContrAction_Left,
 		eContrAction_Up,

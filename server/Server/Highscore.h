@@ -23,6 +23,9 @@ namespace sv
 		void				LoadHighscore();
 		void				SaveHighscore();
 
+		std::string			GetName(uchar index) { return m_Highscore[index].m_Name; }
+		ushort				GetScore(uchar index) { return m_Highscore[index].m_Score; }
+
 	private:
 		Entry				m_Highscore[HIGHSCORE_SIZE];
 	};
