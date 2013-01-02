@@ -316,6 +316,7 @@
     Manager.prototype.end = function ( params ) {
 
         display.show( 'end' );
+        $('#qr_code').removeClass("halfQR");
 
 
         // [{ color: <colorId>, perc: <perc> }, ...]

@@ -583,3 +583,9 @@ h1 {
 .bg-black {
 	background: #000;
 }
+
+.halfQR {
+    width: 50%;
+    position: absolute;
+    bottom: 0;
+}
