@@ -316,6 +316,8 @@
     Manager.prototype.end = function ( params ) {
 
         display.show( 'end' );
+        $('#qr_code').removeClass("halfQR");
+        $('#qr_code').removeClass("blueGradient");
 
         console.log(params);
 

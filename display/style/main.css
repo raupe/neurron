@@ -36,7 +36,7 @@ canvas {
 	width: 100%;
 	min-width: 760px;
 
-	background-image: url(/style/images/neurron_banner.png);
+	background-image: url(images/neurron_banner.png);
 	background-position:right top;
 	background-repeat: no-repeat;
 	background-size:50% auto;
@@ -350,10 +350,6 @@ canvas {
 	color: white;
 	font-weight: bold;
 	font-family: Comic Sans MS;
-
-	-webkit-box-shadow:  2px 2px 2px 2px rgba(100, 100, 100, 0.6);
-	-moz-box-shadow:  2px 2px 2px 2px rgba(100, 100, 100, 0.6);
-	box-shadow:  2px 2px 2px 2px rgba(100, 100, 100, 0.6);
 }
 
 /* ---------------- end ------------------------*/
@@ -586,4 +582,21 @@ h1 {
 
 .bg-black {
 	background: #000;
+}
+
+.halfQR {
+    width: 50%;
+    position: absolute;
+    bottom: 0;
+}
+
+.blueGradient {
+    background: #0e89b6; /* Old browsers */
+	background: -moz-linear-gradient(top,  #0e89b6 0%, #00142c 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#0e89b6), color-stop(100%,#00142c)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #0e89b6 0%,#00142c 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #0e89b6 0%,#00142c 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #0e89b6 0%,#00142c 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #0e89b6 0%,#00142c 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0e89b6', endColorstr='#00142c',GradientType=0 ); /* IE6-9 */
 }

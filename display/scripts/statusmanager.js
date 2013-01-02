@@ -26,6 +26,9 @@
 		this.distance = this.fullBarHeight + 10;
 
 		this.healer = 0;
+
+        $('#qr_code').addClass("halfQR");
+        $('.side_wrapper').addClass("blueGradient");
 	};
 
 
@@ -44,7 +47,7 @@
 		var ctx = this.panel,
 			size = 40;
 
-		ctx.fillStyle = 'yellow';
+		ctx.fillStyle = '#0E499B';
 		ctx.font = '' + size + 'pt Comic Sans MS'; // 'italic ' + size + 'pt Comic Sans MS';
 
 		// firefly symbol instead 'points' or $ ?
@@ -81,16 +84,16 @@
 			}
 
 			// colorBar
-			ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
-			ctx.fillRect(this.colorBarStartX, this.startY + i*this.distance, this.energyBarStartX/2, this.fullBarHeight);
+//			ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
+//			ctx.fillRect(this.colorBarStartX, this.startY + i*this.distance, this.energyBarStartX/2, this.fullBarHeight);
 
 			// lifeLabels
-			ctx.fillStyle = 'white';
-			ctx.font = '' + 20 + 'pt Comic Sans MS';
-			ctx.fillText( currentPlayer.energy + ' %', this.lifeLabelStartX, (this.startY + 30) + i*this.distance );
+//			ctx.fillStyle = 'white';
+//			ctx.font = '' + 20 + 'pt Comic Sans MS';
+//			ctx.fillText( currentPlayer.energy + ' %', this.lifeLabelStartX, (this.startY + 30) + i*this.distance );
 
 			// energyBars
-			ctx.fillStyle = this.color;
+			ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
 			ctx.fillRect( this.energyBarStartX, this.startY + i*this.distance, this.fullBarWidth * ( (currentPlayer.energy - currentPlayer.diffEnergy) / 100), this.fullBarHeight);
 			// ctx.fillRect( this.energyBarStartX, this.startY + i*this.distance, this.fullBarWidth * ( currentPlayer.energy / 100 ), this.fullBarHeight);
 
@@ -112,7 +115,8 @@
 
 		this.offset = container_right.offsetWidth - 1; // ToDo
 		cvs.width = this.offset;
-		cvs.height = window.innerHeight;
+//		cvs.height = window.innerHeight;
+		cvs.height = $(container_right).height();
 
 		this.start = this.screen.cvs.width - this.offset;
 		this.panel = ctx;
@@ -122,6 +126,7 @@
 
 
 		cvs.id = 'statusmanager';
+        cvs.className = 'round';
 		div.appendChild( cvs );
 
 		div.id = 'game-r';
@@ -132,7 +137,8 @@
 
 
 	StatusManager.prototype.setBackground = function () {
-		this.panel.fillStyle = '#000';
+//		this.panel.fillStyle = '#fff';
+		this.panel.fillStyle = '#f00';
 		this.panel.fillRect( 0, 0, this.panel.canvas.width, this.panel.canvas.height );
 	};
 
