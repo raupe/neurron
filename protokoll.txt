@@ -32,6 +32,7 @@ Server - Controller
         1 - Start
             1. Byte: ID                                                     // Server: ok, Controller: ok
             2. Byte: Farbe                                                  // Server: ok, Controller: ok
+            3. Byte: Name eingeben? 1 = ja, 0 = nein
         2 - Status:
             1. Byte: Status:
                 0 - OK                                                      // Server: ok, Controller: ok
