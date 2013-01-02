@@ -16,12 +16,12 @@
 		this.points = 0;
 		this.playerList = playerList;
 
-		this.fullBarWidth = this.offset / 1.6;
-		this.fullBarHeight = 40;
+		this.fullBarWidth = this.offset;
+		this.fullBarHeight = 20;
 		this.energyBarStartX = this.offset / 8;
 		this.colorBarStartX = this.energyBarStartX / 2;
 		this.lifeLabelStartX = this.energyBarStartX + this.fullBarWidth + 4; // 4 offset that it doesnt catch the energybar
-		this.startY = 140;
+		this.startY = 80;
 		this.color = 'green';
 		this.distance = this.fullBarHeight + 10;
 
@@ -48,13 +48,13 @@
 	StatusManager.prototype.showPoints = function () {
 
 		var ctx = this.panel,
-			size = 1;
+			size = 2;
 
 		ctx.fillStyle = '#0E499B';
 		ctx.font = '' + size + 'em Comic Sans MS'; // 'italic ' + size + 'pt Comic Sans MS';
 
 		// firefly symbol instead 'points' or $ ?
-		ctx.fillText( ( display.teamname || 'Total' ) + ': ' + this.points + ' $', this.offset/6, 40 * 2 ); //' points'
+		ctx.fillText( ( display.teamname || 'Total' ) + ': ' + this.points + ' $', this.offset/6, 50 ); //' points'
 	};
 
 
@@ -97,7 +97,8 @@
 
 			// energyBars
 			ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
-			ctx.fillRect( this.energyBarStartX, this.startY + i*this.distance, this.fullBarWidth * ( (currentPlayer.energy - currentPlayer.diffEnergy) / 100), this.fullBarHeight);
+//			ctx.fillRect( this.energyBarStartX, this.startY + i*this.distance, this.fullBarWidth * ( (currentPlayer.energy - currentPlayer.diffEnergy) / 100), this.fullBarHeight);
+			ctx.fillRect( 0, this.startY + i*this.distance, this.fullBarWidth * ( (currentPlayer.energy - currentPlayer.diffEnergy) / 100), this.fullBarHeight);
 			// ctx.fillRect( this.energyBarStartX, this.startY + i*this.distance, this.fullBarWidth * ( currentPlayer.energy / 100 ), this.fullBarHeight);
 
 			if ( currentPlayer.diffEnergy === 0 ) currentPlayer.animationStep = this.originStep; // default
