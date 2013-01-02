@@ -317,34 +317,9 @@
 
         display.show( 'end' );
 
-
-        // [{ color: <colorId>, perc: <perc> }, ...]
-        params[1] = [
-
-			{ color: 1, perc: '20'	},
-			{ color: 2, perc: '11'	},
-			// { color: 2, perc: '50'	},
-			{ color: 3, perc: '8'	},
-			{ color: 4, perc: '17'	},
-			{ color: 5, perc: '5'	},
-			// { color: 5, perc: '20'	},
-			{ color: 6, perc: '13'	},
-			{ color: 7, perc: '10'	},
-			{ color: 8, perc: '15'	}
-			// { color: 8, perc: '30'	}
-        ];
-
-        // [{ rank: <rank>, name: <name>, score: <score> }, ...]
-        params[2] = [
-
-			{ rank: '01', name: 'Team Raupe',	score: '12000' },
-			{ rank: '02', name: 'Marzi Team',	score: '-2000' },
-			{ rank: '03', name: 'Gang of Four', score: '175' }
-		];
-
+        console.log(params);
 
         this.statusManager.showEnd( params[0], params[1], params[2] );
-
 
         this.runningGame = false;
         this.screen.clear();
