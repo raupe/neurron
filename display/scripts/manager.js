@@ -56,9 +56,9 @@
 
 			this.background.draw();
 
-			forAll( this.playerList, 'draw' );
-
 			forAll( this.obstaclePool.list, 'draw' );
+
+			forAll( this.playerList, 'draw' );
 
 
 
