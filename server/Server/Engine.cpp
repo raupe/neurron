@@ -30,7 +30,7 @@ void sv::Engine::GetPath(const char* relPath, char* pathOut, uint bufferSize)
 #ifdef WIN32
 	sprintf_s(pathOut, bufferSize, "%s%s", m_ExePath, relPath);
 #else
-	sprintf_s(pathOut, "%s%s", m_ExePath, relPath);
+	sprintf(pathOut, "%s%s", m_ExePath, relPath);
 #endif
 }
 
