@@ -6,8 +6,9 @@
 #include "Msg.h"
 #include "StatusManager.h"
 #include "Player.h"
+#include "Engine.h"
 
-#include <iostream>
+//#include <iostream>
 #include <fstream>
 
 #ifdef WIN32
@@ -234,6 +235,7 @@ void sv::ObstacleManager::HandleCollision(Obstacle* obstacle)
 }
 
 void sv::ObstacleManager::ParseLevel(){
+	/*
 	char dir[1024];
 #ifdef WIN32
 	GetModuleFileName(0, dir, sizeof(dir));
@@ -252,6 +254,10 @@ void sv::ObstacleManager::ParseLevel(){
 #else
 	sprintf(dir + pos + 1, "..%cLevel%cdefault.lvl", seperator, seperator);
 #endif
+	*/
+
+	char dir[1024];
+	Engine::Instance()->GetPath("../Level/default.lvl", dir, sizeof(dir));
 
 	std::ifstream inFile;
 	inFile.open(dir);
@@ -291,6 +297,8 @@ void sv::ObstacleManager::ParseLevel(){
 		m_LevelSize = lane;
 		m_Level = (char**) malloc(lane * sizeof(char*));
 		memcpy(m_Level, level, lane * sizeof(char*));
+
+		inFile.close();
 	}
 	else
 	{

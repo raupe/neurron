@@ -29,4 +29,7 @@
 // ObstacleManager
 #define LANE_MAX 16
 
+// Highscore
+#define HIGHSCORE_SIZE 10
+
 #endif // Constants_h__

@@ -6,25 +6,43 @@
 #include "InputMsg.h"
 #include "Msg.h"
 #include "Server.h"
+#include "Highscore.h"
 
-sv::Engine::Engine(void)
-{
+sv::Engine::Engine()
+{	
+	m_Highscore = S_NEW Highscore();
 	m_GameManager = S_NEW GameManager();
+
+#ifdef WIN32
+	GetModuleFileName(0, m_ExePath, sizeof(m_ExePath));
+#else
+	readlink("/proc/self/exe", m_ExePath, sizeof(m_ExePath));
+#endif
+
+	int pos = strlen(m_ExePath) - 1;
+	while(pos >= 0 && m_ExePath[pos] != '/' && m_ExePath[pos] != '\\')
+		pos--;
+	m_ExePath[pos+1] = 0;
 }
 
+void sv::Engine::GetPath(const char* relPath, char* pathOut, uint bufferSize)
+{
+#ifdef WIN32
+	sprintf_s(pathOut, bufferSize, "%s%s", m_ExePath, relPath);
+#else
+	sprintf_s(pathOut, "%s%s", m_ExePath, relPath);
+#endif
+}
 
-sv::Engine::~Engine(void)
+sv::Engine::~Engine()
 {
 	delete(m_GameManager);
+	delete(m_Highscore);
 }
 
 void sv::Engine::Run()
 {
-	/*while(true)
-	{
-		HandleMsgs();
-		GameManager::Instance()->Update();
-	}*/
+	m_Highscore->LoadHighscore();
 
 	while(true)
 	{

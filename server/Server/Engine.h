@@ -7,6 +7,7 @@
 namespace sv
 {
 	class GameManager;
+	class Highscore;
 
 	class Engine : public Singleton<Engine>
 	{
@@ -17,6 +18,10 @@ namespace sv
 		void Run();
 
 		void						Continue();
+
+		Highscore*					GetHighscore() { return m_Highscore; }
+		void						GetPath(const char* relPath, char* pathOut, uint bufferSize);
+
 	private:
 		void						HandleMsgs();
 		
@@ -25,6 +30,9 @@ namespace sv
 		bool						m_Paused;
 		boost::mutex				m_MutexPaused;
 		boost::condition_variable	m_ConditionPaused;
+
+		Highscore*					m_Highscore;
+		char						m_ExePath[1024];
 	};
 }
 

@@ -9,6 +9,8 @@
 #include "StatusManager.h"
 #include "Player.h"
 #include "Grid.h"
+#include "Engine.h"
+#include "Highscore.h"
 
 #ifdef WIN32
 #include <Windows.h>
@@ -139,10 +141,17 @@ void sv::Game::End()
 {
 	LOG(DEBUG_FLOW, "Game ended.");
 	m_Status = eGameStatus_Wait;
-	EndMsg endMgs(m_StatusManager->GetPoints());
+	ushort points = m_StatusManager->GetPoints();
+	EndMsg endMgs(points);
 	SendMsg(&endMgs);
-	m_Name = "";
 
+	if(!m_Name.empty() && points)
+	{
+		Highscore* highscore = Engine::Instance()->GetHighscore();
+		highscore->AddScore(points, m_Name);
+	}
+
+	m_Name = "";
 	m_Grid->Reset();
 	m_PlayerManager->Reset();
 	m_ObstacleManager->Reset();
