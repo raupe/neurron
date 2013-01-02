@@ -1,5 +1,7 @@
 (function(){
 
+	var amount = 0;
+
 	var Connection = display.Connection = function() {
 
 		this.url = "ws://" + config.server + ":" + config.port;
@@ -74,6 +76,8 @@
 
 				l = data.charCodeAt(1);				// amount of players
 
+				amount = l;
+
 				options[0] = data.charCodeAt(2);	// amount of lanes
 
 				var players = [],
@@ -142,7 +146,43 @@
 
 	/* 11 */if ( action === config.protocol.END ) {
 
-                options[0] = (data.charCodeAt(1) << 8) + data.charCodeAt(2); // team points
+				var pos = 1,
+					distribution = [],
+					scores = [];
+
+                options[0] = (data.charCodeAt(pos++) << 8) + data.charCodeAt(pos++); // teampoints
+
+				for ( i = 0; i < amount; i += 1 ) {
+
+					distribution.push({
+
+						color	: data.charCodeAt(pos++),
+						perc	: data.charCodeAt(pos++)
+					});
+				}
+
+                options[1] = distribution;// share
+
+				var name, score, entries, length;
+
+				for ( entries = 0; entries < 3; entries++ ) {
+
+					length = data.charCodeAt(pos++);
+					name = '';
+
+					name = data.substr(pos, length);
+					pos += length;
+
+					score = (data.charCodeAt(pos++) << 8) + data.charCodeAt(pos++);
+
+					scores.push({
+
+						name	: name,
+						score	: score
+					});
+				}
+
+                options[2] = scores; // scores
             }
 
 

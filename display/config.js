@@ -9,12 +9,10 @@ window.display = {
 /* configurations */
 window.config = {
 
-
 	server				: 'game.neurron.com',
 	port				: '2020',
 
-
-    errorURL            :  'http://neurron.com/notify/error.php',
+    errorURL            : 'http://neurron.com/notify/error2.php',
 
     gameTime            : 2,		// Minutes
 
@@ -70,8 +68,15 @@ window.config = {
 
 
 			// obstacle
-			damage		: 'assets/damage/damage.png',
+            damage		: {
+
+                src     : 'assets/heal/windmill.png',
+                width   : '100',
+                height  : '100'
+            },
+
 			heal		: 'assets/heal/heal.png',
+
 			points		: 'assets/points/points.png',
 
 

@@ -15,10 +15,8 @@
 
 		this.req = new XMLHttpRequest();
 
-
 		controller.Box.prototype.manager = this;
 		this.box = new controller.Box();
-
 
 		// input reference
 		controller.Input.prototype.manager = this;
@@ -36,8 +34,6 @@
 		if ( this.repeat ) clearInterval( this.repeat );
 
 		if ( category === 1 ) { // handling on end
-
-			this.box.cancel();
 
 			this.id = 0;
 
@@ -119,14 +115,6 @@
 
 				action = data.charCodeAt(0);        // int
 
-			if ( action === config.protocolStoC.START ) {
-
-				this.id = data.charCodeAt(1);
-
-				this.input.color = data.charCodeAt(2);
-
-				this.input.setStyle();
-			}
 
 			if ( action === config.protocolStoC.STATUS ) {
 
@@ -137,16 +125,19 @@
 				this.showBox( state );
 			}
 
-			if ( action === config.protocolStoC.FEEDBACK ) {
+			if ( action === config.protocolStoC.START ) {
 
-				var answer = data.charCodeAt(1);
+				this.id = data.charCodeAt(1);
 
-				// permit to insert a form name
-				//if ( answer === 1 ) this.box.askTeamname();
-				//if ( answer === 2 ) this.box.goCountdown();
+				this.input.color = data.charCodeAt(2);
+
+				this.input.setStyle();
+
+				var lead = data.charCodeAt(3);
+
+				if ( lead === 0 ) this.box.goCountdown();
+				else this.box.askTeamname();
 			}
-
-
 
 		}.bind(this);
 

@@ -13,8 +13,8 @@ Controller - Server
         1 - Spieler erstellen vom Controller || Farbe und Nummer wird vom Server geschickt
         	3. Byte: with Name? 1 = ja, 0 = nein							// Server: vllt
         2 - Teamname														// Server: vllt
-        	3 - n. Byte: Name (Base 64)
-        3 - abbruch
+        	3 - n. Byte: Name (Base 64)                                     // Server: ??, Controller: ok
+        3 - abbruch                                                         // Server: ??, Controller: ok
         4 - rechts                                                          // Server: ok, Controller: ok
         5 - links                                                           // Server: ok, Controller: ok
         6 - oben                                                            // Server: ok, Controller: ok
@@ -83,13 +83,13 @@ Server - Display
        11 - Spielende														// Server: ok, Display: ok
             1. Byte: Teampunktzahl 1
             2. Byte: Teampunktzahl 2 // Pkt = Pkt1 * 256 + Pkt2 bzw. Pkt = Pkt1 << 8 + Pkt2
-            
+
             n+ [0 bis Anzahl der Spieler - 1]
 			  0. Byte: Farbe
 			  1. Byte: Prozent
-			  
-			
+
 			m+ [ 0 bis 2]
-			  0. Byte: Name
-			  1. Byte: Score
-			
+			  0. Byte: Länge des Namen
+			  1. Byte: Name
+			  2.+ 3. Byte: Score
+

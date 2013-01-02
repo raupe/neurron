@@ -142,14 +142,30 @@ void sv::Game::End()
 	LOG(DEBUG_FLOW, "Game ended.");
 	m_Status = eGameStatus_Wait;
 	ushort points = m_StatusManager->GetPoints();
-	EndMsg endMgs(points);
-	SendMsg(&endMgs);
 
+	Highscore* highscore = Engine::Instance()->GetHighscore();
 	if(!m_Name.empty() && points)
 	{
-		Highscore* highscore = Engine::Instance()->GetHighscore();
 		highscore->AddScore(points, m_Name);
 	}
+
+	EndMsg endMsg(points);
+
+	uchar playerNum = m_PlayerManager->GetNumber();
+	Player* pl;
+	for(uchar i=0; i<playerNum; ++i)
+	{
+		pl = m_PlayerManager->GetPlayer(i+1);
+		endMsg.SetPercent(i,pl->GetColor(), pl->GetPoints() > 0 ? (uchar)((pl->GetPoints() * 1000 / points + 5) / 10) : 0);
+	}
+
+	for(uchar i=0; i<3; ++i)
+	{
+		std::string name = highscore->GetName(i);
+		endMsg.SetHighscore(i, name, highscore->GetScore(i));
+	}
+
+	SendMsg(&endMsg);
 
 	m_Name = "";
 	m_Grid->Reset();
@@ -181,6 +197,9 @@ void sv::Game::HandleMsg(sv::InputMsg* msg)
 		break;
 	case eContrAction_Name:
 		HandleNameMsg(msg);
+		break;
+	case eContrAction_Abort:
+		Abort();
 		break;
 	case eContrAction_Right:
 	case eContrAction_Left:
@@ -221,26 +240,28 @@ void sv::Game::HandleStartMsg(InputMsg* msg)
 		pl = m_PlayerManager->AddPlayer();
 		if(pl)
 		{
+			bool enterName = false;
 			if( m_Status == eGameStatus_Wait)
 			{
 				GetDeltaTime();
 				if(msg->GetData() && msg->GetData()[0])
+				{
 					StartName();
+					enterName = true;
+				}
 				else
 					StartCountdown();
 			}
 			
 			JoinMsg joinMsg(pl->GetId(), pl->GetColor());
 			SendMsg(&joinMsg);
+			
+			ResponseStartMsg response(pl->GetId(), pl->GetColor(), enterName);
+			Server::Instance()->Response(&response, msg->GetSocket());
 		}
 	}
 
-	if(pl)
-	{
-		ResponseStartMsg response(pl->GetId(), pl->GetColor());
-		Server::Instance()->Response(&response, msg->GetSocket());
-	}
-	else
+	if(!pl)
 	{
 		ResponseStatusMsg response(ResponseStatusMsg::eResponseStatus_AlreadyRunning);
 		Server::Instance()->Response(&response, msg->GetSocket());

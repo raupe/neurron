@@ -357,13 +357,16 @@
 
 			current = competition[i];
 
-			ranking += '\
-				<tr>\
-					<td>' + current.rank + '</td>\
-					<td>' + current.name + '</td>\
-					<td>' + current.score + '</td>\
-				</tr>\
-			';
+			if ( current.name ) {
+
+				ranking += '\
+					<tr>\
+						<td>0' + (i+1) + '</td>\
+						<td>' + current.name + '</td>\
+						<td>' + current.score + '</td>\
+					</tr>\
+				';
+			}
 		}
 
 		ranking += '</tbody>';
