@@ -600,3 +600,16 @@ h1 {
 	background: linear-gradient(to bottom,  #0e89b6 0%,#00142c 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0e89b6', endColorstr='#00142c',GradientType=0 ); /* IE6-9 */
 }
+
+.statusmanagerWrapper {
+    background-color: white;
+-webkit-border-radius: 20px;
+   -moz-border-radius: 20px;
+        border-radius: 20px;
+}
+
+.statusmanagerWrapper canvas {
+    margin: 4% 4%;
+    width: 90%;
+    height: 90%;
+}

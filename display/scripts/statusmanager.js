@@ -126,19 +126,17 @@
 
 
 		cvs.id = 'statusmanager';
-        cvs.className = 'round';
 		div.appendChild( cvs );
 
 		div.id = 'game-r';
-		div.className = 'wrapper hide';
+		div.className = 'wrapper hide statusmanagerWrapper';
 
 		container_right.appendChild( div );
 	};
 
 
 	StatusManager.prototype.setBackground = function () {
-//		this.panel.fillStyle = '#fff';
-		this.panel.fillStyle = '#f00';
+		this.panel.fillStyle = '#fff';
 		this.panel.fillRect( 0, 0, this.panel.canvas.width, this.panel.canvas.height );
 	};
 
