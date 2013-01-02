@@ -36,7 +36,7 @@
 
 		this.distanceToUser = params.distanceToUser;
 		this.circleOffset = params.circleOffset;
-		this.outerCircleRadius = this.height/2;
+		this.outerCircleRadius = config.outerCircleRadius = this.height/2 - 100;
 		this.maxRadius = Math.sqrt(this.width * this.width + this.height * this.height) / 2;
 
 		// placement

@@ -41,8 +41,8 @@
         	cy = this.cy,
         	maxRadius = this.maxRadius,
         	minRadius = this.minRadius,
-        	lineWidth = this.lineWidth;
-        	outerCircleRadius = this.cvs.height / 2,
+        	lineWidth = this.lineWidth,
+        	outerCircleRadius = config.outerCircleRadius,
         	posShift = this.posShift;
         
         var rad = minRadius,
