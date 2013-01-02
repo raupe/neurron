@@ -35,8 +35,6 @@ var config = {
 
 		START		: 1,
 		STATUS		: 2
-
-		//, FEEDBACK	: 3
 	},
 
 
@@ -44,16 +42,15 @@ var config = {
 
 		REGISTER        : 1,
 		TEAMNAME        : 2,
-		RIGHT           : 3,
-		LEFT            : 4,
-		TOP             : 5,
-		BOTTOM          : 6,
-		CLOCKWISE       : 7,
-		ANTICLOCKWISE   : 8,
-		HEAL            : 9,
-		POLLING         : 10
-
-		// ,CANCEL			: 11
+		CANCEL			: 3,
+		RIGHT           : 4,
+		LEFT            : 5,
+		TOP             : 6,
+		BOTTOM          : 7,
+		CLOCKWISE       : 8,
+		ANTICLOCKWISE   : 9,
+		HEAL            : 10,
+		POLLING         : 11
 	},
 
 
