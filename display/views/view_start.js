@@ -5,7 +5,7 @@
 		var left = '\
 		<div class="slider_content_wrap">\
 			<div class="logo">\
-				<img src="/style/images/neurron_logo.png" width="356" height="113" alt="neurron logo" />\
+				<img src="style/images/neurron_logo.png" width="356" height="113" alt="neurron logo" />\
 				<div class="subtitle">END OF THE TUNNEL</div>\
 			</div>\
 			<div id="slider_box_wrap" class="slider_box_wrap">\
@@ -17,9 +17,9 @@
 				<div class="dashboard round"></div>\
 				<ul id="screen_wrap" class="screen_wrap round">\
 					<li id="intro" class="screen js_screen">\
-						<video poster="/assets/views/load/load_background.jpg" controls preload="auto">\
-							<source src="/assets/views/start/test.mp4" type="video/mp4" />\
-							<source src="/assets/views/start/test.ogv" type="video/ogg" />\
+						<video poster="assets/views/load/load_background.jpg" controls preload="auto">\
+							<source src="assets/views/start/test.mp4" type="video/mp4" />\
+							<source src="assets/views/start/test.ogv" type="video/ogg" />\
 							The browser does\'t support any of the provided formats...\
 						</video>\
 					</li>\
