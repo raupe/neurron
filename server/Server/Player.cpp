@@ -7,6 +7,7 @@ sv::Player::Player()
 : m_Color(0)
 , m_Energy(ENERGY_MAX)
 , m_ReviveCountdown(0)
+, m_Points(0)
 {
 }
 

@@ -90,6 +90,7 @@ Server - Display
 			  
 			
 			m+ [ 0 bis 2]
-			  0. Byte: Name
-			  1. Byte: Score
+			  0. Byte: Länge des Namen
+			  1. Byte: Name
+			  2.+ 3. Byte: Score
 			

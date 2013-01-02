@@ -216,6 +216,41 @@ sv::EndMsg::EndMsg(ushort points)
 : Msg(eMsgType_End)
 , m_Points(points)
 {
+	m_HighscoreNames = (char**) malloc(3 * sizeof(char*));
+
+	memset(m_Colors, 0, sizeof(m_Colors));
+	memset(m_Percents, 0, sizeof(m_Percents));
+	memset(m_HighscoreNames, 0, 3 * sizeof(char*));
+	memset(m_HighscorePoints, 0, sizeof(m_HighscorePoints));
+}
+
+sv::EndMsg::~EndMsg()
+{
+	for(uchar i=0; i<3; ++i)
+	{
+		free(m_HighscoreNames[i]);
+		m_HighscoreNames[i] = 0;
+	}
+	free(m_HighscoreNames);
+}
+
+void sv::EndMsg::SetPercent(uchar index, uchar colors, uchar percent)
+{
+	m_Colors[index] = colors;
+	m_Percents[index] = percent;
+}
+
+void sv::EndMsg::SetHighscore(uchar index, std::string name, ushort points)
+{
+	free(m_HighscoreNames[index]);
+
+	m_HighscoreNames[index] = (char*) malloc(name.length() + 1 * sizeof(char));
+#ifdef WIN32
+	strcpy_s(m_HighscoreNames[index], name.length() + 1, name.c_str());
+#else
+	strcpy(m_HighscoreNames[index], name.c_str());
+#endif
+	m_HighscorePoints[index] = points;
 }
 
 void sv::EndMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
@@ -226,14 +261,42 @@ void sv::EndMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
 	uchar second = m_Points & 0xFF;
 	Visit(first, buffer, pos, length);
 	Visit(second, buffer, pos, length);
+
+	uchar i = 0;
+	while(m_Colors[i])
+	{
+		Visit(m_Colors[i], buffer, pos, length);
+		Visit(m_Percents[i], buffer, pos, length);
+		i++;
+	}
+
+	uchar len;
+	for(i=0; i<3; ++i)
+	{
+		len = strlen(m_HighscoreNames[i]);
+		Visit(len, buffer, pos, length);
+
+		for(uchar j=0; j<len; ++j)
+			Visit(m_HighscoreNames[i][j], buffer, pos, length);
+
+		first = (m_HighscorePoints[i] >> 8) & 0xFF;
+		second = m_HighscorePoints[i] & 0xFF;
+		Visit(first, buffer, pos, length);
+		Visit(second, buffer, pos, length);
+
+//		Visit(0, buffer, pos, length);
+//		Visit(0, buffer, pos, length);
+//		Visit(0, buffer, pos, length);
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-sv::ResponseStartMsg::ResponseStartMsg(uchar id, uchar color)
+sv::ResponseStartMsg::ResponseStartMsg(uchar id, uchar color, bool enterName)
 : Msg(eMsgType_ResponseStart)
 , m_Id(id)
 , m_Color(color)
+, m_EnterName(enterName? 1 : 0)
 {
 }
 
@@ -243,6 +306,7 @@ void sv::ResponseStartMsg::GetBuffer(uchar* buffer, uint& pos, const uint& lengt
 	
 	Visit(m_Id, buffer, pos, length);
 	Visit(m_Color, buffer, pos, length);
+	Visit(m_EnterName, buffer, pos, length);
 }
 
 sv::ResponseStatusMsg::ResponseStatusMsg(uchar status)
