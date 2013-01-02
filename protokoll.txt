@@ -14,14 +14,15 @@ Controller - Server
         	3. Byte: with Name? 1 = ja, 0 = nein							// Server: vllt
         2 - Teamname														// Server: vllt
         	3 - n. Byte: Name (Base 64)
-        3 - rechts                                                          // Server: ok, Controller: ok
-        4 - links                                                           // Server: ok, Controller: ok
-        5 - oben                                                            // Server: ok, Controller: ok
-        6 - unten                                                           // Server: ok, Controller: ok
-        7 - Uhrzeigersinn                                                   // Server: ok, Controller: ok
-        8 - gegen Uhrzeigersinn                                             // Server: ok, Controller: ok
-        9 - heal                                                           	// Server: ok, Controller: ok
-        10 - Polling                                                        // Server: ok, Controller: ok
+        3 - abbruch
+        4 - rechts                                                          // Server: ok, Controller: ok
+        5 - links                                                           // Server: ok, Controller: ok
+        6 - oben                                                            // Server: ok, Controller: ok
+        7 - unten                                                           // Server: ok, Controller: ok
+        8 - Uhrzeigersinn                                                   // Server: ok, Controller: ok
+        9 - gegen Uhrzeigersinn                                             // Server: ok, Controller: ok
+        10 - heal                                                           // Server: ok, Controller: ok
+        11 - Polling                                                        // Server: ok, Controller: ok
 
 
 Server - Controller
@@ -57,14 +58,12 @@ Server - Display
         	1. Byte. length
         	2. Name
         5 - Spieler joined													// Server: vllt
-
         	1. Byte: Spieler ID
         	2. Byte: Spieler Farbe
         6 - Spiel starten													// Server: vllt
             1. Byte: Anzahl Spieler
             2. Byte: Anzahl Lanes
             3. - n. Byte: Position der Spieler
-
         7 - Spieler Bewegung
             1. Byte: Spieler ID                                             // Server: ok, Display: ok
             2. Byte: nächste Position                                       // Server: ok, Display: ok
@@ -83,3 +82,13 @@ Server - Display
        11 - Spielende														// Server: ok, Display: ok
             1. Byte: Teampunktzahl 1
             2. Byte: Teampunktzahl 2 // Pkt = Pkt1 * 256 + Pkt2 bzw. Pkt = Pkt1 << 8 + Pkt2
+            
+            n+ [0 bis Anzahl der Spieler - 1]
+			  0. Byte: Farbe
+			  1. Byte: Prozent
+			  
+			
+			m+ [ 0 bis 2]
+			  0. Byte: Name
+			  1. Byte: Score
+			
