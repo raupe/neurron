@@ -317,7 +317,7 @@
 
         display.show( 'end' );
         $('#qr_code').removeClass("halfQR");
-        $('#qr_code').removeClass("blueGradient");
+        $('.side_wrapper').removeClass("blueGradient");
 
         console.log(params);
 
