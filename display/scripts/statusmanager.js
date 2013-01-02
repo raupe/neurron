@@ -126,6 +126,7 @@
 
 
 		cvs.id = 'statusmanager';
+        cvs.className = 'round';
 		div.appendChild( cvs );
 
 		div.id = 'game-r';
