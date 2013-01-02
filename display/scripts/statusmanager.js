@@ -27,8 +27,11 @@
 
 		this.healer = 0;
 
-        $('#qr_code').addClass("halfQR");
+        // following classes has always to be removed in end scene
+        $('#qr_code').addClass("marginTop");
+        $('#qr_code img').addClass("halfQR");
         $('.side_wrapper').addClass("blueGradient");
+        $('#container-right').addClass("info_gamescene");
 	};
 
 
@@ -45,13 +48,13 @@
 	StatusManager.prototype.showPoints = function () {
 
 		var ctx = this.panel,
-			size = 40;
+			size = 1;
 
 		ctx.fillStyle = '#0E499B';
-		ctx.font = '' + size + 'pt Comic Sans MS'; // 'italic ' + size + 'pt Comic Sans MS';
+		ctx.font = '' + size + 'em Comic Sans MS'; // 'italic ' + size + 'pt Comic Sans MS';
 
 		// firefly symbol instead 'points' or $ ?
-		ctx.fillText( ( display.teamname || 'Total' ) + ': ' + this.points + ' $', this.offset/6, size * 2 ); //' points'
+		ctx.fillText( ( display.teamname || 'Total' ) + ': ' + this.points + ' $', this.offset/6, 40 * 2 ); //' points'
 	};
 
 

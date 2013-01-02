@@ -316,8 +316,10 @@
     Manager.prototype.end = function ( params ) {
 
         display.show( 'end' );
-        $('#qr_code').removeClass("halfQR");
+        $('#qr_code').removeClass("marginTop");
+        $('#qr_code img').removeClass("halfQR");
         $('.side_wrapper').removeClass("blueGradient");
+        $('#container-right').removeClass("info_gamescene");
 
         console.log(params);
 

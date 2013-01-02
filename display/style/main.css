@@ -585,9 +585,7 @@ h1 {
 }
 
 .halfQR {
-    width: 50%;
-    position: absolute;
-    bottom: 0;
+    width: 50% !important;
 }
 
 .blueGradient {
@@ -612,4 +610,13 @@ h1 {
     margin: 4% 4%;
     width: 90%;
     height: 90%;
+}
+
+.marginTop {
+    margin-top: 10%;
+}
+
+.info_gamescene {
+    margin-top: 5%;
+    padding: 7%;
 }
