@@ -28,6 +28,7 @@
 		this.healer = 0;
 
         $('#qr_code').addClass("halfQR");
+        $('.side_wrapper').addClass("blueGradient");
 	};
 
 
@@ -135,7 +136,8 @@
 
 
 	StatusManager.prototype.setBackground = function () {
-		this.panel.fillStyle = '#fff';
+//		this.panel.fillStyle = '#fff';
+		this.panel.fillStyle = '#f00';
 		this.panel.fillRect( 0, 0, this.panel.canvas.width, this.panel.canvas.height );
 	};
 
