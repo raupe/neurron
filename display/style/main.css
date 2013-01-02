@@ -36,7 +36,7 @@ canvas {
 	width: 100%;
 	min-width: 760px;
 
-	background-image: url(/style/images/neurron_banner.png);
+	background-image: url(images/neurron_banner.png);
 	background-position:right top;
 	background-repeat: no-repeat;
 	background-size:50% auto;
