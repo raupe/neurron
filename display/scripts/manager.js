@@ -202,7 +202,8 @@
 
 		if ( display.current !== 'load' ) display.show( 'load' );
 
-		new display.Timer( params[0] * 1000, 'countdown', 'load_countdown_timer');
+		new display.Timer( params[0] * 1000, 'countdown', 'load_wrapper');
+        display.load_view.loadBar(params[0]);
 
 		display.teamname = params[1] ? params[1] : '';
 
@@ -319,7 +320,7 @@
         $('#qr_code').removeClass("marginTop");
         $('#qr_code img').removeClass("halfQR");
         $('.side_wrapper').removeClass("blueGradient");
-        $('#container-right').removeClass("info_gamescene");
+        $('#container-right').removeClass("marginTopPadding");
 
         console.log(params);
 
