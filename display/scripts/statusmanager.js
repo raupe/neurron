@@ -283,10 +283,7 @@
 
 				if (
 						timer > 0*add  && timer < 10*add || // 5 trans
-						// timer > 10*add && timer < 15*add ||
-						// timer > 20*add && timer < 25*add ||
-						// timer > 30*add && timer < 35*add ||
-						timer > 20*add  && timer < 25*add ||
+						timer > 20*add && timer < 25*add ||
 
 						timer > 40*add && timer < 44*add || // 4 trans
 						timer > 48*add && timer < 52*add ||
