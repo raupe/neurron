@@ -50,6 +50,8 @@
 
         loadBar.className = ''; // show loadBar
         load_countdown_timer.removeChild( document.getElementById('load_greet') ); // remove Team greeting
+
+        $('#container').addClass("backgroundImage");
     };
 
     display.load_view.hideLoadBar = function() {
@@ -71,8 +73,10 @@
 
     display.logic.load = function(){
 
-        $container.addClass('bg-black');
-        $body.addClass('bg-black');
+        $('#container').removeClass("backgroundImage");
+
+//        $container.addClass('bg-black');
+//        $body.addClass('bg-black');
     };
 
 })();
