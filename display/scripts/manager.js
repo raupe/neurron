@@ -136,7 +136,7 @@
 	 * @return {[type]}        [description]
 	 */
 	Manager.prototype.init = function ( params ) {
-
+        console.log(params[0]);
         var link = 'http://game.neurron.com/controller/?' + params[0],
 			qrCode = showQRCode( link, { r: 14, g: 73, b: 155 }),
 
