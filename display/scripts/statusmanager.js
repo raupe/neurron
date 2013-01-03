@@ -42,7 +42,7 @@
         $('#qr_code').addClass("marginTop");
         $('#qr_code img').addClass("halfQR");
         $('.side_wrapper').addClass("blueGradient");
-        $('#container-right').addClass("info_gamescene");
+        $('#container-right').addClass("marginTopPadding");
 	};
 
 
