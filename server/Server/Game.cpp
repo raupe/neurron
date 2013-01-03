@@ -152,11 +152,31 @@ void sv::Game::End()
 	EndMsg endMsg(points);
 
 	uchar playerNum = m_PlayerManager->GetNumber();
-	Player* pl;
+	ushort playerPointsSum = 0;
+	short playerPoints;
 	for(uchar i=0; i<playerNum; ++i)
 	{
-		pl = m_PlayerManager->GetPlayer(i+1);
-		endMsg.SetPercent(i,pl->GetColor(), pl->GetPoints() > 0 ? (uchar)((pl->GetPoints() * 1000 / points + 5) / 10) : 0);
+		playerPoints =  m_PlayerManager->GetPlayer(i+1)->GetPoints();
+		playerPointsSum += playerPoints > 0 ? playerPoints : 0;
+	}
+
+	Player* pl;
+	if(playerPointsSum > 0)
+	{
+		for(uchar i=0; i<playerNum; ++i)
+		{
+			pl = m_PlayerManager->GetPlayer(i+1);
+			endMsg.SetPercent(i,pl->GetColor(), pl->GetPoints() > 0 ? (uchar)((pl->GetPoints() * 1000 / points + 5) / 10) : 0);
+		}
+	}
+	else
+	{
+		uchar percent = (1000 / playerNum + 5) / 10;
+		for(uchar i=0; i<playerNum; ++i)
+		{
+			pl = m_PlayerManager->GetPlayer(i+1);
+			endMsg.SetPercent(i,pl->GetColor(), percent);
+		}
 	}
 
 	for(uchar i=0; i<3; ++i)
