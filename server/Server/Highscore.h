@@ -18,16 +18,16 @@ namespace sv
 		Highscore();
 		~Highscore();
 
-		bool				AddScore(ushort score, const std::string& name);
+		bool				AddScore(uchar playerCount, ushort score, const std::string& name);
 
 		void				LoadHighscore();
 		void				SaveHighscore();
 
-		std::string			GetName(uchar index) { return m_Highscore[index].m_Name; }
-		ushort				GetScore(uchar index) { return m_Highscore[index].m_Score; }
+		std::string			GetName(uchar playerCount, uchar index) { return m_Highscore[playerCount-1][index].m_Name; }
+		ushort				GetScore(uchar playerCount, uchar index) { return m_Highscore[playerCount-1][index].m_Score; }
 
 	private:
-		Entry				m_Highscore[HIGHSCORE_SIZE];
+		Entry				m_Highscore[PLAYER_MAX][HIGHSCORE_SIZE];
 	};
 }
 

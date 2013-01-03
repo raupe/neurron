@@ -68,12 +68,7 @@ window.config = {
 
 
 			// obstacle
-            damage		: {
-
-                src     : 'assets/heal/windmill.png',
-                width   : '100',
-                height  : '100'
-            },
+			damage		: 'assets/damage/damage.png',
 
 			heal		: 'assets/heal/heal.png',
 
