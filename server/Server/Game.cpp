@@ -166,7 +166,7 @@ void sv::Game::End()
 		for(uchar i=0; i<playerNum; ++i)
 		{
 			pl = m_PlayerManager->GetPlayer(i+1);
-			endMsg.SetPercent(i,pl->GetColor(), pl->GetPoints() > 0 ? (uchar)((pl->GetPoints() * 1000 / points + 5) / 10) : 0);
+			endMsg.SetPercent(i,pl->GetColor(), pl->GetPoints() > 0 ? (uchar)((pl->GetPoints() * 1000 / playerPointsSum + 5) / 10) : 0);
 		}
 	}
 	else
