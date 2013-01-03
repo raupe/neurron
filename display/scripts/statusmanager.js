@@ -21,11 +21,22 @@
 		this.energyBarStartX = this.offset / 8;
 		this.colorBarStartX = this.energyBarStartX / 2;
 		this.lifeLabelStartX = this.energyBarStartX + this.fullBarWidth + 4; // 4 offset that it doesnt catch the energybar
-		this.startY = 80;
+		this.startY = 40;
 		this.color = 'green';
 		this.distance = this.fullBarHeight + 10;
 
 		this.healer = 0;
+        var ctx = this.panel;
+        this.gradients = [];
+        for ( var i = 1, l = playerList.length; i <= l; i++ ){
+
+            var grd;
+            grd = ctx.createLinearGradient( 0, this.startY + i*this.distance, 0, (this.startY + i*this.distance) + this.fullBarHeight );
+            grd.addColorStop(0, "rgb(" + config.backgroundColors[i].r + "," + config.backgroundColors[i].g + "," + config.backgroundColors[i].b + ")");
+            grd.addColorStop(1, "rgb(" + config.playerColors[i].r + "," + config.playerColors[i].g + "," + config.playerColors[i].b + ")");
+
+            this.gradients.push(grd);
+		}
 
         // following classes has always to be removed in end scene
         $('#qr_code').addClass("marginTop");
@@ -69,39 +80,11 @@
 
 			currentPlayer = playerList[i];
 
-			r = currentPlayer.color.r;
-			g = currentPlayer.color.g;
-			b = currentPlayer.color.b;
-
-			if (currentPlayer.energy <= config.colorLimits.red) {
-
-				this.color = 'red';
-
-			} else if ( currentPlayer.energy <= config.colorLimits.orange ) {
-
-				this.color = 'orange';
-
-			} else {
-
-				this.color = 'green';
-			}
-
-			// colorBar
-//			ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
-//			ctx.fillRect(this.colorBarStartX, this.startY + i*this.distance, this.energyBarStartX/2, this.fullBarHeight);
-
-			// lifeLabels
-//			ctx.fillStyle = 'white';
-//			ctx.font = '' + 20 + 'pt Comic Sans MS';
-//			ctx.fillText( currentPlayer.energy + ' %', this.lifeLabelStartX, (this.startY + 30) + i*this.distance );
-
 			// energyBars
-			ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
-//			ctx.fillRect( this.energyBarStartX, this.startY + i*this.distance, this.fullBarWidth * ( (currentPlayer.energy - currentPlayer.diffEnergy) / 100), this.fullBarHeight);
-			ctx.fillRect( 0, this.startY + i*this.distance, this.fullBarWidth * ( (currentPlayer.energy - currentPlayer.diffEnergy) / 100), this.fullBarHeight);
-			// ctx.fillRect( this.energyBarStartX, this.startY + i*this.distance, this.fullBarWidth * ( currentPlayer.energy / 100 ), this.fullBarHeight);
+            ctx.fillStyle = this.gradients[i];
+            ctx.fillRect( 0, this.startY + (i+1)*this.distance, this.fullBarWidth * ( (currentPlayer.energy - currentPlayer.diffEnergy) / 100), this.fullBarHeight );
 
-			if ( currentPlayer.diffEnergy === 0 ) currentPlayer.animationStep = this.originStep; // default
+            if ( currentPlayer.diffEnergy === 0 ) currentPlayer.animationStep = this.originStep; // default
 			if ( currentPlayer.diffEnergy > 0 ) currentPlayer.diffEnergy -= currentPlayer.animationStep;
 			if ( currentPlayer.diffEnergy < 0 ) currentPlayer.diffEnergy += currentPlayer.animationStep;
 		}
