@@ -9,7 +9,7 @@
 		var width = this.screen.cvs.width,
 			height = this.screen.cvs.height;
 		
-		this.minRadius = 5;
+		this.minRadius = 20;
 		this.maxRadius = Math.sqrt(width*width + height*height) / 2;
 		
 		this.cx = width / 2;
@@ -33,10 +33,8 @@
 
 	Background.prototype.draw = function(){
 
-        //this.screen.ctx.drawImage( this.img, 0, 0,this.screen.cvs.width, this.screen.cvs.height );
-        
         var circle, r, g, b, x=0, y=0, xTmp=0, yTmp=0,
-        	ctx = this.ctx,
+        	ctx = this.screen.ctx, //this.ctx,
         	cx = this.cx,
         	cy = this.cy,
         	maxRadius = this.maxRadius,
@@ -49,31 +47,48 @@
         	radDiff = 20,
         	tmp = 20;
         	
-        ctx.fillStyle = "rgb(0,0,0)";
-        ctx.fillRect(0, 0, this.cvs.width, this.cvs.height);
-        	
-        for(var rad = maxRadius; rad > minRadius; rad -= radDiff) {
+        x = this.grid.getTranslateX(0);
+        y = this.grid.getTranslateY(0);
+        
+        var gradient = ctx.createRadialGradient(cx+x, cy+y, 1, cx, cy, maxRadius);
+        gradient.addColorStop(0, 'rgb(90, 186, 255)');
+        gradient.addColorStop((minRadius-1)/maxRadius, 'rgb(30, 62, 85)');
+        
+        for(var rad = minRadius; rad < maxRadius; rad += radDiff) {
         
         	circle = config.distanceToUser * (outerCircleRadius - rad) / (rad * config.circleOffset);
-            radDiff = ~~(rad - minRadius) / (maxRadius - minRadius) *  40 + 2;
+            radDiff = ~~ ((rad - minRadius) / (maxRadius - minRadius) *  40 + 2);
             
-			r = getColor(circle, rad);
-			g = getColor(circle+2, rad);
-			b = getColor(circle+4, rad);
+			r = getColor(circle, rad, 17, 30);
+			g = getColor(circle, rad, 29, 62);
+			b = getColor(circle, rad, 72, 85);
 			
-			x = this.grid.getTranslateX(rad);
-			y = this.grid.getTranslateY(rad);
-			
-            ctx.beginPath(); 
-			ctx.arc(cx+x, cy+y, rad, 0, Math.PI * 2, false); 
-            ctx.fillStyle = "rgb(" + r + "," + g +"," + b + ")";
-            ctx.fill();
+			gradient.addColorStop(rad/maxRadius, 'rgb(' + r + ',' + g + ',' + b + ')');
     	}
     	
-    	this.screen.ctx.drawImage(this.cvs, 0, 0, this.cvs.width, this.cvs.height);
+    	ctx.fillStyle = gradient;
+		ctx.fillRect( 0, 0, this.screen.cvs.width, this.screen.cvs.height);
     	
-    	function getColor(circle, radius) {
+    	//this.screen.ctx.drawImage(this.cvs, 0, 0, this.cvs.width, this.cvs.height);
+    	
+    	function getColor(circle, radius, col1, col2) {
     		
+    		var tmp = (circle + posShift) % 2,
+    			color;
+    			
+    		
+    		if(tmp < 1) {
+    			color = (col2 - col1) * tmp + col1;
+    		} else {
+    			color = (col1 - col2) * (tmp - 1) + col2;
+    		}
+    		
+    		color = color * (maxRadius - radius) / (maxRadius - minRadius);
+    		
+    		return ~~color;
+    		
+    		
+    		/*
     		var colMax = 110,
     			colDif = 40;
     		
@@ -92,7 +107,7 @@
     		
     		color = color * (maxRadius - radius) / (maxRadius - minRadius);
     		
-    		return ~~color;
+    		return ~~color;*/
     	}
 	};
 
