@@ -146,7 +146,7 @@ void sv::Game::End()
 	Highscore* highscore = Engine::Instance()->GetHighscore();
 	if(!m_Name.empty() && points)
 	{
-		highscore->AddScore(points, m_Name);
+		highscore->AddScore(m_PlayerManager->GetNumber(), points, m_Name);
 	}
 
 	EndMsg endMsg(points);
@@ -181,8 +181,8 @@ void sv::Game::End()
 
 	for(uchar i=0; i<3; ++i)
 	{
-		std::string name = highscore->GetName(i);
-		endMsg.SetHighscore(i, name, highscore->GetScore(i));
+		std::string name = highscore->GetName(playerNum, i);
+		endMsg.SetHighscore(i, name, highscore->GetScore(playerNum, i));
 	}
 
 	SendMsg(&endMsg);
