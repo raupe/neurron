@@ -6,12 +6,15 @@
 	display.views.load = (function(){
 
 		var left = '\
-        <div class="load_background_wrapper">\
-            <img class="load_background" src="assets/views/load/load_background.jpg"/>\
-        </div>\
-        <div id="load_countdown_timer">\
-            <img id="load_bar" src="assets/views/load/load.gif"/>\
-        </div>',
+        <div id="load_wrapper" class="load_wrapper">\
+                    <div id="load_teamname" class="load_teamname"></div>\
+                    <img id="load_bar" src="assets/views/load/load.gif"/>\
+                    <div class="load_background_wrapper">\
+                        <img class="load_background" src="assets/views/load/load_background.jpg"/>\
+                    </div>\
+                    <div id="progressbar" class="progressbar"></div>\
+                </div>\
+                ',
 
         right = '<div id="load_register_status" class="joined round"></div>';
 
@@ -43,15 +46,17 @@
         display.load_view.playerNums = 0;
 
         var loadBar = document.getElementById('load_bar'),
-            load_countdown_timer = document.getElementById('load_countdown_timer');
+            load_teamname = document.getElementById('load_teamname');
 
         // remove images
         document.getElementById('load_register_status').innerHTML = '';
 
         loadBar.className = ''; // show loadBar
-        load_countdown_timer.removeChild( document.getElementById('load_greet') ); // remove Team greeting
+        load_teamname.removeChild( document.getElementById('load_greet') ); // remove Team greeting
 
         $('#container').addClass("backgroundImage");
+        $('#container-right').removeClass("marginTopPadding");
+        $('#qr_code img').removeClass("halfQR");
     };
 
     display.load_view.hideLoadBar = function() {
@@ -61,7 +66,7 @@
 
     display.load_view.greetTeam = function() {
 
-        var element = document.getElementById('load_countdown_timer'),
+        var element = document.getElementById('load_teamname'),
             greetBox = document.createElement('span');
 
         greetBox.id = 'load_greet';
@@ -71,12 +76,16 @@
         element.appendChild(greetBox);
     };
 
+    display.load_view.loadBar = function(seconds) {
+        console.log(seconds);
+    }
+
     display.logic.load = function(){
 
         $('#container').removeClass("backgroundImage");
+        $('#container-right').addClass("marginTopPadding");
+        $('#qr_code img').addClass("halfQR");
 
-//        $container.addClass('bg-black');
-//        $body.addClass('bg-black');
     };
 
 })();
