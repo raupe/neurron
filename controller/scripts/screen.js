@@ -75,11 +75,11 @@
 			btx.fillRect( 0, cy - height/2, bvs.width, height);
 
 			// smoother with pre-calculations
-			var frames = new Array( steps );
+			// var frames = new Array( steps );
 
-			createBackgrounds();
+			// createBackgrounds();
 
-			setTimeout( fade, time );
+			// setTimeout( fade, time );
 		}
 
 
