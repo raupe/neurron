@@ -264,13 +264,8 @@ void sv::Game::HandleStartMsg(InputMsg* msg)
 			if( m_Status == eGameStatus_Wait)
 			{
 				GetDeltaTime();
-				if(msg->GetData() && msg->GetData()[0])
-				{
-					StartName();
-					enterName = true;
-				}
-				else
-					StartCountdown();
+				StartName();
+				enterName = true;
 			}
 			
 			JoinMsg joinMsg(pl->GetId(), pl->GetColor());
