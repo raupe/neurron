@@ -36,7 +36,6 @@ canvas {
 	width: 100%;
 	min-width: 760px;
 
-	background-image: url(images/neurron_banner.png);
 	background-position:right top;
 	background-repeat: no-repeat;
 	background-size:50% auto;
@@ -618,4 +617,8 @@ h1 {
 .info_gamescene {
     margin-top: 5%;
     padding: 7%;
+}
+
+.backgroundImage {
+    background-image: url(images/neurron_banner.png);
 }
