@@ -23,7 +23,6 @@
 	};
 
 
-
 	/**
 	 * [show description]
 	 * @param  {[type]} category [description]
@@ -33,13 +32,14 @@
 
 		if ( this.repeat ) clearInterval( this.repeat );
 
-		if ( category === 1 ) { // handling on end
-
-			this.id = 0;
-
-		} else {
+		if ( category !== 1 ) {
 
 			this.box.label( category );
+
+		} else { // handling on end
+
+			this.id = 0;
+			this.box.start();
 		}
 
 	};
@@ -64,7 +64,6 @@
 
 		}.bind(this), 1000 );
 	};
-
 
 
 	/**
@@ -178,7 +177,7 @@
 
 		this.req.open( 'POST', this.url + '?t=' + Date.now(), true );
 
-		// console.log('action: ', action, '- option: ', option);
+		console.log('action: ', action, '- option: ', option);
 
 		// encode into base64, avoiding special characters like '0' // nur null nicht
 		var data = String.fromCharCode( this.channel, this.id, action ) + ( option || '' );

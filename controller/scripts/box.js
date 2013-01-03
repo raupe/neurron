@@ -194,7 +194,6 @@
 	 */
 	Box.prototype.cancel = function(){
 
-		// better handle/command ?
 		this.manager.send( config.protocolCtoS.CANCEL );
 
 		this.start();
