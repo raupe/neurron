@@ -2,39 +2,53 @@
 
 	var Background = display.Background = function(){
 
-		this.img = this.assetManager.get('image', 'background');
+//		display.Debug.prototype.background = this; // testing
 
-		display.Debug.prototype.background = this; // testing
+		this.minRadius = 20;
+		
+		this.ctx = this.screen.ctx,
+		
+		this.posShift = 0;
+		this.rotate = 0.0001;
+		this.rotateTime = 0;
+		
+		this.resize();
+	};
+	
+	Background.prototype.resize = function() {
 		
 		var width = this.screen.cvs.width,
 			height = this.screen.cvs.height;
 		
-		this.minRadius = 20;
-		this.maxRadius = Math.sqrt(width*width + height*height) / 2;
-		
 		this.cx = width / 2;
 		this.cy = height / 2;
 		
-		this.cvs = document.createElement('canvas');
-		this.ctx = this.cvs.getContext('2d');
-		this.cvs.width = width;
-		this.cvs.height = height;
-		
-		this.posShift = 0;
-	};
-
-
+		this.maxRadius = Math.sqrt(width*width + height*height) / 2;
+			
+	}
 
 	Background.prototype.update = function(delta){
 		
 		this.posShift += delta / config.duration.moveTime;
+		
+		this.rotateTime -= delta;
+		if(this.rotateTime < 0) {
+			this.rotateTime = Math.random() * 15000 + 3000
+			this.rotate = -this.rotate;
+		}
+		
+		console.log(delta);
+        
+        this.ctx.translate(this.cx, this.cy);
+        this.ctx.rotate(this.rotate * delta);
+        this.ctx.translate(-this.cx, -this.cy);
 	};
 
 
 	Background.prototype.draw = function(){
 
         var circle, r, g, b, x=0, y=0, xTmp=0, yTmp=0,
-        	ctx = this.screen.ctx, //this.ctx,
+        	ctx = this.ctx,
         	cx = this.cx,
         	cy = this.cy,
         	maxRadius = this.maxRadius,
@@ -42,7 +56,7 @@
         	lineWidth = this.lineWidth,
         	outerCircleRadius = config.outerCircleRadius,
         	posShift = this.posShift;
-        
+                
         var rad = minRadius,
         	radDiff = 20,
         	tmp = 20;
@@ -67,9 +81,11 @@
     	}
     	
     	ctx.fillStyle = gradient;
-		ctx.fillRect( 0, 0, this.screen.cvs.width, this.screen.cvs.height);
-    	
-    	//this.screen.ctx.drawImage(this.cvs, 0, 0, this.cvs.width, this.cvs.height);
+		ctx.beginPath();
+		ctx.arc( cx, cy, maxRadius, 0, Math.PI * 2, false );
+		ctx.fill();
+				
+		//ctx.fillRect( 0, 0, this.screen.cvs.width, this.screen.cvs.height);
     	
     	function getColor(circle, radius, col1, col2) {
     		
@@ -86,28 +102,6 @@
     		color = color * (maxRadius - radius) / (maxRadius - minRadius);
     		
     		return ~~color;
-    		
-    		
-    		/*
-    		var colMax = 110,
-    			colDif = 40;
-    		
-    		var tmp = (circle  + posShift) % 6,
-    			color;
-    		
-    		if(tmp < 2) {
-    			color = colMax;
-    		} else if ( tmp < 3) {
-    			color = colMax - colDif * (tmp - 2);
-    		} else if ( tmp < 5 ) {
-    			color = colMax - colDif;
-    		} else {
-    			color = colMax - colDif * (6 - tmp);
-    		}	
-    		
-    		color = color * (maxRadius - radius) / (maxRadius - minRadius);
-    		
-    		return ~~color;*/
     	}
 	};
 
