@@ -6,13 +6,15 @@
 	display.views.load = (function(){
 
 		var left = '\
-        <div id="load_wrapper" class="load_wrapper">\
-                    <div id="load_teamname" class="load_teamname"></div>\
-                    <img id="load_bar" src="assets/views/load/load.gif"/>\
-                    <div class="load_background_wrapper">\
-                        <img class="load_background" src="assets/views/load/load_background.jpg"/>\
+        <div id="load_outerwrapper" class="load_outerwrapper">\
+                    <div id="load_innerwrapper" class="load_innerwrapper">\
+                        <div id="load_teamname" class="load_teamname"></div>\
+                        <img id="load_bar" src="assets/views/load/load.gif"/>\
+                        <div class="load_background_wrapper">\
+                            <img class="load_background" src="assets/views/load/load_background.jpg"/>\
+                        </div>\
+                        <div id="progressbar" class="progressbar"></div>\
                     </div>\
-                    <div id="progressbar" class="progressbar"></div>\
                 </div>\
                 ',
 
@@ -77,7 +79,12 @@
     };
 
     display.load_view.loadBar = function(seconds) {
-        console.log(seconds);
+        var progressbar = $('#progressbar');
+        progressbar.animate({
+            width: "100%"
+        }, 15000, function(){
+            console.log("complete");
+        });
     }
 
     display.logic.load = function(){
