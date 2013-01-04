@@ -202,7 +202,7 @@
 
 		if ( display.current !== 'load' ) display.show( 'load' );
 
-		new display.Timer( params[0] * 1000, 'countdown', 'load_wrapper');
+//		new display.Timer( params[0] * 1000, 'countdown', 'load_outerwrapper');
         display.load_view.loadBar(params[0]);
 
 		display.teamname = params[1] ? params[1] : '';
@@ -231,7 +231,6 @@
 	Manager.prototype.start = function ( params ) {
 
         display.show( 'game' );
-
         display.load_view.clearLoadScene();
 
 		this.grid.init({
