@@ -281,7 +281,7 @@ canvas {
 /* ---------- load ---------------------*/
 
 .load_background {
-	height: 80%;
+	width: 100%;
 }
 
 
@@ -621,4 +621,27 @@ h1 {
 
 .backgroundImage {
     background-image: url(images/neurron_banner.png);
+}
+
+.load_outerwrapper {
+    text-align: center;
+    padding-top: 2%;
+}
+
+.load_innerwrapper {
+    width: 70%;
+    margin: auto;
+}
+
+.progressbar {
+    height: 20px;
+    width: 0%;
+    background: #bac000; /* Old browsers */
+	background: -moz-linear-gradient(top,  #bac000 1%, #5d942d 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#bac000), color-stop(100%,#5d942d)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #bac000 1%,#5d942d 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #bac000 1%,#5d942d 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #bac000 1%,#5d942d 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #bac000 1%,#5d942d 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bac000', endColorstr='#5d942d',GradientType=0 ); /* IE6-9 */
 }
