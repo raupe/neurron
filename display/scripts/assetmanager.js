@@ -20,7 +20,7 @@
 
 				image		: {},
 				audio		: {},
-				movie		: {},
+				video		: {},
 				// text		: {},
 
 				length		: 0,	// amount of files
@@ -114,7 +114,7 @@
 
 			} else if ( url === 'mp4' || url === 'avi' || url === 'webm' ) {
 
-				url = 'movie';
+				url = 'video';
 
 			// } else if ( url === 'txt' || url === 'md' ) {
 
