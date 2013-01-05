@@ -88,6 +88,9 @@
 
 		if ( !progressbar ) progressbar = $('#progressbar');
 
+		// progressbar.removeClass('fill');
+		// progressbar.addClass('fill');
+
 		progressbar.css({ width: 0 });
 
 		progressbar.animate({
