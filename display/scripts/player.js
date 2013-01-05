@@ -14,16 +14,15 @@
         this.energy = 100;
         this.diffEnergy = 0;
 
+        this.init({
 
-        this.deadSprites = this.assetManager.get('image', 'player_dead' );
-        this.transSprite = this.assetManager.get('image', 'player_trans' );
+            id      : params.id,
+            pos     : params.pos,
+            color   : config.playerColors[ params.id ]
+        });
 
-		this.init({
-
-			id		: params.id,
-			pos		: params.pos,
-			color	: config.playerColors[ params.id ]
-		});
+        this.deadSprites = this.getAsset('image', 'player_dead' );
+        this.transSprite = this.getAsset('image', 'player_trans' );
 	};
 
     Player.prototype = Object.create( display.Element.prototype );
@@ -43,7 +42,6 @@
             this.dir = ( this.pos - nextPos ) > this.grid.lanes/2 ? 'antiRing' : 'ring';
         }
     };
-
 
 
     Player.prototype.change = function(){

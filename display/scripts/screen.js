@@ -4,8 +4,6 @@
 
 		this.createCanvas();
 
-		// this.requestFullScreen();
-
 		display.Element.prototype.screen = this;
 		display.Background.prototype.screen = this;
 		display.Manager.prototype.screen = this;
@@ -51,26 +49,6 @@
             this.sub = this.cvs.height = window.innerHeight;
 		}
 	};
-
-
-	// ToDo: cancel + fullscren change listener
-	Screen.prototype.requestFullScreen = function(){
-
-		var dd = document.documentElement;
-
-		if ( !dd.requestFullScreen ) dd.requestFullScreen = dd.mozRequestFullScreen || dd.webkitRequestFullScreen || dd.webkitRequestFullscreen;
-		if ( !document.cancelFullScreen) document.requestFullscreen = document.mozCancelFullScreen || document.webkitCancelFullScreen || document.webkitExitFullscreen;
-		if ( !document.fullscreenEnabled ) document.fullscreenEnabled = document.mozFullscreenEnabled || document.webkitFullscreenEnabled || dd.webkitRequestFullScreen;
-
-		this.cvs.addEventListener('click', function(){
-
-			if ( document.fullscreenEnabled  ) {
-
-				dd.requestFullScreen();
-			}
-		});
-	};
-
 
 
 	Screen.prototype.clear = function(){

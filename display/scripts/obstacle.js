@@ -19,16 +19,16 @@
         this.value = params.value;
 		this.type = params.type;
 
-
 		this.velocity = params.velocity;
-
-		this.collisionSound = this.assetManager.get('audio', params.collisionSound );
-		this.collisionImages = this.assetManager.get('image', params.collisionImg );
-
-		this.collisionCounter = 0;
 
 
 		display.Element.prototype.init.call( this, params );
+
+
+		this.collisionCounter = 0;
+
+		this.collisionSound = this.getAsset('audio', params.collisionSound );
+		this.collisionImages = this.getAsset('image', params.collisionImg );
 
 		this.move( this.endField );
     };
@@ -67,7 +67,10 @@
 
     Obstacle.prototype.collide = function(){
 
-		if ( this.collisionCounter === 0 && this.collisionSound ) this.collisionSound.play();
+		if ( config.audio && this.collisionCounter === 0 && this.collisionSound ) {
+
+			this.collisionSound.play();
+		}
 
 		if ( this.collisionCounter < this.collisionImages.length ) {
 
