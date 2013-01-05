@@ -1,6 +1,6 @@
 (function(){
 
-	var Grid = display.Grid = function ( config ) {
+	var Grid = display.Grid = function() {
 
 		display.Element.prototype.grid = this;
 
@@ -10,13 +10,18 @@
 
 	Grid.prototype.init = function ( params ) {
 
-		this.setup( params );
+		this.params = params || this.params; // cache previous
 
-		this.definePositions();
+		if ( this.params ) {
 
-		this.createCanvas();
+			this.setup( this.params );
 
-		this.update();
+			this.definePositions();
+
+			this.createCanvas();
+
+			this.update();
+		}
 	};
 
 
@@ -42,7 +47,7 @@
 		// placement
 		this.posX = 0;
 		this.posY = 0;
-		
+
 		this.transX = 0;
 		this.transY = 0;
 		this.transXDest = 0;
@@ -208,9 +213,9 @@
 
 
 	Grid.prototype.update = function(delta){
-		
+
 		var diff = 0.0001 * delta;
-		
+
 		if(this.transX === this.transXDest) {
 			this.transXDest = Math.random()/4 - 0.125;
 		} else if (this.transX + diff < this.transXDest) {
@@ -218,9 +223,9 @@
 		} else if (this.transX - diff > this.transXDest) {
 			this.transX -= diff;
 		} else {
-			this.transX = this.transXDest;	
+			this.transX = this.transXDest;
 		}
-		
+
 		if(this.transY === this.transYDest) {
 			this.transYDest = Math.random()/4 - 0.125;
 		} else if (this.transY + diff < this.transYDest) {
@@ -228,7 +233,7 @@
 		} else if (this.transY - diff > this.transYDest) {
 			this.transY -= diff;
 		} else {
-			this.transY = this.transYDest;	
+			this.transY = this.transYDest;
 		}
 	};
 
@@ -314,11 +319,11 @@
 			ctx.stroke();
 		}
 	};
-	
+
 	Grid.prototype.getTranslateX = function(radius) {
 		return this.transX * (this.maxRadius - radius);
 	};
-	
+
 	Grid.prototype.getTranslateY = function(radius) {
 		return this.transY * (this.maxRadius - radius);
 	};

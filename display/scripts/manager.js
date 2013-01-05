@@ -17,6 +17,14 @@
 
 		this.background = new display.Background();
 
+
+		this.options = new display.Options({
+
+			grid: this.grid,
+			background: this.background
+		});
+
+
 		display.Connection.prototype.manager = this;
 		display.Debug.prototype.manager = this;
 		display.StatusManager.prototype.manager = this;
@@ -136,7 +144,7 @@
 	 * @return {[type]}        [description]
 	 */
 	Manager.prototype.init = function ( params ) {
-        console.log(params[0]);
+
         var link = 'http://game.neurron.com/controller/?' + params[0],
 			qrCode = showQRCode( link, { r: 14, g: 73, b: 155 }),
 
