@@ -54,7 +54,6 @@
 			containerRight.appendChild( temp );
 		}
 
-
 		if ( display.logic[ id ] ) display.logic[ id ]();
 	};
 
@@ -78,25 +77,24 @@
 		var tracks = display.tracks,
 			current = tracks.current;
 
-		if ( !current ) { // just play
+		if ( current ) { // fading
+
+			var next = tracks.next = el;
+			next.volume = 0;
+
+			timer = config.audioFading;
+			fade();
+
+			next.play();
+
+		} else { // init
 
 			current = tracks.current = el;
 
 			current.currentTime = 0;
-			current.volume = audioVolume;
+			current.volume = config.audio ? audioVolume : 0;
 
 			current.play();
-
-		} else { // fading
-
-			tracks.next = el;
-			tracks.next.volume = 0;
-
-			timer = config.audioFading;
-
-			fade();
-
-			tracks.next.play();
 		}
 	};
 
@@ -107,7 +105,7 @@
 			next = display.tracks.next;
 
 		current.volume = Math.max( current.volume - diff, 0 );
-		next.volume = audioVolume - timer * diff;
+		if ( config.audio )	next.volume = audioVolume - timer * diff;
 
 		if ( timer-- ) {
 
