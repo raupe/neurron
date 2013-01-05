@@ -24,9 +24,7 @@
 			background: this.background
 		});
 
-
 		display.Connection.prototype.manager = this;
-		display.Debug.prototype.manager = this;
 		display.StatusManager.prototype.manager = this;
 	};
 
@@ -261,12 +259,6 @@
 		this.render();
 
         new display.Timer( config.gameTime * 60 * 1000, 'timer' );
-
-        // var endpoints = document.getElementById('endpoints');
-
-        // if ( endpoints ) endpoints.style.display = 'none';
-
-		new display.Debug();
 	};
 
 
@@ -324,12 +316,11 @@
     Manager.prototype.end = function ( params ) {
 
         display.show( 'end' );
+
         $('#qr_code').removeClass("marginTop");
         $('#qr_code img').removeClass("halfQR");
         $('.side_wrapper').removeClass("blueGradient");
         $('#container-right').removeClass("marginTopPadding");
-
-        console.log(params);
 
         this.statusManager.showEnd( params[0], params[1], params[2] );
 
