@@ -10,9 +10,9 @@
 			</div>\
 			<div id="slider_box_wrap" class="slider_box_wrap">\
 				<ul>\
-					<li id="intro_button"class="button button_color intro_button"><p>intro</p></li>\
-					<li id="play_button" class="button button_color play_button"><p>how2play</p></li>\
-					<li id="demo_button" class="button button_color demo_button"><p>demo</p></li>\
+					<li id="intro_button"class="button button_color intro_button"><p>Story</p></li>\
+					<li id="play_button" class="button button_color play_button"><p>Gameplay</p></li>\
+					<li id="demo_button" class="button button_color demo_button"><p>Controls</p></li>\
 				</ul>\
 				<div class="dashboard round"></div>\
 				<ul id="screen_wrap" class="screen_wrap round">\
@@ -20,7 +20,7 @@
 						<video poster="assets/views/load/load_background.jpg" controls preload="auto">\
 							<source src="assets/views/start/test.mp4" type="video/mp4" />\
 							<source src="assets/views/start/test.ogv" type="video/ogg" />\
-							The browser does\'t support any of the provided formats...\
+							The browser doesn\'t support any of the provided formats...\
 						</video>\
 					</li>\
 					<li id="how2play" class="screen js_screen">\
@@ -34,96 +34,102 @@
 		</div>\
 		';
 
-		// right = '\
-		//	<div class="comic round"></div>\
-		//	<div class="qr_code round"></div>\
-		//	<div class="joined round"></div>\
-		// \
-		// ';
-
-
 		return {
 
 			left    : left
-			// right   : right
 		};
 
 	})();
 
-	// Cached DOM
-	var video;
+
+	// Cache
+	var video, music;
 
 	display.logic.start = function(){
 
-		if ( !video ) video = $('#intro').children()[0];
+		if ( video ) {
 
-		$(video).on('loadedmetadata', function(){
+			start();
 
-			var duration = {
+		} else { // first time
 
-					intro : ~~(video.duration*1000), // 4000
-					how2play : 4000,
-					demo : 4000
-				},
+			music = display.getAsset('audio', 'start');
+			music.loop = true;
 
-				$items = $("#screen_wrap li"),
+			video = $('#intro').children()[0];
+			video.volume = 0;
 
-				$buttons = $("#slider_box_wrap li"),
-
-				timer = 0;
-
-				counter = 0,
-
-				itemsLength = $items.length;
-
-			$($buttons).click(function(){
-
-				$($buttons[counter]).removeClass('button_active');
-				$($items[counter]).fadeOut();
-				counter = $(this).index();
-				clearTimeout(timer);
-				timeOut();
-
-			});
-
-			//set time out
-			var timeOut = function(){
-
-				var currentId = $items[counter].id,
-
-					durationTime = duration[currentId];
-
-				$($items[counter]).fadeIn();
-				$($buttons[counter]).addClass('button_active');
-				//$buttons[counter].className += " button_active";
-
-				// if ( currentId === 'intro' ) video.play();
-
-				if ( video.currentTime !== 0 ) {
-
-					video.pause();
-					video.currentTime = 0;
-				}
+			$(video).on('loadedmetadata', start );
+		}
+	};
 
 
-				timer = setTimeout(function() {
+	function start(){
 
-					$($items[counter]).fadeOut();
-					$($buttons[counter]).removeClass('button_active');
-					counter++;
+		display.sound( music );
 
-					if( counter >= itemsLength ) counter = 0;
+		var duration = {
 
-					timeOut();
+				intro : ~~( video.duration * 1000 + 0.5),
+				how2play : 4000,
+				demo : 4000
+			},
 
-				}, durationTime);
-			};
+			$items = $("#screen_wrap li"),
 
+			$buttons = $("#slider_box_wrap li"),
+
+			timer = 0;
+
+			counter = 0,
+
+			itemsLength = $items.length;
+
+		$($buttons).click(function(){
+
+			$($buttons[counter]).removeClass('button_active');
+			$($items[counter]).fadeOut();
+			counter = $(this).index();
+			clearTimeout(timer);
 			timeOut();
 
 		});
 
-	};
+		//set time out
+		var timeOut = function(){
+
+			var currentId = $items[counter].id,
+
+				durationTime = duration[currentId];
+
+			$($items[counter]).fadeIn();
+			$($buttons[counter]).addClass('button_active');
+			//$buttons[counter].className += " button_active";
+
+			if ( currentId === 'intro' ) video.play();
+
+			if ( video.currentTime !== 0 ) {
+
+				video.pause();
+				video.currentTime = 0;
+			}
+
+
+			timer = setTimeout(function() {
+
+				$($items[counter]).fadeOut();
+				$($buttons[counter]).removeClass('button_active');
+				counter++;
+
+				if( counter >= itemsLength ) counter = 0;
+
+				timeOut();
+
+			}, durationTime);
+		};
+
+		timeOut();
+	}
 
 
 })();

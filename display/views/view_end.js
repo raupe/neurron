@@ -59,10 +59,21 @@
 
 	})();
 
+    // cache
+    var music;
+
     display.logic.end = function(){
 
-        $container.removeClass('bg-black');
-        $body.removeClass('bg-black');
+        if ( !music ) {
+
+            music = display.getAsset('audio', 'start');
+            music.loop = true;
+        }
+
+        display.sound( music );
+
+        // $container.removeClass('bg-black');
+        // $body.removeClass('bg-black');
     };
 
 })();
