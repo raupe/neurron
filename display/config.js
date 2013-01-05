@@ -115,8 +115,8 @@ window.config = {
             coin        : 'assets/points/coin-test.wav',
 
 
-            start		: 'assets/heal/pink-test.wav',
-            game		: 'assets/heal/pink-test.wav'
+            start		: 'assets/views/start/start.mp3',
+            game		: 'assets/views/game/game.ogg'
 		}
 	},
 
