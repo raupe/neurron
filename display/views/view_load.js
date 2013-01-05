@@ -9,9 +9,9 @@
         <div id="load_outerwrapper" class="load_outerwrapper">\
                     <div id="load_innerwrapper" class="load_innerwrapper">\
                         <div id="load_teamname" class="load_teamname"></div>\
-                        <img id="load_bar" src="assets/views/load/load.gif"/>\
+                        <img id="load_bar" src="assets/views/load/blink/load.gif"/>\
                         <div class="load_background_wrapper">\
-                            <img class="load_background" src="assets/views/load/load_background.jpg"/>\
+                            <img class="load_background" src="assets/views/load/tutorial/load_background.jpg"/>\
                         </div>\
                         <div id="progressbar" class="progressbar"></div>\
                     </div>\
@@ -36,11 +36,11 @@
         display.load_view.playerNums++;
 
         var element = document.getElementById('load_register_status'),
-            pathToImages = config.viewAssets + '/load/',
+            pathToImages = config.viewAssets + '/load/icons/',
             image = new Image();
 
         image.onload = function(){ element.appendChild(image); };
-        image.src = pathToImages + 'ronron' + display.load_view.playerNums + '.png';
+        image.src = pathToImages + 'neurron_' + display.load_view.playerNums + '.png';
     };
 
     display.load_view.clearLoadScene = function(){

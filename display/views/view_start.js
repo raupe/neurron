@@ -16,17 +16,17 @@
 				</ul>\
 				<div class="dashboard round"></div>\
 				<ul id="screen_wrap" class="screen_wrap round">\
-					<li id="intro" class="screen js_screen">\
-						<video poster="assets/views/load/load_background.jpg" controls preload="auto">\
+					<li id="story" class="screen show">\
+						<img class="video"  src="http://company.zynga.com/nfs/files-0925-01/coasterville_flat_0.png" />\
+					</li>\
+					<li id="gameplay" class="screen hide">\
+						<video poster="assets/views/load/tutorial/load_background.jpg" controls preload="auto">\
 							<source src="assets/views/start/test.mp4" type="video/mp4" />\
 							<source src="assets/views/start/test.ogv" type="video/ogg" />\
 							The browser doesn\'t support any of the provided formats...\
 						</video>\
 					</li>\
-					<li id="how2play" class="screen js_screen">\
-						<img class="video"  src="http://company.zynga.com/nfs/files-0925-01/coasterville_flat_0.png" />\
-					</li>\
-					<li id="demo" class="screen js_screen">\
+					<li id="controls" class="screen hide">\
 						<img class="video"  src="http://www.pc-games-blog.net/wp-content/uploads/2012/10/League_of_Legends_lan-600x351.jpg" />\
 					</li>\
 				</ul>\
@@ -56,7 +56,7 @@
 			music = display.getAsset('audio', 'start');
 			music.loop = true;
 
-			video = $('#intro').children()[0];
+			video = $('#gameplay').children()[0];
 			video.volume = 0;
 
 			$(video).on('loadedmetadata', start );
@@ -70,9 +70,9 @@
 
 		var duration = {
 
-				intro : ~~( video.duration * 1000 + 0.5),
-				how2play : 4000,
-				demo : 4000
+				story		: 12000,
+				gameplay	: ~~( video.duration * 1000 + 0.5),
+				controls	: 4000
 			},
 
 			$items = $("#screen_wrap li"),
@@ -106,7 +106,7 @@
 			$($buttons[counter]).addClass('button_active');
 			//$buttons[counter].className += " button_active";
 
-			if ( currentId === 'intro' ) video.play();
+			if ( currentId === 'gameplay' ) video.play();
 
 			if ( video.currentTime !== 0 ) {
 
