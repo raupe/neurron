@@ -23,6 +23,11 @@ window.config = {
     deadTime            : 5,
 
 
+    audio				: true,		// option #1
+    audioFading			: 10,		// 10 seconds
+    audioVolume			: 80,		// default value
+
+
 
 	circleOffset		: 100,
 	distanceToUser		: 150,
@@ -107,7 +112,11 @@ window.config = {
 
 			collision	: 'assets/damage/collision-test.wav',
             pink        : 'assets/heal/pink-test.wav',
-            coin        : 'assets/points/coin-test.wav'
+            coin        : 'assets/points/coin-test.wav',
+
+
+            start		: 'assets/heal/pink-test.wav',
+            game		: 'assets/heal/pink-test.wav'
 		}
 	},
 
