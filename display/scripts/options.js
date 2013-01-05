@@ -39,20 +39,18 @@
 
 		config.audio = !config.audio;
 
-		// handle entries
 		var task = config.audio ? 'play' : 'pause',
 
-			tracks = display.tracks,
+			current = display.tracks.current,
+			next = display.tracks.next;
 
-			keys = Object.keys(tracks),
+		if ( next ) next[task]();
 
-			l = keys.length,
+		if ( current ) {
 
-			i; // iterator
+			if ( config.audio && !current.volume ) display.sound( current );
 
-		for ( i = 0; i < l; i++ ) {
-
-			if ( tracks[ keys[i] ] ) tracks[ keys[i] ][task]();
+			current[task]();
 		}
 	};
 

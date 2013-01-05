@@ -14,7 +14,6 @@
     });
 
 
-    display.Element.prototype.assetManager = assetManager;
-    display.Background.prototype.assetManager = assetManager;
+    display.getAsset = assetManager.get;
 
 })();

@@ -19,9 +19,9 @@
 
     Element.prototype.setup = function ( params ) {
 
-        // assetManager     -> via prototype
         // screen           -> via prototype
         // grid             -> via prototype
+        this.getAsset = display.getAsset;
 
         this.color = params.color;
         this.id = params.id;
@@ -51,7 +51,7 @@
 
         this.stepsLeft = this.stepRate;
 
-        this.originSprites = this.assetManager.get('image', this.type );
+        this.originSprites = this.getAsset('image', this.type );
 
         this.spriteImages = this.originSprites;
 
