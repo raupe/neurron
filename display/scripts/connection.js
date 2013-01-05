@@ -25,14 +25,6 @@
 		this.socket.onclose = function( msg ){
 
 			console.log('[close]');
-
-			var req = new XMLHttpRequest();
-
-			req.open( 'POST', config.errorURL, true );
-
-			req.setRequestHeader( 'Content-Type', 'text/plain; charset=UTF-8' );
-
-//			req.send( ': Socket - closed :' );
 		};
 
 
