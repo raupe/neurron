@@ -34,27 +34,25 @@
                     </div>\
                 </div>\
                 <div class="score_item">\
-                    <h2>league of legends</h2>\
+                    <h2>league of legends ( <span id="category"></span> Player )</h2>\
                     <div id="legends" class="legends box">\
                         <table border="0" width="100%" cellpadding="3" cellspacing="0">\
                         </table>\
                     </div>\
                 </div>\
             </div>\
-        </div>\
-		\
-		',
+        </div>';
 
 
-		right = '\
-		\
-		';
+		// right = '\
+		// \
+		// ';
 
 
 		return {
 
-            left    : left,
-            right   : right
+            left    : left
+            // right   : right
         };
 
 	})();
@@ -71,9 +69,6 @@
         }
 
         display.sound( music );
-
-        // $container.removeClass('bg-black');
-        // $body.removeClass('bg-black');
     };
 
 })();

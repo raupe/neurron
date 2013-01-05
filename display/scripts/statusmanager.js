@@ -6,8 +6,6 @@
 
 		this.points = 0;
 		this.createPanel();
-
-		display.Debug.prototype.statusManager = this;
 	};
 
 
@@ -65,7 +63,7 @@
 		ctx.font = '' + size + 'em Comic Sans MS'; // 'italic ' + size + 'pt Comic Sans MS';
 
 		// firefly symbol instead 'points' or $ ?
-		ctx.fillText( ( display.teamname || 'Total' ) + ': ' + this.points + ' $', this.offset/6, 50 ); //' points'
+		ctx.fillText( ( display.teamname || 'Total' ) + ': ' + this.points + ' $', this.offset/6, 50 );
 	};
 
 
@@ -82,7 +80,7 @@
 
 			// energyBars
             ctx.fillStyle = this.gradients[i];
-            ctx.fillRect( 0, this.startY + (i+1)*this.distance, this.fullBarWidth * ( (currentPlayer.energy - currentPlayer.diffEnergy) / 100), this.fullBarHeight );
+            ctx.fillRect( 0, this.startY + (i+1)*this.distance, this.fullBarWidth * ( (currentPlayer.energy - currentPlayer.diffEnergy) / 100) + 2, this.fullBarHeight );
 
             if ( currentPlayer.diffEnergy === 0 ) currentPlayer.animationStep = this.originStep; // default
 			if ( currentPlayer.diffEnergy > 0 ) currentPlayer.diffEnergy -= currentPlayer.animationStep;
@@ -302,7 +300,7 @@
 	};
 
 
-	StatusManager.prototype.showEnd = function( points, share, competition ) {
+	StatusManager.prototype.showEnd = function ( points, share, competition ) {
 
 		// highscore
 		document.getElementById('score_value').children[0].textContent = points; // <h1>
@@ -328,7 +326,10 @@
 									}', rules + i );
 		}
 
+
 		// legends
+		document.getElementById('category').textContent = length;
+
 		var legends = document.getElementById('legends').children[0], // <table>
 
 			ranking = '<tbody>';
