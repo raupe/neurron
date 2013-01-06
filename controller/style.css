@@ -75,9 +75,12 @@ canvas {
 
 .teamname {
 
-	min-width: 200px;
+	margin-left: -50px;
 
 	padding: 10px;
+
+	min-width: 200px;
+
 
 	border: 2px solid black;
 	border-radius: 10px;
@@ -96,17 +99,23 @@ canvas {
 
 	min-width: 200px;
 
+	font-size: 1.5em;
+
 	display: block;
-	background-color: #FCF3D9;
+	background-color: rgb(221, 255, 227);
 
 	margin: 2% auto;
 	border: 0;
+
 	border-bottom: 1px dashed #000;
+
+	border-top-left-radius:  10px;
+	border-top-right-radius: 10px;
 }
 
 .half {
 
-	width: 35%;
+	width: 25%;
 	padding: 3%;
 	margin: 5% auto;
 }
@@ -117,7 +126,6 @@ canvas {
 
 .warning {
 
-	/*padding: 10%;*/
 	font-size: 2em;
 	font-weight: bold;
 	text-align: center;
