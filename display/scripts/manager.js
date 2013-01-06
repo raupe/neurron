@@ -195,6 +195,8 @@
 
 		display.show( 'start' );
 
+		display.load_view.clearLoadScene();
+
 		console.log('[game canceled]');
 	};
 
