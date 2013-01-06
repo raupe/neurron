@@ -2,7 +2,8 @@
 
 	controller.Box = (function Box(){
 
-		var content = document.getElementById('content'),
+		var box = document.getElementById('box'),
+			content = document.getElementById('content'),
 			figure = document.getElementById('figure'),
 
 			templates = { // Templates
@@ -12,7 +13,8 @@
 				enterName: '\
 				<div class="teamname">\
 					<div class="info">Enter your Team-Name:</div>\
-					<input id="input" type="name" class="input" autofocus />\
+					<input id="input" type="name" class="input" />\
+					<span id="carret" class="carret">|</span>\
 					<br>\
 					<div id="skip" class="button half left">Skip</div>\
 					<div id="okay" class="button half right">Okay</div>\
@@ -39,7 +41,10 @@
 
 				okay: function(){
 
-					manage( config.commands.NAME, document.getElementById('input').value );
+					var name =  document.getElementById('input').value
+																.replace(/\n+/g,'')
+																.replace(/\t+/g,'');
+					manage( config.commands.NAME, name );
 					hide();
 				}
 			},
@@ -48,7 +53,7 @@
 
 		// -------- trigger ---------- //
 
-		document.getElementById('box').addEventListener('touchend', function ( e ) {
+		box.addEventListener('touchend', function ( e ) {
 
 			var trg = e.target;
 
@@ -59,11 +64,27 @@
 		// --------- public ---------//
 
 		var init = function ( handle ) { manage = handle; },
-			start = function(){	content.innerHTML = templates.start; },
-			name = function(){ content.innerHTML = templates.enterName; },
+
+			start = function(){
+
+				box.className = 'box';
+				content.innerHTML = templates.start;
+			},
+
+			name = function(){
+
+				content.innerHTML = templates.enterName;
+
+				var carret = document.getElementById('carret'),
+					input = document.getElementById('input');
+
+				carret.style.left = input.offsetLeft - 2 + 'px';
+				carret.style.top = input.offsetTop + 'px';
+			},
 
 			hide = function ( id ) {
 
+				box.className = 'hide';
 				content.innerHTML = '';
 
 				figure.innerHTML = '';

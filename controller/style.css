@@ -36,6 +36,8 @@ canvas {
 
 .content {
 
+	position: relative;
+
 	width: 80%;
 	margin: 0 auto;
 }
@@ -59,7 +61,7 @@ canvas {
 		-moz-border-radius: 30px;
 			 border-radius: 30px;
 
-	min-width: 100px; /* redundant ? */
+	min-width: 100px;
 }
 
 .large {
@@ -97,25 +99,64 @@ canvas {
 
 .input {
 
+	display: block;
+
 	min-width: 200px;
 
 	font-size: 1.5em;
-
-	display: block;
-	background-color: rgb(221, 255, 227);
-
-	margin: 2% auto;
 	border: 0;
 
-	border-bottom: 1px dashed #000;
+	margin: 2% auto;
 
-	border-top-left-radius:  10px;
-	border-top-right-radius: 10px;
+	border-bottom: 1px dashed #000;
 }
+
+
+.carret {
+
+	position: absolute;
+	font-size: 1.5em;
+
+    /* property shorthand */
+    -webkit-animation: carret 2s ease-in-out 0s infinite normal none;
+    -moz-animation: carret 2s ease-in-out 0s infinite normal none;
+    -ms-animation: carret 2s ease-in-out 0s infinite normal none;
+    animation: carret 2s ease-in-out 0s infinite normal none;
+}
+
+/* keyframes */
+@-webkit-keyframes carret {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+@-moz-keyframes carret {
+	0% { opacity: 1; }
+	50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+@-ms-keyframes carret {
+	0% { opacity: 1; }
+	50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+@keyframes carret {
+	0% { opacity: 1; }
+	50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+
+
+
+
+
+
+
 
 .half {
 
-	width: 25%;
+	width: 10%;
 	padding: 3%;
 	margin: 5% auto;
 }
@@ -129,7 +170,7 @@ canvas {
 	font-size: 2em;
 	font-weight: bold;
 	text-align: center;
-	color: red;
+	/*color: ;*/
 }
 
 
