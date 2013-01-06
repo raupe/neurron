@@ -1,6 +1,6 @@
 body {
 
-	font-size: 2rem;
+	font-size: 1em;
 }
 
 canvas {
@@ -55,25 +55,25 @@ canvas {
 
 	border: 1px solid #000;
 
-	 -webkit-border-radius: 20px;
-		-moz-border-radius: 20px;
-			 border-radius: 20px;
+	 -webkit-border-radius: 30px;
+		-moz-border-radius: 30px;
+			 border-radius: 30px;
+
+	width: 25%; /* redundant ? */
 }
 
 .large {
 
-	width: 50%;
+	width: 25%;
 	margin: 0 auto;
 
-	font-size: 5rem;
+	font-size: 2em;
 	text-align: center;
 }
 
 
 
 .teamname {
-
-	/*height: 100%;*/
 
 	padding: 10px;
 
@@ -87,7 +87,7 @@ canvas {
 .info {
 
 	margin: 5%;
-	font-size: 2rem;
+	font-size: 1.5em;
 }
 
 .input {
@@ -112,8 +112,8 @@ canvas {
 
 .warning {
 
-	padding: 10%;
-	font-size: 3rem;
+	/*padding: 10%;*/
+	font-size: 2em;
 	font-weight: bold;
 	text-align: center;
 	color: red;
@@ -126,18 +126,18 @@ canvas {
 	position: absolute;
 	z-index: 100;
 
-	left: 45%;
+	left: 30%;
 	bottom: -10%;
 }
 
 
 .moveTop {
 
-	-webkit-transition: all 10s ease-in-out;
-	   -moz-transition: all 10s ease-in-out;
-	    -ms-transition: all 10s ease-in-out;
-	     -o-transition: all 10s ease-in-out;
-		    transition: all 10s ease-in-out;
+	-webkit-transition: all 15s ease-in-out;
+	   -moz-transition: all 15s ease-in-out;
+	    -ms-transition: all 15s ease-in-out;
+	     -o-transition: all 15s ease-in-out;
+		    transition: all 15s ease-in-out;
 
 	bottom: 200%;
 }
