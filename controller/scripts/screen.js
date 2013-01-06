@@ -1,64 +1,48 @@
 (function(){
 
-	var Screen = controller.Screen = function() {
+	controller.Screen = (function(){
 
-		this.createCanvas();
+		var cvs = document.createElement('canvas'),
+			ctx = cvs.getContext('2d'),
+			input;
 
-		controller.Input.prototype.screen = this;
-	};
+		function init ( param ) {
 
-
-	Screen.prototype.createCanvas = function(){
-
-		var canvas = document.createElement('canvas');
-
-		this.ctx = canvas.getContext('2d');
-		this.cvs = canvas;
-
-		this.scale();
-
-		document.body.appendChild( this.cvs );
-
-		window.addEventListener('resize', this.scale.bind( this ) );
-		window.addEventListener('orientationchange', this.scale.bind( this ) );
-	};
-
-
-	Screen.prototype.scale = function() {
-
-		this.cvs.width = window.innerWidth;
-		this.cvs.height = window.innerHeight;
-
-        if ( this.input ) this.input.setStyle();
-	};
-
-
-	Screen.prototype.setBackground = function ( colorId ) {
-
-		var cvs = this.cvs;
-
-		if ( !colorId ) { // before request
-
-			cvs.style['background'] = '#000';
-
-		} else { // after
-
-
+			input = param;
 		}
 
-	};
+		function scale() {
+
+			cvs.width = window.innerWidth;
+			cvs.height = window.innerHeight;
+			if ( input ) input.setStyle();
+		}
+
+		function clear (){
+
+			ctx.save();
+			ctx.clearRect( 0 , 0 , cvs.width, cvs.height );
+			ctx.restore();
+		}
 
 
-	Screen.prototype.clear = function(){
+		scale();
 
-		var ctx = this.ctx;
+		document.body.appendChild( cvs );
 
-		ctx.save();
+		window.addEventListener('resize', scale );
+		window.addEventListener('orientationchange', scale );
 
-		ctx.clearRect( 0 , 0 , ctx.canvas.width, ctx.canvas.height );
+		return {
 
-		ctx.restore();
-	};
+			init	: init,
+			cvs		: cvs,
+			ctx		: ctx,
+			clear	: clear
+		};
+
+	})();
+
 
 })();
 
