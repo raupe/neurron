@@ -15,8 +15,9 @@
 
 		this.req = new XMLHttpRequest();
 
-		controller.Box.prototype.manager = this;
-		this.box = new controller.Box();
+
+		this.box = controller.Box;
+		this.box.init( this.handle.bind(this) );
 
 		// input reference
 		controller.Input.prototype.manager = this;
@@ -28,18 +29,18 @@
 	 * @param  {[type]} category [description]
 	 * @return {[type]}          [description]
 	 */
-	Manager.prototype.showBox = function ( category ) {
+	Manager.prototype.showBox = function ( type ) {
 
 		if ( this.repeat ) clearInterval( this.repeat );
 
-		if ( category !== 1 ) {
-
-			this.box.label( category );
-
-		} else { // handling on end
+		if ( type === 1 ) {
 
 			this.id = 0;
 			this.box.start();
+
+		} else { // handling on error
+
+			this.box.warn( type );
 		}
 
 	};
@@ -49,7 +50,7 @@
 	 * [init description]
 	 * @return {[type]} [description]
 	 */
-	Manager.prototype.init = function(){
+	Manager.prototype.startTimer = function(){
 
 		this.repeat = setInterval(function(){
 
@@ -76,15 +77,27 @@
 
 		var commands = {
 
-			// 1   : this.teamname,
 			1   : this.register,
-			2   : this.move,
-			3   : this.heal
+			2	: this.name,
+			3   : this.move,
+			4   : this.heal
 		};
 
-		// console.log(action, options);
+		// console.log(action, commands);
 
 		commands[ action ].call( this, options );
+	};
+
+
+	/**
+	 * [name description]
+	 * @param  {String} teamname
+	 */
+	Manager.prototype.name = function ( name ) { // name
+
+		this.input.enable();
+
+		this.send( config.protocolCtoS.TEAMNAME, name );
 	};
 
 
@@ -92,13 +105,11 @@
 	 * [register description]
 	 * @return {[type]} [description]
 	 */
-	Manager.prototype.register = function( name ) {
+	Manager.prototype.register = function() {
 
 		if ( this.id ) return;
 
-		this.input.enable();
-
-		this.init();
+		this.startTimer();
 
 
 		/* serve response  */
@@ -132,21 +143,21 @@
 
 				this.input.setStyle();
 
-				var lead = data.charCodeAt(3);
+				var name = data.charCodeAt(3);
 
-				if ( lead === 0 ) this.box.goCountdown();
-				else this.box.askTeamname();
+				if ( name === 0 ) this.box.hide( this.id );
+				else this.box.name();
 			}
 
 		}.bind(this);
 
-		this.send( config.protocolCtoS.REGISTER, name );
+		this.send( config.protocolCtoS.REGISTER );
 	};
 
 
 	/**
 	 * [move description]
-	 * @param  {[type]} params [description]
+	 * @param  {object} params [description]
 	 * @return {[type]}        [description]
 	 */
 	Manager.prototype.move = function ( params ) {
@@ -177,7 +188,7 @@
 
 		this.req.open( 'POST', this.url + '?t=' + Date.now(), true );
 
-		console.log('action: ', action, '- option: ', option);
+		// console.log('action: ', action, '- option: ', option || '/' );
 
 		// encode into base64, avoiding special characters like '0' // nur null nicht
 		var data = String.fromCharCode( this.channel, this.id, action ) + ( option || '' );

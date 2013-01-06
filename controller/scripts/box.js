@@ -1,281 +1,107 @@
 (function(){
 
-	/**
-	 * [Box description]
-	 */
-	var Box = controller.Box = function() {
+	controller.Box = (function Box(){
 
-		this.visible = {
+		var content = document.getElementById('content'),
+			figure = document.getElementById('figure'),
 
-			box:    false,
-			top:    false,
-			center: false,
-			bottom: false
-		};
+			templates = { // Templates
 
-		this.listen();
+				start: '<div id="start" class="button large">Start</div>',
 
-		this.start();
-	};
+				enterName: '\
+				<div class="teamname">\
+					<div class="info">Enter your Team-Name:</div>\
+					<input id="input" type="name" class="input" autofocus />\
+					<br>\
+					<div id="skip" class="button half left">Skip</div>\
+					<div id="okay" class="button half right">Okay</div>\
+				</div>',
 
+				notFound: '<div class="warning teamname">The Game does not exist !</div>',
 
-	/**
-	 * [unset description]
-	 * @return {[type]} [description]
-	 */
-	Box.prototype.unsetAll = function(){
-
-		this.hide( 'box' );
-		this.hide( 'top' );
-		this.hide( 'center' );
-		this.hide( 'bottom' );
-	};
+				alreadyRunning: '<div class="warning teamname">The Game is already running !</div>'
+			},
 
 
-	/**
-	 * [show description]
-	 * @return {[type]} [description]
-	 */
-	Box.prototype.show = function ( id ) {
+			buttons = {
 
-		removeClass( document.getElementById( id ), 'hide' );
+				start: function(){
 
-		this.visible[ id ] = true;
-	};
+					manage( config.commands.REGISTER );
+				},
 
+				skip: function(){
 
-	/**
-	 * [hide description]
-	 * @return {[type]} [description]
-	 */
-	Box.prototype.hide = function ( id ) {
+					manage( config.commands.NAME, '' );
+					hide();
+				},
 
-		// document.getElementById( id ).className += ' hide';
-		addClass( document.getElementById( id ), 'hide' );
+				okay: function(){
 
-		this.visible[ id ] = false;
-	};
+					manage( config.commands.NAME, document.getElementById('input').value );
+					hide();
+				}
+			},
 
+			manage;
 
-
-
-	/**
-	 * [set description]
-	 * @param {[type]} id       [description]
-	 * @param {[type]} category [description]
-	 */
-	Box.prototype.set = function ( id, category ) {
-
-		var element = document.getElementById( id );
-
-		if ( !this.visible.box ) this.show('box');
-		if ( !this.visible[ id ] ) this.show( id );
-
-		this.changeBehaviour( element, category[0], category[2] );
-
-		element.textContent = category[1];
-		// element.children[0].textContent = category[1];
-	};
-
-
-	/**
-	 * [setAttributes description]
-	 * @param {[type]} element [description]
-	 * @param {[type]} type    [description]
-	 */
-	Box.prototype.changeBehaviour = function ( element, type, fn ) {
-
-		// ToDo: add styling classes
-
-		// if ( type === 'label' ) {}
-
-		if ( type === 'button' ) {
-
-			element.setAttribute( 'data-fn', fn );
-		}
-
-		if ( type === 'form' ) {
-
-			var form = document.getElementById('form');
-
-			if ( !form ) {
-
-				form = document.createElement('div');
-
-				form.innerHTML = '\
-				<input id="input" type="name" class="input">\
-				<br>\
-				<div>\
-					<button id="confirm" data-fn="confirm">Confirm</button>\
-					<button id="cancel" data-fn="cancel">Cancel</button>\
-				</div>\
-				';
-				form.className = 'form';
-				form.id = 'form';
-
-				setTimeout(function(){ // needs time to parse-create the innerHTML
-
-					element.appendChild( form );
-
-					document.getElementById('input').addEventListener('keyup', function ( e ) {
-
-						if ( e.which === 13) this.confirm();
-
-					}.bind(this) );
-
-				}.bind(this), 16.7);
-
-			} else {
-
-				this.show( 'form' );
-			}
-
-		}
-	};
-
-
-	/**
-	 * [listen description]
-	 * @param  {[type]}   element [description]
-	 * @param  {Function} fn      [description]
-	 * @return {[type]}           [description]
-	 */
-	Box.prototype.listen = function() {
+		// -------- trigger ---------- //
 
 		document.getElementById('box').addEventListener('touchend', function ( e ) {
 
 			var trg = e.target;
 
-			if ( trg.hasAttribute( 'data-fn' ) ) {
-
-				this[ trg.getAttribute('data-fn') ]();
-			}
-
-		}.bind(this));
-	};
+			if ( trg.id && buttons[trg.id] ) buttons[trg.id]();
+		});
 
 
-	/**
-	 * [confirm description]
-	 * @return {[type]} [description]
-	 */
-	Box.prototype.confirm = function(){ // teamname
+		// --------- public ---------//
 
-		var value = document.getElementById('input').value;
+		var init = function ( handle ) { manage = handle; },
+			start = function(){	content.innerHTML = templates.start; },
+			name = function(){ content.innerHTML = templates.enterName; },
 
-		if ( value ) {
+			hide = function ( id ) {
 
-			this.unsetAll();
+				content.innerHTML = '';
 
-			this.input.enable();
+				figure.innerHTML = '';
+				figure.className = 'figure';
 
-			this.manager.send( config.protocolCtoS.TEAMNAME, value );
-		}
+				var img = new Image();
 
-	};
+				img.onload = function(){
 
+					figure.appendChild( img );
 
-	Box.prototype.label = function ( category ) {
+					figure.className += ' moveTop';
+				};
 
-		this.unsetAll();
+				img.src = 'figures/neurron_' + ( id || 1 ) + '.png';
+			},
 
-		if ( !this.input.disabled ) this.input.disable();
+			warn = function ( type ) {
 
-		this.show( 'box' );
+				var msg;
 
-		this.set( 'center', config.boxes[ category ] );
-	};
+				if ( type === 2 ) msg = templates.alreadyRunning;
+				if ( type === 3 ) msg = templates.notFound;
 
+				content.innerHTML = msg;
+			};
 
+		start();
 
-	/**
-	 * [cancel description]
-	 * @return {[type]} [description]
-	 */
-	Box.prototype.cancel = function(){
+		return {
 
-		this.manager.send( config.protocolCtoS.CANCEL );
+			init	: init,
+			start	: start,
+			name	: name,
+			hide	: hide,
+			warn	: warn
+		};
 
-		this.start();
-	};
-
-
-
-	/**
-	 * [start description]
-	 * @return {[type]} [description]
-	 */
-	Box.prototype.start = function(){ // original
-
-		this.unsetAll();
-
-		if ( !this.input.disabled ) this.input.disable();
-
-		this.show( 'box' );
-
-		this.set( 'top', config.boxes[ 4 ] );       // teamname
-		this.set( 'bottom', config.boxes[ 5 ] );    // without
-	};
-
-
-
-
-	/**
-	 * [requestLead description]
-	 * @return {[type]} [description]
-	 */
-	Box.prototype.requestLead = function(){
-
-		this.unsetAll();
-
-		this.manager.handle( config.commands.REGISTER, 1 );
-	};
-
-
-	// will be shown on success message from server -> else handled as normal 'without'
-	/**
-	 * [askTeamname description]
-	 * @return {[type]} [description]
-	 */
-	Box.prototype.askTeamname = function(){
-
-		this.unsetAll();
-
-		this.show( 'box' );
-
-		this.set( 'top', config.boxes[ 6 ] );    // label
-		this.set( 'bottom', config.boxes[ 7 ] ); // form
-	};
-
-
-	/**
-	 * [goCountdown description]
-	 * @return {[type]} [description]
-	 */
-	Box.prototype.goCountdown = function(){
-
-		this.unsetAll();
-
-		this.manager.handle( config.commands.REGISTER );
-	};
-
-
-
-	function hasClass(ele,cls) {
-
-		return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
-	}
-
-	function addClass(ele,cls) {
-
-		if (!hasClass(ele,cls)) ele.className += " "+cls;
-	}
-
-	function removeClass(ele,cls) {
-		// if (hasClass(ele,cls)) {
-		var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
-		ele.className=ele.className.replace(reg,' ');
-		// }
-	}
+	})();
 
 })();

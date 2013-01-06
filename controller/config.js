@@ -7,27 +7,14 @@ var config = {
 	server			: 'game.neurron.com',
 	port			: '2020',
 
-	boxes: {
-
-		// 1			: [ 'button'  , 'Start a new game' ],
-		2			: [ 'label'		, 'The game is already running !'					],
-		3			: [ 'label'		, 'Game not found !'								],
-
-		4			: [ 'button'	, 'Enter a teamname'				, 'requestLead' ],
-		5			: [ 'button'	, 'Without a name'					, 'goCountdown'	],
-
-		6			: [ 'label'		, 'How should your team be called ?'				],
-		7			: [ 'form'		, ''								, 'goCountdown'	]
-	},
 	pollingTimer    : 5,
-
 
 	commands:	{
 
-		// TEAMNAME    : 1,
 		REGISTER	: 1,
-		MOVE		: 2,
-		HEAL		: 3
+		NAME		: 2,
+		MOVE		: 3,
+		HEAL		: 4
 	},
 
 
@@ -42,7 +29,9 @@ var config = {
 
 		REGISTER        : 1,
 		TEAMNAME        : 2,
+
 		CANCEL			: 3,
+
 		RIGHT           : 4,
 		LEFT            : 5,
 		TOP             : 6,
@@ -79,3 +68,13 @@ var config = {
         8:  { r: 177,   g:   0,  b: 101 }  // pink
     }
 };
+
+
+
+		// 4			: [ 'button'	, 'Start', 'requestLead' ],
+		// 5			: [ 'button'	, 'Skip', 'goCountdown'	],
+
+		// 6			: [ 'label'		, 'How should your team be called ?'				],
+		// 7			: [ 'form'		, ''								, 'goCountdown'	]
+
+		// 1			: [ 'form'],

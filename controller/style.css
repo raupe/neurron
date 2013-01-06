@@ -1,179 +1,143 @@
+body {
+
+	font-size: 2rem;
+}
+
 canvas {
 
-    display: block;
-    margin: 0 auto;
+	display: block;
+	margin: 0 auto;
 
-    background-size: 100% auto;
-
-
-     -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-         -ms-transform: translate3d(0,0,0);
-          -o-transform: translate3d(0,0,0);
-             transform: translate3d(0,0,0);
-
-     -webkit-transform-style: preserve-3d;
-        -moz-transform-style: preserve-3d;
-         -ms-transform-style: preserve-3d;
-          -o-transform-style: preserve-3d;
-             transform-style: preserve-3d;
+	background-color: #333;
 }
 
 
-.button {
-    -moz-box-shadow:inset 0 1px 0 0 #a4e271;
-    -webkit-box-shadow:inset 0 1px 0 0 #a4e271;
-    box-shadow:inset 0 1px 0 0 #a4e271;
-    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #89c403), color-stop(1, #77a809) );
-    background:-moz-linear-gradient( center top, #89c403 5%, #77a809 100% );
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#89c403', endColorstr='#77a809');
-    background-color:#89c403;
-    -webkit-border-radius:12px;
-    -moz-border-radius:12px;
-    border-radius:12px;
-    border: 1px solid #74b807;
-    position: absolute;
-    width: 50%;
-    height: 50%;
-    min-width: 200px;
-    min-height: 100px;
-    top: 25%;
-    left: 25%;
+.hide {
+
+	display: none;
 }
 
+.show {
 
+	display: block;
+}
 
 
 .box {
 
-   /* -moz-box-shadow:inset 0 1px 0 0 #f29c93;
-    -webkit-box-shadow:inset 0 1px 0 0 #f29c93;
-    box-shadow:inset 0 1px 0 0 #f29c93;
-    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fe1a00), color-stop(1, #ce0100) );
-    background:-moz-linear-gradient( center top, #fe1a00 5%, #ce0100 100% );
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fe1a00', endColorstr='#ce0100');*/
-    background-color:#333;
-    color: #eee;
-    -moz-border-radius:12px;
-    -webkit-border-radius:12px;
-    border-radius:12px;
-    border:1px solid #4B4D48;
-    position: absolute;
-    width: 50%;
-    height: 50%;
-    min-width: 200px;
-    min-height: 100px;
-    top: 25%;
-    left: 25%;
+	position: absolute;
+	width: 50%;
+
+	top: 25%;
+	left: 25%;
+
+	z-index: 1;
 }
 
-.z {
+.content {
 
-    z-index: 1;
+	width: 80%;
+	margin: 0 auto;
 }
 
-.fields {
-/*
-    background-color: blue;
-    margin: 0 auto;
-    width: 200px;
-    height: 100px;*/
+
+.button {
+
+	text-align: center;
+
+	background: #b443c6; /* Old browsers */
+	background: -moz-linear-gradient(top,  #b443c6 0%, #6e106f 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b443c6), color-stop(100%,#6e106f)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #b443c6 0%,#6e106f 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #b443c6 0%,#6e106f 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #b443c6 0%,#6e106f 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #b443c6 0%,#6e106f 100%); /* W3C */
+
+	border: 1px solid #000;
+
+	 -webkit-border-radius: 20px;
+		-moz-border-radius: 20px;
+			 border-radius: 20px;
 }
 
+.large {
+
+	width: 50%;
+	margin: 0 auto;
+
+	font-size: 5rem;
+	text-align: center;
+}
+
+
+
+.teamname {
+
+	/*height: 100%;*/
+
+	padding: 10px;
+
+	border: 2px solid black;
+	border-radius: 10px;
+
+	background-color: #fff;
+}
+
+
+.info {
+
+	margin: 5%;
+	font-size: 2rem;
+}
+
+.input {
+
+	display: block;
+
+	margin: 2% auto;
+	border: 0;
+	border-bottom: 1px dashed #000;
+}
 
 .half {
 
-    margin: 40px auto;
-    width: 200px;
-    position: relative;
-}
-
-.top {
-/*
-    border-top-left-radius: 9999px;
-    border-top-right-radius: 9999px;*/
-}
-
-.center {
-/*
-
-    width: 200px;
-    vertical-align: middle;
-    margin-top: 60px;*/
-}
-
-.bottom {
-/*
-    border-bottom-left-radius: 9999px;
-    border-bottom-right-radius: 9999px;*/
+	width: 35%;
+	padding: 3%;
+	margin: 5% auto;
 }
 
 
-.text {
-/*
-    text-align: center;
-    margin: 0 auto;
-    width: 200px;
-    position: relative;
-    padding-top: 40px;
-    color: #eee;*/
+.left { float: left; }
+.right { float: right; }
+
+.warning {
+
+	padding: 10%;
+	font-size: 3rem;
+	font-weight: bold;
+	text-align: center;
+	color: red;
 }
 
 
 
+.figure {
 
-.button:hover {
+	position: absolute;
+	z-index: 100;
 
-     background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #77a809), color-stop(1, #89c403) );
-     background:-moz-linear-gradient( center top, #77a809 5%, #89c403 100% );
-     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77a809', endColorstr='#89c403');
-     background-color:#77a809;
- }
-
- .label{
-     -moz-box-shadow:inset 0px 1px 0px 0px #f29c93;
-     -webkit-box-shadow:inset 0px 1px 0px 0px #f29c93;
-     box-shadow:inset 0px 1px 0px 0px #f29c93;
-     background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fe1a00), color-stop(1, #ce0100) );
-     background:-moz-linear-gradient( center top, #fe1a00 5%, #ce0100 100% );
-     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fe1a00', endColorstr='#ce0100');
-     background-color:#fe1a00;
-     -moz-border-radius:12px;
-     -webkit-border-radius:12px;
-     border-radius:12px;
-     border:1px solid #4B4D48;
-     position: absolute;
-     width: 50%;
-     height: 50%;
-     min-width: 200px;
-     min-height: 100px;
-     top: 25%;
-     left: 25%;
- }
-
- #text{
-     color:#ffffff;
-     font-family:arial;
-     font-size:4.5vw;
-     font-weight:bold;
-     text-decoration:none;
-     text-shadow:1px 1px 0px #515251;
-     text-align: center;
-     vertical-align: middle;
-     position: absolute;
-     width: 100%;
-     vertical-align: center;
-     top: 40%;
- }
-
- .hide {
-
-    display: none;
- }
-
- .show {
-
-    display: block;
- }
+	left: 45%;
+	bottom: -10%;
+}
 
 
+.moveTop {
+
+	-webkit-transition: all 10s ease-in-out;
+	   -moz-transition: all 10s ease-in-out;
+	    -ms-transition: all 10s ease-in-out;
+	     -o-transition: all 10s ease-in-out;
+		    transition: all 10s ease-in-out;
+
+	bottom: 200%;
+}
