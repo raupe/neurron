@@ -59,7 +59,7 @@ canvas {
 		-moz-border-radius: 30px;
 			 border-radius: 30px;
 
-	width: 25%; /* redundant ? */
+	min-width: 100px; /* redundant ? */
 }
 
 .large {
@@ -74,6 +74,8 @@ canvas {
 
 
 .teamname {
+
+	min-width: 200px;
 
 	padding: 10px;
 
@@ -92,7 +94,10 @@ canvas {
 
 .input {
 
+	min-width: 200px;
+
 	display: block;
+	background-color: #FCF3D9;
 
 	margin: 2% auto;
 	border: 0;
