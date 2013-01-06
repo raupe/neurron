@@ -114,11 +114,11 @@
 
 		if ( direction === config.protocolCtoS.CLOCKWISE ) {
 
-			console.log("uhrzeiger");
+			// console.log("uhrzeiger");
 
 		} else {
 
-			console.log("gegen uhrzeiger");
+			// console.log("gegen uhrzeiger");
 		}
 
 		manager.send( direction );

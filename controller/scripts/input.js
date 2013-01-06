@@ -5,6 +5,8 @@
 	 */
 	var Input = controller.Input = function() {
 
+		this.screen = controller.Screen;
+
 		this.cvs = this.screen.cvs;
 		this.ctx = this.screen.ctx,
 
@@ -22,8 +24,9 @@
 
 		this.init();
 
-		controller.Box.prototype.input = this;
-		controller.Screen.prototype.input = this;
+
+		controller.Screen.init( this );
+
 		controller.Manager.prototype.input = this;
 	};
 
@@ -81,13 +84,9 @@
 		var cvs = this.cvs;
 
 		cvs.addEventListener('touchstart', this.start.bind(this) );
-
 		cvs.addEventListener('touchmove', this.move.bind(this) );
-
 		cvs.addEventListener('touchend', this.end.bind(this) );
-
 		cvs.addEventListener('touchcancel', this.cancel.bind(this) );
-
 		cvs.addEventListener('touchleave', this.leave.bind(this) );
 	};
 
@@ -95,10 +94,7 @@
 	// Style settings
 	Input.prototype.setStyle = function(){
 
-		this.screen.setBackground( this.color );
-
 		var ctx = this.ctx,
-
 			color = config.playerColors[ this.color ];
 
 		ctx.lineWidth = 10;
@@ -151,11 +147,9 @@
 
 		this.last = touch;
 
-
 		this.averageX += touch.x;
 		this.averageY += touch.y;
 		this.counter++;
-
 
 		ctx.stroke();
 	};
@@ -179,9 +173,7 @@
 			return;
 		}
 
-
 		this.tapped = false;
-
 
 		this.averageX = this.averageX / this.counter;
 		this.averageY = this.averageY / this.counter;
