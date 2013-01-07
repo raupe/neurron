@@ -23,9 +23,9 @@ window.config = {
     deadTime            : 5,
 
 
-    audio				: false,	// option #1
+    audio				: true,		// option #1
     audioFading			: 10,		// 10 seconds
-    audioVolume			: 80,		// default value
+    audioVolume			: 30,		// default value
 
 
 	circleOffset		: 100,
@@ -91,9 +91,10 @@ window.config = {
 
 		audio: {
 
-			collision	: 'assets/damage/collision-test.wav',
-            pink        : 'assets/heal/pink-test.wav',
-            coin        : 'assets/points/coin-test.wav',
+			damage		: 'assets/damage/damage.wav',
+			heal		: 'assets/heal/heal.wav',
+			points		: 'assets/points/points.wav',
+			revive		: 'assets/player/revive.wav',
 
             start		: 'assets/views/start/start.mp3',
             game		: 'assets/views/game/game.ogg'
@@ -132,8 +133,8 @@ window.config = {
 			size			: 100,
 			velocity		: 1,
 			value			:  10,
-			collisionImg	: 'collision',
-			collisionSound	: 'collision'
+			collisionImg	: 'pink',
+			collisionSound	: 'damage'
 		},
 
 		2: {
@@ -142,7 +143,7 @@ window.config = {
 			velocity		: 1,
 			value			:  10,
 			collisionImg	: 'pink',
-			collisionSound	: 'pink'
+			collisionSound	: 'heal'
 		},
 
 		3: {
@@ -150,8 +151,8 @@ window.config = {
 			size			: 100,
 			velocity		: 1,
 			value			: 100,
-			collisionImg	: 'coin',
-			collisionSound	: 'coin'
+			collisionImg	: 'pink',
+			collisionSound	: 'points'
 		},
 
 		4: {
@@ -159,8 +160,8 @@ window.config = {
 			size			: 100,
 			velocity		: 1,
 			value			: 50,
-			collisionImg	: 'coin',
-			collisionSound	: 'coin'
+			collisionImg	: 'pink',
+			collisionSound	: 'points'
 		}
 
 	},
