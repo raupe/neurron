@@ -25,6 +25,7 @@
 
 		this.deadSprites = this.getAsset('image', 'player_dead' );
 		this.transSprite = this.getAsset('image', 'player_trans' );
+		this.reviveSound = this.getAsset('audio', 'revive' );
 	};
 
 	Player.prototype = Object.create( display.Element.prototype );
@@ -96,6 +97,8 @@
 
 		this.spriteImages = this.originSprites;
 		this.spriteCounter = 0;
+
+		this.reviveSound.play();
 
 		this.alive = true;
 		this.energy = 100;
