@@ -23,10 +23,9 @@ window.config = {
     deadTime            : 5,
 
 
-    audio				: true,		// option #1
+    audio				: false,	// option #1
     audioFading			: 10,		// 10 seconds
     audioVolume			: 80,		// default value
-
 
 
 	circleOffset		: 100,
@@ -42,54 +41,36 @@ window.config = {
     },
 
 
-    // colors for lifeBars
-    colorLimits: {
-
-        red				: 20,
-        orange			: 60
-    },
+	playerSize			: 80,
 
 
-	elements: {
 
-		size			: 80
-	},
 
 	assets: {
 
 		image: {
 
             // player
-			player_1	: { src:	'assets/player/ron_red_80.png',    width: '80' },	// red
-            player_2    : { src:	'assets/player/ron_blue_80.png',   width: '80' },	// blue
-            player_3    : { src:	'assets/player/ron_green_80.png',  width: '80' },	// green
-            player_4    : { src:	'assets/player/ron_yellow_80.png', width: '80' },	// yellow
-            player_5    : { src:	'assets/player/ron_lila_80.png',   width: '80' },	// lila
-            player_6    : { src:	'assets/player/ron_orange_80.png', width: '80' },	// orange
-            player_7    : { src:	'assets/player/ron_turq_80.png',   width: '80' },	// turq
-            player_8    : { src:	'assets/player/ron_pink_80.png',   width: '80' },	// pink
-            player_dead : { src:	'assets/player/ron_grey_80.png',   width: '80' },	// grey
-            player_trans:			'assets/player/trans.gif',							// trans
+			player_1	: { src:	'assets/player/ron_red_80.png',    width: 80 },	// red
+            player_2    : { src:	'assets/player/ron_blue_80.png',   width: 80 },	// blue
+            player_3    : { src:	'assets/player/ron_green_80.png',  width: 80 },	// green
+            player_4    : { src:	'assets/player/ron_yellow_80.png', width: 80 },	// yellow
+            player_5    : { src:	'assets/player/ron_lila_80.png',   width: 80 },	// lila
+            player_6    : { src:	'assets/player/ron_orange_80.png', width: 80 },	// orange
+            player_7    : { src:	'assets/player/ron_turq_80.png',   width: 80 },	// turq
+            player_8    : { src:	'assets/player/ron_pink_80.png',   width: 80 },	// pink
+            player_dead : { src:	'assets/player/ron_grey_80.png',   width: 80 },	// grey
+            player_trans:			'assets/player/trans.gif',						// trans
 
 
 			// obstacle
-			damage		: 'assets/damage/damage.png',
-
-			heal		: 'assets/heal/heal.png',
-
-			points		: 'assets/points/points.png',
-
-
-			background	: 'assets/background.png',
+			damage		: { src: 'assets/damage/light_red.png', width: 100 },
+			heal		: { src: 'assets/heal/light_green.png', width: 100 },
+			points		: { src: 'assets/points/light_white.png', width: 100 },
 
 
 			// animations
-			collision   : {
-
-				src		: 'assets/damage/explosion-sprite-sheet.png',
-				width	: '64'
-			},
-
+			collision   : {	src: 'assets/damage/explosion-sprite-sheet.png', width: 64 },
 
             pink        : {
 
@@ -113,7 +94,6 @@ window.config = {
 			collision	: 'assets/damage/collision-test.wav',
             pink        : 'assets/heal/pink-test.wav',
             coin        : 'assets/points/coin-test.wav',
-
 
             start		: 'assets/views/start/start.mp3',
             game		: 'assets/views/game/game.ogg'
@@ -149,40 +129,36 @@ window.config = {
 
 		1: {
 			type			: 'damage',
-			size			: 1*60,
+			size			: 100,
 			velocity		: 1,
 			value			:  10,
-			color			: [ 213,  10,  50 ], // red
 			collisionImg	: 'collision',
 			collisionSound	: 'collision'
 		},
 
 		2: {
 			type			: 'heal',
-			size			: 1*60,
+			size			: 100,
 			velocity		: 1,
 			value			:  10,
-			color			: [   0, 170,  30 ], // green
 			collisionImg	: 'pink',
 			collisionSound	: 'pink'
 		},
 
 		3: {
 			type			: 'points',
-			size			: 1*60,
+			size			: 100,
 			velocity		: 1,
 			value			: 100,
-			color			: [ 240, 220,  10 ], // yellow
 			collisionImg	: 'coin',
 			collisionSound	: 'coin'
 		},
 
 		4: {
 			type			: 'points',
-			size			: 1*60,
+			size			: 100,
 			velocity		: 1,
 			value			: 50,
-			color			: [ 240, 220,  10 ],
 			collisionImg	: 'coin',
 			collisionSound	: 'coin'
 		}
