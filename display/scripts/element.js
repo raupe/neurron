@@ -6,9 +6,6 @@
 
     Element.prototype.init = function ( params ) {
 
-        // global e.g. default for player
-        this.size = config.elements.size;
-
         this.checkMove = config.duration.moveTime / this.velocity / this.grid.frames;
 
         this.setup( params );
@@ -23,19 +20,13 @@
         // grid             -> via prototype
         this.getAsset = display.getAsset;
 
-        this.color = params.color;
         this.id = params.id;
         this.pos = params.pos;
 
-        if ( params.size ) {
 
-           this.size = params.size;
-        }
+        if ( params.size ) this.size = params.size;
 
-        if ( params.visible ) {
-
-            this.visible = params.visible;
-        }
+        if ( params.visible ) this.visible = params.visible;
 
 
         this.diff = 0;

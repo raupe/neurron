@@ -1,7 +1,7 @@
 /* global namespace */
 window.controller = {};
 
-/* configuraitons */
+/* configurations */
 var config = {
 
 	server			: 'game.neurron.com',
@@ -68,13 +68,3 @@ var config = {
         8:  { r: 177,   g:   0,  b: 101 }  // pink
     }
 };
-
-
-
-		// 4			: [ 'button'	, 'Start', 'requestLead' ],
-		// 5			: [ 'button'	, 'Skip', 'goCountdown'	],
-
-		// 6			: [ 'label'		, 'How should your team be called ?'				],
-		// 7			: [ 'form'		, ''								, 'goCountdown'	]
-
-		// 1			: [ 'form'],
