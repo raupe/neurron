@@ -13,7 +13,7 @@
 				enterName: '\
 				<div class="teamname">\
 					<div class="info">Enter your Team-Name:</div>\
-					<input id="input" type="name" class="input" />\
+					<input id="input" type="name" class="input" autofocus />\
 					<span id="carret" class="carret">|</span>\
 					<br>\
 					<div id="skip" class="button half left">Skip</div>\

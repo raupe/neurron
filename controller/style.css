@@ -61,7 +61,7 @@ canvas {
 		-moz-border-radius: 30px;
 			 border-radius: 30px;
 
-	min-width: 100px;
+	min-width: 80px;
 }
 
 .large {
@@ -158,7 +158,7 @@ canvas {
 
 	width: 10%;
 	padding: 3%;
-	margin: 5% auto;
+	margin: 10% auto;
 }
 
 
