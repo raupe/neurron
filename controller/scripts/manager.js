@@ -6,7 +6,6 @@
 	 */
 	var Manager = controller.Manager = function ( config ) {
 
-		// default
 		this.id = 0;
 		this.timer = 0;
 
@@ -15,9 +14,15 @@
 
 		this.req = new XMLHttpRequest();
 
-
 		this.box = controller.Box;
 		this.box.init( this.handle.bind(this) );
+
+		if ( this.channel > 255 ) {
+
+			this.box.warn( 3 );
+
+			// input.disable();
+		}
 
 		// input reference
 		controller.Input.prototype.manager = this;
