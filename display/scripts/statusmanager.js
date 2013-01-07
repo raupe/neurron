@@ -2,7 +2,7 @@
 
 	var StatusManager = display.StatusManager = function() {
 
-		this.originStep = 0.5;// 0.2
+		this.originStep = 0.5;
 
 		this.points = 0;
 		this.createPanel();
@@ -60,10 +60,10 @@
 			size = 2;
 
 		ctx.fillStyle = '#0E499B';
-		ctx.font = '' + size + 'em Comic Sans MS'; // 'italic ' + size + 'pt Comic Sans MS';
+		ctx.font = size + 'em Comic Sans MS';
 
-		// firefly symbol instead 'points' or $ ?
-		ctx.fillText( ( display.teamname || 'Total' ) + ': ' + this.points + ' $', this.offset/6, 50 );
+		// ctx.fillText( ( display.teamname || 'Neurrons' ) , this.offset/6, 0 );
+		ctx.fillText( this.points + ' Points', this.offset/3, 50 );
 	};
 
 
@@ -100,7 +100,7 @@
 
 		this.offset = container_right.offsetWidth - 1; // ToDo
 		cvs.width = this.offset;
-//		cvs.height = window.innerHeight;
+
 		cvs.height = $(container_right).height();
 
 		this.start = this.screen.cvs.width - this.offset;
@@ -151,8 +151,6 @@
 				}
 			}
 		}
-
-		// this.draw();
 	};
 
 
@@ -187,7 +185,6 @@
 				currentPlayer.diffEnergy = -value;
 
 
-
 				if (currentPlayer.energy === 0) {
 
 					if (this.points >= config.punishPoints) {
@@ -203,7 +200,7 @@
 
 						currentPlayer.die();
 
-						this.fading( currentPlayer );
+						currentPlayer.fade();
 					}
 				}
 			}
@@ -236,67 +233,7 @@
 			}
 		}
 
-		// this.draw();
-
 		currentObstacle.collide();
-	};
-
-
-	StatusManager.prototype.fading = function ( player ) {
-
-		var steps = 100,
-			timer = 0,
-
-			add = config.deadTime / steps,
-			duration = add * 1000;
-
-		function check(){
-
-			timer += add;
-
-			if ( timer >= config.deadTime ) {
-
-				player.revive();
-
-				player.animationStep = 2; // 5;
-
-			} else {
-
-				if (
-						timer > 0*add  && timer < 10*add || // 5 trans
-						timer > 20*add && timer < 25*add ||
-
-						timer > 40*add && timer < 44*add || // 4 trans
-						timer > 48*add && timer < 52*add ||
-						timer > 54*add && timer < 58*add ||
-						timer > 62*add && timer < 66*add ||
-						timer > 68*add && timer < 69*add ||
-
-						timer > 70*add && timer < 72*add || // 2-3 trans
-						timer > 73*add && timer < 76*add ||
-						timer > 77*add && timer < 79*add ||
-						timer > 80*add && timer < 82*add ||
-						timer > 83*add && timer < 86*add ||
-						timer > 87*add && timer < 89*add ||
-						timer > 90*add && timer < 92*add ||
-						timer > 93*add && timer < 96*add ||
-						timer > 97*add && timer < 99*add
-					) {
-
-					player.src = player.transSprite;
-					player.spriteImages = null;
-
-				} else {
-
-					player.spriteImages = player.deadSprites;
-				}
-
-				setTimeout( check, duration );
-			}
-		}
-
-		//config.deadTime * 1000
-		setTimeout( check, duration );
 	};
 
 
