@@ -7,7 +7,6 @@ canvas {
 
 	display: block;
 	margin: 0 auto;
-
 	background-color: #333;
 }
 
@@ -148,12 +147,6 @@ canvas {
 
 
 
-
-
-
-
-
-
 .half {
 
 	width: 10%;
@@ -170,7 +163,6 @@ canvas {
 	font-size: 2em;
 	font-weight: bold;
 	text-align: center;
-	/*color: ;*/
 }
 
 
@@ -178,20 +170,55 @@ canvas {
 .figure {
 
 	position: absolute;
-	z-index: 100;
 
 	left: 30%;
-	bottom: -10%;
+	top: 20%;
+
+	opacity: 1;
 }
 
 
-.moveTop {
 
-	-webkit-transition: all 15s ease-in-out;
-	   -moz-transition: all 15s ease-in-out;
-	    -ms-transition: all 15s ease-in-out;
-	     -o-transition: all 15s ease-in-out;
-		    transition: all 15s ease-in-out;
 
-	bottom: 200%;
+.fadeAnimation {
+
+	-webkit-transition: opacity 7s ease-in-out;
+	   -moz-transition: opacity 7s ease-in-out;
+	    -ms-transition: opacity 7s ease-in-out;
+	     -o-transition: opacity 7s ease-in-out;
+		    transition: opacity 7s ease-in-out;
+
+    opacity: 0;
+
+
+    -webkit-animation: pound .7s infinite alternate;
+    -moz-animation: pound .7s infinite alternate;
+    -ms-animation: pound .7s infinite alternate;
+    animation: pound .7s infinite alternate;
+
+    transform-origin: center;
 }
+
+
+
+
+/* keyframes */
+@-webkit-keyframes pound {
+
+	50%{ -webkit-transform:scale(1.4); }
+}
+
+@-moz-keyframes pound {
+
+	50% { -moz-transform:scale(1.4); }
+}
+
+@-ms-keyframes pound {
+
+	50%{ -ms-transform:scale(1.4); }
+}
+@keyframes pound {
+
+	50% {  transform: scale(1.4); }
+}
+

@@ -9,6 +9,9 @@ var config = {
 
 	pollingTimer    : 5,
 
+	figureTimer		: 7,
+
+
 	commands:	{
 
 		REGISTER	: 1,

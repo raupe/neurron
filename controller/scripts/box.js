@@ -78,7 +78,7 @@
 				var carret = document.getElementById('carret'),
 					input = document.getElementById('input');
 
-				carret.style.left = input.offsetLeft - 2 + 'px';
+				carret.style.left = input.offsetLeft + 'px';
 				carret.style.top = input.offsetTop + 'px';
 			},
 
@@ -87,8 +87,7 @@
 				box.className = 'hide';
 				content.innerHTML = '';
 
-				figure.innerHTML = '';
-				figure.className = 'figure';
+				figure.className = 'figure fadeAnimation';
 
 				var img = new Image();
 
@@ -96,7 +95,12 @@
 
 					figure.appendChild( img );
 
-					figure.className += ' moveTop';
+					setTimeout(function(){
+
+						figure.innerHTML = '';
+						figure.className = 'figure';
+
+					}, config.figureTimer * 1000);
 				};
 
 				img.src = 'figures/neurron_' + ( id || 1 ) + '.png';
