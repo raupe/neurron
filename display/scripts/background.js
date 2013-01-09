@@ -7,8 +7,9 @@
 		this.ctx = this.screen.ctx,
 
 		this.posShift = 0;
-		this.rotate = 0.0001;
+		this.rotateDiff = 0.0001;
 		this.rotateTime = 0;
+		this.rotate = 0;
 
 		this.resize();
 	};
@@ -31,13 +32,14 @@
 		this.rotateTime -= delta;
 		if(this.rotateTime < 0) {
 			this.rotateTime = Math.random() * 15000 + 3000;
-			this.rotate = -this.rotate;
+			this.rotateDiff = -this.rotateDiff;
 		}
+		this.rotate += this.rotateDiff * delta;
 
 //		console.log(delta);
-
+		
 		this.ctx.translate(this.cx, this.cy);
-		this.ctx.rotate(this.rotate * delta);
+		this.ctx.rotate(this.rotate);
 		this.ctx.translate(-this.cx, -this.cy);
 	};
 

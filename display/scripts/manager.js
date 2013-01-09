@@ -45,10 +45,7 @@
 			delta	= time - last;
 			last	= time;
 
-
-			this.statusManager.draw();
-
-
+			this.screen.ctx.save();
 
 			forAll( this.playerList, 'update', delta );
 
@@ -66,6 +63,9 @@
 
 			forAll( this.playerList, 'draw' );
 
+			this.statusManager.draw();
+			
+			this.screen.ctx.restore();
 
 
 
