@@ -98,7 +98,7 @@
 		this.spriteImages = this.originSprites;
 		this.spriteCounter = 0;
 
-		this.reviveSound.play();
+		if ( config.audio ) this.reviveSound.play();
 
 		this.alive = true;
 		this.energy = 100;
