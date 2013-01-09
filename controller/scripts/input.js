@@ -112,6 +112,8 @@
 		e.preventDefault();
 		e.stopPropagation();
 
+        this.screen.clear();
+
 		this.tapped = true;
 
 		var touch = getPos( e.changedTouches[0] );
@@ -180,7 +182,7 @@
 
 		manager.handle( config.commands.MOVE, [ origin, touch, this.averageX, this.averageY, this.between ] );
 
-		this.screen.clear();
+		//this.screen.clear();
 
 		this.between.length = 0;
 		this.averageX = 0;
