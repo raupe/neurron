@@ -19,9 +19,9 @@
 		this.energyBarStartX = this.offset / 8;
 		this.colorBarStartX = this.energyBarStartX / 2;
 		this.lifeLabelStartX = this.energyBarStartX + this.fullBarWidth + 4; // 4 offset that it doesnt catch the energybar
-		this.startY = 40;
+		this.startY = 50;
 		this.color = 'green';
-		this.distance = this.fullBarHeight + 10;
+		this.distance = this.fullBarHeight + 12;
 
 		this.healer = 0;
         var ctx = this.panel;
@@ -41,6 +41,7 @@
         $('#qr_code img').addClass("halfQR");
         $('.side_wrapper').addClass("blueGradient");
         $('#container-right').addClass("marginTopPadding");
+        $('#container').removeClass("backgroundImage");
 	};
 
 
@@ -57,13 +58,14 @@
 	StatusManager.prototype.showPoints = function () {
 
 		var ctx = this.panel,
-			size = 2;
+			size = 16;
 
 		ctx.fillStyle = '#0E499B';
-		ctx.font = size + 'em Comic Sans MS';
+		//ctx.font = size + 'px Fredoka One cursive';
+		ctx.font = "2em Fredoka One";
 
-		// ctx.fillText( ( display.teamname || 'Neurrons' ) , this.offset/6, 0 );
-		ctx.fillText( this.points + ' Points', this.offset/3, 50 );
+        ctx.fillText( ( display.teamname || 'Neurrons' ) , this.offset/5, 30 );
+		ctx.fillText( this.points + ' Points', this.offset/5, 64 );
 	};
 
 
