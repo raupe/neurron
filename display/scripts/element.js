@@ -29,7 +29,8 @@
         if ( params.visible ) this.visible = params.visible;
 
 
-        this.diff = 0;
+        this.diffMove = 0;
+        this.diffAni = 0;
 
         this.check = false;
 
@@ -38,7 +39,7 @@
 
         this.spriteCounter = 0;
 
-        this.stepRate = this.getStep();
+		this.checkAni = this.getStep();
 
         this.stepsLeft = this.stepRate;
 
@@ -54,10 +55,10 @@
 
         var ms;
 
-        if ( this.type === 'heal' )     ms = 4;
-        if ( this.type === 'points' )   ms = 4;
-        if ( this.type === 'damage' )   ms = 4;
-        if ( this.isPlayer )            ms = 4 + ~~(this.id + 0.5);
+        if ( this.type === 'heal' )     ms = 60;
+        if ( this.type === 'points' )   ms = 60;
+        if ( this.type === 'damage' )   ms = 60;
+        if ( this.isPlayer )            ms = 60 + this.id * 15;//4 + ~~(this.id + 0.5);
 
         return ms;
     };
@@ -92,18 +93,24 @@
 
     Element.prototype.update = function ( delta ) {
 
-        this.diff += delta;
+        this.diffMove += delta;
+        this.diffAni += delta;
+        
+        while ( this.diffAni >= this.checkAni) {
+        	this.diffAni -= this.checkAni;
+        	this.changeSprite();
+        }
 
-        while ( this.diff >= this.checkMove ) {
+        while ( this.diffMove >= this.checkMove ) {
 
-            this.diff -= this.checkMove;
+            this.diffMove -= this.checkMove;
 
-            if ( !--this.stepsLeft ) {
+        /*    if ( !--this.stepsLeft ) {
 
                 this.stepsLeft = this.stepRate;
 
                 this.changeSprite();
-            }
+            } */
 
             if ( this.moving ) {
 

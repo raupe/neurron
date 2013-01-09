@@ -37,7 +37,7 @@ window.config = {
 
     duration: {
 
-		moveTime		: 1200		// 1.2s, sync with server
+		moveTime		: 600		// 1.2s, sync with server
     },
 
 
@@ -169,7 +169,7 @@ window.config = {
 
 	player: {
 
-		velocity: 3
+		velocity: 2
 	},
 
 

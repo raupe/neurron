@@ -156,9 +156,9 @@ void sv::ObstacleManager::Update(ulong deltaTime)
 void sv::ObstacleManager::UpdateLevel(ulong deltaTime)
 {
 	m_PassedTime += deltaTime;
-	if(m_PassedTime > MOVE_TIME_OB)
+	if(m_PassedTime > SPAWN_TIME_OB)
 	{
-		m_PassedTime -= MOVE_TIME_OB;
+		m_PassedTime -= SPAWN_TIME_OB;
 		m_Step ++;
 		if(m_Step == m_LevelSize)
 			m_Step = 0;
