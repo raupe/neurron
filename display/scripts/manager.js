@@ -20,6 +20,7 @@
 
 		this.options = new display.Options({
 
+			manager: this,
 			grid: this.grid,
 			background: this.background
 		});
@@ -27,6 +28,36 @@
 		display.Connection.prototype.manager = this;
 		display.StatusManager.prototype.manager = this;
 	};
+
+
+	var forAll = function ( collection, method, delta ) {
+
+        var l = collection.length;
+
+        do {
+
+			el = collection[l];
+
+			if ( el && el.visible ) { // undefined.()
+
+				el[method]( delta );
+			}
+
+        } while ( l-- );
+	};
+
+
+	/**
+	 * [resize description]
+	 * @return {[type]} [description]
+	 */
+	Manager.prototype.resize = function(){
+
+		forAll( this.playerList, 'resize' );
+
+		forAll( this.obstaclePool.list, 'resize' );
+	};
+
 
 
 	/**
@@ -38,7 +69,6 @@
 		var last = 0,
 
 			delta;
-
 
 		function loop ( time ) {
 
@@ -64,9 +94,8 @@
 			forAll( this.playerList, 'draw' );
 
 			this.statusManager.draw();
-			
-			this.screen.ctx.restore();
 
+			this.screen.ctx.restore();
 
 
             if ( this.runningGame ) {
@@ -86,24 +115,6 @@
 			loop.call(this, time);
 
 		}.bind(this) );
-
-
-		function forAll ( collection, method, delta ) {
-
-            var l = collection.length;
-
-            do {
-
-				el = collection[l];
-
-				if ( el && el.visible ) { // undefined.()
-
-					el[method]( delta );
-				}
-
-            } while ( l-- );
-		}
-
 	};
 
 

@@ -171,4 +171,10 @@
         this.origin.restore();
     };
 
+
+    Element.prototype.resize = function(){
+
+        this.field = this.grid.fields[ this.pos ];
+    };
+
 })();
