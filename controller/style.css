@@ -54,13 +54,16 @@ canvas {
 	background: -ms-linear-gradient(top,  #b443c6 0%,#6e106f 100%); /* IE10+ */
 	background: linear-gradient(to bottom,  #b443c6 0%,#6e106f 100%); /* W3C */
 
-	border: 1px solid #000;
+	/*border: 1px solid #000;*/
 
 	 -webkit-border-radius: 30px;
 		-moz-border-radius: 30px;
 			 border-radius: 30px;
 
 	min-width: 80px;
+
+    color: white;
+    font-weight: bold;
 }
 
 .large {

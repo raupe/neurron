@@ -23,6 +23,7 @@ sv::Game::Game()
 , m_PlayerManager(0)
 , m_Grid(0)
 , m_StatusManager(0)
+, m_Name("")
 {
 	m_Grid = S_NEW Grid();
 	m_PlayerManager = S_NEW PlayerManager(this);
@@ -41,6 +42,7 @@ sv::Game::~Game()
 
 void sv::Game::Init(uint id, int socket)
 {
+	m_Name = "";
 	m_StatusManager->Reset();
 	m_ObstacleManager->Reset();
 	m_PlayerManager->Reset();
