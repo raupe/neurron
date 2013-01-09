@@ -16,8 +16,8 @@
 					<input id="input" type="name" class="input" autofocus />\
 					<span id="carret" class="carret">|</span>\
 					<br>\
-					<div id="skip" class="button half left">Skip</div>\
-					<div id="okay" class="button half right">Okay</div>\
+					<div id="okay" class="button half left">Okay</div>\
+					<div id="skip" class="button half right">Skip</div>\
 				</div>',
 
 				notFound: '<div class="warning teamname">The Game does not exist !</div>',
