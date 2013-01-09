@@ -57,14 +57,15 @@
 
 	Options.prototype.fullscreen = function(){
 
-		if ( screenfull.enabled ) {
-
-			screenfull.toggle();
-		}
+		if ( screenfull.enabled ) screenfull.toggle();
 	};
 
 
+	var btnFullScreen = document.getElementById('fullscreen');
+
 	Options.prototype.changeFullScreen = function(){
+
+		if ( !screenfull.isFullscreen ) btnFullScreen.classList.remove('off');
 
 		this.grid.init();
 		this.background.resize();
