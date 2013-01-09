@@ -57,7 +57,9 @@
 		document.getElementById('load_register_status').innerHTML = '';
 
 		loadBar.className = ''; // show loadBar
-		load_teamname.removeChild( document.getElementById('load_greet') ); // remove Team greeting
+        console.log("load_teamname comes: ");
+        console.log(load_teamname);
+		if ( $(load_teamname).html() !== "" ) load_teamname.removeChild( document.getElementById('load_greet') ); // remove Team greeting
 
 		$('#container').addClass("backgroundImage");
 		$('#container-right').removeClass("marginTopPadding");
