@@ -11,16 +11,13 @@
 
 		this.params = params || this.params; // cache previous
 
-		if ( this.params ) {
+		this.setup( this.params );
 
-			this.setup( this.params );
+		this.definePositions();
 
-			this.definePositions();
+		this.createCanvas();
 
-			this.createCanvas();
-
-			this.update();
-		}
+		this.update();
 	};
 
 

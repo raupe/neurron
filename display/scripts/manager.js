@@ -20,6 +20,7 @@
 
 		this.options = new display.Options({
 
+			manager: this,
 			grid: this.grid,
 			background: this.background
 		});
@@ -27,6 +28,36 @@
 		display.Connection.prototype.manager = this;
 		display.StatusManager.prototype.manager = this;
 	};
+
+
+	var forAll = function ( collection, method, delta ) {
+
+        var l = collection.length;
+
+        do {
+
+			el = collection[l];
+
+			if ( el && el.visible ) { // undefined.()
+
+				el[method]( delta );
+			}
+
+        } while ( l-- );
+	};
+
+
+	/**
+	 * [resize description]
+	 * @return {[type]} [description]
+	 */
+	Manager.prototype.resize = function(){
+
+		forAll( this.playerList, 'resize' );
+
+		forAll( this.obstaclePool.list, 'resize' );
+	};
+
 
 
 	/**
@@ -39,13 +70,13 @@
 
 			delta;
 
-
 		function loop ( time ) {
 
 			delta	= time - last;
 			last	= time;
 
 			this.screen.ctx.save();
+
 
 			forAll( this.playerList, 'update', delta );
 
@@ -64,9 +95,9 @@
 			forAll( this.playerList, 'draw' );
 
 			this.statusManager.draw();
-			
-			this.screen.ctx.restore();
 
+
+			this.screen.ctx.restore();
 
 
             if ( this.runningGame ) {
@@ -86,24 +117,6 @@
 			loop.call(this, time);
 
 		}.bind(this) );
-
-
-		function forAll ( collection, method, delta ) {
-
-            var l = collection.length;
-
-            do {
-
-				el = collection[l];
-
-				if ( el && el.visible ) { // undefined.()
-
-					el[method]( delta );
-				}
-
-            } while ( l-- );
-		}
-
 	};
 
 
@@ -323,6 +336,7 @@
         $('#qr_code img').removeClass("halfQR");
         $('.side_wrapper').removeClass("blueGradient");
         $('#container-right').removeClass("marginTopPadding");
+        $('#container').addClass("backgroundImage");
 
         this.statusManager.showEnd( params[0], params[1], params[2] );
 

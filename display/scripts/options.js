@@ -4,6 +4,7 @@
 
 		this.grid = params.grid;
 		this.background = params.background;
+		this.manager = params.manager;
 
 		this.init();
 	};
@@ -69,6 +70,8 @@
 
 		this.grid.init();
 		this.background.resize();
+
+		this.manager.resize();
 	};
 
 })();
