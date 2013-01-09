@@ -64,7 +64,7 @@
 			forAll( this.playerList, 'draw' );
 
 			this.statusManager.draw();
-			
+
 			this.screen.ctx.restore();
 
 
@@ -323,6 +323,7 @@
         $('#qr_code img').removeClass("halfQR");
         $('.side_wrapper').removeClass("blueGradient");
         $('#container-right').removeClass("marginTopPadding");
+        $('#container').addClass("backgroundImage");
 
         this.statusManager.showEnd( params[0], params[1], params[2] );
 
