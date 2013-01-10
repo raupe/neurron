@@ -11,6 +11,8 @@
 
 		this.params = params || this.params; // cache previous
 
+		if ( !this.params ) return;
+
 		this.setup( this.params );
 
 		this.definePositions();
@@ -25,7 +27,6 @@
 
 		this.origin = this.screen.ctx;
 
-//		this.width = this.screen.cvs.width - this.screen.cvs.width / params.factor;
         this.width = this.screen.cvs.width;
 		this.height = this.screen.cvs.height;
 
