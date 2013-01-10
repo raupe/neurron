@@ -25,7 +25,7 @@ window.config = {
 
     audio				: true,	// option #1
     audioFading			: 10,		// 10 seconds
-    audioVolume			: 10,		// default value
+    audioVolume			: 30,		// default value
 
 
 	circleOffset		: 100,
@@ -42,6 +42,11 @@ window.config = {
     },
 
 
+	player: {
+
+		velocity: 2
+	},
+
 	playerSize			: 80,
 	frameDuration		: 60,		// base ani duration
 
@@ -51,7 +56,7 @@ window.config = {
 		image: {
 
             // player
-			player_1	: 'assets/player/trans.gif',//{ src:	'assets/player/ron_red_80.png',    width: 80 },	// red
+			player_1	: { src:	'assets/player/ron_red_80.png',    width: 80 },	// red
             player_2    : { src:	'assets/player/ron_blue_80.png',   width: 80 },	// blue
             player_3    : { src:	'assets/player/ron_green_80.png',  width: 80 },	// green
             player_4    : { src:	'assets/player/ron_yellow_80.png', width: 80 },	// yellow
@@ -158,10 +163,6 @@ window.config = {
 	},
 
 
-	player: {
-
-		velocity: 2
-	},
 
 
     playerColors: {
