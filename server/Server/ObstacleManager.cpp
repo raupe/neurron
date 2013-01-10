@@ -104,6 +104,7 @@ void sv::ObstacleManager::Reset()
 		free(m_Level[i]);
 	free(m_Level);
 	m_Level = 0;
+	m_LevelSize = 0;
 }
 
 void sv::ObstacleManager::Start()
