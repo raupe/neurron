@@ -43,7 +43,7 @@ canvas {
 
 
 .button {
-
+	padding: 5px;
 	text-align: center;
 
 	background: #b443c6; /* Old browsers */
@@ -56,9 +56,9 @@ canvas {
 
 	/*border: 1px solid #000;*/
 
-	 -webkit-border-radius: 30px;
-		-moz-border-radius: 30px;
-			 border-radius: 30px;
+	 -webkit-border-radius: 6px;
+		-moz-border-radius: 6px;
+			 border-radius: 6px;
 
 	min-width: 80px;
 
@@ -194,10 +194,10 @@ canvas {
     opacity: 0;
 
 
-    -webkit-animation: pound .7s infinite alternate;
-    -moz-animation: pound .7s infinite alternate;
-    -ms-animation: pound .7s infinite alternate;
-    animation: pound .7s infinite alternate;
+    -webkit-animation: pound 1.8s infinite none;
+    -moz-animation: pound 1.8s infinite none;
+    -ms-animation: pound 1.8s infinite none;
+    animation: pound 1.8s infinite none;
 
     transform-origin: center;
 }
@@ -208,20 +208,20 @@ canvas {
 /* keyframes */
 @-webkit-keyframes pound {
 
-	50%{ -webkit-transform:scale(1.4); }
+	50%{ -webkit-transform:scale(1.2); }
 }
 
 @-moz-keyframes pound {
 
-	50% { -moz-transform:scale(1.4); }
+	50% { -moz-transform:scale(1.2); }
 }
 
 @-ms-keyframes pound {
 
-	50%{ -ms-transform:scale(1.4); }
+	50%{ -ms-transform:scale(1.2); }
 }
 @keyframes pound {
 
-	50% {  transform: scale(1.4); }
+	50% {  transform: scale(1.2); }
 }
 
