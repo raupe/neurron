@@ -280,7 +280,9 @@
 
 		length = competition.length;
 
-		legendContainer.className = ( !length ) ? 'hide' : '';
+		legendContainer.classList.remove('hide');
+
+		if ( !length ) legendContainer.classList.add('hide');
 
 
 		for ( i = 0; i < length; i++ ) {
