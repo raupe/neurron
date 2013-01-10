@@ -23,9 +23,9 @@ window.config = {
     deadTime            : 5,
 
 
-    audio				: false,	// option #1
+    audio				: true,	// option #1
     audioFading			: 10,		// 10 seconds
-    audioVolume			: 30,		// default value
+    audioVolume			: 10,		// default value
 
 
 	circleOffset		: 100,
@@ -51,7 +51,7 @@ window.config = {
 		image: {
 
             // player
-			player_1	: { src:	'assets/player/ron_red_80.png',    width: 80 },	// red
+			player_1	: 'assets/player/trans.gif',//{ src:	'assets/player/ron_red_80.png',    width: 80 },	// red
             player_2    : { src:	'assets/player/ron_blue_80.png',   width: 80 },	// blue
             player_3    : { src:	'assets/player/ron_green_80.png',  width: 80 },	// green
             player_4    : { src:	'assets/player/ron_yellow_80.png', width: 80 },	// yellow
@@ -69,9 +69,9 @@ window.config = {
 			points		: 'assets/points/points.png',
 
 			// collisions
-			damage_col  : {	src: 'assets/damage/damage_col.png',	width: 102, height: 104 },
-			points_col  : {	src: 'assets/points/points_col.png',	width: 102, height: 104 },
-			heal_col	: {	src: 'assets/heal/heal_col.png',		width: 102, height: 104 }
+			damage_col  : {	src: 'assets/damage/damage_col.png',	width: 100 },
+			points_col  : {	src: 'assets/points/points_col.png',	width: 100 },
+			heal_col	: {	src: 'assets/heal/heal_col.png',		width: 100 }
         },
 
 

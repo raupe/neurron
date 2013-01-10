@@ -235,7 +235,10 @@
 			}
 		}
 
-		currentObstacle.collide();
+
+		if ( config.audio && currentObstacle.collisionSound ) currentObstacle.collisionSound.play();
+
+		setTimeout(function(){	currentObstacle.collide(); }, 60);
 	};
 
 
