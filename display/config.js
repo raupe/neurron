@@ -145,7 +145,7 @@ window.config = {
 			size			: 100,
 			velocity		: 1,
 			value			: 100,
-			frameDuration	: 100,
+			frameDuration	: 30,
 			collisionImg	: 'points_col',
 			collisionSound	: 'points'
 		},
@@ -155,7 +155,7 @@ window.config = {
 			size			: 100,
 			velocity		: 1,
 			value			: 50,
-			frameDuration	: 100,
+			frameDuration	: 30,
 			collisionImg	: 'points_col',
 			collisionSound	: 'points'
 		}
