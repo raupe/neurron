@@ -38,6 +38,7 @@ window.config = {
     duration: {
 
 		moveTime		: 600		// 1.2s, sync with server
+		// aniTime			:
     },
 
 

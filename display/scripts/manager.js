@@ -304,9 +304,21 @@
 	 * @param  {[type]} params [description] obstacleId - category - start
 	 * @return {[type]}        [description]
 	 */
-	Manager.prototype.create = function ( params ) {
+	Manager.prototype.create = function ( params ) { // wave
 
-		this.obstaclePool.get( params[0], params[1], params[2] );
+		var wave = params[0],
+
+			current,	// temp
+
+			i, l;		// iterator
+
+		for ( i = 0, l = wave.length; i < l; i++ ) {
+
+			current = wave[i];
+
+			this.obstaclePool.get( current.id, current.category, current.start );
+		}
+
 	};
 
 

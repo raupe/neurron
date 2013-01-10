@@ -36,6 +36,8 @@
 
 				options = [],						// params
 
+				pos,								// temp
+
 				i, l;								// iterator
 
 
@@ -68,7 +70,7 @@
 
 				l = data.charCodeAt(1);				// amount of players
 
-				amount = l;
+				amount = l; // ~ cache
 
 				options[0] = data.charCodeAt(2);	// amount of lanes
 
@@ -99,7 +101,7 @@
 
 				options[0] = data.charCodeAt(1); // player ID
 
-						l = data.charCodeAt(2); // amount of targets
+				l = data.charCodeAt(2); // amount of targets
 
 				var targets = [];
 
@@ -114,9 +116,23 @@
 
 	/*  9 */if ( action === config.protocol.CREATE ) {
 
-				options[0] = data.charCodeAt(1); // obstacle ID
-				options[1] = data.charCodeAt(2); // category
-				options[2] = data.charCodeAt(3); // startpos
+				var wave = [];
+
+				pos = 1;
+
+				l = data.charCodeAt(pos++);
+
+				for ( i = 0; i < l; i++ ) {
+
+					wave.push({
+
+						id		: data.charCodeAt(pos++),
+						category: data.charCodeAt(pos++),
+						start	: data.charCodeAt(pos++)
+					});
+				}
+
+				options[0] = wave; // wave
 			}
 
 
@@ -138,13 +154,14 @@
 
 	/* 11 */if ( action === config.protocol.END ) {
 
-				var pos = 1,
-					distribution = [],
+				var distribution = [],
 					scores = [];
+
+				pos = 1;
 
                 options[0] = (data.charCodeAt(pos++) << 8) + data.charCodeAt(pos++); // teampoints
 
-				for ( i = 0; i < amount; i += 1 ) {
+				for ( i = 0; i < amount; i++ ) {
 
 					distribution.push({
 
