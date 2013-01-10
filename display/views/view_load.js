@@ -57,8 +57,6 @@
 		document.getElementById('load_register_status').innerHTML = '';
 
 		loadBar.className = ''; // show loadBar
-        console.log("load_teamname comes: ");
-        console.log(load_teamname);
 		if ( $(load_teamname).html() !== "" ) load_teamname.removeChild( document.getElementById('load_greet') ); // remove Team greeting
 
         if ( !progressbar ) progressbar = $('#progressbar');

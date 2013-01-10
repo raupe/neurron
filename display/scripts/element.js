@@ -41,8 +41,6 @@
 
 		this.checkAni = this.getStep();
 
-        this.stepsLeft = this.stepRate;
-
         this.originSprites = this.getAsset('image', this.type );
 
         this.spriteImages = this.originSprites;
@@ -55,10 +53,10 @@
 
         var ms;
 
-        if ( this.type === 'heal' )     ms = 60;
-        if ( this.type === 'points' )   ms = 60;
-        if ( this.type === 'damage' )   ms = 60;
-        if ( this.isPlayer )            ms = 60 + this.id * 15;//4 + ~~(this.id + 0.5);
+        if ( this.type === 'damage' )   ms = config.obstacles[1].frameDuration || config.frameDuration;
+        if ( this.type === 'heal' )     ms = config.obstacles[2].frameDuration || config.frameDuration;
+        if ( this.type === 'points' )   ms = config.obstacles[3].frameDuration || config.frameDuration;
+        if ( this.isPlayer )            ms = config.frameDuration + this.id * 15;
 
         return ms;
     };
@@ -95,27 +93,21 @@
 
         this.diffMove += delta;
         this.diffAni += delta;
-        
-        while ( this.diffAni >= this.checkAni) {
-        	this.diffAni -= this.checkAni;
-        	this.changeSprite();
+
+        // animation
+        while ( this.diffAni >= this.checkAni ) {
+
+            this.diffAni -= this.checkAni;
+
+            this.changeSprite();
         }
 
+        // movement
         while ( this.diffMove >= this.checkMove ) {
 
             this.diffMove -= this.checkMove;
 
-        /*    if ( !--this.stepsLeft ) {
-
-                this.stepsLeft = this.stepRate;
-
-                this.changeSprite();
-            } */
-
-            if ( this.moving ) {
-
-                this.animate();
-            }
+            if ( this.moving ) this.animate();
         }
     };
 
