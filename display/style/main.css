@@ -646,7 +646,7 @@ h1 {
 	     -o-transition: width 15s ease-in-out;
 		    transition: width 15s ease-in-out;
 
-	width: 100%;
+	width: 100% !important;
 }
 
 

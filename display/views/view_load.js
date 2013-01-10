@@ -61,6 +61,9 @@
         console.log(load_teamname);
 		if ( $(load_teamname).html() !== "" ) load_teamname.removeChild( document.getElementById('load_greet') ); // remove Team greeting
 
+        if ( !progressbar ) progressbar = $('#progressbar');
+        progressbar.removeClass('fill');
+
 		$('#container').addClass("backgroundImage");
 		$('#container-right').removeClass("marginTopPadding");
 		$('#qr_code img').removeClass("halfQR");
@@ -90,16 +93,13 @@
 
 		if ( !progressbar ) progressbar = $('#progressbar');
 
-		// progressbar.removeClass('fill');
-		// progressbar.addClass('fill');
+        progressbar.addClass('fill');
 
-		progressbar.css({ width: 0 });
-
-		progressbar.animate({
+		/*progressbar.animate({
 			width: "100%"
 		}, 15000, function(){
 			console.log("complete");
-		});
+		});*/
 	};
 
 	var tutorial;
