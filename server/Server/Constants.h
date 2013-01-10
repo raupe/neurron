@@ -13,10 +13,17 @@
 #define NUMBER_CIRCLES 10
 
 // Element
-#define MOVE_TIME_PL		   400000	// 0.4 sec = 1.2 / 3
+/*#define MOVE_TIME_PL		   400000	// 0.4 sec = MOVE_TIME_OB / 3
 #define CHANGE_TIME_PL		   200000	// 0.2 sec
 #define MOVE_TIME_OB		  1200000	// 1.2 sec
-#define CHANGE_TIME_OB		  1100000	// 0.9 sec
+#define CHANGE_TIME_OB		  1100000	// 0.9 sec 
+#define SPAWN_TIME_OB		  1200000	// 1.2 sec*/
+
+#define MOVE_TIME_PL		   300000	// 0.4 sec = MOVE_TIME_OB / 2
+#define CHANGE_TIME_PL		   100000	// 0.2 sec
+#define MOVE_TIME_OB		   600000	// 1.2 sec
+#define CHANGE_TIME_OB		   500000	// 0.9 sec
+#define SPAWN_TIME_OB		  1200000	//
 
 // Player
 #define REVIVE_TIME			  5000000	// 5   sec
