@@ -246,10 +246,9 @@ canvas {
 
 .qr_link {
 	display: block;
-	padding-top: 5px;
+	padding-top: 9px;
 	text-align: center;
 	font-size: 20px;
-	margin-top: 9px;
 	font-family: 'Fredoka One', cursive;
 	color: #0E499B;
 }
