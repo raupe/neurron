@@ -62,6 +62,8 @@
 
     display.logic.end = function(){
 
+        $container.addClass('backgroundImage');
+
         if ( !music ) {
 
             music = display.getAsset('audio', 'start');
