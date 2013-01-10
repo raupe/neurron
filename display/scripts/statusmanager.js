@@ -15,13 +15,13 @@
 		this.playerList = playerList;
 
 		this.fullBarWidth = this.offset;
-		this.fullBarHeight = 20;
+		this.fullBarHeight = this.canvas.height / 16;
 		this.energyBarStartX = this.offset / 8;
 		this.colorBarStartX = this.energyBarStartX / 2;
 		this.lifeLabelStartX = this.energyBarStartX + this.fullBarWidth + 4; // 4 offset that it doesnt catch the energybar
 		this.startY = 50;
 		this.color = 'green';
-		this.distance = this.fullBarHeight + 12;
+		this.distance = this.fullBarHeight + 10;
 
 		this.healer = 0;
         var ctx = this.panel;
@@ -58,13 +58,13 @@
 	StatusManager.prototype.showPoints = function () {
 
 		var ctx = this.panel,
-			size = 16;
+			size = 2;
 
 		ctx.fillStyle = '#0E499B';
 		//ctx.font = size + 'px Fredoka One cursive';
-		ctx.font = "2em Fredoka One";
+		ctx.font = size + "em Fredoka One";
 
-        ctx.fillText( ( display.teamname || 'Neurrons' ) , this.offset/5, 30 );
+        ctx.fillText( ( display.teamname || 'neurrons' ) , this.offset/5, 30 );
 		ctx.fillText( this.points + ' Points', this.offset/5, 64 );
 	};
 
@@ -82,7 +82,7 @@
 
 			// energyBars
             ctx.fillStyle = this.gradients[i];
-            ctx.fillRect( 0, this.startY + (i+1)*this.distance, this.fullBarWidth * ( (currentPlayer.energy - currentPlayer.diffEnergy) / 100) + 2, this.fullBarHeight );
+            ctx.fillRect( 0, this.startY + (i+1)*this.distance, this.fullBarWidth * ( (currentPlayer.energy - currentPlayer.diffEnergy) / 100) + 6, this.fullBarHeight );
 
             if ( currentPlayer.diffEnergy === 0 ) currentPlayer.animationStep = this.originStep; // default
 			if ( currentPlayer.diffEnergy > 0 ) currentPlayer.diffEnergy -= currentPlayer.animationStep;
@@ -271,9 +271,14 @@
 
 		var legends = document.getElementById('legends').children[0], // <table>
 
+			legendContainer = document.getElementById('legends').parentNode,
+
 			ranking = '<tbody>';
 
 		length = competition.length;
+
+		legendContainer.className = ( !length ) ? 'hide' : '';
+
 
 		for ( i = 0; i < length; i++ ) {
 
@@ -300,6 +305,7 @@
 	StatusManager.prototype.clear = function(){
 
 		this.panel.clearRect( 0,0, this.canvas.width, this.canvas.height );
+        this.canvas.height = $(document.getElementById('container-right')).height();
 	};
 
 
