@@ -158,87 +158,94 @@
 
 	StatusManager.prototype.handleCollide = function ( obstacleId, playersIds ) {
 
-		var currentObstacle = this.pool.list[obstacleId],
+		var currentObstacle = this.pool.list[obstacleId];
 
-			type = currentObstacle.type,
-			value = currentObstacle.value,
-			numberOfPlayers = playersIds.length,
-			currentPlayer,
-			i;
+		if ( currentObstacle ) { // check existence
 
-		if ( type === 'damage' ) {
+			var	type = currentObstacle.type,
+				value = currentObstacle.value,
+				numberOfPlayers = playersIds.length,
+				currentPlayer,
+				i;
 
-			for ( i = 0; i < numberOfPlayers; i++ ){
+			if ( type === 'damage' ) {
 
-				currentPlayer = this.playerList[playersIds[i] - 1];
+				for ( i = 0; i < numberOfPlayers; i++ ){
 
-				if ( !currentPlayer.alive ) currentPlayer.revive();
+					currentPlayer = this.playerList[playersIds[i] - 1];
 
-
-				if (currentPlayer.energy >= value) {
-
-					currentPlayer.energy -= value;
-
-				} else {
-
-					currentPlayer.energy = 0;
-				}
-
-				currentPlayer.diffEnergy = -value;
+					if ( !currentPlayer.alive ) currentPlayer.revive();
 
 
-				if (currentPlayer.energy === 0) {
+					if (currentPlayer.energy >= value) {
 
-					if (this.points >= config.punishPoints) {
-
-						this.points -= config.punishPoints;
+						currentPlayer.energy -= value;
 
 					} else {
 
-						this.points = 0;
+						currentPlayer.energy = 0;
 					}
 
-					if ( currentPlayer.alive ) {
+					currentPlayer.diffEnergy = -value;
 
-						currentPlayer.die();
 
-						currentPlayer.fade();
+					if (currentPlayer.energy === 0) {
+
+						if (this.points >= config.punishPoints) {
+
+							this.points -= config.punishPoints;
+
+						} else {
+
+							this.points = 0;
+						}
+
+						if ( currentPlayer.alive ) {
+
+							currentPlayer.die();
+
+							currentPlayer.fade();
+						}
 					}
+				}
+
+			} else if ( type === 'heal' ) {
+
+				for ( i = 0; i < numberOfPlayers; i++ ){
+
+					var healForEachPlayer = ~~(value / numberOfPlayers);
+					currentPlayer = this.playerList[playersIds[i] - 1];
+
+					if ( !currentPlayer.alive ) currentPlayer.revive();
+
+					currentPlayer.energy += healForEachPlayer;
+
+					if ( currentPlayer.energy > 100 ) currentPlayer.energy = 100;
+
+					currentPlayer.diffEnergy = currentPlayer.energy < 100 ? healForEachPlayer : 0;
+				}
+
+			} else { // points
+
+				for ( i = 0; i < numberOfPlayers; i++ ){
+					var pointsForEachPlayer = ~~(value / numberOfPlayers);
+					currentPlayer = this.playerList[playersIds[i] - 1];
+
+					if ( !currentPlayer.alive ) currentPlayer.revive();
+
+					this.points += ~~((currentPlayer.energy / 100) * pointsForEachPlayer);
 				}
 			}
 
-		} else if ( type === 'heal' ) {
 
-			for ( i = 0; i < numberOfPlayers; i++ ){
+			if ( config.audio && currentObstacle.collisionSound ) currentObstacle.collisionSound.play();
 
-				var healForEachPlayer = ~~(value / numberOfPlayers);
-				currentPlayer = this.playerList[playersIds[i] - 1];
+			setTimeout(function(){	currentObstacle.collide(); }, 60);
 
-				if ( !currentPlayer.alive ) currentPlayer.revive();
+		} else {
 
-				currentPlayer.energy += healForEachPlayer;
-
-				if ( currentPlayer.energy > 100 ) currentPlayer.energy = 100;
-
-				currentPlayer.diffEnergy = currentPlayer.energy < 100 ? healForEachPlayer : 0;
-			}
-
-		} else { // points
-
-			for ( i = 0; i < numberOfPlayers; i++ ){
-				var pointsForEachPlayer = ~~(value / numberOfPlayers);
-				currentPlayer = this.playerList[playersIds[i] - 1];
-
-				if ( !currentPlayer.alive ) currentPlayer.revive();
-
-				this.points += ~~((currentPlayer.energy / 100) * pointsForEachPlayer);
-			}
+			console.log( obstacleId, currentObstacle );
 		}
-
-
-		if ( config.audio && currentObstacle.collisionSound ) currentObstacle.collisionSound.play();
-
-		setTimeout(function(){	currentObstacle.collide(); }, 60);
 	};
 
 
