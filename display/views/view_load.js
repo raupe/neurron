@@ -80,7 +80,7 @@
 		greetBox.id = 'load_greet';
 		greetBox.className = 'greetings';
 
-		greetBox.innerHTML = 'Hi ' + ( display.teamname ? 'Team ' + display.teamname : 'Neurrons' );
+		greetBox.innerHTML = 'Hi ' + ( display.teamname ? 'team ' + display.teamname : 'neurrons' );
 		element.appendChild(greetBox);
 	};
 
