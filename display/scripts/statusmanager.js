@@ -271,9 +271,14 @@
 
 		var legends = document.getElementById('legends').children[0], // <table>
 
+			legendContainer = document.getElementById('legends').parentNode,
+
 			ranking = '<tbody>';
 
 		length = competition.length;
+
+		legendContainer.className = ( !length ) ? 'hide' : '';
+
 
 		for ( i = 0; i < length; i++ ) {
 
