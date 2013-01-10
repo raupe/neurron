@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "Msg.h"
 #include "StatusManager.h"
+#include "PlayerManager.h"
 #include "Player.h"
 #include "Engine.h"
 
@@ -80,7 +81,6 @@ sv::ObstacleManager::ObstacleManager(Game* game)
 , m_LevelSize(0)
 , m_Level(0)
 {
-	ParseLevel();
 }
 
 
@@ -99,11 +99,17 @@ void sv::ObstacleManager::Reset()
 
 	Pool<Obstacle>::FreeAll();
 	Pool<Obstacle>::Clear();
+	
+	for(uint i=0; i<m_LevelSize; i++)
+		free(m_Level[i]);
+	free(m_Level);
+	m_Level = 0;
 }
 
 void sv::ObstacleManager::Start()
 {
 	Pool<Obstacle>::Init(80);
+	ParseLevel();
 }
 
 void sv::ObstacleManager::Update(ulong deltaTime)
@@ -206,42 +212,30 @@ void sv::ObstacleManager::HandleCollision(Obstacle* obstacle)
 		GetStatusManager()->CalculateCollision(obstacle, player, count);
 		LOG1(DEBUG_OBSTACLES, "Collision: id %i", obstacle->GetId());
 
-	//	if(obstacle->GetType() != Obstacle::eObstacleType_EnergyDown)
-	//	{
-			DeleteObstacle(obstacle);
-	//	}
+		DeleteObstacle(obstacle);
 	}
 }
 
-void sv::ObstacleManager::ParseLevel(){
-	/*
+void sv::ObstacleManager::ParseLevel()
+{
 	char dir[1024];
-#ifdef WIN32
-	GetModuleFileName(0, dir, sizeof(dir));
-#else
-	readlink("/proc/self/exe", dir, sizeof(dir));
-#endif
-
-	int pos = strlen(dir) - 1;
-	while(pos >= 0 && dir[pos] != '/' && dir[pos] != '\\')
-		pos--;
-
-	char seperator = dir[pos];
-	
-#ifdef WIN32
-	sprintf_s(dir + pos + 1, sizeof(dir) - pos - 1, "..%cLevel%cdefault.lvl", seperator, seperator);
-#else
-	sprintf(dir + pos + 1, "..%cLevel%cdefault.lvl", seperator, seperator);
-#endif
-	*/
-
-	char dir[1024];
-	Engine::Instance()->GetPath("../Level/default.lvl", dir, sizeof(dir));
+	char path[15];
+	memcpy(path, "../Level/?.lvl", 15 * sizeof(char));
+	path[9] = '0' + GetPlayerManager()->GetNumber();
+	Engine::Instance()->GetPath(path, dir, sizeof(dir));
 
 	std::ifstream inFile;
 	inFile.open(dir);
 
 	bool success = ! inFile.fail();
+
+	if(! success)
+	{
+		Engine::Instance()->GetPath("../Level/default.lvl", dir, sizeof(dir));
+		inFile.open(dir);
+		success = ! inFile.fail();
+	}
+
 	if(success)
 	{
 		char lane = 0;
@@ -253,7 +247,7 @@ void sv::ObstacleManager::ParseLevel(){
 
 		while(inFile.good() && lane < sizeof(level))
 		{
-			while(c != '\n' && c != '\r')
+			while(c != '\n' && c != '\r' && inFile.good())
 			{
 				if(step < 16)
 					line[step++] = c;
