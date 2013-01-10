@@ -56,6 +56,10 @@
 		forAll( this.playerList, 'resize' );
 
 		forAll( this.obstaclePool.list, 'resize' );
+
+        // clear and init to get a resized status manager
+        this.statusManager.clear();
+        this.statusManager.init( this.playerList );
 	};
 
 
