@@ -54,14 +54,11 @@
 
 
     // extend animate for collision
-    Obstacle.prototype.animate = function(){
+    Obstacle.prototype.changeSprite = function(){
 
-		if ( this.collisionCounter > 0 ) {
+		if ( this.collisionCounter > 0 ) this.collide();
 
-			this.collide();
-		}
-
-		display.Element.prototype.animate.call( this );
+		display.Element.prototype.changeSprite.call( this );
     };
 
 
