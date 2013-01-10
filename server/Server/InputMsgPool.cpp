@@ -93,6 +93,7 @@ void sv::InputMsgPool::Free(std::vector<uint>& indecies)
 	{
 		//ASSERT(m_Msgs[indecies[i]].status == eMsgStatus_HandledInUse, "sv::InputMsgPool::SetUnhandled : invalid index");
 		ASSERT(m_Msgs[indecies[i]].status == eMsgStatus_UnhandledInUse, "sv::InputMsgPool::SetUnhandled : invalid index");
+		m_Msgs[indecies[i]].msg->Reset();
 		m_Msgs[indecies[i]].status = eMsgStatus_Free;
 	}
 }

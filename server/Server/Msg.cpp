@@ -167,21 +167,31 @@ void sv::HealMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
 		Visit(m_TagetIds[i], buffer, pos, length);
 }
 
-sv::ObstacleMsg::ObstacleMsg(uchar obstacleId, uchar category, uchar pos)
+sv::ObstacleMsg::ObstacleMsg()
 : Msg(eMsgType_Obstacle)
-, m_ObstacleId(obstacleId)
-, m_Category(category)
-, m_Pos(pos)
+, m_Number(0)
 {
+}
+
+void sv::ObstacleMsg::AddObstacle(uchar obstacleId, uchar category, uchar pos)
+{
+	m_ObstacleId[m_Number] = obstacleId;
+	m_Category[m_Number] = category;
+	m_Pos[m_Number] = pos;
+	m_Number++;
 }
 
 void sv::ObstacleMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
 {
 	Visit(m_Type, buffer, pos, length);
 	
-	Visit(m_ObstacleId, buffer, pos, length);
-	Visit(m_Category, buffer, pos, length);
-	Visit(m_Pos, buffer, pos, length);
+	Visit(m_Number, buffer, pos, length);
+	for(uchar i=0; i<m_Number; ++i)
+	{
+		Visit(m_ObstacleId[i], buffer, pos, length);
+		Visit(m_Category[i], buffer, pos, length);
+		Visit(m_Pos[i], buffer, pos, length);
+	}
 }
 
 sv::CollisionMsg::CollisionMsg(uchar obstacleId, uchar playerCount)
@@ -283,10 +293,6 @@ void sv::EndMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
 		second = m_HighscorePoints[i] & 0xFF;
 		Visit(first, buffer, pos, length);
 		Visit(second, buffer, pos, length);
-
-//		Visit(0, buffer, pos, length);
-//		Visit(0, buffer, pos, length);
-//		Visit(0, buffer, pos, length);
 	}
 }
 

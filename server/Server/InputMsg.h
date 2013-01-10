@@ -32,6 +32,7 @@ namespace sv
 
 		void			SetContent(uchar* buffer, const uint& length, uint socket);
 		void			SetContent(uint channel, uint controllerId, uint action, uint socket);
+		void			Reset();
 
 		uchar			GetChannel() { return m_Channel; }
 		uchar			GetControllerId() { return m_ControllerId; }

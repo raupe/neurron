@@ -152,15 +152,18 @@ namespace sv
 	class ObstacleMsg : public Msg
 	{
 	public:
-		ObstacleMsg(uchar obstacleId, uchar category, uchar pos);
+		ObstacleMsg();
 		virtual ~ObstacleMsg() {}
 
 		virtual void	GetBuffer(uchar* buffer, uint& pos, const uint& length);
+		
+		void			AddObstacle(uchar obstacleId, uchar category, uchar pos);
 
 	private:
-		uchar			m_ObstacleId;
-		uchar			m_Category;
-		uchar			m_Pos;
+		uchar			m_Number;
+		uchar			m_ObstacleId[LANE_MAX];
+		uchar			m_Category[LANE_MAX];
+		uchar			m_Pos[LANE_MAX];
 	};
 
 	class CollisionMsg : public Msg

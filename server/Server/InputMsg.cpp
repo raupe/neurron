@@ -17,14 +17,7 @@ sv::InputMsg::~InputMsg()
 void sv::InputMsg::SetContent(uchar* buffer, const uint& length, uint socket)
 {
 	m_Socket = socket;
-	if(length < 3)
-	{
-		m_Channel = 0;
-		m_ControllerId = 0;
-		m_Action = 0;
-		m_Data = 0;
-	}
-	else
+	if(length >= 3)
 	{
 		m_Channel = buffer[0];
 		m_ControllerId = buffer[1];
@@ -49,4 +42,14 @@ void sv::InputMsg::SetContent(uint channel, uint controllerId, uint action, uint
 	m_ControllerId = controllerId;
 	m_Action = action;
 	m_Data = 0;
+}
+
+void sv::InputMsg::Reset()
+{
+		m_Channel = 0;
+		m_ControllerId = 0;
+		m_Action = 0;
+
+		free(m_Data);
+		m_Data = 0;
 }

@@ -20,7 +20,7 @@
 #endif
 
 /*
-const int sv::ObstacleManager::s_LevelSize = 1;//30;
+const int sv::ObstacleManager::s_LevelSize = 2;
 const char* sv::ObstacleManager::s_Level[s_LevelSize] = 
 {
 //a - ein Feld, 1, Energie minus 10%, rot
@@ -30,37 +30,8 @@ const char* sv::ObstacleManager::s_Level[s_LevelSize] =
 
 //  0         10        20
 //  012345678901234567890
-/*	"cadacadadaacadcc",
+	"cadacadadaacadcc",
 	"   c  a  d   aaa",
-	"acacabccac a bc ",
-	"  b bcbc cb   cb",
-	"dada a adaadada ",
-	" b  dbd   a b  b",
-	"a da dd abaaba  ",
-	"dadda dab bd ddd",
-	"bca  ca aaaca   ",
-	" b  cbc   a b  b",
-    "d  a a a db d b ",
-	"  b bdbd db   db",
-	"dada a adaadadaa",
-	" b  dbd   a b  b",
-	"a da dd abaaba  ",
-	"dadda dab bd ddd",
-	"bdb  da aaada   ",
-	"  d d  d dba aaa",
-	"da a a a db d b ",
-	" b  dbd   a b  b",
-    "a ca cc abaaba  ",
-	"cbcca cab bc ddd",
-	"bda  da aaada   ",
-	" ac c  c cba aaa",
-	"c  a a a cb c b ",
-	"  b bcbc cb   cb",
-	"dada a adaadada ",
-	" b  dbd   a b  b",
-	"a da dd abaaba  ",
-	"dadda dab bd ddd", * /
-	"a               ",
 };
 */
 
@@ -162,12 +133,23 @@ void sv::ObstacleManager::UpdateLevel(ulong deltaTime)
 		m_Step ++;
 		if(m_Step == m_LevelSize)
 			m_Step = 0;
+		
+		ObstacleMsg obstacleMsg;
+		bool obstacleCreated = false;
 
 		for(uchar i=0; i<GetGrid()->GetNumberLanes(); ++i)
 		{
 			if(m_Level[m_Step][i] != ' ')
-				CreateObstacle(m_Level[m_Step][i] - 'a' +1, i);
+			{
+				uchar category = m_Level[m_Step][i] - 'a' +1;
+				Obstacle* ob = CreateObstacle(category, i);
+				obstacleMsg.AddObstacle(ob->GetId(), category, ob->GetPos());
+				obstacleCreated = true;
+			}
 		}
+
+		if(obstacleCreated)
+			GetGame()->SendMsg(&obstacleMsg);
 	}
 }
 
@@ -180,10 +162,7 @@ sv::Obstacle* sv::ObstacleManager::CreateObstacle(uchar category, uchar lane)
 	obstacle->Start(pos);
 
 	LOG2(DEBUG_OBSTACLES, "Obstacle created: id: %i, pos: %i", m_IdCount, pos);
-
-	ObstacleMsg obstacleMsg(m_IdCount, category, pos);
-	GetGame()->SendMsg(&obstacleMsg);
-
+	
 	if(m_IdCount == 255)
 		m_IdCount = 1;
 	else
