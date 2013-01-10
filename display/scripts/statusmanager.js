@@ -65,7 +65,7 @@
 		ctx.font = size + "em Fredoka One";
 
         ctx.fillText( ( display.teamname || 'neurrons' ) , this.offset/5, 30 );
-		ctx.fillText( this.points + ' Points', this.offset/5, 64 );
+		ctx.fillText( this.points + ' points', this.offset/5, 64 );
 	};
 
 
@@ -82,7 +82,7 @@
 
 			// energyBars
             ctx.fillStyle = this.gradients[i];
-            ctx.fillRect( 0, this.startY + (i+1)*this.distance, this.fullBarWidth * ( (currentPlayer.energy - currentPlayer.diffEnergy) / 100) + 6, this.fullBarHeight );
+            ctx.fillRect( 0, this.startY + (i+1)*this.distance, this.fullBarWidth * ( (currentPlayer.energy - currentPlayer.diffEnergy) / 100) + 10, this.fullBarHeight );
 
             if ( currentPlayer.diffEnergy === 0 ) currentPlayer.animationStep = this.originStep; // default
 			if ( currentPlayer.diffEnergy > 0 ) currentPlayer.diffEnergy -= currentPlayer.animationStep;
