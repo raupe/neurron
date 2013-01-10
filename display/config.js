@@ -23,7 +23,7 @@ window.config = {
     deadTime            : 5,
 
 
-    audio				: true,		// option #1
+    audio				: false,	// option #1
     audioFading			: 10,		// 10 seconds
     audioVolume			: 30,		// default value
 
@@ -64,27 +64,14 @@ window.config = {
 
 
 			// obstacle
-			damage		: { src: 'assets/damage/light_red.png', width: 100 },
-			heal		: { src: 'assets/heal/light_green.png', width: 100 },
-			points		: { src: 'assets/points/light_white.png', width: 100 },
+			damage		: 'assets/damage/damage.png',
+			heal		: 'assets/heal/heal.png',
+			points		: 'assets/points/points.png',
 
-
-			// animations
-			collision   : {	src: 'assets/damage/explosion-sprite-sheet.png', width: 64 },
-
-            pink        : {
-
-                src     : 'assets/heal/pink-test.png',
-                width   : '57',
-                height  : '55'
-            },
-
-            coin    : {
-
-                src     : 'assets/points/coin-test.png',
-                width   : '29',
-                height  : '28'
-            }
+			// collisions
+			damage_col  : {	src: 'assets/damage/damage_col.png',	width: 102, height: 104 },
+			points_col  : {	src: 'assets/points/points_col.png',	width: 102, height: 104 },
+			heal_col	: {	src: 'assets/heal/heal_col.png',		width: 102, height: 104 }
         },
 
 
@@ -133,7 +120,7 @@ window.config = {
 			size			: 100,
 			velocity		: 1,
 			value			:  10,
-			collisionImg	: 'pink',
+			collisionImg	: 'damage_col',
 			collisionSound	: 'damage'
 		},
 
@@ -142,7 +129,7 @@ window.config = {
 			size			: 100,
 			velocity		: 1,
 			value			:  10,
-			collisionImg	: 'pink',
+			collisionImg	: 'heal_col',
 			collisionSound	: 'heal'
 		},
 
@@ -151,7 +138,7 @@ window.config = {
 			size			: 100,
 			velocity		: 1,
 			value			: 100,
-			collisionImg	: 'pink',
+			collisionImg	: 'points_col',
 			collisionSound	: 'points'
 		},
 
@@ -160,7 +147,7 @@ window.config = {
 			size			: 100,
 			velocity		: 1,
 			value			: 50,
-			collisionImg	: 'pink',
+			collisionImg	: 'points_col',
 			collisionSound	: 'points'
 		}
 
