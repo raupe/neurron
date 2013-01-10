@@ -43,8 +43,7 @@ window.config = {
 
 
 	playerSize			: 80,
-
-
+	frameDuration		: 60,		// base ani duration
 
 
 	assets: {
@@ -121,6 +120,7 @@ window.config = {
 			size			: 100,
 			velocity		: 1,
 			value			:  10,
+			frameDuration	: 100,
 			collisionImg	: 'damage_col',
 			collisionSound	: 'damage'
 		},
@@ -130,6 +130,7 @@ window.config = {
 			size			: 100,
 			velocity		: 1,
 			value			:  10,
+			frameDuration	: 100,
 			collisionImg	: 'heal_col',
 			collisionSound	: 'heal'
 		},
@@ -139,6 +140,7 @@ window.config = {
 			size			: 100,
 			velocity		: 1,
 			value			: 100,
+			frameDuration	: 100,
 			collisionImg	: 'points_col',
 			collisionSound	: 'points'
 		},
@@ -148,6 +150,7 @@ window.config = {
 			size			: 100,
 			velocity		: 1,
 			value			: 50,
+			frameDuration	: 100,
 			collisionImg	: 'points_col',
 			collisionSound	: 'points'
 		}
