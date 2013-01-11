@@ -1,5 +1,6 @@
 (function(){
 
+
 	/**
 	 * [Input description]
 	 */
@@ -11,14 +12,15 @@
 		this.ctx = this.screen.ctx,
 
 		this.origin = null;
-		this.last = null;
-		this.between = [];
+		this.points = [];
 
+
+		this.between = [];
 		this.averageX = 0;
 		this.averageY = 0;
 		this.counter = 0;
 
-		this.tapped = false;
+		// this.tapped = false;
 
 		this.color = null;
 
@@ -29,6 +31,11 @@
 
 		controller.Manager.prototype.input = this;
 	};
+
+
+	// stroking line
+	var clearing = null,
+		paused = null;
 
 
 	Input.prototype.init = function(){
@@ -97,14 +104,17 @@
 		var ctx = this.ctx,
 			color = config.playerColors[ this.color ];
 
-		ctx.lineWidth = 10;
+		ctx.lineWidth = 16;
 		ctx.lineCap = 'round';
+		ctx.lineJoin = 'round';
 
 		ctx.strokeStyle = '#fff';
 
 		ctx.shadowBlur = 20;
 		ctx.shadowColor = color ? 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')' : '#BAE9F7';
 	};
+
+
 
 
 	Input.prototype.start =  function( e ) {
@@ -117,12 +127,18 @@
 		var touch = getPos( e.changedTouches[0] );
 
 		this.origin = touch;
-		this.last = touch;
 
 		this.averageX += touch.x;
 		this.averageY += touch.y;
 
-		this.ctx.beginPath();
+
+		// line
+		if ( this.points.length ) this.clear();
+
+		this.points.length = 0;
+		this.points[0] = touch;
+
+		setTimeout( this.clear.bind(this), config.clearDelay );
 	};
 
 
@@ -131,27 +147,21 @@
 		e.preventDefault();
 		e.stopPropagation();
 
-		this.tapped = false;
+		// this.tapped = false;
 
-		var touch = getPos( e.changedTouches[0] ),
-			last = this.last,
-			ctx = this.ctx;
+		var touch = getPos( e.changedTouches[0] );
 
 		this.between.push(touch);
-
-		// ToDo: check for device property
-		if ( !this.disabled ) {
-
-			ctx.lineTo( last.x, last.y, touch.x, touch.y );
-		}
-
-		this.last = touch;
+		this.points.push(touch);
 
 		this.averageX += touch.x;
 		this.averageY += touch.y;
 		this.counter++;
 
-		ctx.stroke();
+		// line
+		if ( paused ) setTimeout( this.clear.bind(this), config.clearDelay );
+
+		this.draw();
 	};
 
 
@@ -160,27 +170,24 @@
 		e.preventDefault();
 		e.stopPropagation();
 
+		var touch = getPos( e.changedTouches[0] );
 
-		var manager = this.manager,
-			touch = getPos( e.changedTouches[0] ),
-			origin = this.origin;
+		this.points.push( touch );
 
-		if ( this.tapped ) {
+		// if ( this.tapped ) {
 
-			// ToDo: tapped animation
-			manager.handle( config.commands.HEAL );
-
-			return;
-		}
+		//	//for heal
+		//	this.manager.handle( config.commands.HEAL );
+		//	return;
+		// }
 
 		this.tapped = false;
 
 		this.averageX = this.averageX / this.counter;
 		this.averageY = this.averageY / this.counter;
 
-		manager.handle( config.commands.MOVE, [ origin, touch, this.averageX, this.averageY, this.between ] );
-
-		this.screen.clear();
+		this.manager.handle( config.commands.MOVE,
+							[ this.origin, touch, this.averageX, this.averageY, this.between ] );
 
 		this.between.length = 0;
 		this.averageX = 0;
@@ -190,29 +197,77 @@
 
 
 
+	Input.prototype.clear = function(){
+
+		if ( clearing ) return;
+
+		paused = false;
+
+		clearing = window.setInterval(function(){
+
+			if ( !this.points.length ) {
+
+				clearInterval( clearing );
+				clearing = null;
+
+				paused = true;
+				return;
+			}
+
+			this.points = this.points.slice(1);
+
+			// animate -> missing glow
+			this.ctx.clearRect( 0, 0, this.cvs.width, this.cvs.height );
+
+			this.draw();
+
+		}.bind(this), config.clearRate );
+	};
+
+
+	Input.prototype.draw = function(){
+
+		var	ctx = this.ctx,
+			points = this.points,
+			l = points.length - 2,
+			x2, y2;	// temp
+
+		ctx.beginPath();
+
+		// check
+		if ( this.disabled || l <= 0 ) return;
+
+		ctx.moveTo( points[0].x, points[0].y );
+
+		for ( var i = 1; i < l; i++ ) {
+
+			x2 = ( points[i].x + points[i+1].x ) / 2;
+			y2 = ( points[i].y + points[i+1].y ) / 2;
+
+			ctx.quadraticCurveTo( points[i].x, points[i].y, x2, y2 );
+		}
+
+		ctx.quadraticCurveTo( points[i].x, points[i].y,	points[i+1].x, points[i+1].y );
+
+		ctx.stroke();
+	};
+
+
+
 	function getPos ( e ) {
 
-		if ( e.offsetX ) {
+		return {
 
-			return { x: e.offsetX, y: e.offsetY };
-
-		} else if ( e.layerX ) {
-
-			return { x: e.layerX, y: e.layerY };
-
-		} else {
-
-			return { x: e.pageX, y: e.pageY };
-		}
+			x: e.clientX || e.offsetX || e.layerX || e.pageX,
+			y: e.clientY || e.offsetY || e.layerY || e.pageY
+		};
 	}
-
 
 
 	Input.prototype.cancel = function ( e ) {
 
 		e.preventDefault();
 		e.stopPropagation();
-		// console.log(e);
 	};
 
 
@@ -220,9 +275,6 @@
 
 		e.preventDefault();
 		e.stopPropagation();
-		// console.log(e);
 	};
-
-
 
 })();

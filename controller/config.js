@@ -12,6 +12,10 @@ var config = {
 	figureTimer		: 7,
 
 
+	clearDelay		: 3000,
+	clearRate		: 20,
+
+
 	commands:	{
 
 		REGISTER	: 1,
