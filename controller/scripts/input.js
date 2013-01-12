@@ -1,280 +1,243 @@
 (function(){
 
+	controller.Input = (function(){
 
-	/**
-	 * [Input description]
-	 */
-	var Input = controller.Input = function() {
+		var screen = controller.Screen,
 
-		this.screen = controller.Screen;
+			cvs = screen.cvs,
+			ctx = screen.ctx,
 
-		this.cvs = this.screen.cvs;
-		this.ctx = this.screen.ctx,
+			origin = null,
+			points = [],
 
-		this.origin = null;
-		this.points = [];
+			between = [],
+			averageX = 0,
+			averageY = 0,
+			counter = 0,
 
+			color = null,
+			enabled = false,
 
-		this.between = [];
-		this.averageX = 0;
-		this.averageY = 0;
-		this.counter = 0;
+			clearing = null,
+			paused = null,
+			//tapped = false,
 
-		// this.tapped = false;
-
-		this.color = null;
-
-		this.init();
+			manage; // temp
 
 
-		controller.Screen.init( this );
 
-		controller.Manager.prototype.input = this;
-	};
+		// ---- public ----- //
 
+		var active = function ( change ) {
 
-	// stroking line
-	var clearing = null,
-		paused = null;
+				enabled = change;
+			},
 
 
-	Input.prototype.init = function(){
+			setStyle = function ( color ) {
 
-		if ( !( 'ontouchstart' in window ) ) {
+				color = config.playerColors[ color ];
 
-			this.handleKeyboard();
+				ctx.lineWidth = 16;
+				ctx.lineCap = 'round';
+				ctx.lineJoin = 'round';
 
-		} else {
+				ctx.strokeStyle = '#fff';
 
-			this.setStyle();
+				ctx.shadowBlur = 20;
+				ctx.shadowColor = color ? 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')' : '#BAE9F7';
+			},
 
-			this.handleTouch();
+
+			init = function ( handle ) {
+
+				// setup
+				if ( ( 'ontouchstart' in window ) ) {
+
+					setStyle();
+
+					handleTouch();
+				}
+
+				manage = handle;
+
+				return this;
+			};
+
+
+		// ----- private ----- //
+
+		function handleTouch() {
+
+			cvs.addEventListener('touchstart', start );
+			cvs.addEventListener('touchmove', move );
+			cvs.addEventListener('touchend', end );
+			cvs.addEventListener('touchcancel', cancel );
+			cvs.addEventListener('touchleave', leave );
 		}
 
-	};
+		function start ( e ) {
 
+			e.preventDefault();
+			e.stopPropagation();
 
-	Input.prototype.disable = function(){
+			tapped = true;
 
-		// ToDo: remove handler - called on  set/int for button
-		this.disabled = true;
-	};
+			var touch = getPos( e.changedTouches[0] );
 
+			origin = touch;
 
-	Input.prototype.enable = function(){
+			averageX += touch.x;
+			averageY += touch.y;
 
-		this.disabled = false;
-	};
 
+			// line
+			if ( points.length ) clear();
 
-	Input.prototype.handleKeyboard = function() {
+			points.length = 0;
+			points[0] = touch;
 
-		document.addEventListener('keydown', function ( e ) {
+			setTimeout( clear, config.clearDelay );
+		}
 
-			var key = e.which;
 
-			if ( key === 39 ) this.manager.send( config.protocolCtoS.RIGHT ); // right
-			if ( key === 37 ) this.manager.send( config.protocolCtoS.LEFT ); // left
+		function move ( e ) {
 
-			if ( key === 38 ) this.manager.send( config.protocolCtoS.TOP ); // top
-			if ( key === 40 ) this.manager.send( config.protocolCtoS.BOTTOM ); // bottom
+			e.preventDefault();
+			e.stopPropagation();
 
-			if ( key === 13 ) this.manager.handle( config.commands.REGISTER ); // return
-			if ( key === 32 ) this.manager.handle( config.commands.HEAL ); // space
+			// this.tapped = false;
 
-		}.bind(this));
-	};
+			var touch = getPos( e.changedTouches[0] );
 
+			between.push(touch);
+			points.push(touch);
 
-	Input.prototype.handleTouch = function() {
+			averageX += touch.x;
+			averageY += touch.y;
+			counter++;
 
-		var cvs = this.cvs;
+			// line
+			if ( paused ) setTimeout( clear, config.clearDelay );
 
-		cvs.addEventListener('touchstart', this.start.bind(this) );
-		cvs.addEventListener('touchmove', this.move.bind(this) );
-		cvs.addEventListener('touchend', this.end.bind(this) );
-		cvs.addEventListener('touchcancel', this.cancel.bind(this) );
-		cvs.addEventListener('touchleave', this.leave.bind(this) );
-	};
+			draw();
+		}
 
 
-	// Style settings
-	Input.prototype.setStyle = function(){
+		function end ( e ) {
 
-		var ctx = this.ctx,
-			color = config.playerColors[ this.color ];
+			e.preventDefault();
+			e.stopPropagation();
 
-		ctx.lineWidth = 16;
-		ctx.lineCap = 'round';
-		ctx.lineJoin = 'round';
+			var touch = getPos( e.changedTouches[0] );
 
-		ctx.strokeStyle = '#fff';
+			points.push( touch );
 
-		ctx.shadowBlur = 20;
-		ctx.shadowColor = color ? 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')' : '#BAE9F7';
-	};
+			// if ( this.tapped ) {
 
+			//	//for heal
+			//	manage( config.commands.HEAL );
+			//	return;
+			// }
 
+			tapped = false;
 
+			averageX /= counter;
+			averageY /= counter;
 
-	Input.prototype.start =  function( e ) {
+			manage( config.commands.MOVE,[ origin, touch, averageX, averageY, between ] );
 
-		e.preventDefault();
-		e.stopPropagation();
+			between.length = 0;
+			averageX = 0;
+			averageY = 0;
+			counter = 0;
+		}
 
-		this.tapped = true;
 
-		var touch = getPos( e.changedTouches[0] );
+		function clear() {
 
-		this.origin = touch;
+			if ( clearing ) return;
 
-		this.averageX += touch.x;
-		this.averageY += touch.y;
+			paused = false;
 
+			clearing = window.setInterval(function(){
 
-		// line
-		if ( this.points.length ) this.clear();
+				if ( !points.length ) {
 
-		this.points.length = 0;
-		this.points[0] = touch;
+					clearInterval( clearing );
+					clearing = null;
 
-		setTimeout( this.clear.bind(this), config.clearDelay );
-	};
+					paused = true;
+					return;
+				}
 
+				points = points.slice(1);
 
-	Input.prototype.move = function ( e ) {
+				// animate -> missing glow
+				ctx.clearRect( 0, 0, cvs.width, cvs.height );
 
-		e.preventDefault();
-		e.stopPropagation();
+				draw();
 
-		// this.tapped = false;
+			}, config.clearRate );
+		}
 
-		var touch = getPos( e.changedTouches[0] );
 
-		this.between.push(touch);
-		this.points.push(touch);
+		function draw(){
 
-		this.averageX += touch.x;
-		this.averageY += touch.y;
-		this.counter++;
+			var l = points.length - 2,
+				x2, y2;	// temp
 
-		// line
-		if ( paused ) setTimeout( this.clear.bind(this), config.clearDelay );
+			ctx.beginPath();
 
-		this.draw();
-	};
+			// check
+			if ( !enabled || l <= 0 ) return;
 
+			ctx.moveTo( points[0].x, points[0].y );
 
-	Input.prototype.end = function ( e ) {
+			for ( var i = 1; i < l; i++ ) {
 
-		e.preventDefault();
-		e.stopPropagation();
+				x2 = ( points[i].x + points[i+1].x ) / 2;
+				y2 = ( points[i].y + points[i+1].y ) / 2;
 
-		var touch = getPos( e.changedTouches[0] );
-
-		this.points.push( touch );
-
-		// if ( this.tapped ) {
-
-		//	//for heal
-		//	this.manager.handle( config.commands.HEAL );
-		//	return;
-		// }
-
-		this.tapped = false;
-
-		this.averageX = this.averageX / this.counter;
-		this.averageY = this.averageY / this.counter;
-
-		this.manager.handle( config.commands.MOVE,
-							[ this.origin, touch, this.averageX, this.averageY, this.between ] );
-
-		this.between.length = 0;
-		this.averageX = 0;
-		this.averageY = 0;
-		this.counter = 0;
-	};
-
-
-
-	Input.prototype.clear = function(){
-
-		if ( clearing ) return;
-
-		paused = false;
-
-		clearing = window.setInterval(function(){
-
-			if ( !this.points.length ) {
-
-				clearInterval( clearing );
-				clearing = null;
-
-				paused = true;
-				return;
+				ctx.quadraticCurveTo( points[i].x, points[i].y, x2, y2 );
 			}
 
-			this.points = this.points.slice(1);
+			ctx.quadraticCurveTo( points[i].x, points[i].y,	points[i+1].x, points[i+1].y );
 
-			// animate -> missing glow
-			this.ctx.clearRect( 0, 0, this.cvs.width, this.cvs.height );
-
-			this.draw();
-
-		}.bind(this), config.clearRate );
-	};
-
-
-	Input.prototype.draw = function(){
-
-		var	ctx = this.ctx,
-			points = this.points,
-			l = points.length - 2,
-			x2, y2;	// temp
-
-		ctx.beginPath();
-
-		// check
-		if ( this.disabled || l <= 0 ) return;
-
-		ctx.moveTo( points[0].x, points[0].y );
-
-		for ( var i = 1; i < l; i++ ) {
-
-			x2 = ( points[i].x + points[i+1].x ) / 2;
-			y2 = ( points[i].y + points[i+1].y ) / 2;
-
-			ctx.quadraticCurveTo( points[i].x, points[i].y, x2, y2 );
+			ctx.stroke();
 		}
 
-		ctx.quadraticCurveTo( points[i].x, points[i].y,	points[i+1].x, points[i+1].y );
 
-		ctx.stroke();
-	};
+		function getPos ( e ) {
+
+			return {
+
+				x: e.clientX || e.offsetX || e.layerX || e.pageX,
+				y: e.clientY || e.offsetY || e.layerY || e.pageY
+			};
+		}
+
+		function cancel ( e ) {
+
+			e.preventDefault();
+			e.stopPropagation();
+		}
 
 
+		function leave ( e ) {
 
-	function getPos ( e ) {
+			e.preventDefault();
+			e.stopPropagation();
+		}
 
 		return {
 
-			x: e.clientX || e.offsetX || e.layerX || e.pageX,
-			y: e.clientY || e.offsetY || e.layerY || e.pageY
+			init	: init,
+			active	: active,
+			setStyle: setStyle
 		};
-	}
 
+	})();
 
-	Input.prototype.cancel = function ( e ) {
-
-		e.preventDefault();
-		e.stopPropagation();
-	};
-
-
-	Input.prototype.leave = function ( e ) {
-
-		e.preventDefault();
-		e.stopPropagation();
-	};
 
 })();

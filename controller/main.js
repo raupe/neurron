@@ -3,9 +3,6 @@
 	// reference for display
 	var channel = window.location.search.substr(1);
 
-	// handling input
-	new controller.Input();
-
 	// delegating commands
 	new controller.Manager({
 

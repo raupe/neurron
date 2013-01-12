@@ -14,18 +14,10 @@
 
 		this.req = new XMLHttpRequest();
 
-		this.box = controller.Box;
-		this.box.init( this.handle.bind(this) );
+		this.box = controller.Box.init( this.handle.bind(this) );
+		this.input = controller.Input.init( this.handle.bind(this) );
 
-		if ( this.channel > 255 ) {
-
-			this.box.warn( 3 );
-
-			// input.disable();
-		}
-
-		// input reference
-		controller.Input.prototype.manager = this;
+		if ( this.channel > 255 ) this.box.warn( 3 );
 	};
 
 
@@ -48,6 +40,7 @@
 			this.box.warn( type );
 		}
 
+		this.input.active( false );
 	};
 
 
@@ -100,7 +93,7 @@
 	 */
 	Manager.prototype.name = function ( name ) { // name
 
-		this.input.enable();
+		this.input.active( true );
 
 		this.send( config.protocolCtoS.TEAMNAME, name );
 	};
@@ -144,9 +137,7 @@
 
 				this.id = data.charCodeAt(1);
 
-				this.input.color = data.charCodeAt(2);
-
-				this.input.setStyle();
+				this.input.setStyle( data.charCodeAt(2) );
 
 				var name = data.charCodeAt(3);
 
