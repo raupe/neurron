@@ -183,45 +183,37 @@ canvas {
 
 
 
-.fadeAnimation {
+.fade {
+
+    opacity: 0;
 
 	-webkit-transition: opacity 7s ease-in-out;
 	   -moz-transition: opacity 7s ease-in-out;
 	    -ms-transition: opacity 7s ease-in-out;
 	     -o-transition: opacity 7s ease-in-out;
 		    transition: opacity 7s ease-in-out;
-
-    opacity: 0;
-
-
-    -webkit-animation: pound 1.8s infinite none;
-    -moz-animation: pound 1.8s infinite none;
-    -ms-animation: pound 1.8s infinite none;
-    animation: pound 1.8s infinite none;
-
-    transform-origin: center;
 }
 
+
+.pound {
+
+	-webkit-transform-origin: center;
+	   -moz-transform-origin: center;
+	    -ms-transform-origin: center;
+	     -o-transform-origin: center;
+	     	transform-origin: center;
+
+    -webkit-animation: pound 1.8s infinite none;
+	   -moz-animation: pound 1.8s infinite none;
+   		-ms-animation: pound 1.8s infinite none;
+    		animation: pound 1.8s infinite none;
+}
 
 
 
 /* keyframes */
-@-webkit-keyframes pound {
-
-	50%{ -webkit-transform:scale(1.2); }
-}
-
-@-moz-keyframes pound {
-
-	50% { -moz-transform:scale(1.2); }
-}
-
-@-ms-keyframes pound {
-
-	50%{ -ms-transform:scale(1.2); }
-}
-@keyframes pound {
-
-	50% {  transform: scale(1.2); }
-}
+@-webkit-keyframes pound { 50%{	-webkit-transform:scale(1.2); 	transform: scale(1.2); } }
+@-moz-keyframes pound { 50% { 	-moz-transform:scale(1.2); 		transform: scale(1.2); } }
+@-ms-keyframes pound { 50%{ 	-ms-transform:scale(1.2); 		transform: scale(1.2); } }
+@keyframes pound { 50% {  										transform: scale(1.2); } }
 

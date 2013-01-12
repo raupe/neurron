@@ -1,6 +1,6 @@
 (function(){
 
-	controller.Box = (function Box(){
+	controller.Box = (function(){
 
 		var box = document.getElementById('box'),
 			content = document.getElementById('content'),
@@ -63,7 +63,12 @@
 
 		// --------- public ---------//
 
-		var init = function ( handle ) { manage = handle; },
+		var init = function ( handle ) {
+
+				manage = handle;
+
+				return this;
+			},
 
 			start = function(){
 
@@ -87,7 +92,7 @@
 				box.className = 'hide';
 				content.innerHTML = '';
 
-				figure.className = 'figure fadeAnimation';
+				figure.className = 'figure fade pound';
 
 				var img = new Image();
 
