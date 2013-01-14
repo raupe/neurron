@@ -17,13 +17,7 @@
 
 		this.background = new display.Background();
 
-
-		this.options = new display.Options({
-
-			manager: this,
-			grid: this.grid,
-			background: this.background
-		});
+		this.options = new display.Options({ manager: this });
 
 		display.Connection.prototype.manager = this;
 		display.StatusManager.prototype.manager = this;
@@ -52,6 +46,9 @@
 	 * @return {[type]} [description]
 	 */
 	Manager.prototype.resize = function(){
+
+		this.grid.init();
+		this.background.resize();
 
 		forAll( this.playerList, 'resize' );
 
@@ -148,7 +145,6 @@
 		};
 
 		// console.log(action, options);
-
 		commands[ action ].call( this, options );
 	};
 
@@ -174,16 +170,26 @@
 
 				linkBox = document.createElement('a');
 
+			qrCode.className = 'show';
+
 			linkBox.href = link;
 			linkBox.textContent = shortUrl;
-			linkBox.className = "qr_link";
-			linkBox.target = "_blank";
+			linkBox.className = 'qr_link show';
+			linkBox.target = '_blank';
 
 			element.appendChild( qrCode );
 			element.insertBefore( linkBox, qrCode.nextSibling );
 
+			element.className = 'qr_code round show';
+
 			// set visible
-			element.className = 'qr_code round';
+			setTimeout(function(){
+
+				element.classList.add('fadeIn');
+				qrCode.classList.add('fadeIn');
+				linkBox.classList.add('fadeIn');
+
+			}, 16.7 );
 		};
 
         xhr.open('GET', 'http://is.gd/create.php?format=json&url=' + encodeURI( link ), true );
@@ -200,7 +206,7 @@
 	 */
 	Manager.prototype.teamname = function() {
 
-		display.show( 'load' );
+		display.show('load');
 	};
 
 
@@ -210,11 +216,9 @@
 	 */
 	Manager.prototype.cancel = function(){
 
-		display.show( 'start' );
+		display.show('start');
 
 		display.load_view.clearLoadScene();
-
-		console.log('[game canceled]');
 	};
 
 
@@ -225,10 +229,9 @@
 	 */
 	Manager.prototype.countdown = function ( params )  {
 
-		if ( display.current !== 'load' ) display.show( 'load' );
+		if ( display.current !== 'load' ) display.show('load');
 
-//		new display.Timer( params[0] * 1000, 'countdown', 'load_outerwrapper');
-        display.load_view.loadBar(params[0]);
+        display.load_view.loadBar( params[0] );
 
 		display.teamname = params[1] ? params[1] : '';
 
@@ -255,7 +258,8 @@
 	 */
 	Manager.prototype.start = function ( params ) {
 
-        display.show( 'game' );
+        display.show('game');
+
         display.load_view.clearLoadScene();
 
 		this.grid.init({
@@ -273,6 +277,7 @@
 
 		this.playerList	= new display.PlayerList( params[1] );
 
+		this.statusManager.clear();
 		this.statusManager.init( this.playerList );
 
 		this.render();
@@ -346,24 +351,23 @@
      */
     Manager.prototype.end = function ( params ) {
 
-        display.show( 'end' );
+        display.show('end');
 
-        $('#qr_code').removeClass("marginTop");
-        $('#qr_code img').removeClass("halfQR");
-        $('.side_wrapper').removeClass("blueGradient");
-        $('#container-right').removeClass("marginTopPadding");
-        $('#container').addClass("backgroundImage");
+        // fading
+        setTimeout( function(){
 
-        this.statusManager.showEnd( params[0], params[1], params[2] );
+			this.statusManager.showEnd( params[0], params[1], params[2] );
 
-        this.runningGame = false;
-        this.screen.clear();
+			this.runningGame = false;
+			this.screen.clear();
 
-        this.obstaclePool.list.length = 0;
-        this.obstaclePool.pool.length = 0;
-        this.playerList.length = 0;
+			this.obstaclePool.list.length = 0;
+			this.obstaclePool.pool.length = 0;
+			this.playerList.length = 0;
 
-        this.statusManager.clear();
+			this.statusManager.clear();
+
+        }.bind(this), 1000 );
 	};
 
 

@@ -8,7 +8,7 @@
 		var left = '\
 		<div class="main_content_wrap">\
             <div class="logo">\
-                <img src="style/images/neurron_logo.png" width="356" height="113" alt="neurron logo" />\
+                <img src="style/images/neurron_logo.png" alt="neurron logo" class="logo" />\
                 <div class="subtitle">END OF THE TUNNEL</div>\
             </div>\
             <div id="score_wrap" class="score_wrap">\
@@ -44,31 +44,31 @@
         </div>';
 
 
-		// right = '\
-		// \
-		// ';
-
-
-		return {
-
-            left    : left
-            // right   : right
-        };
+		return { left: left };
 
 	})();
 
     // cache
-    var music;
+    var music, win;
 
     display.logic.end = function(){
 
-        $container.addClass('backgroundImage');
+        $('#qr_code').removeClass("marginTop");
+        $('#qr_code img').removeClass("halfQR");
+        $('.side_wrapper').removeClass("blueGradient");
+        $('#container-right').removeClass("marginTopPadding");
+        $('#container').addClass("backgroundImage");
 
         if ( !music ) {
+
+            win = display.getAsset('audio', 'win');
+            win.volume = config.audioVolume/100;
 
             music = display.getAsset('audio', 'start');
             music.loop = true;
         }
+
+        if ( config.audio ) win.play();
 
         display.sound( music );
     };

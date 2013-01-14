@@ -220,7 +220,7 @@ canvas {
 	position: relative;
 	height: 50%;
 
-	/*width: 100%; /* ???? */*/
+	/*width: 100%; /* ???? */
 }
 
 
@@ -230,13 +230,12 @@ canvas {
 
 
 .qr_code {
-	background-color: #ffffff;
+	background-color: #fff;
 	padding: 10px;
 	position: relative;
 	width: 80%;
 	margin: 0 auto;
 }
-
 
 .qr_code img {
 	display: block;
@@ -255,18 +254,42 @@ canvas {
 
 
 .show {
+
 	display: block;
+
+	opacity: 0;
+
+	-webkit-transition: opacity 1s ease-in-out;
+	   -moz-transition: opacity 1s ease-in-out;
+	    -ms-transition: opacity 1s ease-in-out;
+	     -o-transition: opacity 1s ease-in-out;
+		    transition: opacity 1s ease-in-out;
 }
 
+.hide {		display: none;	}
+.fadeOut {	opacity: 0;		}
+.fadeIn {	opacity: 1;		}
 
-.hide {
-	display: none;
-}
 
 
 /* ---------- load ---------------------*/
 
 .load_background {
+	width: 100%;
+}
+
+.load_bar {
+
+	padding: 10px 0;
+}
+
+.load_tutorial {
+
+	width: 90%;
+	margin: 0 auto;
+}
+
+.tutorial {
 	width: 100%;
 }
 
@@ -350,6 +373,15 @@ canvas {
 }
 
 /*score ?*/
+
+/*
+.logo {
+
+	width: 356px;
+	height: 113px;
+}*/
+
+/*width="356" height="113" */
 
 /*
 .logo {
@@ -620,6 +652,8 @@ h1 {
 .load_innerwrapper {
     width: 70%;
     margin: auto;
+
+    background-color: #fff;
 }
 
 .progressbar {

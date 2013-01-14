@@ -29,7 +29,7 @@
 		cvs.id = 'screen';
 
 		div.id = 'game-l';
-		div.className = 'wrapper hide';
+		div.className = 'wrapper show hide';
 
 		div.appendChild( cvs );
 

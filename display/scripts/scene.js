@@ -1,9 +1,36 @@
 (function(){
 
 	// handle visuals
-
 	var containerLeft = document.getElementById('container-left'),
-		containerRight = document.getElementById('container-right');
+		containerRight = document.getElementById('container-right'),
+
+		// cross browser event
+		transitionend = (function(){
+
+		var prefix = {
+
+				'WebkitTransition'	: 'webkitTransitionEnd',
+				'MozTransition'		: 'transitionend',
+				'MSTransition'		: 'msTransitionEnd',
+				'OTransition'		: 'oTransitionEnd',
+				'transition'		: 'transitionEnd'
+			},
+
+			temp = document.createElement('div'),
+			keys = Object.keys( prefix ),
+
+			i, l; // iterator
+
+		for ( i = 0, l = keys.length; i < l; i++ ) {
+
+			if ( temp.style[ keys[i] ] !== undefined ) return prefix[ keys[i] ];
+		}
+
+	})();
+
+
+
+
 
 	display.current = null;
 
@@ -11,51 +38,113 @@
 
 		var left, right,
 			view = display.views[ id ],
+			check = 0,
 			temp;
 
 		if ( display.current ) {
 
 			left = document.getElementById( display.current + '-l' );
-			if ( left ) $(left).toggleClass('show hide');
-
 			right = document.getElementById( display.current + '-r' );
-			if ( right ) $(right).toggleClass('show hide');
+
+			if ( left ) {
+
+				check++;
+
+				left.classList.remove('fadeIn');
+				left.classList.add('fadeOut');
+				left.addEventListener( transitionend, hide );
+			}
+
+			if ( right ) {
+
+				check++;
+
+				right.classList.remove('fadeIn');
+				right.classList.add('fadeOut');
+				right.addEventListener( transitionend, hide );
+			}
+
+		} else {
+
+			show();
 		}
 
 		display.current = id;
 
 
-		left = document.getElementById( id + '-l' );
-		right = document.getElementById( id + '-r' );
+		function hide ( e ) {
 
-		if ( left ) {
+			var el = e.currentTarget;
 
-			$(left).toggleClass('show hide');
+			el.classList.remove('fadeOut');
+			el.classList.add('hide');
 
-		} else if ( view && view.left ) {
+			el.removeEventListener( transitionend, hide );
 
-			temp = document.createElement('div');
-			temp.innerHTML = view.left;
-			temp.id = id + '-l';
-			temp.className = 'wrapper show';
-			containerLeft.appendChild( temp );
+			if ( !--check ) show(); // as both triggered
 		}
 
-		if ( right ) {
 
-			$(right).toggleClass('show hide');
+		function show(){
 
-		} else if ( view && view.right ) {
+			left = document.getElementById( id + '-l' );
+			right = document.getElementById( id + '-r' );
 
-			temp = document.createElement('div');
-			temp.innerHTML = view.right;
-			temp.id = id + '-r';
-			temp.className = 'wrapper show';
-			containerRight.appendChild( temp );
+			if ( left ) {
+
+				left.classList.remove('hide');
+				setTimeout(function(){ left.classList.add('fadeIn'); }, 16.7 );
+
+			} else if ( view && view.left ) {
+
+				temp = document.createElement('div');
+				temp.innerHTML = view.left;
+				temp.id = id + '-l';
+				temp.className = 'wrapper show';
+				containerLeft.appendChild( temp );
+
+				setTimeout(function(){
+
+					document.getElementById( id + '-l' ).classList.add('fadeIn');
+
+				}, 16.7 );
+			}
+
+			if ( right ) {
+
+				right.classList.remove('hide');
+				setTimeout(function(){ right.classList.add('fadeIn'); }, 16.7 );
+
+			} else if ( view && view.right ) {
+
+				temp = document.createElement('div');
+				temp.innerHTML = view.right;
+				temp.id = id + '-r';
+				temp.className = 'wrapper show';
+				containerRight.appendChild( temp );
+
+				setTimeout(function(){
+
+					document.getElementById( id + '-r' ).classList.add('fadeIn');
+
+				}, 16.7 );
+			}
+
+			if ( display.logic[ id ] ) display.logic[ id ]();
 		}
-
-		if ( display.logic[ id ] ) display.logic[ id ]();
 	};
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,8 +1,6 @@
 (function(){
 
-	var $Screen = $('#Screen'),
-		$StatusManager = $('#StatusManager'),
-		music;
+	var music;
 
 	display.logic.game = function(){
 
@@ -13,9 +11,6 @@
 		}
 
 		display.sound( music );
-
-		$Screen.toggleClass('hide show');
-		$StatusManager.toggleClass('hide show');
 	};
 
 })();
