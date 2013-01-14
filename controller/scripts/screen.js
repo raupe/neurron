@@ -4,18 +4,18 @@
 
 		var cvs = document.createElement('canvas'),
 			ctx = cvs.getContext('2d'),
-			input;
+			setStyle;
 
 		function init ( param ) {
 
-			input = param;
+			setStyle = param;
 		}
 
 		function scale() {
 
 			cvs.width = window.innerWidth;
 			cvs.height = window.innerHeight;
-			if ( input ) input.setStyle();
+			if ( setStyle ) setStyle();
 		}
 
 		function clear (){
@@ -24,7 +24,6 @@
 			ctx.clearRect( 0 , 0 , cvs.width, cvs.height );
 			ctx.restore();
 		}
-
 
 		scale();
 

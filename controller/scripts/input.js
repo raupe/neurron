@@ -15,7 +15,7 @@
 			averageY = 0,
 			counter = 0,
 
-			color = null,
+			colorID = null,
 			enabled = false,
 
 			clearing = null,
@@ -23,7 +23,6 @@
 			//tapped = false,
 
 			manage; // temp
-
 
 
 		// ---- public ----- //
@@ -34,9 +33,11 @@
 			},
 
 
-			setStyle = function ( color ) {
+			setStyle = function ( param ) {
 
-				color = config.playerColors[ color ];
+				if ( param ) colorID = param;
+
+				var color = config.playerColors[ colorID ];
 
 				ctx.lineWidth = 16;
 				ctx.lineCap = 'round';
@@ -229,6 +230,10 @@
 			e.preventDefault();
 			e.stopPropagation();
 		}
+
+
+		// pass for resize
+		screen.init( setStyle );
 
 		return {
 
