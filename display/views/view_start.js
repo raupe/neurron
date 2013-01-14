@@ -6,7 +6,7 @@
 		<div class="slider_content_wrap">\
 			<div class="logo">\
 				<img src="style/images/neurron_logo.png" alt="neurron logo" class="logo" />\
-				<div class="subtitle">END OF THE TUNNEL</div>\
+				<div class="subtitle">TUNNEL TO THE END</div>\
 			</div>\
 			<div id="slider_box_wrap" class="slider_box_wrap">\
 				<ul>\
