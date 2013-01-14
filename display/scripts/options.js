@@ -2,8 +2,6 @@
 
 	var Options = display.Options = function ( params ) {
 
-		this.grid = params.grid;
-		this.background = params.background;
 		this.manager = params.manager;
 
 		this.init();
@@ -67,9 +65,6 @@
 	Options.prototype.changeFullScreen = function(){
 
 		if ( !screenfull.isFullscreen ) btnFullScreen.classList.remove('off');
-
-		this.grid.init();
-		this.background.resize();
 
 		this.manager.resize();
 	};
