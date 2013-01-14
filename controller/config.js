@@ -12,7 +12,7 @@ var config = {
 	figureTimer		: 7,
 
 
-	clearDelay		: 3000,
+	clearDelay		: 2000,
 	clearRate		: 20,
 
 
