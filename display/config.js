@@ -23,9 +23,9 @@ window.config = {
     deadTime            : 5,
 
 
-    audio				: true,	// option #1
+    audio				: true,		// option #1
     audioFading			: 10,		// 10 seconds
-    audioVolume			: 30,		// default value
+    audioVolume			: 50,		// default value
 
 
 	circleOffset		: 100,
@@ -84,9 +84,12 @@ window.config = {
 		audio: {
 
 			damage		: 'assets/damage/damage.wav',
-			heal		: 'assets/heal/heal.wav',
+			heal		: 'assets/heal/heal.mp3',
 			points		: 'assets/points/points.wav',
+
+			dead		: 'assets/player/dead.wav',
 			revive		: 'assets/player/revive.wav',
+			win			: 'assets/player/win.mp3',
 
             start		: 'assets/views/start/start.mp3',
             game		: 'assets/views/game/game.ogg'
