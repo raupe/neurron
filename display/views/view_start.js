@@ -5,7 +5,7 @@
 		var left = '\
 		<div class="slider_content_wrap">\
 			<div class="logo">\
-				<img src="style/images/neurron_logo.png" width="356" height="113" alt="neurron logo" />\
+				<img src="style/images/neurron_logo.png" alt="neurron logo" class="logo" />\
 				<div class="subtitle">END OF THE TUNNEL</div>\
 			</div>\
 			<div id="slider_box_wrap" class="slider_box_wrap">\
@@ -20,7 +20,7 @@
 						<img class="video"  src="http://company.zynga.com/nfs/files-0925-01/coasterville_flat_0.png" />\
 					</li>\
 					<li id="gameplay" class="screen hide">\
-						<video poster="assets/views/load/tutorial/load_background.jpg" controls preload="auto">\
+						<video poster="assets/views/load/tutorial/load_background.jpg" controls preload="auto" class="video">\
 							<source src="assets/views/start/test.mp4" type="video/mp4" />\
 							<source src="assets/views/start/test.ogv" type="video/ogg" />\
 							The browser doesn\'t support any of the provided formats...\
@@ -31,13 +31,9 @@
 					</li>\
 				</ul>\
 			</div>\
-		</div>\
-		';
+		</div>';
 
-		return {
-
-			left    : left
-		};
+		return { left: left	};
 
 	})();
 
@@ -46,6 +42,11 @@
 	var video, music;
 
 	display.logic.start = function(){
+
+
+		$('#container').addClass("backgroundImage");
+		$('#container-right').removeClass("marginTopPadding");
+		$('#qr_code img').removeClass("halfQR");
 
 		if ( video ) {
 
@@ -104,7 +105,6 @@
 
 			$($items[counter]).fadeIn();
 			$($buttons[counter]).addClass('button_active');
-			//$buttons[counter].className += " button_active";
 
 			if ( currentId === 'gameplay' ) video.play();
 

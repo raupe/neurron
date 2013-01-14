@@ -7,43 +7,44 @@
 
 		var left = '\
 		<div id="load_outerwrapper" class="load_outerwrapper">\
-			<div id="load_innerwrapper" class="load_innerwrapper">\
+			<div id="load_innerwrapper" class="load_innerwrapper round">\
 				<div id="load_teamname" class="load_teamname"></div>\
-				<img id="load_bar" src="assets/views/load/blink/load.gif"/>\
-				<div id="tutorial" class="load_background_wrapper">\
-					<iframe style="width:100%; height: 50%; position: relative;\
-							margin: 0; padding: 0; border: 0;"\
-						frameBorder="0" scrolling="no" 0" hspace="0" vspace="0"\
-						marginheight="0" marginwidth="0"></iframe>\
+				<img id="load_bar" class="load_bar" src="assets/views/load/blink/load.gif"/>\
+				<div id="tutorial" class="load_background_wrapper load_tutorial">\
+					<video poster="assets/views/load/tutorial/load_background.jpg" controls preload="auto" class="tutorial">\
+						<source src="assets/views/start/test.mp4" type="video/mp4" />\
+						<source src="assets/views/start/test.ogv" type="video/ogg" />\
+						The browser doesn\'t support any of the provided formats...\
+					</video>\
 				</div>\
 				<div id="progressbar" class="progressbar"></div>\
 			</div>\
-		</div>\
-		',
+		</div>',
 
 		right = '<div id="load_register_status" class="joined round"></div>';
 
-		return {
-
-			left    : left,
-			right   : right
-		};
+		return { left: left, right: right };
 
 	})();
 
 	display.load_view.playerNums = 0;
 
+
 	display.load_view.showNewPlayer = function(){
 
-		// console.log("new player added");
-		display.load_view.playerNums++;
+		// fading animation
+		setTimeout(function(){
 
-		var element = document.getElementById('load_register_status'),
-			pathToImages = config.viewAssets + '/load/icons/',
-			image = new Image();
+			display.load_view.playerNums++;
 
-		image.onload = function(){ element.appendChild(image); };
-		image.src = pathToImages + 'neurron_' + display.load_view.playerNums + '.png';
+			var element = document.getElementById('load_register_status'),
+				pathToImages = config.viewAssets + '/load/icons/',
+				image = new Image();
+
+			image.onload = function(){ element.appendChild(image); };
+			image.src = pathToImages + 'neurron_' + display.load_view.playerNums + '.png';
+
+		}, 1000);
 	};
 
 	display.load_view.clearLoadScene = function(){
@@ -62,9 +63,9 @@
         if ( !progressbar ) progressbar = $('#progressbar');
         progressbar.removeClass('fill');
 
-		$('#container').addClass("backgroundImage");
-		$('#container-right').removeClass("marginTopPadding");
-		$('#qr_code img').removeClass("halfQR");
+		// $('#container').addClass("backgroundImage");
+		// $('#container-right').removeClass("marginTopPadding");
+		// $('#qr_code img').removeClass("halfQR");
 	};
 
 	display.load_view.hideLoadBar = function() {
@@ -92,12 +93,6 @@
 		if ( !progressbar ) progressbar = $('#progressbar');
 
         progressbar.addClass('fill');
-
-		/*progressbar.animate({
-			width: "100%"
-		}, 15000, function(){
-			console.log("complete");
-		});*/
 	};
 
 	var tutorial;

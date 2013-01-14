@@ -26,6 +26,7 @@
 		this.healer = 0;
         var ctx = this.panel;
         this.gradients = [];
+
         for ( var i = 1, l = playerList.length; i <= l; i++ ){
 
             var grd;
@@ -35,13 +36,6 @@
 
             this.gradients.push(grd);
 		}
-
-        // following classes has always to be removed in end scene
-        $('#qr_code').addClass("marginTop");
-        $('#qr_code img').addClass("halfQR");
-        $('.side_wrapper').addClass("blueGradient");
-        $('#container-right').addClass("marginTopPadding");
-        $('#container').removeClass("backgroundImage");
 	};
 
 
@@ -116,7 +110,7 @@
 		div.appendChild( cvs );
 
 		div.id = 'game-r';
-		div.className = 'wrapper hide statusmanagerWrapper';
+		div.className = 'wrapper show hide statusmanagerWrapper';
 
 		container_right.appendChild( div );
 	};
@@ -244,73 +238,78 @@
 
 		} else {
 
-			console.log( obstacleId, currentObstacle );
+			console.log( 'Missed: ', obstacleId, ' - ', currentObstacle );
 		}
 	};
 
 
 	StatusManager.prototype.showEnd = function ( points, share, competition ) {
 
-		// highscore
-		document.getElementById('score_value').children[0].textContent = points; // <h1>
+		// fade
+		setTimeout( function(){
 
-		// diagram
-		var stylesheet = document.styleSheets[ document.styleSheets.length-1 ],
+			// highscore
+			document.getElementById('score_value').children[0].textContent = points; // <h1>
 
-			rules = stylesheet.cssRules.length, // || stylesheet.rules,
+			// diagram
+			var stylesheet = document.styleSheets[ document.styleSheets.length-1 ],
 
-			colors = config.colors,
+				rules = stylesheet.cssRules.length, // || stylesheet.rules,
 
-			length = share.length,
+				colors = config.colors,
 
-			current,	// temp
-			i;			// iterator
+				length = share.length,
 
-		for ( i = 0; i < length; i++ ) {
+				current,	// temp
+				i;			// iterator
 
-			current = share[i];
+			for ( i = 0; i < length; i++ ) {
 
-			stylesheet.insertRule( '.'+ colors[current.color] + '{\
-										width: ' + current.perc + '%;\
-									}', rules + i );
-		}
+				current = share[i];
 
-
-		// legends
-		document.getElementById('category').textContent = length;
-
-		var legends = document.getElementById('legends').children[0], // <table>
-
-			legendContainer = document.getElementById('legends').parentNode,
-
-			ranking = '<tbody>';
-
-		length = competition.length;
-
-		legendContainer.classList.remove('hide');
-
-		if ( !length ) legendContainer.classList.add('hide');
-
-
-		for ( i = 0; i < length; i++ ) {
-
-			current = competition[i];
-
-			if ( current.name ) {
-
-				ranking += '\
-					<tr>\
-						<td>0' + (i+1) + '</td>\
-						<td>' + current.name + '</td>\
-						<td>' + current.score + '</td>\
-					</tr>\
-				';
+				stylesheet.insertRule( '.'+ colors[current.color] + '{\
+											width: ' + current.perc + '%;\
+										}', rules + i );
 			}
-		}
 
-		ranking += '</tbody>';
 
-		legends.innerHTML = ranking;
+			// legends
+			document.getElementById('category').textContent = length;
+
+			var legends = document.getElementById('legends').children[0], // <table>
+
+				legendContainer = document.getElementById('legends').parentNode,
+
+				ranking = '<tbody>';
+
+			length = competition.length;
+
+			legendContainer.classList.remove('hide');
+
+			if ( !length ) legendContainer.classList.add('hide');
+
+
+			for ( i = 0; i < length; i++ ) {
+
+				current = competition[i];
+
+				if ( current.name ) {
+
+					ranking += '\
+						<tr>\
+							<td>0' + (i+1) + '</td>\
+							<td>' + current.name + '</td>\
+							<td>' + current.score + '</td>\
+						</tr>\
+					';
+				}
+			}
+
+			ranking += '</tbody>';
+
+			legends.innerHTML = ranking;
+
+		}, 16.7 );
 	};
 
 
