@@ -372,6 +372,13 @@ canvas {
 	margin-right: auto;
 }
 
+
+.teamname {
+
+	float: right;
+	padding-right: 50%;
+}
+
 /*score ?*/
 
 /*

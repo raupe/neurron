@@ -250,6 +250,7 @@
 
 			// highscore
 			document.getElementById('score_value').children[0].textContent = points; // <h1>
+			document.getElementById('teamname').textContent = display.teamname || '';
 
 			// diagram
 			var stylesheet = document.styleSheets[ document.styleSheets.length-1 ],
