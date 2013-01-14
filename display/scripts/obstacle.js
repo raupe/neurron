@@ -28,6 +28,8 @@
 		this.collisionCounter = 0;
 
 		this.collisionSound = this.getAsset('audio', params.collisionSound );
+		this.collisionSound.volume = config.audioVolume/100;
+
 		this.collisionImages = this.getAsset('image', params.collisionImg );
 
 		this.move( this.endField );

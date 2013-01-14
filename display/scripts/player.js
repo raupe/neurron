@@ -23,9 +23,14 @@
 			pos     : params.pos
 		});
 
-		this.deadSprites = this.getAsset('image', 'player_dead' );
-		this.transSprite = this.getAsset('image', 'player_trans' );
-		this.reviveSound = this.getAsset('audio', 'revive' );
+		this.deadSprites = this.getAsset('image', 'player_dead');
+		this.transSprite = this.getAsset('image', 'player_trans');
+
+		this.reviveSound = this.getAsset('audio', 'revive');
+		this.reviveSound.volume = config.audioVolume/100;
+
+		this.deadSound = this.getAsset('audio', 'dead');
+		this.deadSound.volume = config.audioVolume/100;
 	};
 
 	Player.prototype = Object.create( display.Element.prototype );
@@ -89,6 +94,8 @@
 		this.spriteImages = this.deadSprites;
 		this.spriteCounter = 0;
 
+		if ( config.audio ) this.deadSound.play();
+
 		this.alive = false;
 	};
 
@@ -129,7 +136,7 @@
 				} else {
 
 					if (
-							timer > 0*add  && timer < 10*add || // 5 trans
+							timer >  5*add && timer < 10*add || // 5 trans
 							timer > 20*add && timer < 25*add ||
 
 							timer > 40*add && timer < 44*add || // 4 trans
