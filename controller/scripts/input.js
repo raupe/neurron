@@ -39,13 +39,13 @@
 
 				var color = config.playerColors[ colorID ];
 
-				ctx.lineWidth = 16;
+				ctx.lineWidth = 10;
 				ctx.lineCap = 'round';
 				ctx.lineJoin = 'round';
 
 				ctx.strokeStyle = '#fff';
 
-				ctx.shadowBlur = 20;
+				ctx.shadowBlur = 30;
 				ctx.shadowColor = color ? 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')' : '#BAE9F7';
 			},
 
@@ -121,7 +121,7 @@
 			// line
 			if ( paused ) setTimeout( clear, config.clearDelay );
 
-			draw();
+			draw( false );
 		}
 
 
@@ -176,26 +176,32 @@
 
 				// animate -> missing glow
 				ctx.clearRect( 0, 0, cvs.width, cvs.height );
+				// points.length = 0;
 
-				draw();
+				draw( true );
 
 			}, config.clearRate );
 		}
 
 
-		function draw(){
+		function draw ( smooth ) {
 
 			var l = points.length - 2,
+
+				i = smooth ? 0 : l,
+
 				x2, y2;	// temp
 
-			ctx.beginPath();
+			// reset start
+			if ( smooth ) ctx.beginPath();
 
-			// check
+			// ctx.clearRect( 0, 0, cvs.width, cvs.height );
+
 			if ( !enabled || l <= 0 ) return;
 
-			ctx.moveTo( points[0].x, points[0].y );
+			ctx.moveTo( points[i].x, points[i].y );
 
-			for ( var i = 1; i < l; i++ ) {
+			if ( smooth ) for ( i =+ 1; i < l; i++ ) {
 
 				x2 = ( points[i].x + points[i+1].x ) / 2;
 				y2 = ( points[i].y + points[i+1].y ) / 2;
