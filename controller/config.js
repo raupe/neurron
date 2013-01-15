@@ -13,7 +13,7 @@ var config = {
 
 
 	clearDelay		: 2000,
-	clearRate		: 20,
+	clearRate		: 30,
 
 
 	commands:	{

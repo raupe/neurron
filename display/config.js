@@ -23,7 +23,7 @@ window.config = {
     deadTime            : 5,
 
 
-    audio				: true,		// option #1
+    audio				: false,	// option #1
     audioFading			: 10,		// 10 seconds
     audioVolume			: 50,		// default value
 
@@ -38,7 +38,6 @@ window.config = {
     duration: {
 
 		moveTime		: 600		// 1.2s, sync with server
-		// aniTime			:
     },
 
 
@@ -148,7 +147,7 @@ window.config = {
 			size			: 100,
 			velocity		: 1,
 			value			: 100,
-			frameDuration	: 30,
+			frameDuration	: 80,
 			collisionImg	: 'points_col',
 			collisionSound	: 'points'
 		},
@@ -157,8 +156,8 @@ window.config = {
 			type			: 'points',
 			size			: 100,
 			velocity		: 1,
-			value			: 50,
-			frameDuration	: 30,
+			value			: 80,
+			frameDuration	: 50,
 			collisionImg	: 'points_col',
 			collisionSound	: 'points'
 		}
