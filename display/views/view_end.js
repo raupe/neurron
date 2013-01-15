@@ -9,17 +9,17 @@
 		<div class="main_content_wrap">\
             <div class="logo">\
                 <img src="style/images/neurron_logo.png" alt="neurron logo" class="logo" />\
-                <div class="subtitle">TUNNEL TO THE END</div>\
+                <div class="subtitle">END OF THE TUNNEL</div>\
             </div>\
             <div id="score_wrap" class="score_wrap">\
                 <div class="score_item">\
-                    <h2>high score <span id="teamname" class="teamname"></span></h2>\
+                    <h2 id="teamname"></h2>\
                     <div id="score_value" class="score_value box">\
                         <h1></h1>\
                     </div>\
                 </div>\
                 <div class="score_item">\
-                    <h2>team score</h2>\
+                    <h2>partition</h2>\
                     <div id="diagram" class="diagram box">\
                         <ul>\
                             <li class="red "></li>\

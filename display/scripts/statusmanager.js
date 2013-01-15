@@ -249,8 +249,8 @@
 		setTimeout( function(){
 
 			// highscore
-			document.getElementById('score_value').children[0].textContent = points; // <h1>
-			document.getElementById('teamname').textContent = display.teamname || '';
+			document.getElementById('teamname').textContent = display.teamname || 'score';
+			document.getElementById('score_value').children[0].textContent = points;
 
 			// diagram
 			var stylesheet = document.styleSheets[ document.styleSheets.length-1 ],
