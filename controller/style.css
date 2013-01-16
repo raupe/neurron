@@ -1,6 +1,6 @@
 body {
 
-	font-size: 1em;
+	font-size: 2em;
 }
 
 canvas {
@@ -11,15 +11,8 @@ canvas {
 }
 
 
-.hide {
-
-	display: none;
-}
-
-.show {
-
-	display: block;
-}
+.hide {	display: none; }
+.show { display: block; }
 
 
 .box {
@@ -52,9 +45,7 @@ canvas {
 	background: -webkit-linear-gradient(top,  #b443c6 0%,#6e106f 100%); /* Chrome10+,Safari5.1+ */
 	background: -o-linear-gradient(top,  #b443c6 0%,#6e106f 100%); /* Opera 11.10+ */
 	background: -ms-linear-gradient(top,  #b443c6 0%,#6e106f 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  #b443c6 0%,#6e106f 100%); /* W3C */
-
-	/*border: 1px solid #000;*/
+	background: linear-gradient(top bottom,  #b443c6 0%,#6e106f 100%); /* W3C */
 
 	 -webkit-border-radius: 6px;
 		-moz-border-radius: 6px;
@@ -66,12 +57,11 @@ canvas {
     font-weight: bold;
 }
 
-.large {
+.big {
 
 	width: 25%;
 	margin: 0 auto;
 
-	font-size: 2em;
 	text-align: center;
 }
 
@@ -79,12 +69,10 @@ canvas {
 
 .teamname {
 
-	margin-left: -50px;
-
-	padding: 10px;
-
 	min-width: 200px;
 
+	margin-left: -50px;
+	padding: 10px;
 
 	border: 2px solid black;
 	border-radius: 10px;
@@ -96,64 +84,21 @@ canvas {
 .info {
 
 	margin: 5%;
-	font-size: 1.5em;
 }
 
 .input {
 
 	display: block;
 
-	min-width: 200px;
-
-	font-size: 1.5em;
+	margin: 0 auto;
 	border: 0;
-
-	margin: 2% auto;
-
 	border-bottom: 1px dashed #000;
 }
 
 
-.carret {
+.small {
 
-	position: absolute;
-	font-size: 1.5em;
-
-    /* property shorthand */
-    -webkit-animation: carret 2s ease-in-out 0s infinite normal none;
-    -moz-animation: carret 2s ease-in-out 0s infinite normal none;
-    -ms-animation: carret 2s ease-in-out 0s infinite normal none;
-    animation: carret 2s ease-in-out 0s infinite normal none;
-}
-
-/* keyframes */
-@-webkit-keyframes carret {
-    0% { opacity: 1; }
-    50% { opacity: 0; }
-    100% { opacity: 1; }
-}
-@-moz-keyframes carret {
-	0% { opacity: 1; }
-	50% { opacity: 0; }
-    100% { opacity: 1; }
-}
-@-ms-keyframes carret {
-	0% { opacity: 1; }
-	50% { opacity: 0; }
-    100% { opacity: 1; }
-}
-@keyframes carret {
-	0% { opacity: 1; }
-	50% { opacity: 0; }
-    100% { opacity: 1; }
-}
-
-
-
-.half {
-
-	width: 10%;
-	padding: 3%;
+	width: 20%;
 	margin: 10% auto;
 }
 
@@ -163,7 +108,6 @@ canvas {
 
 .warning {
 
-	font-size: 2em;
 	font-weight: bold;
 	text-align: center;
 }
@@ -177,23 +121,24 @@ canvas {
 	left: 30%;
 	top: 20%;
 
-	opacity: 1;
+	-webkit-transition: background-color 5s ease-in-out;
+	   -moz-transition: background-color 5s ease-in-out;
+	    -ms-transition: background-color 5s ease-in-out;
+	     -o-transition: background-color 5s ease-in-out;
+		    transition: background-color 5s ease-in-out;
 }
 
 
+.red { background-color: rgb( 148, 24, 55 ); }
+.blue { background-color: rgb( 37, 54, 137 ); }
+.green { background-color: rgb( 102, 179, 45 ); }
+.yellow { background-color: rgb( 210, 179, 31 ); }
+.lila { background-color: rgb( 105,	41, 134 ); }
+.orange { background-color: rgb( 236, 129, 10 ); }
+.turq { background-color: rgb( 46, 155, 215 ); }
+.pink { background-color: rgb( 190,	74, 150 ); }
 
-
-.fade {
-
-    opacity: 0;
-
-	-webkit-transition: opacity 7s ease-in-out;
-	   -moz-transition: opacity 7s ease-in-out;
-	    -ms-transition: opacity 7s ease-in-out;
-	     -o-transition: opacity 7s ease-in-out;
-		    transition: opacity 7s ease-in-out;
-}
-
+.fade { background-color: #333; }
 
 .pound {
 
@@ -209,11 +154,29 @@ canvas {
     		animation: pound 1.8s infinite none;
 }
 
-
-
-/* keyframes */
 @-webkit-keyframes pound { 50%{	-webkit-transform:scale(1.2); 	transform: scale(1.2); } }
 @-moz-keyframes pound { 50% { 	-moz-transform:scale(1.2); 		transform: scale(1.2); } }
 @-ms-keyframes pound { 50%{ 	-ms-transform:scale(1.2); 		transform: scale(1.2); } }
 @keyframes pound { 50% {  										transform: scale(1.2); } }
+
+
+
+@media only screen and (max-width: 1050px) {
+
+	body { font-size: 1.5em; }
+
+    .small { font-size: 1em; }
+}
+
+
+@media only screen and (max-width: 780px) {
+
+	body { font-size: 1em; }
+}
+
+
+@media only screen and (max-width: 480px) {
+
+	body { font-size: 0.7em; }
+}
 
