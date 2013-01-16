@@ -5,14 +5,14 @@
 		var left = '\
 		<div class="slider_content_wrap">\
 			<div class="logo">\
-				<img src="style/images/neurron_logo.png" alt="neurron logo" class="logo" />\
+				<img src="style/images/neurron_logo.png" alt="neurron logo" />\
 				<div class="subtitle">END OF THE TUNNEL</div>\
 			</div>\
 			<div id="slider_box_wrap" class="slider_box_wrap">\
 				<ul id="button_wrap">\
-					<li id="intro_button"class="button button_color intro_button"><p>Story</p></li>\
-					<li id="play_button" class="button button_color play_button"><p>Gameplay</p></li>\
-					<li id="demo_button" class="button button_color demo_button"><p>Controls</p></li>\
+					<li id="intro_button"class="button button_color intro_button"><p>idea</p></li>\
+					<li id="play_button" class="button button_color play_button"><p>game</p></li>\
+					<li id="demo_button" class="button button_color demo_button"><p>demo</p></li>\
 				</ul>\
 				<div class="dashboard round"></div>\
 				<ul id="screen_wrap" class="screen_wrap round">\
