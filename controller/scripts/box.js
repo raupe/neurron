@@ -8,16 +8,15 @@
 
 			templates = { // Templates
 
-				start: '<div id="start" class="button large">Start</div>',
+				start: '<div id="start" class="button big">Start</div>',
 
 				enterName: '\
 				<div class="teamname">\
 					<div class="info">Enter your Team-Name:</div>\
 					<input id="input" type="name" class="input" autofocus />\
-					<span id="carret" class="carret">|</span>\
 					<br>\
-					<div id="okay" class="button half left">Okay</div>\
-					<div id="skip" class="button half right">Skip</div>\
+					<div id="skip" class="button small right">Skip</div>\
+					<div id="okay" class="button small left">Okay</div>\
 				</div>',
 
 				notFound: '<div class="warning teamname">The Game does not exist !</div>',
@@ -44,6 +43,9 @@
 					var name =  document.getElementById('input').value
 																.replace(/\n+/g,'')
 																.replace(/\t+/g,'');
+					// limit to ascii
+					if ( name.length ) name = name.match(/[ -~]/g).join('');
+
 					manage( config.commands.NAME, name );
 					hide();
 				}
@@ -51,7 +53,6 @@
 
 			manage;
 
-		// -------- trigger ---------- //
 
 		box.addEventListener('touchend', function ( e ) {
 
@@ -61,7 +62,6 @@
 		});
 
 
-		// --------- public ---------//
 
 		var init = function ( handle ) {
 
@@ -79,12 +79,6 @@
 			name = function(){
 
 				content.innerHTML = templates.enterName;
-
-				var carret = document.getElementById('carret'),
-					input = document.getElementById('input');
-
-				carret.style.left = input.offsetLeft + 'px';
-				carret.style.top = input.offsetTop + 'px';
 			},
 
 			hide = function ( id ) {
@@ -92,23 +86,23 @@
 				box.className = 'hide';
 				content.innerHTML = '';
 
-				figure.className = 'figure fade pound';
+				// removes 'hide', color
+				figure.className = 'figure ' + config.colors[ id || 1 ];
 
-				var img = new Image();
+				function hide ( e ) {
 
-				img.onload = function(){
+					figure.removeEventListener( transitionend, hide );
 
-					figure.appendChild( img );
+					figure.className = 'figure hide';
+				}
 
-					setTimeout(function(){
+				setTimeout(function(){
 
-						figure.innerHTML = '';
-						figure.className = 'figure';
+					figure.className = 'figure fade pound';
 
-					}, config.figureTimer * 1000);
-				};
+					figure.addEventListener( transitionend, hide );
 
-				img.src = 'figures/neurron_' + ( id || 1 ) + '.png';
+				}, 16.7);
 			},
 
 			warn = function ( type ) {

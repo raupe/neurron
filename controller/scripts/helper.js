@@ -28,11 +28,34 @@
 		};
 	}
 
+	// date fallback
+	if ( !Date.now ) Date.now = function now() {	return +(new Date()); };
 
 
-	if ( !Date.now ) {
+	// cross browser event
+	window.transitionend = (function(){
 
-		Date.now = function now() {	return +(new Date()); };
-	}
+		var prefix = {
+
+				'WebkitTransition'	: 'webkitTransitionEnd',
+				'MozTransition'		: 'transitionend',
+				'MSTransition'		: 'msTransitionEnd',
+				'OTransition'		: 'oTransitionEnd',
+				'transition'		: 'transitionEnd'
+			},
+
+			temp = document.createElement('div'),
+			keys = Object.keys( prefix ),
+
+			i, l; // iterator
+
+		for ( i = 0, l = keys.length; i < l; i++ ) {
+
+			if ( temp.style[ keys[i] ] !== undefined ) return prefix[ keys[i] ];
+		}
+
+		console.log('TransitionEnd - is not supported');
+
+	})();
 
 })();

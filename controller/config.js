@@ -9,9 +9,6 @@ var config = {
 
 	pollingTimer    : 5,
 
-	figureTimer		: 7,
-
-
 	clearDelay		: 2000,
 	clearRate		: 30,
 
@@ -50,28 +47,27 @@ var config = {
 	},
 
 
-    playerColors: {
+	colors: {
 
-        1:  { r: 246,   g:  91,  b:  98 }, // red
-        2:  { r:  83,   g: 102,  b: 243 }, // blue
-        3:  { r: 162,   g: 251,  b:  91 }, // green
-        4:  { r: 250,   g: 235,  b:  64 }, // yellow
-        5:  { r: 223,   g: 105,  b: 254 }, // lila
-        6:  { r: 255,   g: 182,  b: 106 }, // orange
-        7:  { r: 144,   g: 216,  b: 255 }, // turq
-        8:  { r: 255,   g: 121,  b: 198 }  // pink
-    },
+		1: 'red',		// image - r: 148,	g:  24,	b:	55
+		2: 'blue',		// image - r:  37,	g:  54,	b: 137
+		3: 'green',		// image - r: 102,	g: 179,	b:	45
+		4: 'yellow',	// image - r: 210,	g: 179,	b:	31
+		5: 'lila',		// image - r: 105,	g:  41,	b: 134
+		6: 'orange',	// image - r: 236,	g: 129,	b:	10
+		7: 'turq',		// image - r:  46,	g: 155,	b: 215
+		8: 'pink'		// image - r: 190,	g:  74,	b: 150
+	},
 
+    shadowColors: {
 
-    backgroundColors: {
-
-        1:  { r: 158,   g:   7,  b:  52 }, // red
-        2:  { r:  10,   g:  26,  b: 161 }, // blue
-        3:  { r:  81,   g: 154,  b:   6 }, // green
-        4:  { r: 205,   g: 172,  b:  31 }, // yellow
-        5:  { r: 105,   g:  23,  b: 140 }, // lila
-        6:  { r: 235,   g: 124,  b:   0 }, // orange
-        7:  { r:  23,   g: 163,  b: 158 }, // turq
-        8:  { r: 177,   g:   0,  b: 101 }  // pink
+		red		: { r: 246,   g:  91,  b:  98 },
+		blue	: { r:  83,   g: 102,  b: 243 },
+		green	: { r: 162,   g: 251,  b:  91 },
+		yellow	: { r: 250,   g: 235,  b:  64 },
+		lila	: { r: 223,   g: 105,  b: 254 },
+		orange	: { r: 255,   g: 182,  b: 106 },
+		turq	: { r: 144,   g: 216,  b: 255 },
+		pink	: { r: 255,   g: 121,  b: 198 }
     }
 };
