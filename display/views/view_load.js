@@ -11,15 +11,12 @@
 				<div id="load_teamname" class="load_teamname"></div>\
 				<img id="load_bar" class="load_bar" src="assets/views/load/blink/load.gif"/>\
 				<div id="tutorial" class="load_tutorial">\
-					<video poster="assets/views/load/tutorial/load_background.jpg" preload="auto"\
-						loop muted autoplay class="tutorial">\
-						<source src="assets/views/start/test.mp4" type="video/mp4" />\
+					<video preload="auto" loop muted autoplay class="tutorial">\
+						<source src="assets/views/start/idea.mp4" type="video/mp4" />\
 						<source src="assets/views/start/test.ogv" type="video/ogg" />\
 						The browser doesn\'t support any of the provided formats...\
 					</video>\
-					<div id="progressbar" class="load_progressbar">\
-						<div id="counter" class="counter">0</div>\
-					</div>\
+					<div id="progressbar" class="load_progressbar"></div>\
 				</div>\
 			</div>\
 		</div>',
@@ -34,6 +31,8 @@
 
 
 	display.load_view.showNewPlayer = function(){
+
+		// to fast.....
 
 		// fading animation
 		setTimeout(function(){
@@ -86,33 +85,28 @@
 	};
 
 
-	var progressbar,
-		counter;
+	var progressbar;
 
 	display.load_view.loadBar = function(seconds) {
 
 		if ( !progressbar ) progressbar = document.getElementById('progressbar');
-		if ( !counter ) counter = document.getElementById('counter');
 
         progressbar.classList.add('fill');
 
-
         var step = 15 * 1000 / 100,
-			i = 1,
+			counter = 0,
 			interval;
 
-        setTimeout(function(){
+		// pre-set
+		progressbar.textContent = '0 %';
 
-			interval = setInterval(function(){
+		interval = setInterval(function(){
 
-				counter.textContent = ++i + ' %';
+			progressbar.textContent = ++counter + ' %';
 
-				if ( i === 99 ) clearInterval( interval );
+			if ( counter === 100 ) clearInterval( interval );
 
-			}, step );
-
-        }, step );
-
+		}, step );
 	};
 
 	var video;
