@@ -9,7 +9,7 @@
 				<div class="subtitle">END OF THE TUNNEL</div>\
 			</div>\
 			<div id="slider_box_wrap" class="slider_box_wrap">\
-				<ul>\
+				<ul id="button_wrap">\
 					<li id="intro_button"class="button button_color intro_button"><p>Story</p></li>\
 					<li id="play_button" class="button button_color play_button"><p>Gameplay</p></li>\
 					<li id="demo_button" class="button button_color demo_button"><p>Controls</p></li>\
@@ -78,12 +78,10 @@
 				controls	: 4000
 			},
 
-			$items = $("#screen_wrap li"),
+			$buttons = $("#button_wrap > li"),
+			$items = $("#screen_wrap > li"),
 
-			$buttons = $("#slider_box_wrap li"),
-
-			timer = 0;
-
+			timer = 0,
 			counter = 0,
 
 			itemsLength = $items.length;
@@ -95,7 +93,6 @@
 			counter = $(this).index();
 			clearTimeout(timer);
 			timeOut();
-
 		});
 
 		//set time out
