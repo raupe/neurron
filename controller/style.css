@@ -36,6 +36,9 @@ canvas {
 
 
 .button {
+
+	font-size: 2em;
+
 	padding: 5px;
 	text-align: center;
 
@@ -59,7 +62,7 @@ canvas {
 
 .big {
 
-	width: 25%;
+	width: 30%;/*25%;*/
 	margin: 0 auto;
 
 	text-align: center;
@@ -74,7 +77,6 @@ canvas {
 	margin-left: -50px;
 	padding: 10px;
 
-	border: 2px solid black;
 	border-radius: 10px;
 
 	background-color: #fff;
@@ -98,7 +100,7 @@ canvas {
 
 .small {
 
-	width: 20%;
+	/*width: 20%;*/
 	margin: 10% auto;
 }
 
@@ -113,10 +115,11 @@ canvas {
 }
 
 
-
 .figure {
 
 	position: absolute;
+
+	width: 20%;
 
 	left: 30%;
 	top: 20%;
@@ -127,6 +130,14 @@ canvas {
 	     -o-transition: background-color 5s ease-in-out;
 		    transition: background-color 5s ease-in-out;
 }
+
+
+.trans {
+	position: relative;
+	display: block;
+	width: 100%;
+}
+
 
 
 .red { background-color: rgb( 148, 24, 55 ); }
