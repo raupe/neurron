@@ -10,14 +10,17 @@
 			<div id="load_innerwrapper" class="load_innerwrapper round">\
 				<div id="load_teamname" class="load_teamname"></div>\
 				<img id="load_bar" class="load_bar" src="assets/views/load/blink/load.gif"/>\
-				<div id="tutorial" class="load_background_wrapper load_tutorial">\
-					<video poster="assets/views/load/tutorial/load_background.jpg" controls preload="auto" class="tutorial">\
+				<div id="tutorial" class="load_tutorial">\
+					<video poster="assets/views/load/tutorial/load_background.jpg" preload="auto"\
+						loop muted autoplay class="tutorial">\
 						<source src="assets/views/start/test.mp4" type="video/mp4" />\
 						<source src="assets/views/start/test.ogv" type="video/ogg" />\
 						The browser doesn\'t support any of the provided formats...\
 					</video>\
+					<div id="progressbar" class="load_progressbar">\
+						<div id="counter" class="counter">0</div>\
+					</div>\
 				</div>\
-				<div id="progressbar" class="progressbar"></div>\
 			</div>\
 		</div>',
 
@@ -57,20 +60,17 @@
 		// remove images
 		document.getElementById('load_register_status').innerHTML = '';
 
-		loadBar.className = ''; // show loadBar
+		loadBar.className = 'load_bar'; // show loadBar
 		if ( $(load_teamname).html() !== "" ) load_teamname.removeChild( document.getElementById('load_greet') ); // remove Team greeting
 
-        if ( !progressbar ) progressbar = $('#progressbar');
-        progressbar.removeClass('fill');
 
-		// $('#container').addClass("backgroundImage");
-		// $('#container-right').removeClass("marginTopPadding");
-		// $('#qr_code img').removeClass("halfQR");
+        if ( !progressbar ) progressbar = document.getElementById('progressbar');
+        if ( progressbar.classList.contains('fill') ) progressbar.classList.remove('fill');
 	};
 
 	display.load_view.hideLoadBar = function() {
 
-		document.getElementById('load_bar').className = 'load_hide';
+		document.getElementById('load_bar').className = 'hide';
 	};
 
 	display.load_view.greetTeam = function() {
@@ -86,26 +86,46 @@
 	};
 
 
-	var progressbar;
+	var progressbar,
+		counter;
 
 	display.load_view.loadBar = function(seconds) {
 
-		if ( !progressbar ) progressbar = $('#progressbar');
+		if ( !progressbar ) progressbar = document.getElementById('progressbar');
+		if ( !counter ) counter = document.getElementById('counter');
 
-        progressbar.addClass('fill');
+        progressbar.classList.add('fill');
+
+
+        var step = 15 * 1000 / 100,
+			i = 1,
+			interval;
+
+        setTimeout(function(){
+
+			interval = setInterval(function(){
+
+				counter.textContent = ++i + ' %';
+
+				if ( i === 99 ) clearInterval( interval );
+
+			}, step );
+
+        }, step );
+
 	};
 
-	var tutorial;
+	var video;
 
 	display.logic.load = function(){
 
-		if ( !tutorial ) tutorial = document.getElementById('tutorial').children[0];
-
-		tutorial.src = 'views/load/index.html';
+		if ( !video ) video = document.getElementById('tutorial').children[0];
 
 		$('#container').removeClass("backgroundImage");
 		$('#container-right').addClass("marginTopPadding");
 		$('#qr_code img').addClass("halfQR");
 	};
+
+
 
 })();

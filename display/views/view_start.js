@@ -17,17 +17,18 @@
 				<div class="dashboard round"></div>\
 				<ul id="screen_wrap" class="screen_wrap round">\
 					<li id="story" class="screen show">\
-						<img class="video"  src="http://company.zynga.com/nfs/files-0925-01/coasterville_flat_0.png" />\
+						<img class="video" src="http://company.zynga.com/nfs/files-0925-01/coasterville_flat_0.png" />\
 					</li>\
 					<li id="gameplay" class="screen hide">\
-						<video poster="assets/views/load/tutorial/load_background.jpg" controls preload="auto" class="video">\
+						<video poster="assets/views/load/tutorial/load_background.jpg" \
+							muted controls preload="auto" class="video">\
 							<source src="assets/views/start/test.mp4" type="video/mp4" />\
 							<source src="assets/views/start/test.ogv" type="video/ogg" />\
 							The browser doesn\'t support any of the provided formats...\
 						</video>\
 					</li>\
 					<li id="controls" class="screen hide">\
-						<img class="video"  src="http://www.pc-games-blog.net/wp-content/uploads/2012/10/League_of_Legends_lan-600x351.jpg" />\
+						<img class="video" src="http://www.pc-games-blog.net/wp-content/uploads/2012/10/League_of_Legends_lan-600x351.jpg" />\
 					</li>\
 				</ul>\
 			</div>\
@@ -43,7 +44,6 @@
 
 	display.logic.start = function(){
 
-
 		$('#container').addClass("backgroundImage");
 		$('#container-right').removeClass("marginTopPadding");
 		$('#qr_code img').removeClass("halfQR");
@@ -54,11 +54,13 @@
 
 		} else { // first time
 
-			music = display.getAsset('audio', 'start');
-			music.loop = true;
+			if ( display.getAsset ) {
 
-			video = $('#gameplay').children()[0];
-			video.volume = 0;
+				music = display.getAsset('audio', 'start');
+				music.loop = true;
+
+				video = $('#gameplay').children()[0];
+			}
 
 			$(video).on('loadedmetadata', start );
 		}
@@ -67,7 +69,7 @@
 
 	function start(){
 
-		display.sound( music );
+		if ( display.getAsset ) display.sound( music );
 
 		var duration = {
 
@@ -113,7 +115,6 @@
 				video.pause();
 				video.currentTime = 0;
 			}
-
 
 			timer = setTimeout(function() {
 

@@ -312,42 +312,85 @@ canvas {
 
 /* ---------- load ---------------------*/
 
-.load_background {
-	width: 100%;
+
+.load_outerwrapper {
+    text-align: center;
+    padding-top: 2%;
+}
+
+.load_innerwrapper {
+
+    width: 70%;
+    margin: auto;
+    background-color: #fff;
 }
 
 .load_bar {
 
-	padding: 10px 0;
+	margin: 10px 0;
 }
 
 .load_tutorial {
 
-	width: 90%;
+	width: 80%;
+	height: 100%;
+
 	margin: 0 auto;
-}
-
-.tutorial {
-	width: 100%;
-}
-
-
-.load_background_wrapper {
 	text-align: center;
 }
 
+/* video */
+.tutorial {	width: 100%; }
 
-.load_hide {
-	display: none;
+.load_progressbar {
+
+    height: 30px;
+    width: 0;
+
+	margin: 10px auto;
+
+	 -webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+			 border-radius: 10px;
+
+
+    background: #bac000; /* Old browsers */
+	background: -moz-linear-gradient(top,  #bac000 1%, #5d942d 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#bac000), color-stop(100%,#5d942d)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #bac000 1%,#5d942d 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #bac000 1%,#5d942d 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #bac000 1%,#5d942d 100%); /* IE10+ */
+	background: linear-gradient(top bottom,  #bac000 1%,#5d942d 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bac000', endColorstr='#5d942d',GradientType=0 ); /* IE6-9 */
+}
+
+.fill {
+
+	-webkit-transition: width 15s ease-in-out;
+	   -moz-transition: width 15s ease-in-out;
+	    -ms-transition: width 15s ease-in-out;
+	     -o-transition: width 15s ease-in-out;
+		    transition: width 15s ease-in-out;
+
+	width: 100% !important;
+
+    border: 1px solid #000;
 }
 
 
-.joined {
-	background-color: #fff;
+.counter {
+
+	/*width: 20px;*/
+	/*margin: 0 auto;*/
+
+	color: #fff;
+	text-align: center;
 }
 
+.joined { background-color: #fff; }
 
 .joined > img {
+
 	margin: 10px;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
@@ -362,6 +405,7 @@ canvas {
     display: inline-block;
     margin-bottom: 1%;
 }
+
 
 
 /* ---------- game -------------------- */
@@ -409,32 +453,6 @@ canvas {
 	margin-left: auto;
 	margin-right: auto;
 }
-
-
-/*score ?*/
-
-/*
-.logo {
-
-	width: 356px;
-	height: 113px;
-}*/
-
-/*width="356" height="113" */
-
-/*
-.logo {
-	border-radius: 0px 0px 20px 20px;
-	-moz-border-radius: 0px 0px 20px 20px;
-	-webkit-border-radius: 0px 0px 20px 20px;
-	width: 35%;
-	min-width: 270px;
-	height: 15%;
-	min-height: 90px;
-	background-color: #ffffff;
-	margin-left: 10%;
-}
-*/
 
 
 h2 {
@@ -681,44 +699,6 @@ h1 {
 
 .backgroundImage {
     background-image: url(images/neurron_banner.png);
-}
-
-.load_outerwrapper {
-    text-align: center;
-    padding-top: 2%;
-}
-
-.load_innerwrapper {
-    width: 70%;
-    margin: auto;
-    padding: 5%;
-    background-color: #fff;
-}
-
-.progressbar {
-    height: 20px;
-    width: 0;
-    background: #bac000; /* Old browsers */
-	background: -moz-linear-gradient(top,  #bac000 1%, #5d942d 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#bac000), color-stop(100%,#5d942d)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #bac000 1%,#5d942d 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #bac000 1%,#5d942d 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #bac000 1%,#5d942d 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  #bac000 1%,#5d942d 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bac000', endColorstr='#5d942d',GradientType=0 ); /* IE6-9 */
-}
-
-
-/* filling with CSS using GPU */
-.fill {
-
-	-webkit-transition: width 15s ease-in-out;
-	   -moz-transition: width 15s ease-in-out;
-	    -ms-transition: width 15s ease-in-out;
-	     -o-transition: width 15s ease-in-out;
-		    transition: width 15s ease-in-out;
-
-	width: 100% !important;
 }
 
 
