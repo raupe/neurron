@@ -10,25 +10,24 @@
 			</div>\
 			<div id="slider_box_wrap" class="slider_box_wrap">\
 				<ul id="button_wrap">\
-					<li id="intro_button"class="button button_color intro_button"><p>idea</p></li>\
-					<li id="play_button" class="button button_color play_button"><p>game</p></li>\
-					<li id="demo_button" class="button button_color demo_button"><p>demo</p></li>\
+					<li class="button button_color idea_button"><p>idea</p></li>\
+					<li class="button button_color game_button"><p>game</p></li>\
+					<li class="button button_color demo_button"><p>demo</p></li>\
 				</ul>\
 				<div class="dashboard round"></div>\
 				<ul id="screen_wrap" class="screen_wrap round">\
-					<li id="story" class="screen show">\
-						<img class="video" src="http://company.zynga.com/nfs/files-0925-01/coasterville_flat_0.png" />\
-					</li>\
-					<li id="gameplay" class="screen hide">\
-						<video poster="assets/views/load/tutorial/load_background.jpg" \
-							muted controls preload="auto" class="video">\
-							<source src="assets/views/start/test.mp4" type="video/mp4" />\
+					<li id="idea" class="screen hide">\
+						<video muted controls preload="auto" class="video">\
+							<source src="assets/views/start/idea.mp4" type="video/mp4" />\
 							<source src="assets/views/start/test.ogv" type="video/ogg" />\
 							The browser doesn\'t support any of the provided formats...\
 						</video>\
 					</li>\
-					<li id="controls" class="screen hide">\
-						<img class="video" src="http://www.pc-games-blog.net/wp-content/uploads/2012/10/League_of_Legends_lan-600x351.jpg" />\
+					<li id="game" class="screen hide">\
+						<img src="http://company.zynga.com/nfs/files-0925-01/coasterville_flat_0.png" class="video" />\
+					</li>\
+					<li id="demo" class="screen hide">\
+						<img src="http://www.pc-games-blog.net/wp-content/uploads/2012/10/League_of_Legends_lan-600x351.jpg" class="video" />\
 					</li>\
 				</ul>\
 			</div>\
@@ -46,7 +45,7 @@
 
 		$('#container').addClass("backgroundImage");
 		$('#container-right').removeClass("marginTopPadding");
-		$('#qr_code img').removeClass("halfQR");
+		$('#qr_code > img').removeClass("halfQR");
 
 		if ( video ) {
 
@@ -58,9 +57,9 @@
 
 				music = display.getAsset('audio', 'start');
 				music.loop = true;
-
-				video = $('#gameplay').children()[0];
 			}
+
+			video = document.getElementById('idea').children[0];
 
 			$(video).on('loadedmetadata', start );
 		}
@@ -73,18 +72,19 @@
 
 		var duration = {
 
-				story		: 12000,
-				gameplay	: ~~( video.duration * 1000 + 0.5),
-				controls	: 4000
+				idea	: ~~( video.duration * 1000 ) + 1000,
+				game	: 15000,
+				demo	: 15000
 			},
 
 			$buttons = $("#button_wrap > li"),
 			$items = $("#screen_wrap > li"),
 
-			timer = 0,
-			counter = 0,
+			itemsLength = $items.length,
 
-			itemsLength = $items.length;
+			counter = 0,
+			timer;
+
 
 		$($buttons).click(function(){
 
@@ -94,6 +94,7 @@
 			clearTimeout(timer);
 			timeOut();
 		});
+
 
 		//set time out
 		var timeOut = function(){
@@ -105,7 +106,7 @@
 			$($items[counter]).fadeIn();
 			$($buttons[counter]).addClass('button_active');
 
-			if ( currentId === 'gameplay' ) video.play();
+			if ( currentId === 'idea' ) setTimeout(function(){ video.play(); }, 1000);
 
 			if ( video.currentTime !== 0 ) {
 
