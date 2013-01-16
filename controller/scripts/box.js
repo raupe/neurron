@@ -15,8 +15,8 @@
 					<div class="info">Enter your Team-Name:</div>\
 					<input id="input" type="name" class="input" autofocus />\
 					<br>\
-					<div id="skip" class="button small right">Skip</div>\
-					<div id="okay" class="button small left">Okay</div>\
+					<div id="skip" class="button small left">Skip</div>\
+					<div id="okay" class="button small right">Okay</div>\
 				</div>',
 
 				notFound: '<div class="warning teamname">The Game does not exist !</div>',
