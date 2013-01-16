@@ -87,13 +87,13 @@
 
 	var progressbar;
 
-	display.load_view.loadBar = function(seconds) {
+	display.load_view.loadBar = function() {
 
 		if ( !progressbar ) progressbar = document.getElementById('progressbar');
 
         progressbar.classList.add('fill');
 
-        var step = 15 * 1000 / 100,
+        var step = 15 * 1000 / 90, // css width .load_progressbar
 			counter = 0,
 			interval;
 
