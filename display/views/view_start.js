@@ -24,10 +24,10 @@
 						</video>\
 					</li>\
 					<li id="game" class="screen hide">\
-						<img src="http://company.zynga.com/nfs/files-0925-01/coasterville_flat_0.png" class="video" />\
+						<img src="assets/views/start/placeholder.jpg" class="video" />\
 					</li>\
 					<li id="demo" class="screen hide">\
-						<img src="http://www.pc-games-blog.net/wp-content/uploads/2012/10/League_of_Legends_lan-600x351.jpg" class="video" />\
+						<img src="assets/views/start/schneeronny.jpg" class="video" />\
 					</li>\
 				</ul>\
 			</div>\
