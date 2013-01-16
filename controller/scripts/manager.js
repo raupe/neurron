@@ -4,20 +4,20 @@
 	 * [Manager description]
 	 * @param {[type]} config [description]
 	 */
-	var Manager = controller.Manager = function ( config ) {
+	var Manager = controller.Manager = function ( params ) {
 
 		this.id = 0;
 		this.timer = 0;
 
-		this.url = config.url;
-		this.channel = config.channel;
+		this.url = params.url;
+		this.channel = params.channel;
 
 		this.req = new XMLHttpRequest();
 
 		this.box = controller.Box.init( this.handle.bind(this) );
 		this.input = controller.Input.init( this.handle.bind(this) );
 
-		if ( this.channel > 255 ) this.box.warn( 3 );
+		if ( this.channel > 255 || this.channel < 0 ) this.box.warn( 3 );
 	};
 
 
