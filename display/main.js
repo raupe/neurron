@@ -1,19 +1,40 @@
 (function(){
 
-    var assetManager = display.AssetManager;
+	if ( ! ('WebSocket' in window ) ) {
 
-    assetManager.set( config.assets, function() {
+		var warning = document.getElementById('warning'),
 
-        new display.Screen();
+			supportTouch = 'ontouchstart' in window,
 
-        new display.Manager();
+			remove = function(){
 
-        new display.Connection();
+				warning.className = 'warning hide';
 
-        display.show( 'start' );
-    });
+				warning.removeEventListener( supportTouch ? 'touchend' : 'click', remove );
+			};
 
+		warning.className = 'warning';
 
-    display.getAsset = assetManager.get;
+		warning.addEventListener( supportTouch ? 'touchend' : 'click', remove );
+
+		display.show('start');
+
+	} else {
+
+		var assetManager = display.AssetManager;
+
+		assetManager.set( config.assets, function() {
+
+			new display.Screen();
+
+			new display.Manager();
+
+			new display.Connection();
+
+			display.show('start');
+		});
+
+		display.getAsset = assetManager.get;
+	}
 
 })();

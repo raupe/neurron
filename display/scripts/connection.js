@@ -9,33 +9,8 @@
 		this.initializeSocket();
 	};
 
-	Connection.prototype.warning = function(){
-
-		var warning = document.getElementById('warning'),
-			supportTouch = 'ontouchstart' in window;
-
-		warning.classList.remove('hide');
-
-		warning.addEventListener( supportTouch ? 'touchend' : 'click', remove );
-
-		function remove() {
-
-			warning.classList.add('hide');
-
-			warning.removeEventListener( supportTouch ? 'touchend' : 'click', remove );
-		}
-	};
-
 
 	Connection.prototype.initializeSocket = function(){
-
-
-		if ( !WebSocket ) {
-
-			this.warning();
-
-			return;
-		}
 
 		this.socket = new WebSocket( this.url );
 
