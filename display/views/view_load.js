@@ -12,11 +12,11 @@
 				<img id="load_bar" class="load_bar" src="assets/views/load/blink/load.gif"/>\
 				<div id="tutorial" class="load_tutorial">\
 					<video preload="auto" loop muted autoplay class="tutorial">\
-						<source src="assets/views/start/idea.mp4" type="video/mp4" />\
+						<source src="assets/views/load/tutorial.mp4" type="video/mp4" />\
 						<source src="assets/views/start/test.ogv" type="video/ogg" />\
 						The browser doesn\'t support any of the provided formats...\
 					</video>\
-					<div id="progressbar" class="load_progressbar"></div>\
+					<div id="progressbar" class="load_progressbar">0 %</div>\
 				</div>\
 			</div>\
 		</div>',
@@ -97,14 +97,16 @@
 			counter = 0,
 			interval;
 
-		// pre-set
-		progressbar.textContent = '0 %';
-
 		interval = setInterval(function(){
 
 			progressbar.textContent = ++counter + ' %';
 
-			if ( counter === 100 ) clearInterval( interval );
+			if ( counter === 100 ) {
+
+				// reset
+				clearInterval( interval );
+				progressbar.textContent = '0 %';
+			}
 
 		}, step );
 	};
