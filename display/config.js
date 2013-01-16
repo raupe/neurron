@@ -23,7 +23,7 @@ window.config = {
     deadTime            : 5,
 
 
-    audio				: false,	// option #1
+    audio				: true,		// option #1
     audioFading			: 10,		// 10 seconds
     audioVolume			: 50,		// default value
 
@@ -165,7 +165,17 @@ window.config = {
 	},
 
 
+    colors: {
 
+		1: 'red',
+		2: 'blue',
+		3: 'green',
+		4: 'yellow',
+		5: 'lila',
+		6: 'orange',
+		7: 'turkey',
+		8: 'pink'
+	},
 
     playerColors: {
 
@@ -189,17 +199,5 @@ window.config = {
         6:  { r: 235,   g: 124,  b:   0 }, // orange
         7:  { r:  23,   g: 163,  b: 158 }, // turq
         8:  { r: 177,   g:   0,  b: 101 }  // pink
-    },
-
-    colors: {
-
-		1: 'red',
-		2: 'blue',
-		3: 'green',
-		4: 'yellow',
-		5: 'lila',
-		6: 'orange',
-		7: 'turkey',
-		8: 'pink'
-	}
+    }
 };

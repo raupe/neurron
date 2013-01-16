@@ -2,34 +2,7 @@
 
 	// handle visuals
 	var containerLeft = document.getElementById('container-left'),
-		containerRight = document.getElementById('container-right'),
-
-		// cross browser event
-		transitionend = (function(){
-
-		var prefix = {
-
-				'WebkitTransition'	: 'webkitTransitionEnd',
-				'MozTransition'		: 'transitionend',
-				'MSTransition'		: 'msTransitionEnd',
-				'OTransition'		: 'oTransitionEnd',
-				'transition'		: 'transitionEnd'
-			},
-
-			temp = document.createElement('div'),
-			keys = Object.keys( prefix ),
-
-			i, l; // iterator
-
-		for ( i = 0, l = keys.length; i < l; i++ ) {
-
-			if ( temp.style[ keys[i] ] !== undefined ) return prefix[ keys[i] ];
-		}
-
-	})();
-
-
-
+		containerRight = document.getElementById('container-right');
 
 
 	display.current = null;
