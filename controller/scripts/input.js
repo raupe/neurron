@@ -15,10 +15,12 @@
 			averageY = 0,
 			counter = 0,
 
-			colorID = null,
+			color = null,
 			enabled = false,
 
 			clearing = null,
+			timer = null,
+
 			paused = null,
 			//tapped = false,
 
@@ -35,9 +37,7 @@
 
 			setStyle = function ( param ) {
 
-				if ( param ) colorID = param;
-
-				var color = config.playerColors[ colorID ];
+				if ( param ) color = config.shadowColors[ config.colors[ param ] ];
 
 				ctx.lineWidth = 10;
 				ctx.lineCap = 'round';
@@ -45,7 +45,7 @@
 
 				ctx.strokeStyle = '#fff';
 
-				ctx.shadowBlur = 30;
+				ctx.shadowBlur = 20;
 				ctx.shadowColor = color ? 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')' : '#BAE9F7';
 			},
 
@@ -53,11 +53,11 @@
 			init = function ( handle ) {
 
 				// setup
-				if ( ( 'ontouchstart' in window ) ) {
-
-					setStyle();
+				if ( 'ontouchstart' in window ) {
 
 					handleTouch();
+
+					setStyle();
 				}
 
 				manage = handle;
@@ -82,23 +82,25 @@
 			e.preventDefault();
 			e.stopPropagation();
 
-			tapped = true;
+			// reset on start
+			if ( clearing )	clearInterval( clearing );
+			if ( timer ) clearTimeout( timer );
+
+			ctx.clearRect( 0, 0, cvs.width, cvs.height );
+			points.length = 0;
+			clearing = null;
 
 			var touch = getPos( e.changedTouches[0] );
+			// tapped = true;
 
 			origin = touch;
 
 			averageX += touch.x;
 			averageY += touch.y;
 
-
-			// line
-			if ( points.length ) clear();
-
-			points.length = 0;
 			points[0] = touch;
 
-			setTimeout( clear, config.clearDelay );
+			timer = setTimeout( clear, config.clearDelay );
 		}
 
 
@@ -107,7 +109,7 @@
 			e.preventDefault();
 			e.stopPropagation();
 
-			// this.tapped = false;
+			// tapped = false;
 
 			var touch = getPos( e.changedTouches[0] );
 
@@ -119,9 +121,9 @@
 			counter++;
 
 			// line
-			if ( paused ) setTimeout( clear, config.clearDelay );
+			if ( paused ) timer = setTimeout( clear, config.clearDelay );
 
-			draw( false );
+			draw();
 		}
 
 
@@ -134,14 +136,16 @@
 
 			points.push( touch );
 
-			// if ( this.tapped ) {
+			/*
+				// heal
+				if ( tapped ) {
 
-			//	//for heal
-			//	manage( config.commands.HEAL );
-			//	return;
-			// }
+					manage( config.commands.HEAL );
+					return;
+				}
 
-			tapped = false;
+				tapped = false;
+			 */
 
 			averageX /= counter;
 			averageY /= counter;
@@ -157,11 +161,13 @@
 
 		function clear() {
 
+			timer = null;
+
 			if ( clearing ) return;
 
 			paused = false;
 
-			clearing = window.setInterval(function(){
+			clearing = setInterval(function(){
 
 				if ( !points.length ) {
 
@@ -174,34 +180,31 @@
 
 				points = points.slice(1);
 
-				// animate -> missing glow
 				ctx.clearRect( 0, 0, cvs.width, cvs.height );
+
+				// -> remove instant
 				// points.length = 0;
 
-				draw( true );
+				draw();
 
 			}, config.clearRate );
 		}
 
 
-		function draw ( smooth ) {
+		function draw(){
 
 			var l = points.length - 2,
-
-				i = smooth ? 0 : l,
 
 				x2, y2;	// temp
 
 			// reset start
-			if ( smooth ) ctx.beginPath();
-
-			// ctx.clearRect( 0, 0, cvs.width, cvs.height );
+			ctx.beginPath();
 
 			if ( !enabled || l <= 0 ) return;
 
-			ctx.moveTo( points[i].x, points[i].y );
+			ctx.moveTo( points[0].x, points[0].y );
 
-			if ( smooth ) for ( i =+ 1; i < l; i++ ) {
+			for ( var i = 1; i < l; i++ ) {
 
 				x2 = ( points[i].x + points[i+1].x ) / 2;
 				y2 = ( points[i].y + points[i+1].y ) / 2;
