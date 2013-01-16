@@ -65,6 +65,8 @@
 
         if ( !progressbar ) progressbar = document.getElementById('progressbar');
         if ( progressbar.classList.contains('fill') ) progressbar.classList.remove('fill');
+        progressbar.textContent = '0 %';
+
 	};
 
 	display.load_view.hideLoadBar = function() {
@@ -93,7 +95,7 @@
 
         progressbar.classList.add('fill');
 
-        var step = 15 * 1000 / 90, // css width .load_progressbar
+        var step = (15 * 1000 / 100) * 0.9, // css width .load_progressbar
 			counter = 0,
 			interval;
 
@@ -101,12 +103,7 @@
 
 			progressbar.textContent = ++counter + ' %';
 
-			if ( counter === 100 ) {
-
-				// reset
-				clearInterval( interval );
-				progressbar.textContent = '0 %';
-			}
+			if ( counter === 99 ) clearInterval( interval );
 
 		}, step );
 	};
