@@ -89,7 +89,7 @@
 				// removes 'hide', color
 				figure.className = 'figure ' + config.colors[ id || 1 ];
 
-				function hide ( e ) {
+				function hide() {
 
 					figure.removeEventListener( transitionend, hide );
 
