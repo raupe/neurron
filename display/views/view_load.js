@@ -9,7 +9,7 @@
 		<div id="load_outerwrapper" class="load_outerwrapper">\
 			<div id="load_innerwrapper" class="load_innerwrapper round">\
 				<div id="load_teamname" class="load_teamname"></div>\
-				<img id="load_bar" class="load_bar" src="assets/views/load/blink/load.gif"/>\
+				<h2 class="load_heading">Control:</h2>\
 				<div id="tutorial" class="load_tutorial">\
 					<video preload="auto" loop muted autoplay class="tutorial">\
 						<source src="assets/views/load/tutorial.mp4" type="video/mp4" />\
@@ -19,6 +19,7 @@
 					<div id="progressbar" class="load_progressbar">0 %</div>\
 				</div>\
 			</div>\
+            <div class="load_hintbox round">Red player is entering teamname. Game will start after confirming.</div>\
 		</div>',
 
 		right = '<div id="load_register_status" class="joined round"></div>';
@@ -53,13 +54,11 @@
 
 		display.load_view.playerNums = 0;
 
-		var loadBar = document.getElementById('load_bar'),
-			load_teamname = document.getElementById('load_teamname');
+		var load_teamname = document.getElementById('load_teamname');
 
 		// remove images
 		document.getElementById('load_register_status').innerHTML = '';
 
-		loadBar.className = 'load_bar'; // show loadBar
 		if ( $(load_teamname).html() !== "" ) load_teamname.removeChild( document.getElementById('load_greet') ); // remove Team greeting
 
 
@@ -69,15 +68,10 @@
 
 	};
 
-	display.load_view.hideLoadBar = function() {
-
-		document.getElementById('load_bar').className = 'hide';
-	};
-
 	display.load_view.greetTeam = function() {
 
 		var element = document.getElementById('load_teamname'),
-			greetBox = document.createElement('span');
+			greetBox = document.createElement('h1');
 
 		greetBox.id = 'load_greet';
 		greetBox.className = 'greetings';

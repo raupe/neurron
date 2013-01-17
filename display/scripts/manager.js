@@ -235,7 +235,6 @@
 
 		display.teamname = params[1] ? params[1] : '';
 
-        display.load_view.hideLoadBar();
         display.load_view.greetTeam();
 	};
 
