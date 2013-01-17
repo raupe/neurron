@@ -396,13 +396,38 @@ canvas {
 
 .greetings {
 	font-size: 20px;
-	color: #fff;
+	color: #0E499B;
     font-family: 'Fredoka One', cursive;
     display: inline-block;
     margin-bottom: 1%;
+    margin: 2px 0;
 }
 
+.load_heading {
+	font-size: 20px;
+	color: #0E499B;
+    font-family: 'Fredoka One', cursive;
+    display: inline-block;
+    margin-bottom: 1%;
+    letter-spacing: 0;
+    margin: 2px 0;
+}
 
+.load_hintbox {
+    color: #941837;
+    width: 70%;
+    margin: auto;
+    padding: 1%;
+    margin-top: 5%;
+    background-color: white;
+    font-weight: bold;
+    font-family: 'Fredoka One', cursive;
+}
+
+.load_teamname {
+    margin-top: 1%;
+    font-size: 2em;
+}
 
 /* ---------- game -------------------- */
 
