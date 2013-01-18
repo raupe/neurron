@@ -145,7 +145,7 @@
 
 				if ( name === 0 ) {
 
-					box.skip( id );
+					box.skip( true );
 					input.active( true );
 
 				} else {

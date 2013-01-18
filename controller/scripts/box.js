@@ -66,16 +66,16 @@
 
 		//  ---------- private ---------------------
 
-		function hide() {
+		function hide ( center )  {
 
 			box.className = 'hide';
 			content.innerHTML = '';
 
-			hint.className = 'hint visible';
+			hint.className = 'hint visible' + ( center ? ' center' : '' );
 
 			setTimeout(function(){
 
-				hint.className = 'hint opaque fading';
+				hint.className = 'hint opaque fading' + ( center ? ' center' : '' );
 				hint.addEventListener( transitionEnd, hideHint );
 
 			}, 16.7);
