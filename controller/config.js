@@ -12,22 +12,11 @@ var config = {
 	clearDelay		: 2000,
 	clearRate		: 30,
 
-
-	commands:	{
-
-		REGISTER	: 1,
-		NAME		: 2,
-		MOVE		: 3,
-		HEAL		: 4
-	},
-
-
 	protocolStoC: {
 
 		START		: 1,
 		STATUS		: 2
 	},
-
 
 	protocolCtoS: {
 
@@ -49,6 +38,7 @@ var config = {
 
 	colors: {
 
+		0: 'default',	// #333
 		1: 'red',		// image - r: 148,	g:  24,	b:	55
 		2: 'blue',		// image - r:  37,	g:  54,	b: 137
 		3: 'green',		// image - r: 102,	g: 179,	b:	45

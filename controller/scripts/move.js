@@ -6,7 +6,7 @@
 	 * @param  {[type]} params  [description]
 	 * @return {[type]}         [description]
 	 */
-	function move ( manager, params )  {
+	controller.Move = function ( send, params )  {
 
 		var start = params[0],
 			end = params[1],
@@ -20,8 +20,6 @@
 			difference = 0,
 			sum = 0,
 			direction = 0;
-
-		// direction = config.protocolCtoS.ANTICLOCKWISE;
 
 		m1 = (end.y - start.y) / ( end.x - start.x ),
 		m2 = -1/m1;
@@ -79,7 +77,7 @@
 			sum += difference;
 		}
 
-//		console.log('end: ',sum);
+		//	console.log('end: ',sum);
 
 		if ( diffX > diffY ) {
 
@@ -112,18 +110,8 @@
 			}
 		}
 
-		if ( direction === config.protocolCtoS.CLOCKWISE ) {
+		send( direction );
+	};
 
-			// console.log("uhrzeiger");
-
-		} else {
-
-			// console.log("gegen uhrzeiger");
-		}
-
-		manager.send( direction );
-	}
-
-	controller.move = move;
 
 })();

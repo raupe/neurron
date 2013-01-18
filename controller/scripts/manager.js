@@ -1,24 +1,44 @@
 (function(){
 
+	var url = 'http://' + config.server + ':' + config.port,
+		channel = window.location.search.substr(1);
+
+		req = new XMLHttpRequest(),
+		box = controller.Box,
+		input = controller.Input,
+
+		timer = 0, id = 0,
+		repeat = null;
+
+	// simple warning
+	if ( channel > 255 || channel < 0 ) box.warn( 3 );
+
+
+	// ----------------- private -----------------
+
 	/**
-	 * [Manager description]
-	 * @param {[type]} config [description]
+	 * [send description]
+	 * @param  {[type]} action [description]
+	 * @param  {[type]} option [description]
+	 * @return {[type]}        [description]
 	 */
-	var Manager = controller.Manager = function ( params ) {
+	function send ( action, option )  {
 
-		this.id = 0;
-		this.timer = 0;
+		timer = 0; // treshold
 
-		this.url = params.url;
-		this.channel = params.channel;
+		req.open( 'POST', url + '?t=' + Date.now(), true );
 
-		this.req = new XMLHttpRequest();
+		// console.log('action: ', action, '- option: ', option || '/' );
 
-		this.box = controller.Box.init( this.handle.bind(this) );
-		this.input = controller.Input.init( this.handle.bind(this) );
+		// encode into base64, avoiding special characters like '0' // nur null nicht
+		var data = String.fromCharCode( channel, id, action ) + ( option || '' );
 
-		if ( this.channel > 255 || this.channel < 0 ) this.box.warn( 3 );
-	};
+		data = btoa( data );
+
+		req.setRequestHeader( 'Content-Type', 'text/plain; charset=UTF-8' );
+
+		req.send( data );
+	}
 
 
 	/**
@@ -26,76 +46,59 @@
 	 * @param  {[type]} category [description]
 	 * @return {[type]}          [description]
 	 */
-	Manager.prototype.showBox = function ( type ) {
+	function changeView ( type ) {
 
-		if ( this.repeat ) clearInterval( this.repeat );
+		if ( repeat ) clearInterval( repeat );
 
 		if ( type === 1 ) {
 
-			this.id = 0;
-			this.box.start();
+			id = 0;
+			box.start();
 
 		} else { // handling on error
 
-			this.box.warn( type );
+			box.warn( type );
 		}
 
-		this.input.active( false );
-	};
+		input.setStyle( 0 );
+		input.active( false );
+	}
 
 
 	/**
 	 * [init description]
 	 * @return {[type]} [description]
 	 */
-	Manager.prototype.startTimer = function(){
+	function startTimer(){
 
-		this.repeat = setInterval(function(){
+		repeat = setInterval(function(){
 
-			this.timer++;
+			timer++;
 
-			if ( this.timer === config.pollingTimer ) {
+			if ( timer === config.pollingTimer ) {
 
-				this.timer = 0;
+				timer = 0;
 
-				this.send( config.protocolCtoS.POLLING );
+				send( config.protocolCtoS.POLLING );
 			}
 
-		}.bind(this), 1000 );
-	};
+		}, 1000 );
+	}
 
 
-	/**
-	 * [handle description]
-	 * @param  {[type]} action  [description]
-	 * @param  {[type]} options [description]
-	 * @return {[type]}         [description]
-	 */
-	Manager.prototype.handle = function ( action, options ) {
 
-		var commands = {
 
-			1   : this.register,
-			2	: this.name,
-			3   : this.move,
-			4   : this.heal
-		};
-
-		// console.log(action, commands);
-
-		commands[ action ].call( this, options );
-	};
-
+	// ----------------- public -----------------
 
 	/**
 	 * [name description]
 	 * @param  {String} teamname
 	 */
-	Manager.prototype.name = function ( name ) { // name
+	var name = function ( string ) { // name
 
-		this.input.active( true );
+		input.active( true );
 
-		this.send( config.protocolCtoS.TEAMNAME, name );
+		send( config.protocolCtoS.TEAMNAME, string );
 	};
 
 
@@ -103,15 +106,14 @@
 	 * [register description]
 	 * @return {[type]} [description]
 	 */
-	Manager.prototype.register = function() {
+	var register = function() {
 
-		if ( this.id ) return;
+		if ( id ) return;
 
-		this.startTimer();
-
+		startTimer();
 
 		/* serve response  */
-		this.req.onload = function ( t ) {
+		req.onload = function ( t ) {
 
 			var res = t.currentTarget.responseText,
 
@@ -130,24 +132,30 @@
 
 				if ( state === 0 ) return;
 
-				this.showBox( state );
+				changeView( state );
 			}
 
 			if ( action === config.protocolStoC.START ) {
 
-				this.id = data.charCodeAt(1);
+				id = data.charCodeAt(1);
 
-				this.input.setStyle( data.charCodeAt(2) );
+				input.setStyle( data.charCodeAt(2) );
 
 				var name = data.charCodeAt(3);
 
-				if ( name === 0 ) this.box.hide( this.id );
-				else this.box.name();
+				if ( name === 0 ) {
+
+					box.skip( id );
+					input.active( true );
+
+				} else {
+
+					box.name();
+				}
 			}
+		};
 
-		}.bind(this);
-
-		this.send( config.protocolCtoS.REGISTER );
+		send( config.protocolCtoS.REGISTER );
 	};
 
 
@@ -156,9 +164,9 @@
 	 * @param  {object} params [description]
 	 * @return {[type]}        [description]
 	 */
-	Manager.prototype.move = function ( params ) {
+	var move = function ( params ) {
 
-		controller.move( this, params );
+		controller.Move( send, params );
 	};
 
 
@@ -166,34 +174,24 @@
 	 * [heal description]
 	 * @return {[type]} [description]
 	 */
-	Manager.prototype.heal = function(){
+	// var heal = function(){
 
-		this.send( config.protocolCtoS.HEAL );
+	//	send( config.protocolCtoS.HEAL );
+	// };
+
+
+	// Interface
+	var Manager = {
+
+		register: register,
+		name	: name,
+		move	: move
+		// heal	: heal
 	};
 
 
-	/**
-	 * [send description]
-	 * @param  {[type]} action [description]
-	 * @param  {[type]} option [description]
-	 * @return {[type]}        [description]
-	 */
-	Manager.prototype.send = function ( action, option )  {
-
-		this.timer = 0; // treshold
-
-		this.req.open( 'POST', this.url + '?t=' + Date.now(), true );
-
-		// console.log('action: ', action, '- option: ', option || '/' );
-
-		// encode into base64, avoiding special characters like '0' // nur null nicht
-		var data = String.fromCharCode( this.channel, this.id, action ) + ( option || '' );
-
-		data = btoa( data );
-
-		this.req.setRequestHeader( 'Content-Type', 'text/plain; charset=UTF-8' );
-
-		this.req.send( data );
-	};
+	// init
+	box.init( Manager );
+	input.init( Manager );
 
 })();
