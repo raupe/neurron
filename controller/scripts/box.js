@@ -11,11 +11,19 @@
 
 		var	description;
 
+		if ( window.matchMedia ) {
+
 			if ( window.matchMedia("(max-width: 1378px)").matches ) description = 'Enter your Team-Name (default: none)';
 			if ( window.matchMedia("(max-width: 1024px)").matches ) description = 'Enter your Team-Name';
-			if ( window.matchMedia("(max-width: 800px)").matches ) description = 'Enter Team-Name';
-			if ( window.matchMedia("(max-width: 480px)").matches ) description = 'Team-Name';
-			if ( window.matchMedia("(max-width: 320px)").matches ) description = 'Name';
+			if ( window.matchMedia("(max-width: 800px)").matches )	description = 'Enter Team-Name';
+			if ( window.matchMedia("(max-width: 480px)").matches )	description = 'Team-Name';
+			if ( window.matchMedia("(max-width: 320px)").matches )	description = 'Name';
+
+		} else {
+
+			description = 'Name';
+		}
+
 
 		var templates = {
 
@@ -45,8 +53,9 @@
 				var name =  document.getElementById('input').value
 															.replace(/\n+/g,'')
 															.replace(/\t+/g,'');
-				// limit to ascii
+				// limit to ascii & size
 				if ( name.length ) name = name.match(/[ -~]/g).join('');
+				if ( name.length > 10 ) name = name.substr(0,9) + '.';
 
 				manager.name( name );
 

@@ -190,7 +190,7 @@
 	};
 
 
-	// init
+	// Initialize
 	box.init( Manager );
 	input.init( Manager );
 
