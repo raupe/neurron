@@ -63,7 +63,7 @@
 			left = document.getElementById( id + '-l' );
 			right = document.getElementById( id + '-r' );
 
-			if ( left ) {
+			if ( left ) { // 2nd
 
 				left.classList.remove('hide');
 				setTimeout(function(){ left.classList.add('fadeIn'); }, 16.7 );
@@ -83,7 +83,7 @@
 				}, 16.7 );
 			}
 
-			if ( right ) {
+			if ( right ) { // 2nd
 
 				right.classList.remove('hide');
 				setTimeout(function(){ right.classList.add('fadeIn'); }, 16.7 );
@@ -103,7 +103,8 @@
 				}, 16.7 );
 			}
 
-			if ( display.logic[ id ] ) display.logic[ id ]();
+			// ensure HTML parsing
+			setTimeout(function(){ if ( display.logic[ id ] ) display.logic[ id ](); }, 16.7 );
 		}
 	};
 
@@ -145,7 +146,7 @@
 			next.volume = 0;
 
 			timer = config.audioFading;
-			fade();
+			crossFade();
 
 			next.play();
 
@@ -153,15 +154,19 @@
 
 			current = tracks.current = el;
 
-			current.currentTime = 0;
-			current.volume = config.audio ? audioVolume : 0;
+			setTimeout(function(){
 
-			current.play();
+				current.currentTime = 0;
+				current.volume = config.audio ? audioVolume : 0;
+
+				current.play();
+
+			}, 16.7 );
 		}
 	};
 
 
-	function fade(){
+	function crossFade(){
 
 		var current = display.tracks.current,
 			next = display.tracks.next;
@@ -171,7 +176,7 @@
 
 		if ( timer-- ) {
 
-			setTimeout( fade, 1000 );
+			setTimeout( crossFade, 1000 );
 
 		} else {
 
