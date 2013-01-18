@@ -217,10 +217,7 @@
 	Manager.prototype.cancel = function(){
 
 		display.show('start');
-
-		display.load_view.clearLoadScene();
 	};
-
 
 	/**
 	 * [countdown description]
@@ -229,13 +226,16 @@
 	 */
 	Manager.prototype.countdown = function ( params )  {
 
-		if ( display.current !== 'load' ) display.show('load');
+		// fading
+		setTimeout(function(){
 
-        display.load_view.loadBar( params[0] );
+			display.load_view.loadBar();
 
-		display.teamname = params[1] ? params[1] : '';
+			display.teamname = params[1] ? params[1] : '';
 
-        display.load_view.greetTeam();
+			display.load_view.greetTeam();
+
+		}, 1000);
 	};
 
 
@@ -246,7 +246,12 @@
 	 */
 	Manager.prototype.joined = function ( params ) {
 
-		display.load_view.showNewPlayer( params[0] );
+		// fading
+		setTimeout(function(){
+
+			display.load_view.showNewPlayer( params[0] );
+
+		}, 1000);
 	};
 
 
@@ -258,8 +263,6 @@
 	Manager.prototype.start = function ( params ) {
 
         display.show('game');
-
-        display.load_view.clearLoadScene();
 
 		this.grid.init({
 

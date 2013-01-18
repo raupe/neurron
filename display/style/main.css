@@ -127,9 +127,10 @@ canvas {
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
-	width: 24%;
-	height: 14%;
-	min-height: 50px;
+	/*width: 24%;*/
+	width: 38%;
+	height: 12%;
+	/*min-height: 50px;*/
 	background-color: #dcdcdc;
 	float: left;
 	position: relative;
@@ -139,7 +140,8 @@ canvas {
 
 
 .button p {
-	margin-top: 10%;
+	/*margin-top: 10%;*/
+	margin: 0.5em 0;
 	text-align: center;
 	font-size: 1.5em ;
 	font-family: 'Fredoka One', cursive;
@@ -272,7 +274,7 @@ canvas {
 
 .hide {		display: none;	}
 .fadeOut {	opacity: 0;		}
-.fadeIn {	opacity: 1;		}
+.fadeIn {	opacity: 1 !important; }
 
 
 
@@ -348,7 +350,7 @@ canvas {
 
 .load_progressbar {
 
-    height: 20px;
+    height: 30px;
     width: 10%;
 
     /* font position */
@@ -385,6 +387,40 @@ canvas {
 }
 
 
+.caption {
+
+	font-size: 1.3em;
+	padding: 10px;
+
+	color: rgb(240, 195, 55);
+	font-weight: bold;
+	font-family: 'Fredoka One', cursive;
+}
+
+.message {
+
+	width: 95%;
+	font-style: italic;
+}
+
+
+.waiting {
+
+	border	: 0;
+	padding	: 0;
+	margin	: 0;
+
+	margin-left: -10px;
+
+	vertical-align: baseline;
+	list-style: none;
+
+	float: right;
+	letter-spacing: 3px
+}
+
+.waiting > li { display: inline-block; opacity: 0; }
+
 .joined { background-color: #fff; }
 
 .joined > img {
@@ -406,21 +442,29 @@ canvas {
 }
 
 .load_heading {
-	font-size: 20px;
-	color: #0E499B;
-    font-family: 'Fredoka One', cursive;
+
     display: inline-block;
-    margin-bottom: 1%;
-    letter-spacing: 0;
-    margin: 2px 0;
+
+	font-size: 2em;
+    margin: 10px 0;
+
+    font-family: 'Fredoka One', cursive;
+    /*margin-bottom: 1%;*/
+    /*letter-spacing: 0;*/
+    /*margin: 2px 0;*/
+	color: #0E499B;
 }
 
 .load_hintbox {
-    color: #941837;
+
+	font-size: 1.5em;
+
     width: 70%;
     margin: auto;
     padding: 1%;
+
     margin-top: 5%;
+    color: #941837;
     background-color: white;
     font-weight: bold;
     font-family: 'Fredoka One', cursive;
