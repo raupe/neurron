@@ -12,8 +12,6 @@ window.config = {
 	server				: 'game.neurron.com',
 	port				: '2020',
 
-    errorURL            : 'http://neurron.com/notify/error2.php',
-
     gameTime            : 2,		// Minutes
 
 
