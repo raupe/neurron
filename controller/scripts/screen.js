@@ -2,10 +2,12 @@
 
 	controller.Screen = (function(){
 
-		var cvs = document.getElementById('cvs'),
+		var cvs = document.createElement('canvas'),
 			ctx = cvs.getContext('2d'),
-
 			setStyle = null;
+
+		cvs.className = 'background default';
+
 
 		// ---- private -----
 		function scale() {
@@ -17,14 +19,16 @@
 
 
 		// ---- public -----
-		var init = function ( param ) {
+		var init = function ( style ) {
 
 			scale();
 
-			setStyle = param;
+			setStyle = style;
 
 			window.addEventListener('resize', scale );
 			window.addEventListener('orientationchange', scale );
+
+			document.getElementById('background').appendChild( cvs );
 		};
 
 		var clear = function(){
