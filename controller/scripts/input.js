@@ -57,7 +57,7 @@
 
 		function clear () {
 
-			timer = null;
+			if ( timer ) clearTimeout( timer );
 
 			if ( clearing ) return;
 
@@ -65,7 +65,7 @@
 
 			clearing = setInterval(function(){
 
-				if ( clearing && !points.length ) {
+				if ( !points.length ) {
 
 					clearInterval( clearing );
 					clearing = null;
@@ -106,6 +106,7 @@
 			ctx.clearRect( 0, 0, cvs.width, cvs.height );
 			points.length = 0;
 			clearing = null;
+			timer = null;
 
 
 			var touch = getPos( e.changedTouches[0] );
@@ -138,7 +139,11 @@
 			averageY += touch.y;
 			counter++;
 
-			if ( paused ) timer = setTimeout( clear, config.clearDelay );
+			if ( paused ) {
+
+				paused = null;
+				timer = setTimeout( clear, config.clearDelay );
+			}
 
 			draw();
 		}
