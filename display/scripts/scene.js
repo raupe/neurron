@@ -140,6 +140,12 @@
 		var tracks = display.tracks,
 			current = tracks.current;
 
+		if ( isNaN(el.duration) ) { // state validation
+
+			setTimeout( function(){	display.sound(el);	}, 16.7 );
+			return;
+		}
+
 		if ( current ) { // fading
 
 			var next = tracks.next = el;
@@ -154,14 +160,10 @@
 
 			current = tracks.current = el;
 
-			setTimeout(function(){
+			current.currentTime = 0;
+			current.volume = config.audio ? audioVolume : 0;
 
-				current.currentTime = 0;
-				current.volume = config.audio ? audioVolume : 0;
-
-				current.play();
-
-			}, 16.7 );
+			current.play();
 		}
 	};
 
