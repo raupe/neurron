@@ -90,14 +90,14 @@
 
 		function reset(){
 
+			controller.Screen.clear();
+
 			box.className = 'box';
 			hint.className = 'hint opaque';
 			content.innerHTML = templates.start;
 		}
 
 		//  ---------- public ---------------------
-
-
 
 		/**
 		 * [init description]
@@ -133,12 +133,17 @@
 
 		var warn = function ( type ) {
 
+			reset(); // although waste of start...
+
 			var msg;
 
 			if ( type === 2 ) msg = templates.alreadyRunning;
 			if ( type === 3 ) msg = templates.notFound;
 
 			content.innerHTML = msg;
+
+			box.className = 'box';
+			hint.className = 'hint opaque';
 		};
 
 
