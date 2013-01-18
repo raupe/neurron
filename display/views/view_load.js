@@ -31,100 +31,28 @@
 
 	})();
 
-	var joined;
-
-	display.load_view.showNewPlayer = function ( id ) {
-
-		if ( !joined ) joined = document.getElementById('load_register_status');
-
-		var	pathToImages = config.viewAssets + '/load/icons/',
-			image = new Image();
-
-		image.onload = function(){ joined.appendChild(image); };
-		image.src = pathToImages + 'neurron_' + id + '.png';
-	};
-
-
-	var progressbar,
+	var joined,
+		progressbar,
 		message,
-		animation;
+		animation,
+		video,
+		waiting,
+		load_teamname;
 
-
-
-	display.load_view.clearLoadScene = function(){
-
-		var load_teamname = document.getElementById('load_teamname');
-
-		// remove images
-		if ( joined ) joined.innerHTML = '';
-
-		if ( $(load_teamname).html() !== "" ) load_teamname.removeChild( document.getElementById('load_greet') ); // remove Team greeting
-
-		if ( !message ) message = document.getElementById('message');
-        if ( !progressbar ) progressbar = document.getElementById('progressbar');
-
-		if ( message.classList.contains('hide') ) message.classList.remove('hide');
-		if ( !progressbar.classList.contains('hide') ) progressbar.classList.add('hide');
-
-        if ( progressbar.classList.contains('fill') ) progressbar.classList.remove('fill');
-
-        progressbar.textContent = '0 %';
-	};
-
-
-	display.load_view.loadBar = function() {
-
-		if ( animation ) clearInterval( animation );
-
-		message.classList.add('hide');
-		progressbar.classList.remove('hide');
-
-		setTimeout(function(){
-
-			progressbar.classList.add('fill');
-
-		}, 16.7);
-
-		var step = (15 * 1000 / 100) * 0.9, // css width .load_progressbar
-			counter = 0,
-			interval;
-
-		interval = setInterval(function(){
-
-			progressbar.textContent = ++counter + ' %';
-
-			if ( counter === 100 ) clearInterval( interval );
-
-		}, step );
-	};
-
-
-
-
-
-	display.load_view.greetTeam = function() {
-
-		var element = document.getElementById('load_teamname'),
-			greetBox = document.createElement('h1');
-
-		greetBox.id = 'load_greet';
-		greetBox.className = 'greetings';
-
-		greetBox.innerHTML = 'Hi ' + ( display.teamname ? 'team ' + display.teamname : 'neurrons' );
-		element.appendChild(greetBox);
-	};
-
-
-
-	var video,
-		waiting;
 
 	display.logic.load = function(){
 
-		display.load_view.clearLoadScene();
+		if ( !video ) {
 
-		if ( !video ) video = document.getElementById('tutorial').children[0];
-		if ( !waiting ) waiting = document.getElementById('waiting');
+			video = document.getElementById('tutorial').children[0];
+			if ( !video ) { setTimeout(function(){ display.logic.load(); }, 16.7 );	return; }
+        }
+
+		if ( !waiting ) {
+
+			waiting = document.getElementById('waiting');
+			if ( !waiting ) { setTimeout(function(){ display.logic.load(); }, 16.7 ); return; }
+		}
 
 		var elements = waiting.children,
 			length = elements.length,
@@ -145,12 +73,116 @@
 
 		}, 1000 );
 
-
 		$('#container').removeClass("backgroundImage");
 		$('#container-right').addClass("marginTopPadding");
-		$('#qr_code img').addClass("halfQR");
+		$('#qr_code > img').addClass("halfQR");
 	};
 
 
+	display.load_view.showNewPlayer = function ( id ) {
+
+		if ( !joined ) {
+
+			joined = document.getElementById('load_register_status');
+			if ( !joined ) { setTimeout(function(){ display.load_view.showNewPlayer( id ); }, 16.7 ); return; }
+		}
+
+		var	pathToImages = config.viewAssets + '/load/icons/',
+			image = new Image();
+
+		image.onload = function(){ joined.appendChild(image); };
+		image.src = pathToImages + 'neurron_' + id + '.png';
+	};
+
+
+
+
+
+	display.load_view.loadBar = function() {
+
+		if ( !message ) {
+
+			message = document.getElementById('message');
+			if ( !message ) { setTimeout(function(){ display.load_view.loadBar(); }, 16.7 ); return; }
+		}
+
+        if ( !progressbar ) {
+
+			progressbar = document.getElementById('progressbar');
+			if ( !progressbar ) { setTimeout(function(){ display.load_view.loadBar(); }, 16.7 ); return; }
+        }
+
+		if ( animation ) clearInterval( animation );
+
+		message.classList.add('hide');
+		progressbar.classList.remove('hide');
+
+		setTimeout(function(){ progressbar.classList.add('fill'); }, 16.7);
+
+		var step = (15 * 1000 / 100) * 0.9, // css width .load_progressbar
+			counter = 0,
+			interval;
+
+		interval = setInterval(function(){
+
+			progressbar.textContent = ++counter + ' %';
+
+			if ( counter === 100 ) clearInterval( interval );
+
+		}, step );
+	};
+
+	display.load_view.greetTeam = function() {
+
+		if ( !load_teamname ) {
+
+			load_teamname = document.getElementById('load_teamname');
+			if ( !load_teamname ) { setTimeout(function(){ display.load_view.greetTeam(); }, 16.7 ); return; }
+		}
+
+		var greetBox = document.createElement('h1');
+
+		greetBox.id = 'load_greet';
+		greetBox.className = 'greetings';
+
+		greetBox.innerHTML = 'Hi ' + ( display.teamname ? 'team ' + display.teamname : 'neurrons' );
+		load_teamname.appendChild(greetBox);
+	};
+
+	display.load_view.clearLoadScene = function(){
+
+		if ( !load_teamname ) {
+
+			load_teamname = document.getElementById('load_teamname');
+			if ( !load_teamname ) { setTimeout(function(){ display.load_view.clearLoadScene(); }, 16.7 ); return; }
+		}
+
+		if ( !message ) {
+
+			message = document.getElementById('message');
+			if ( !message ) { setTimeout(function(){ display.load_view.clearLoadScene(); }, 16.7 ); return; }
+		}
+
+        if ( !progressbar ) {
+
+			progressbar = document.getElementById('progressbar');
+			if ( !progressbar ) { setTimeout(function(){ display.load_view.clearLoadScene(); }, 16.7 ); return; }
+        }
+
+		setTimeout(function(){ // delay for smoothness
+
+			// remove images
+			if ( joined ) joined.innerHTML = '';
+
+			if ( load_teamname.innerHTML !== "" ) load_teamname.removeChild( document.getElementById('load_greet') ); // remove Team greeting
+
+			if ( message.classList.contains('hide') ) message.classList.remove('hide');
+			if ( !progressbar.classList.contains('hide') ) progressbar.classList.add('hide');
+			if ( progressbar.classList.contains('fill') ) progressbar.classList.remove('fill');
+
+			progressbar.textContent = '0 %';
+
+		}, 1000 );
+	};
 
 })();
