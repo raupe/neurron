@@ -25,7 +25,7 @@
 
 				left.classList.remove('fadeIn');
 				left.classList.add('fadeOut');
-				left.addEventListener( transitionend, hide );
+				left.addEventListener( transitionEnd, hide );
 			}
 
 			if ( right ) {
@@ -34,7 +34,7 @@
 
 				right.classList.remove('fadeIn');
 				right.classList.add('fadeOut');
-				right.addEventListener( transitionend, hide );
+				right.addEventListener( transitionEnd, hide );
 			}
 
 		} else {
@@ -52,7 +52,7 @@
 			el.classList.remove('fadeOut');
 			el.classList.add('hide');
 
-			el.removeEventListener( transitionend, hide );
+			el.removeEventListener( transitionEnd, hide );
 
 			if ( !--check ) show(); // as both triggered
 		}
