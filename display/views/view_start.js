@@ -10,9 +10,8 @@
 			</div>\
 			<div id="slider_box_wrap" class="slider_box_wrap">\
 				<ul id="button_wrap">\
-					<li class="button button_color idea_button"><p>idea</p></li>\
-					<li class="button button_color game_button"><p>game</p></li>\
-					<li class="button button_color demo_button"><p>demo</p></li>\
+					<li id="btn-idea" class="button button_color idea_button"><p>idea</p></li>\
+					<li id="btn-game" class="button button_color game_button"><p>game</p></li>\
 				</ul>\
 				<div class="dashboard round"></div>\
 				<ul id="screen_wrap" class="screen_wrap round">\
@@ -26,9 +25,6 @@
 					<li id="game" class="screen hide">\
 						<img src="assets/views/start/placeholder.jpg" class="video" />\
 					</li>\
-					<li id="demo" class="screen hide">\
-						<img src="assets/views/start/schneeronny.jpg" class="video" />\
-					</li>\
 				</ul>\
 			</div>\
 		</div>';
@@ -39,13 +35,23 @@
 
 
 	// Cache
-	var video, music;
+	var video, music,
+
+		$buttons,
+		$items,
+		$container,
+		$containerRight,
+		$qrCode,
+
+		counter,
+		duration,
+		itemsLength,
+		timer;
+
+
+
 
 	display.logic.start = function(){
-
-		$('#container').addClass("backgroundImage");
-		$('#container-right').removeClass("marginTopPadding");
-		$('#qr_code > img').removeClass("halfQR");
 
 		if ( video ) {
 
@@ -53,14 +59,40 @@
 
 		} else { // first time
 
-
 			music = display.getAsset('audio', 'start');
 			music.loop = true;
 
 			video = document.getElementById('idea').children[0];
 
+
+
+			$buttons = $('#button_wrap > li');
+			$items = $('#screen_wrap > li');
+			$container = $('#container');
+			$containerRight = $('#container-right');
+			$qrCode = $('#qr_code > img');
+
+
+
+			// event handler
+			$($buttons).click(function(){
+
+				if ( counter === $(this).index() ) return;
+
+				$($buttons[counter]).removeClass('button_active');
+				$($items[counter]).fadeOut();
+				counter = $(this).index();
+				if ( timer ) clearTimeout(timer);
+				timeOut();
+			});
+
 			$(video).on('loadedmetadata', start );
+			$(video).on('ended', function(){ document.getElementById('btn-game').click(); });
 		}
+
+		$container.addClass("backgroundImage");
+		$containerRight.removeClass("marginTopPadding");
+		$qrCode.removeClass("halfQR");
 	};
 
 
@@ -68,65 +100,53 @@
 
 		display.sound( music );
 
-		var duration = {
+		duration = {
 
-				idea	: ~~( video.duration * 1000 ) + 1000,
-				game	: 15000,
-				demo	: 15000
-			},
-
-			$buttons = $("#button_wrap > li"),
-			$items = $("#screen_wrap > li"),
-
-			itemsLength = $items.length,
-
-			counter = 0,
-			timer;
-
-
-		$($buttons).click(function(){
-
-			$($buttons[counter]).removeClass('button_active');
-			$($items[counter]).fadeOut();
-			counter = $(this).index();
-			clearTimeout(timer);
-			timeOut();
-		});
-
-
-		//set time out
-		var timeOut = function(){
-
-			var currentId = $items[counter].id,
-
-				durationTime = duration[currentId];
-
-			$($items[counter]).fadeIn();
-			$($buttons[counter]).addClass('button_active');
-
-			if ( currentId === 'idea' ) setTimeout(function(){ video.play(); }, 1000);
-
-			if ( video.currentTime !== 0 ) {
-
-				video.pause();
-				video.currentTime = 0;
-			}
-
-			timer = setTimeout(function() {
-
-				$($items[counter]).fadeOut();
-				$($buttons[counter]).removeClass('button_active');
-				counter++;
-
-				if( counter >= itemsLength ) counter = 0;
-
-				timeOut();
-
-			}, durationTime);
+			idea	: ~~( video.duration * 1000 ) + 1000,
+			game	: 15000,
+			demo	: 15000
 		};
+
+		itemsLength = $items.length;
+
+		counter = 0;
 
 		timeOut();
 	}
+
+	//set time out
+	function timeOut(){
+
+		var currentId = $items[counter].id,
+
+			durationTime = duration[currentId];
+
+		$($items[counter]).fadeIn();
+		$($buttons[counter]).addClass('button_active');
+
+		if ( currentId === 'idea' ) setTimeout(function(){ video.play(); }, 1000);
+
+		if ( video.currentTime !== 0 ) {
+
+			video.pause();
+			video.currentTime = 0;
+		}
+
+		timer = setTimeout(function() {
+
+			$($items[counter]).fadeOut();
+			$($buttons[counter]).removeClass('button_active');
+			counter++;
+
+			if( counter >= itemsLength ) counter = 0;
+
+			if ( display.current === 'start' ) timeOut();
+
+		}, durationTime);
+	}
+
+
+
 
 
 })();
