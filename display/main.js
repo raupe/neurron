@@ -1,40 +1,44 @@
 (function(){
 
-	if ( ! ('WebSocket' in window ) ) {
+	// assets handling
+	var assetManager = display.AssetManager;
 
-		var warning = document.getElementById('warning'),
+	display.getAsset = assetManager.get;
 
-			supportTouch = 'ontouchstart' in window,
 
-			remove = function(){
-
-				warning.className = 'warning hide';
-
-				warning.removeEventListener( supportTouch ? 'touchend' : 'click', remove );
-			};
-
-		warning.className = 'warning';
-
-		warning.addEventListener( supportTouch ? 'touchend' : 'click', remove );
+	assetManager.set({ audio: { start: 'assets/views/start/start.mp3' }}, function(){
 
 		display.show('start');
 
-	} else {
+		// connection warning
+		if ( ! ('WebSocket' in window ) ) {
 
-		var assetManager = display.AssetManager;
+			var warning = document.getElementById('warning'),
 
-		assetManager.set( config.assets, function() {
+				supportTouch = 'ontouchstart' in window,
 
-			new display.Screen();
+				remove = function(){
 
-			new display.Manager();
+					warning.className = 'warning hide';
 
-			new display.Connection();
+					warning.removeEventListener( supportTouch ? 'touchend' : 'click', remove );
+				};
 
-			display.show('start');
-		});
+			warning.className = 'warning';
 
-		display.getAsset = assetManager.get;
-	}
+			warning.addEventListener( supportTouch ? 'touchend' : 'click', remove );
+
+		} else {
+
+			assetManager.set( config.assets, function() {
+
+				new display.Screen();
+
+				new display.Manager();
+
+				new display.Connection();
+			});
+		}
+	});
 
 })();

@@ -53,11 +53,9 @@
 
 		} else { // first time
 
-			if ( display.getAsset ) {
 
-				music = display.getAsset('audio', 'start');
-				music.loop = true;
-			}
+			music = display.getAsset('audio', 'start');
+			music.loop = true;
 
 			video = document.getElementById('idea').children[0];
 
@@ -68,7 +66,7 @@
 
 	function start(){
 
-		if ( display.getAsset ) display.sound( music );
+		display.sound( music );
 
 		var duration = {
 

@@ -88,8 +88,7 @@ window.config = {
 			revive		: 'assets/player/revive.wav',
 			win			: 'assets/player/win.mp3',
 
-            start		: 'assets/views/start/start.mp3',
-            game		: 'assets/views/game/game.ogg'
+			game		: 'assets/views/game/game.ogg'
 		}
 	},
 
