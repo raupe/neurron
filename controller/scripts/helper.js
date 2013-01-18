@@ -33,7 +33,7 @@
 
 
 	// cross browser event
-	window.transitionend = (function(){
+	window.transitionEnd = (function(){
 
 		var prefix = {
 

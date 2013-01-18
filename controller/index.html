@@ -19,32 +19,36 @@
 </head>
 <body>
 
-	<div id="figure" class="figure hide">
-		<img src="style/trans.png" class="trans"/>
-	</div>
 
-	<div id="box" class="box">
-		<div id="content" class="content"></div>
+	<div class="container">
+
+		<img id="hint" src="style/hint.png" class="hint opaque"/>
+
+		<canvas id="cvs" class="background default">
+
+		</canvas>
+
+		<div id="box" class="box">
+			<div id="content"></div>
+		</div>
+
 	</div>
 
 
 	<!-- Development -->
-
-<!--
 	<script src="config.js"></script>
 	<script src="scripts/helper.js"></script>
 
-	<script src="scripts/manager.js"></script>
 	<script src="scripts/screen.js"></script>
 	<script src="scripts/input.js"></script>
 	<script src="scripts/box.js"></script>
 	<script src="scripts/move.js"></script>
-
-	<script src="main.js"></script>
- -->
+	<script src="scripts/manager.js"></script>
 
 	<!-- Production -->
+<!--
 	<script src="min/main.js"></script>
+ -->
 
 </body>
 </html>
