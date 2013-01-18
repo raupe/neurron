@@ -23,6 +23,36 @@
 		this.cy = height / 2;
 
 		this.maxRadius = Math.sqrt(width*width + height*height) / 2;
+		
+		this.lineEnds = [];
+		this.lineStarts = [];
+		this.lineNum = 128;
+		var iStep = Math.PI * 2 / this.lineNum,
+			i,
+			sin,
+			cos,
+			sinMin,
+			cosMin,
+			cx = this.cx,
+			cy = this.cy;
+			
+		for(i = Math.PI / 2; i > 0; i -= iStep) {
+			sin = Math.sin(i);
+			cos = Math.cos(i);
+			sinMin = sin * this.minRadius;
+			cosMin = cos * this.minRadius;
+			sin *= this.maxRadius;
+			cos *= this.maxRadius;
+			this.lineEnds.push({x: sin+cx, y: -cos+cy});
+			this.lineEnds.push({x: cos+cx, y: sin+cy});
+			this.lineEnds.push({x: -sin+cx, y: cos+cy});
+			this.lineEnds.push({x: -cos+cx, y: -sin+cy});
+			
+			this.lineStarts.push({x: sinMin+cx, y: -cosMin+cy});
+			this.lineStarts.push({x: cosMin+cx, y: sinMin+cy});
+			this.lineStarts.push({x: -sinMin+cx, y: cosMin+cy});
+			this.lineStarts.push({x: -cosMin+cx, y: -sinMin+cy});
+		}
 	};
 
 	Background.prototype.update = function(delta){
@@ -83,6 +113,17 @@
 		ctx.beginPath();
 		ctx.arc( cx, cy, maxRadius, 0, Math.PI * 2, false );
 		ctx.fill();
+		
+		x = this.grid.getTranslateX(minRadius);
+		y = this.grid.getTranslateY(minRadius);
+		
+		ctx.strokeStyle = "rgba(0, 0, 0, 0.3)";
+		for(var i=0; i< this.lineNum; i++) {
+			ctx.beginPath();
+			ctx.moveTo(this.lineStarts[i].x+x, this.lineStarts[i].y+y);
+			ctx.lineTo(this.lineEnds[i].x, this.lineEnds[i].y);
+			ctx.stroke()
+		}
 
 		//ctx.fillRect( 0, 0, this.screen.cvs.width, this.screen.cvs.height);
 
