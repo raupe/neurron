@@ -2,15 +2,12 @@
 
 	controller.Screen = (function(){
 
-		var cvs = document.createElement('canvas'),
+		var cvs = document.getElementById('cvs'),
 			ctx = cvs.getContext('2d'),
-			setStyle;
 
-		function init ( param ) {
+			setStyle = null;
 
-			setStyle = param;
-		}
-
+		// ---- private -----
 		function scale() {
 
 			cvs.width = window.innerWidth;
@@ -18,27 +15,35 @@
 			if ( setStyle ) setStyle();
 		}
 
-		function clear (){
+
+		// ---- public -----
+		var init = function ( param ) {
+
+			scale();
+
+			setStyle = param;
+
+			window.addEventListener('resize', scale );
+			window.addEventListener('orientationchange', scale );
+		};
+
+		var clear = function(){
 
 			ctx.save();
 			ctx.clearRect( 0 , 0 , cvs.width, cvs.height );
 			ctx.restore();
-		}
+		};
 
-		scale();
+		// Interface
+		var Screen = {
 
-		document.body.appendChild( cvs );
-
-		window.addEventListener('resize', scale );
-		window.addEventListener('orientationchange', scale );
-
-		return {
-
-			init	: init,
 			cvs		: cvs,
 			ctx		: ctx,
+			init	: init,
 			clear	: clear
 		};
+
+		return Screen;
 
 	})();
 
