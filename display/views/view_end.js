@@ -5,7 +5,7 @@
 		var left = '\
 		<div class="main_content_wrap">\
 			<div class="logo">\
-				<img src="style/images/neurron_logo.png" alt="neurron logo" class="logo" />\
+				<img src="style/images/neurron_logo.png" width="356" height="113" alt="neurron logo" />\
 				<div class="subtitle">END OF THE TUNNEL</div>\
 			</div>\
 			<div id="score_wrap" class="score_wrap">\
