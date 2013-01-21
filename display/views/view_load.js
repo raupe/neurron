@@ -76,6 +76,7 @@
 		$('#container').removeClass("backgroundImage");
 		$('#container-right').addClass("marginTopPadding");
 		$('#qr_code > img').addClass("halfQR");
+        $('.contact').fadeOut(1000);
 	};
 
 
