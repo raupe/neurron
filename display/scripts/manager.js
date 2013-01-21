@@ -216,6 +216,7 @@
 	 */
 	Manager.prototype.cancel = function(){
 
+        $('.contact').fadeIn(1000);
 		display.show('start');
 
 		display.load_view.clearLoadScene();
