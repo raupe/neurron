@@ -156,6 +156,27 @@
 	 */
 	Manager.prototype.init = function ( params ) {
 
+        document.getElementById("contact").addEventListener("click", function(){
+
+            $('.contact').fadeOut(1000);
+            $('.neurron').fadeIn(1000);
+
+            display.show('contact');
+
+            $('#qr_code').removeClass("fadeIn");
+            $('#qr_code').addClass("fadeOut");
+        });
+
+        document.getElementById("neurron").addEventListener("click", function(){
+
+            $('.neurron').fadeOut(1000);
+            $('.contact').fadeIn(1000);
+
+            display.show('start');
+
+            // I put the expected fadeIn Code for #qr_code into the start logic because it starts somehow very late
+        });
+
         var link = 'http://game.neurron.com/controller/?' + params[0],
 			qrCode = showQRCode( link, { r: 14, g: 73, b: 155 }),
 
