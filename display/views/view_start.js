@@ -93,6 +93,13 @@
 		$container.addClass("backgroundImage");
 		$containerRight.removeClass("marginTopPadding");
 		$qrCode.removeClass("halfQR");
+
+        // to display qr code when coming back from contact site
+        $('#qr_code').removeClass("fadeOut");
+        $('#qr_code').addClass("fadeIn");
+
+        // to make qr code normal size after canceling (2 minutes in loading screen)
+        $('#qr_code img').removeClass("halfQR");
 	};
 
 
