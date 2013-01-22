@@ -276,13 +276,14 @@ canvas {
 .fadeIn {	opacity: 1 !important; }
 
 .site {
-    color: #AACEDB;
     position: absolute;
     bottom: 10px;
     right: 10px;
     font-size: 20px;
     font-family: 'Fredoka One', cursive;
     cursor: pointer;
+    color: #eee;
+    opacity: 0.7 !important;
 }
 
 /*
@@ -299,7 +300,8 @@ canvas {
 }*/
 
 .contacttext {
-    color: #527FB3;
+    color: #0E499B;
+    line-height: 1.5;
 }
 
 /* ---------- contact ---------------------*/
@@ -316,6 +318,9 @@ canvas {
     padding: 30px;
 }
 
+.contact_innerwrap h1 {
+    font-family: 'Fredoka One', cursive;
+}
 
 /* ---------- connect ---------------------*/
 
