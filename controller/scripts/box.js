@@ -50,12 +50,14 @@
 
 			okay: function(){
 
-				var name =  document.getElementById('input').value
-															.replace(/\n+/g,'')
-															.replace(/\t+/g,'');
+				var input = document.getElementById('input'),
+					name =  input.value.replace(/\n+/g,'').replace(/\t+/g,'');
+
 				// limit to ascii & size
 				if ( name.length ) name = name.match(/[ -~]/g).join('');
 				if ( name.length > 10 ) name = name.substr(0,9) + '.';
+
+				input.setAttribute( 'autofocus', false );
 
 				manager.name( name );
 
