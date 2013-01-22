@@ -15,13 +15,13 @@
 		this.playerList = playerList;
 
 		this.fullBarWidth = this.offset;
-		this.fullBarHeight = this.canvas.height / 16;
+		this.fullBarHeight = this.canvas.height / 18;
 		this.energyBarStartX = this.offset / 8;
 		this.colorBarStartX = this.energyBarStartX / 2;
 		this.lifeLabelStartX = this.energyBarStartX + this.fullBarWidth + 4; // 4 offset that it doesnt catch the energybar
-		this.startY = 50;
+		this.startY = 56;
 		this.color = 'green';
-		this.distance = this.fullBarHeight + 10;
+		this.distance = this.fullBarHeight + 8;
 
 		this.healer = 0;
         var ctx = this.panel;
