@@ -275,18 +275,17 @@ canvas {
 .fadeOut {	opacity: 0;		}
 .fadeIn {	opacity: 1 !important; }
 
-.contact, .neurron {
+.site {
     color: #AACEDB;
     position: absolute;
     bottom: 10px;
     right: 10px;
     font-size: 20px;
     font-family: 'Fredoka One', cursive;
-}
-
-.contact:hover, .neurron:hover {
     cursor: pointer;
 }
+
+/*
 
 .contact_back_button {
     width: 80px;
@@ -297,7 +296,7 @@ canvas {
 
 .contact_back_button p {
     margin: 0;
-}
+}*/
 
 .contacttext {
     color: #527FB3;

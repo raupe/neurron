@@ -2,6 +2,7 @@
 
 	display.current = null;
 
+
 	// history
 	var chrome = !!window.chrome;
 
@@ -16,6 +17,20 @@
 		}
 
 		display.show( history.state );
+	});
+
+
+	// navigation
+	var site = document.getElementById('site');
+
+	site.addEventListener('click', function(){
+
+		if ( site.innerText === 'contact' ) display.show('contact');
+		if ( site.innerText === 'main' ) display.show('start');
+
+		site.classList.remove('fadeIn');
+		site.classList.remove('fadeOut');
+		site.addEventListener( transitionEnd, function(){ site.classList.add('fadeIn'); });
 	});
 
 
