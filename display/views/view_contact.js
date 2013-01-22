@@ -16,11 +16,11 @@
 				<br/>\n\
 				<div class="contacttext">impressum | Name | Straße | Berlin | Tel.: | email: </div>\
 			</div>\
-		</div>',
+		</div>';
 
-		right = '';
+		// right = '';
 
-		return { left: left, right: right };
+		return { left: left }; //, right: right };
 
 	})();
 
