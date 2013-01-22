@@ -1,18 +1,35 @@
 (function(){
 
+	display.current = null;
+
+	// history
+	var chrome = !!window.chrome;
+
+	window.addEventListener('popstate', function ( e )  {
+
+		if ( chrome ) { chrome = !chrome; return; }
+
+		if ( !history.state || history.state === display.current ) {
+
+			window.history.back();
+			return;
+		}
+
+		display.show( history.state );
+	});
+
+
 	// handle visuals
 	var containerLeft = document.getElementById('container-left'),
 		containerRight = document.getElementById('container-right');
 
-
-	display.current = null;
-
 	display.show = function ( id ) {
 
 		var left, right,
-			view = display.views[ id ],
 			check = 0,
 			temp;
+
+		if ( window.history.pushState ) window.history.pushState( id, '', '' );
 
 		if ( display.current ) {
 
@@ -37,12 +54,9 @@
 				right.addEventListener( transitionEnd, hide );
 			}
 
-		} else {
+		} else { show(); }
 
-			show();
-		}
 
-		display.current = id;
 
 
 		function hide ( e ) {
@@ -57,8 +71,9 @@
 			if ( !--check ) show(); // as both triggered
 		}
 
-
 		function show(){
+
+			var view = display.views[ id ];
 
 			left = document.getElementById( id + '-l' );
 			right = document.getElementById( id + '-r' );
@@ -103,6 +118,8 @@
 				}, 16.7 );
 			}
 
+			display.current = id;
+
 			// ensure HTML parsing
 			setTimeout(function(){ if ( display.logic[ id ] ) display.logic[ id ](); }, 16.7 );
 		}
@@ -123,7 +140,6 @@
 
 
 	// handle audio
-
 	display.tracks = {
 
 		current	: null,

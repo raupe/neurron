@@ -1,14 +1,21 @@
 (function(){
 
 	// assets handling
-	var assetManager = display.AssetManager;
+	var assetManager = display.AssetManager,
+
+		path = location.pathname,
+		scene = path.indexOf('/display/') > -1 ? path.substr(9, path.length ) : path;
+
+	// check - default
+	scene = display.views[scene] ? scene : 'start';
+
+
 
 	display.getAsset = assetManager.get;
 
-
 	assetManager.set({ audio: { start: 'assets/views/start/start.mp3' }}, function(){
 
-		display.show('start');
+		display.show( scene );
 
 		// connection warning
 		if ( ! ('WebSocket' in window ) ) {
