@@ -37,8 +37,6 @@
 	// Cache
 	var video, music,
 
-		site,
-
 		$buttons,
 		$items,
 		$container,
@@ -59,13 +57,10 @@
 
 		} else { // first time
 
-			if ( !site ) site = document.getElementById('site');
-
 			music = display.getAsset('audio', 'start');
 			music.loop = true;
 
 			video = document.getElementById('idea').children[0];
-
 
 
 			$buttons = $('#button_wrap > li');
@@ -79,12 +74,13 @@
 			// event handler
 			$($buttons).click(function(){
 
+				if ( timer ) clearTimeout(timer);
 				if ( counter === $(this).index() ) return;
 
 				$($buttons[counter]).removeClass('button_active');
 				$($items[counter]).fadeOut();
+
 				counter = $(this).index();
-				if ( timer ) clearTimeout(timer);
 				timeOut();
 			});
 
@@ -96,32 +92,31 @@
 		$containerRight.removeClass("marginTopPadding");
 		$qrCode.removeClass("halfQR");
 
+        // to make qr code normal size after canceling (2 minutes in loading screen)
+        $('#qr_code img').removeClass("halfQR");
+
         // to display qr code when coming back from contact site
         // $('#qr_code').removeClass("fadeOut");
         // $('#qr_code').addClass("fadeIn");
-
-        // to make qr code normal size after canceling (2 minutes in loading screen)
-        $('#qr_code img').removeClass("halfQR");
 	};
 
 
 	function start(){
-
-		site.textContent = 'contact';
 
 		display.sound( music );
 
 		duration = {
 
 			idea	: ~~( video.duration * 1000 ) + 1000,
-			game	: 15000,
-			demo	: 15000
+			game	: 15000
 		};
 
 		itemsLength = $items.length;
 
-		counter = 0;
+		$buttons.removeClass('button_active');
+		video.currentTime = 0;
 
+		counter = counter || 0;
 		timeOut();
 	}
 
@@ -129,7 +124,6 @@
 	function timeOut(){
 
 		var currentId = $items[counter].id,
-
 			durationTime = duration[currentId];
 
 		$($items[counter]).fadeIn();

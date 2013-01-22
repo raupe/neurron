@@ -13,7 +13,7 @@
 						<source src="assets/views/start/test.ogv" type="video/ogg" />\
 						The browser doesn\'t support any of the provided formats...\
 					</video>\
-					<div class="caption">Swipe an arc to move :)</div>\
+					<div class="caption">Swipe an arc to move (clock or counter-clockwise)</div>\
 				</div>\
 			</div>\
             <div class="load_hintbox round">\
@@ -45,8 +45,10 @@
 		if ( !video ) {
 
 			video = document.getElementById('tutorial').children[0];
-			if ( !video ) { setTimeout(function(){ display.logic.load(); }, 16.7 );	return; }
+			if ( !video ) {	setTimeout(function(){ display.logic.load(); }, 16.7 );	return; }
         }
+
+        if ( !video.duration ) { setTimeout(function(){ display.logic.load(); }, 16.7 ); return; }
 
 		if ( !waiting ) {
 

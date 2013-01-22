@@ -110,6 +110,8 @@
 
 		if ( id ) return;
 
+		id = true;
+
 		startTimer();
 
 		/* serve response  */
