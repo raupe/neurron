@@ -8,7 +8,7 @@
 
 	// check - default
 	scene = display.views[scene] ? scene : 'start';
-
+	if ( scene === 'contact' ) document.getElementById('site').textContent = 'main';
 
 
 	display.getAsset = assetManager.get;

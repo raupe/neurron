@@ -21,17 +21,45 @@
 
 
 	// navigation
-	var site = document.getElementById('site');
+	var site = document.getElementById('site'),
+		text, prev,
+		triggered;
 
 	site.addEventListener('click', function(){
 
-		if ( site.innerText === 'contact' ) display.show('contact');
-		if ( site.innerText === 'main' ) display.show('start');
+		triggered = false;
 
-		site.classList.remove('fadeIn');
-		site.classList.remove('fadeOut');
-		site.addEventListener( transitionEnd, function(){ site.classList.add('fadeIn'); });
+		prev = display.current;
+
+		text = site.innerText;
+
+		if ( text === 'main' ) {			display.show('start'); }
+		else if ( display.logic[ text ] )	display.show( text );
+
+		display.changeLink();
 	});
+
+	site.addEventListener( transitionEnd, fadeLink );
+
+	display.changeLink = function(){ site.classList.remove('fadeIn'); };
+
+	function fadeLink(){
+
+		// in-out
+		if ( (triggered = !triggered) === false ) return;
+
+		if ( !prev || prev === 'contact' ) {
+
+			site.innerText = 'contact';
+
+		} else {
+
+			site.innerText = ( prev === 'start' ) ? 'main' : prev;
+			prev = 'contact';
+		}
+
+		site.classList.add('fadeIn');
+	}
 
 
 	// handle visuals

@@ -207,6 +207,8 @@
 	Manager.prototype.teamname = function() {
 
 		display.show('load');
+
+		display.changeLink();
 	};
 
 

@@ -24,13 +24,6 @@
 
 	})();
 
-	var site;
-
-
-    display.logic.contact = function(){
-
-		if ( !site ) site = document.getElementById('site');
-		site.textContent = 'main';
-	};
+    display.logic.contact = function(){};
 
 })();
