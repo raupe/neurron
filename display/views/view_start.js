@@ -58,7 +58,8 @@
 		} else { // first time
 
 			music = display.getAsset('audio', 'start');
-			music.loop = true;
+			if ( music ) music.loop = true;
+
 
 			video = document.getElementById('idea').children[0];
 
@@ -103,7 +104,7 @@
 
 	function start(){
 
-		display.sound( music );
+		if ( music ) display.sound( music );
 
 		duration = {
 

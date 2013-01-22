@@ -271,6 +271,12 @@
 
 			set = function ( src, callback, storage ) {
 
+				// not supported
+				if ( !window.URL || ( !window.Blob && !window.BlobBuilder ) ) {
+					callback();
+					return;
+				}
+
 				if ( storage ) AssetManager.storage = getIDB( storage );
 
 				if ( callback ) channels.load[0] = [ callback ];
