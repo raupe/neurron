@@ -62,7 +62,7 @@
 	}
 
 
-	// handle visuals
+	// visuals
 	var containerLeft = document.getElementById('container-left'),
 		containerRight = document.getElementById('container-right');
 
@@ -182,7 +182,7 @@
 
 
 
-	// handle audio
+	// audio
 	display.tracks = {
 
 		current	: null,
@@ -208,6 +208,9 @@
 		if ( current ) { // fading
 
 			var next = tracks.next = el;
+
+			if ( current === next ) return;
+
 			next.volume = 0;
 
 			timer = config.audioFading;
