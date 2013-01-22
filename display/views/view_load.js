@@ -45,8 +45,10 @@
 		if ( !video ) {
 
 			video = document.getElementById('tutorial').children[0];
-			if ( !video ) { setTimeout(function(){ display.logic.load(); }, 16.7 );	return; }
+			if ( !video ) {	setTimeout(function(){ display.logic.load(); }, 16.7 );	return; }
         }
+
+        if ( !video.duration ) { setTimeout(function(){ display.logic.load(); }, 16.7 ); return; }
 
 		if ( !waiting ) {
 
