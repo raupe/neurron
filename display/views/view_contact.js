@@ -14,7 +14,8 @@
 					<a class="contacttext" href="mailto:info@neurron.com">info@neurron.com</a>\
 				</div>\n\
 				<br/>\n\
-				<div class="contacttext">impressum | Name | Straße | Berlin | Tel.: | email: </div>\
+                <div id="contact_play_button" class="contact_play_button button"><p>play neurron</p></div>\
+				<div class="contacttext">impressum | Name | Straße | Berlin | Tel.: | Email: </div>\n\
 			</div>\
 		</div>';
 
@@ -24,6 +25,8 @@
 
 	})();
 
-    display.logic.contact = function(){};
+    display.logic.contact = function(){
+        addListener(document.getElementById("contact_play_button"));
+    };
 
 })();
