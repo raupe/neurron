@@ -25,6 +25,22 @@
 		text, prev,
 		triggered;
 
+    // crap code, added a global function to bind play neurron button to click event
+    window.addListener = function( element ) {
+        element.addEventListener("click", function() {
+            triggered = false;
+
+            prev = display.current;
+
+            text = site.innerText;
+
+            if ( text === 'play neurron' ) {			display.show('start'); }
+            else if ( display.logic[ text ] )	display.show( text );
+
+            display.changeLink();
+        });
+    }
+
 	site.addEventListener('click', function(){
 
 		triggered = false;
@@ -33,7 +49,7 @@
 
 		text = site.innerText;
 
-		if ( text === 'main' ) {			display.show('start'); }
+		if ( text === 'play neurron' ) {			display.show('start'); }
 		else if ( display.logic[ text ] )	display.show( text );
 
 		display.changeLink();
@@ -54,7 +70,7 @@
 
 		} else {
 
-			site.innerText = ( prev === 'start' ) ? 'main' : prev;
+			site.innerText = ( prev === 'start' ) ? 'play neurron' : prev;
 			prev = 'contact';
 		}
 
