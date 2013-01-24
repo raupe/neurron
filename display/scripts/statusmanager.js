@@ -242,75 +242,100 @@
 		}
 	};
 
+	var teamname,
+		scoreValue,
+		legends,
+		category;
+
+
 
 	StatusManager.prototype.showEnd = function ( points, share, competition ) {
 
-		// fade
-		setTimeout( function(){
+		if ( !teamname ) {
+			teamname = document.getElementById('teamname');
+			if ( !teamname ) {	setTimeout(function(){ this.showEnd( points, share, competition); }.bind(this), 16.7 );	return; }
+        }
 
-			// highscore
-			document.getElementById('teamname').textContent = display.teamname || 'score';
-			document.getElementById('score_value').children[0].textContent = points;
 
-			// diagram
-			var stylesheet = document.styleSheets[ document.styleSheets.length-1 ],
+		if ( !scoreValue ) {
+			scoreValue = document.getElementById('score_value');
+			if ( !scoreValue) {	setTimeout(function(){ this.showEnd( points, share, competition); }.bind(this), 16.7 );	return; }
+        }
 
-				rules = stylesheet.cssRules.length, // || stylesheet.rules,
 
-				colors = config.colors,
+		if ( !legends ) {
+			legends = document.getElementById('legends');
+			if ( !legends ) {	setTimeout(function(){ this.showEnd( points, share, competition); }.bind(this), 16.7 );	return; }
+        }
 
-				length = share.length,
+		if ( !category ) {
+			category = document.getElementById('category');
+			if ( !category ) {	setTimeout(function(){ this.showEnd( points, share, competition); }.bind(this), 16.7 );	return; }
+        }
 
-				current,	// temp
-				i;			// iterator
+  //       console.log(points, share, competition);
 
-			for ( i = 0; i < length; i++ ) {
+		// highscore
+        teamname.textContent = display.teamname || 'score';
+        scoreValue.children[0].textContent = points;
 
-				current = share[i];
 
-				stylesheet.insertRule( '.'+ colors[current.color] + '{\
-											width: ' + current.perc + '%;\
-										}', rules + i );
+		// diagram
+		var stylesheet = document.styleSheets[ document.styleSheets.length-1 ],
+
+			rules = stylesheet.cssRules.length, // || stylesheet.rules,
+
+			colors = config.colors,
+
+			length = share.length,
+
+			current,	// temp
+			i;			// iterator
+
+		for ( i = 0; i < length; i++ ) {
+
+			current = share[i];
+
+			stylesheet.insertRule( '.'+ colors[current.color] + '{\
+										width: ' + current.perc + '%;\
+									}', rules + i );
+		}
+
+		// legends
+		category.textContent = length;
+
+		var highscore = legends.children[0], // <table>
+
+			legendContainer = legends.parentNode,
+
+			ranking = '<tbody>';
+
+		length = competition.length;
+
+		legendContainer.classList.remove('hide');
+
+		if ( !length ) legendContainer.classList.add('hide');
+
+
+		for ( i = 0; i < length; i++ ) {
+
+			current = competition[i];
+
+			if ( current.name ) {
+
+				ranking += '\
+					<tr>\
+						<td>0' + (i+1) + '</td>\
+						<td>' + current.name + '</td>\
+						<td>' + current.score + '</td>\
+					</tr>\
+				';
 			}
+		}
 
+		ranking += '</tbody>';
 
-			// legends
-			document.getElementById('category').textContent = length;
-
-			var legends = document.getElementById('legends').children[0], // <table>
-
-				legendContainer = document.getElementById('legends').parentNode,
-
-				ranking = '<tbody>';
-
-			length = competition.length;
-
-			legendContainer.classList.remove('hide');
-
-			if ( !length ) legendContainer.classList.add('hide');
-
-
-			for ( i = 0; i < length; i++ ) {
-
-				current = competition[i];
-
-				if ( current.name ) {
-
-					ranking += '\
-						<tr>\
-							<td>0' + (i+1) + '</td>\
-							<td>' + current.name + '</td>\
-							<td>' + current.score + '</td>\
-						</tr>\
-					';
-				}
-			}
-
-			ranking += '</tbody>';
-
-			legends.innerHTML = ranking;
-
-		}, 16.7 );
+		highscore.innerHTML = ranking;
 	};
 
 
