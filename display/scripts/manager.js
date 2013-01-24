@@ -279,6 +279,8 @@
 
 		this.render();
 
+		this.resize();
+
         new display.Timer( config.gameTime * 60 * 1000, 'timer' );
 	};
 
