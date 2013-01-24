@@ -36,43 +36,6 @@ const char* sv::ObstacleManager::s_Level[s_LevelSize] =
 };
 */
 
-sv::Obstacle::Properties sv::ObstacleManager::GetProperties(uchar category)
-{
-	Obstacle::Properties prop;
-	switch(category)
-	{
-	case 1:
-		{
-			prop.m_Type = Obstacle::eObstacleType_EnergyDown;
-			prop.m_Value = 10;
-			prop.m_Size = 1;
-			prop.m_Velocity = 1;
-		} break;
-	case 2:
-		{
-			prop.m_Type = Obstacle::eObstacleType_EnergyUp;
-			prop.m_Value = 10;
-			prop.m_Size = 1;
-			prop.m_Velocity = 1;
-		} break;
-	case 3:
-		{
-			prop.m_Type = Obstacle::eObstacleType_PointsUp;
-			prop.m_Value = 100;
-			prop.m_Size = 1;
-			prop.m_Velocity = 1;
-		} break;
-	case 4:
-		{
-			prop.m_Type = Obstacle::eObstacleType_PointsUp;
-			prop.m_Value = 50;
-			prop.m_Size = 1;
-			prop.m_Velocity = 1;
-		} break;
-	}
-	return prop;
-}
-
 sv::ObstacleManager::ObstacleManager(Game* game)
 : Manager(game)
 , m_IdCount(1)
@@ -163,9 +126,8 @@ void sv::ObstacleManager::UpdateLevel(ulong deltaTime)
 sv::Obstacle* sv::ObstacleManager::CreateObstacle(uchar category, uchar lane)
 {
 	Obstacle* obstacle = Get();
-	Obstacle::Properties prop = GetProperties(category);
 	uchar pos = GetGrid()->GetInnerPos(lane);
-	obstacle->Init(m_IdCount, GetGrid(), prop);
+	obstacle->Init(m_IdCount, GetGrid(), category);
 	obstacle->Start(pos);
 
 	LOG2(DEBUG_OBSTACLES, "Obstacle created: id: %i, pos: %i", m_IdCount, pos);
@@ -206,7 +168,7 @@ void sv::ObstacleManager::HandleCollision(Obstacle* obstacle)
 		uchar playerIds[PLAYER_MAX];
 		for(uint i=0; i<count; ++i)
 			playerIds[i] = player[i]->GetId();
-		CollisionMsg collisionMsg(obstacle->GetId(), count);
+		CollisionMsg collisionMsg(obstacle->GetId(), obstacle->GetCategory(), count);
 		collisionMsg.SetPlayer(playerIds);
 		GetGame()->SendMsg(&collisionMsg);
 

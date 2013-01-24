@@ -15,8 +15,6 @@ namespace sv
 	class ObstacleManager : public Manager, private Pool<Obstacle>
 	{
 	public:
-		static Obstacle::Properties		GetProperties(uchar category);
-
 		ObstacleManager(Game* game);
 		~ObstacleManager();
 

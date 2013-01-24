@@ -26,17 +26,18 @@ void sv::StatusManager::Start()
 
 void sv::StatusManager::CalculateCollision(Obstacle* obstacle, Player* player[], uchar playerCount)
 {
-	uchar value = obstacle->GetValue() / playerCount;
+	Obstacle::Properties prop = Obstacle::GetProperties(obstacle->GetCategory());
+	uchar value = prop.m_Value / playerCount;
 	uchar energy;
-	switch(obstacle->GetType())
+	switch(prop.m_Type)
 	{
 	case Obstacle::eObstacleType_EnergyDown:
 		for(uchar i=0; i<playerCount; ++i)
 		{
 			energy = player[i]->GetEnergy();
 			
-			if(energy > obstacle->GetValue())
-				energy -= obstacle->GetValue();
+			if(energy > prop.m_Value)
+				energy -= prop.m_Value;
 			else {
 				energy = 0;
 				player[i]->StartReviveCountdown();

@@ -81,8 +81,9 @@ Server - Display
             	3. Byte: Position                                               
        10 - Collision
             1. Byte: Obstacle ID                                            // Server: ok, Display: ok
-            2. Byte: Anzahl Spieler                                         // Server: ok, Display: ok
-            3. - n. Byte: Spieler ID                                        // Server: ok, Display: ok
+            2. Byte: Kategorie
+            3. Byte: Anzahl Spieler                                         // Server: ok, Display: ok
+            4. - n. Byte: Spieler ID                                        // Server: ok, Display: ok
        11 - Spielende														// Server: ok, Display: ok
             1. Byte: Teampunktzahl 1
             2. Byte: Teampunktzahl 2 // Pkt = Pkt1 * 256 + Pkt2 bzw. Pkt = Pkt1 << 8 + Pkt2

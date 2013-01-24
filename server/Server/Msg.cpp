@@ -194,9 +194,10 @@ void sv::ObstacleMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
 	}
 }
 
-sv::CollisionMsg::CollisionMsg(uchar obstacleId, uchar playerCount)
+sv::CollisionMsg::CollisionMsg(uchar obstacleId, uchar obstacleCategory, uchar playerCount)
 : Msg(eMsgType_Collision)
 , m_ObstacleId(obstacleId)
+, m_ObstacleCategory(obstacleCategory)
 , m_PlayerCount(playerCount)
 {
 	m_PlayerIds = static_cast<uchar*>( malloc(m_PlayerCount * sizeof(uchar)) );
@@ -217,6 +218,7 @@ void sv::CollisionMsg::GetBuffer(uchar* buffer, uint& pos, const uint& length)
 	Visit(m_Type, buffer, pos, length);
 	
 	Visit(m_ObstacleId, buffer, pos, length);
+	Visit(m_ObstacleCategory, buffer, pos, length);
 	Visit(m_PlayerCount, buffer, pos, length);
 	for(uchar i=0; i<m_PlayerCount; ++i)
 		Visit(m_PlayerIds[i], buffer, pos, length);
