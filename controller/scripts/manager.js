@@ -7,7 +7,8 @@
 		box = controller.Box,
 		input = controller.Input,
 
-		timer = 0, id = 0,
+		timer = 0,
+		id = null,
 		repeat = null;
 
 	// simple warning
@@ -52,7 +53,7 @@
 
 		if ( type === 1 ) {
 
-			id = 0;
+			id = null;
 			box.start();
 
 		} else { // handling on error
@@ -108,9 +109,9 @@
 	 */
 	var register = function() {
 
-		if ( id ) return;
+		if ( isNaN(id) ) return;
 
-		id = true;
+		id = 0;
 
 		startTimer();
 
