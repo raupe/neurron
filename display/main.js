@@ -8,7 +8,7 @@
 
 	// check - default
 	scene = display.views[scene] ? scene : 'start';
-	if ( scene === 'contact' ) document.getElementById('site').textContent = 'main';
+	if ( scene === 'contact' ) document.getElementById('site').textContent = 'play neurron';
 
 
 	display.getAsset = assetManager.get;

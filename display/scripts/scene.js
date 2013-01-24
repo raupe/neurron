@@ -17,6 +17,8 @@
 		}
 
 		display.show( history.state );
+
+		display.changeLink();
 	});
 
 
@@ -39,7 +41,7 @@
 
             display.changeLink();
         });
-    }
+    };
 
 	site.addEventListener('click', function(){
 
@@ -49,7 +51,7 @@
 
 		text = site.innerText;
 
-		if ( text === 'play neurron' ) {			display.show('start'); }
+		if ( text === 'play neurron' ) {	display.show('start'); }
 		else if ( display.logic[ text ] )	display.show( text );
 
 		display.changeLink();
@@ -64,13 +66,13 @@
 		// in-out
 		if ( (triggered = !triggered) === false ) return;
 
-		if ( !prev || prev === 'contact' ) {
+		if ( display.current !== 'contact' && ( !prev || prev === 'contact') ) {
 
 			site.innerText = 'contact';
 
 		} else {
 
-			site.innerText = ( prev === 'start' ) ? 'play neurron' : prev;
+			site.innerText = ( display.current === 'contact' ) ? 'play neurron' : 'contact';
 			prev = 'contact';
 		}
 
