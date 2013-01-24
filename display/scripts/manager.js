@@ -336,7 +336,7 @@
 	 */
 	Manager.prototype.collide = function ( params ) {
 
-		this.statusManager.handleCollide( params[0], params[1] );
+		this.statusManager.handleCollide( params[0], params[1], params[2] );
 	};
 
 

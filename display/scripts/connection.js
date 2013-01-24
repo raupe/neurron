@@ -140,16 +140,18 @@
 
 				options[0] = data.charCodeAt(1); // obstacle ID
 
-						l =  data.charCodeAt(2); // amount of players
+				options[1] = data.charCodeAt(2); // category
+
+						l =  data.charCodeAt(3); // amount of players
 
 				var playerIds = [];
 
-				for ( i = 3; i < l+3; i++ ) {
+				for ( i = 4; i < l+4; i++ ) {
 
 					playerIds.push( data.charCodeAt(i) );
 				}
 
-				options[1] = playerIds;
+				options[2] = playerIds;
 			}
 
 	/* 11 */if ( action === config.protocol.END ) {

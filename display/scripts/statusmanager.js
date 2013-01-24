@@ -150,58 +150,56 @@
 	};
 
 
-	StatusManager.prototype.handleCollide = function ( obstacleId, playersIds ) {
+	StatusManager.prototype.handleCollide = function ( obstacleId, category, playersIds ) {
 
-		var currentObstacle = this.pool.list[obstacleId];
-
-		if ( currentObstacle ) { // check existence
-
-			var	type = currentObstacle.type,
-				value = currentObstacle.value,
-				numberOfPlayers = playersIds.length,
-				currentPlayer,
-				i;
+		var currentObstacle = config.obstacles[ category ],
+			type = currentObstacle.type,
+			value = currentObstacle.value,
+			numberOfPlayers = playersIds.length,
+			currentPlayer,
+			i;
 
 			if ( type === 'damage' ) {
 
 				for ( i = 0; i < numberOfPlayers; i++ ){
 
-					currentPlayer = this.playerList[playersIds[i] - 1];
+				currentPlayer = this.playerList[playersIds[i] - 1];
 
-					if ( !currentPlayer.alive ) currentPlayer.revive();
+				if ( !currentPlayer.alive ) currentPlayer.revive();
 
 
-					if (currentPlayer.energy >= value) {
+				if (currentPlayer.energy >= value) {
 
-						currentPlayer.energy -= value;
+					currentPlayer.energy -= value;
+
+				} else {
+
+					currentPlayer.energy = 0;
+				}
+
+				currentPlayer.diffEnergy = -value;
+
+
+				if (currentPlayer.energy === 0) {
+
+					if (this.points >= config.punishPoints) {
+
+						this.points -= config.punishPoints;
 
 					} else {
 
-						currentPlayer.energy = 0;
+						this.points = 0;
 					}
 
-					currentPlayer.diffEnergy = -value;
+					if ( currentPlayer.alive ) {
 
+						currentPlayer.die();
 
-					if (currentPlayer.energy === 0) {
-
-						if (this.points >= config.punishPoints) {
-
-							this.points -= config.punishPoints;
-
-						} else {
-
-							this.points = 0;
-						}
-
-						if ( currentPlayer.alive ) {
-
-							currentPlayer.die();
-
-							currentPlayer.fade();
-						}
+						currentPlayer.fade();
 					}
 				}
+			}
+
 
 			} else if ( type === 'heal' ) {
 
@@ -232,15 +230,17 @@
 			}
 
 
-			if ( config.audio && currentObstacle.collisionSound ) currentObstacle.collisionSound.play();
+		var current = this.pool.list[obstacleId];
 
-			setTimeout(function(){	currentObstacle.collide(); }, 60);
+		if ( current ) { // check existence
 
-		} else {
+			if ( config.audio && current.collisionSound ) current.collisionSound.play();
 
-			console.log( 'Missed: ', obstacleId, ' - ', currentObstacle );
-		}
+			setTimeout(function(){	current.collide(); }, 60);
+
+		} else { console.log( 'Missed: ', obstacleId);	}
 	};
+
 
 	var teamname,
 		scoreValue,
