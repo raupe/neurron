@@ -18,7 +18,7 @@
 					<li id="idea" class="screen hide">\
 						<video muted controls preload="auto" class="video">\
 							<source src="assets/views/start/idea.mp4" type="video/mp4" />\
-							<source src="assets/views/start/test.ogv" type="video/ogg" />\
+							<source src="assets/views/start/idea.ogv" type="video/ogg" />\
 							The browser doesn\'t support any of the provided formats...\
 						</video>\
 					</li>\
