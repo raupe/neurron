@@ -13,7 +13,7 @@
 
 	display.getAsset = assetManager.get;
 
-	assetManager.set({ audio: { start: 'assets/views/start/start.mp3' }}, function(){
+	assetManager.set({ audio: { start: 'assets/views/start/start.ogg' }}, function(){
 
 		display.show( scene );
 

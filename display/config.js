@@ -80,13 +80,13 @@ window.config = {
 
 		audio: {
 
-			damage		: 'assets/damage/damage.wav',
-			heal		: 'assets/heal/heal.mp3',
-			points		: 'assets/points/points.wav',
+			damage		: 'assets/damage/damage.ogg',
+			heal		: 'assets/heal/heal.ogg',
+			points		: 'assets/points/points.ogg',
 
-			dead		: 'assets/player/dead.wav',
-			revive		: 'assets/player/revive.wav',
-			win			: 'assets/player/win.mp3',
+			dead		: 'assets/player/dead.ogg',
+			revive		: 'assets/player/revive.ogg',
+			win			: 'assets/player/win.ogg',
 
 			game		: 'assets/views/game/game.ogg'
 		}
