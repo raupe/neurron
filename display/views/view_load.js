@@ -10,7 +10,7 @@
 				<div id="tutorial" class="load_tutorial">\
 					<video preload="auto" loop muted autoplay class="tutorial">\
 						<source src="assets/views/load/tutorial.mp4" type="video/mp4" />\
-						<source src="assets/views/start/test.ogv" type="video/ogg" />\
+						<source src="assets/views/load/tutorial.ogv" type="video/ogg" />\
 						The browser doesn\'t support any of the provided formats...\
 					</video>\
 					<div class="caption">Swipe an arc to move (clock or counter-clockwise)</div>\
