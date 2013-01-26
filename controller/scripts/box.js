@@ -86,7 +86,7 @@
 		function hideHint(){
 
 			hint.removeEventListener( transitionEnd, hideHint );
-			hint.className = 'hint opaque';
+			hint.className = 'hide';
 		}
 
 
