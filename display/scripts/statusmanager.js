@@ -314,28 +314,33 @@
 
 		legendContainer.classList.remove('hide');
 
-		if ( !length ) legendContainer.classList.add('hide');
+		if ( !length ) {
 
+			legendContainer.classList.add('hide');
 
-		for ( i = 0; i < length; i++ ) {
+		} else {
 
-			current = competition[i];
+			for ( i = 0; i < length; i++ ) {
 
-			if ( current.name ) {
+				current = competition[i];
 
-				ranking += '\
-					<tr>\
-						<td>0' + (i+1) + '</td>\
-						<td>' + current.name + '</td>\
-						<td>' + current.score + '</td>\
-					</tr>\
-				';
+				if ( current.name ) {
+
+					ranking += '\
+						<tr>\
+							<td>0' + (i+1) + '</td>\
+							<td>' + current.name + '</td>\
+							<td>' + current.score + '</td>\
+						</tr>\
+					';
+				}
 			}
+
+			ranking += '</tbody>';
+
+			highscore.innerHTML = ranking;
 		}
 
-		ranking += '</tbody>';
-
-		highscore.innerHTML = ranking;
 	};
 
 
