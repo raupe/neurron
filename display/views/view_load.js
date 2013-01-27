@@ -5,12 +5,11 @@
 		var left = '\
 		<div id="load_outerwrapper" class="load_outerwrapper">\
 			<div id="load_innerwrapper" class="load_innerwrapper round">\
-				<div id="load_teamname" class="load_teamname"></div>\
-				<h2 class="load_heading">Control</h2>\
+				<h2 id="load_teamname" class="load_heading"></h2>\
 				<div id="tutorial" class="load_tutorial">\
 					<video preload="auto" loop muted autoplay class="tutorial">\
-						<source src="assets/views/load/tutorial.mp4" type="video/mp4" />\
-						<source src="assets/views/load/tutorial.ogv" type="video/ogg" />\
+						<source src="assets/views/load/controls.mp4" type="video/mp4" />\
+						<source src="assets/views/load/controls.ogv" type="video/ogg" />\
 						The browser doesn\'t support any of the provided formats...\
 					</video>\
 					<div class="caption">Swipe an arc to move (clock or counter-clockwise)</div>\
