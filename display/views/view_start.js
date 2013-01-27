@@ -23,7 +23,11 @@
 						</video>\
 					</li>\
 					<li id="game" class="screen hide">\
-						<img src="assets/views/start/placeholder.jpg" class="video" />\
+						<video muted preload="auto" class="video">\
+							<source src="assets/views/start/game.mp4" type="video/mp4" />\
+							<source src="assets/views/start/game.ogv" type="video/ogg" />\
+							The browser doesn\'t support any of the provided formats...\
+						</video>\
 					</li>\
 				</ul>\
 			</div>\
@@ -35,7 +39,8 @@
 
 
 	// Cache
-	var video, music,
+	var idea, game,
+		music,
 
 		$buttons,
 		$items,
@@ -51,7 +56,7 @@
 
 	display.logic.start = function(){
 
-		if ( video ) {
+		if ( idea && game ) {
 
 			start();
 
@@ -61,7 +66,8 @@
 			if ( music ) music.loop = true;
 
 
-			video = document.getElementById('idea').children[0];
+			idea = document.getElementById('idea').children[0];
+			game = document.getElementById('game').children[0];
 
 
 			$buttons = $('#button_wrap > li');
@@ -85,8 +91,11 @@
 				timeOut();
 			});
 
-			$(video).on('loadedmetadata', start );
-			$(video).on('ended', function(){ document.getElementById('btn-game').click(); });
+			$(idea).on('loadedmetadata', start );
+			$(idea).on('ended', function(){ document.getElementById('btn-game').click(); });
+
+			$(game).on('loadedmetadata', start);
+			$(game).on('ended', function(){ document.getElementById('btn-idea').click(); });
 		}
 
 		$container.addClass("backgroundImage");
@@ -104,20 +113,24 @@
 
 	function start(){
 
+		if ( !idea.duration || !game.duration ) return;
+
 		if ( music ) display.sound( music );
 
 		duration = {
 
-			idea	: ~~( video.duration * 1000 ) + 1000,
-			game	: 15000
+			idea	: ~~( idea.duration * 1000 ) + 1000,
+			game	: ~~( game.duration * 1000 ) + 1000
 		};
 
 		itemsLength = $items.length;
 
 		$buttons.removeClass('button_active');
-		video.currentTime = 0;
+		idea.currentTime = 0;
+		game.currentTime = 0;
 
 		counter = counter || 0;
+
 		timeOut();
 	}
 
@@ -130,13 +143,11 @@
 		$($items[counter]).fadeIn();
 		$($buttons[counter]).addClass('button_active');
 
-		if ( currentId === 'idea' ) setTimeout(function(){ video.play(); }, 1000);
+		if ( currentId === 'idea' ) setTimeout(function(){ idea.play(); }, 1000);
+		if ( idea.currentTime !== 0 ) {	idea.pause(); idea.currentTime = 0;	}
 
-		if ( video.currentTime !== 0 ) {
-
-			video.pause();
-			video.currentTime = 0;
-		}
+		if ( currentId === 'game' ) setTimeout(function(){ game.play(); }, 1000);
+		if ( game.currentTime !== 0 ) {	game.pause(); game.currentTime = 0;	}
 
 		timer = setTimeout(function() {
 
