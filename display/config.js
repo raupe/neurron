@@ -22,7 +22,7 @@ window.config = {
 
 
     audio				: true,		// option #1
-    audioFading			: 10,		// 10 seconds
+    audioFading			: 4,		// 4 seconds
     audioVolume			: 50,		// default value
 
 
