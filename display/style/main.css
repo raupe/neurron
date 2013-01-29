@@ -398,6 +398,61 @@ canvas {
 /* video */
 .tutorial {	width: 100%; }
 
+
+.load_heading {
+
+    display: inline-block;
+
+	font-size: 2em;
+    margin: 10px 0;
+    margin-top: 1%;
+
+    font-family: 'Fredoka One', cursive;
+    /*margin-bottom: 1%;*/
+    /*letter-spacing: 0;*/
+    /*margin: 2px 0;*/
+	color: #0E499B;
+}
+
+.load_hintbox {
+
+	font-size: 1.4em;
+
+    width: 70%;
+    margin: auto;
+    padding: 0.5% 0;
+
+    margin-top: 5%;
+    color: #941837;
+    background-color: white;
+    font-weight: bold;
+    font-family: 'Fredoka One', cursive;
+}
+
+
+.caption {
+
+	font-size: 1.3em;
+	padding: 10px;
+
+	color: #7a1d7d;
+	font-weight: bold;
+	font-family: 'Fredoka One', cursive;
+}
+
+.message {
+
+	width: 95%;
+	font-style: italic;
+}
+
+
+.load_container {
+
+	width: 96%;
+	margin: 0 auto;
+}
+
 .load_progressbar {
 
     height: 30px;
@@ -437,21 +492,6 @@ canvas {
 }
 
 
-.caption {
-
-	font-size: 1.3em;
-	padding: 10px;
-
-	color: #7a1d7d;
-	font-weight: bold;
-	font-family: 'Fredoka One', cursive;
-}
-
-.message {
-
-	width: 95%;
-	font-style: italic;
-}
 
 
 .waiting {
@@ -489,36 +529,6 @@ canvas {
     display: inline-block;
     margin-bottom: 1%;
     margin: 2px 0;
-}
-
-.load_heading {
-
-    display: inline-block;
-
-	font-size: 2em;
-    margin: 10px 0;
-    margin-top: 1%;
-
-    font-family: 'Fredoka One', cursive;
-    /*margin-bottom: 1%;*/
-    /*letter-spacing: 0;*/
-    /*margin: 2px 0;*/
-	color: #0E499B;
-}
-
-.load_hintbox {
-
-	font-size: 1.5em;
-
-    width: 70%;
-    margin: auto;
-    padding: 1% 0;
-
-    margin-top: 5%;
-    color: #941837;
-    background-color: white;
-    font-weight: bold;
-    font-family: 'Fredoka One', cursive;
 }
 
 

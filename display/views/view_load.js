@@ -20,7 +20,9 @@
 					<span>Player "Red" is entering the Team-Name. Still waiting</span>\
 					<ul id="waiting" class="waiting"><li class="fadeIn">.</li><li>.</li><li>.</li><li>.</li></ul>\
 				</div>\
-				<div id="progressbar" class="load_progressbar hide">0 %</div>\
+				<div class="load_container">\
+					<div id="progressbar" class="load_progressbar hide">0 %</div>\
+				</div>\
             </div>\
 		</div>',
 
