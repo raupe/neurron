@@ -14,7 +14,6 @@ window.config = {
 
     gameTime            : 2,		// Minutes
 
-
     factor				: 4,		// offset for statusbar and grid
     amountToHeal		: 10,		// how much a player can heal
     punishPoints		: 1000,
@@ -22,7 +21,7 @@ window.config = {
 
 
     audio				: true,		// option #1
-    audioFading			: 4,		// 4 seconds
+    audioFading			: 5,		// 5 seconds
     audioVolume			: 50,		// default value
 
 
@@ -123,7 +122,7 @@ window.config = {
 			type			: 'damage',
 			size			: 100,
 			velocity		: 1,
-			value			:  10,
+			value			:  20,
 			frameDuration	: 100,
 			collisionImg	: 'damage_col',
 			collisionSound	: 'damage'
@@ -133,7 +132,7 @@ window.config = {
 			type			: 'heal',
 			size			: 100,
 			velocity		: 1,
-			value			:  10,
+			value			:  40,
 			frameDuration	: 100,
 			collisionImg	: 'heal_col',
 			collisionSound	: 'heal'
