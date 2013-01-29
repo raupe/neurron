@@ -16,14 +16,14 @@
 				<div class="dashboard round"></div>\
 				<ul id="screen_wrap" class="screen_wrap round">\
 					<li id="idea" class="screen hide">\
-						<video muted controls preload="auto" class="video">\
+						<video muted controls preload="auto" poster="assets/views/start/idea.jpg" class="video">\
 							<source src="assets/views/start/idea.mp4" type="video/mp4" />\
 							<source src="assets/views/start/idea.ogv" type="video/ogg" />\
 							The browser doesn\'t support any of the provided formats...\
 						</video>\
 					</li>\
 					<li id="game" class="screen hide">\
-						<video muted preload="auto" class="video">\
+						<video muted controls preload="auto" poster="assets/views/start/game.jpg" class="video">\
 							<source src="assets/views/start/game.mp4" type="video/mp4" />\
 							<source src="assets/views/start/game.ogv" type="video/ogg" />\
 							The browser doesn\'t support any of the provided formats...\
