@@ -232,7 +232,7 @@
 			next.volume = 0;
 
 			timer = config.audioFading;
-			crossFade();
+			fadeOut();
 
 			next.play();
 
@@ -248,17 +248,33 @@
 	};
 
 
-	function crossFade(){
+	function fadeOut(){
 
-		var current = display.tracks.current,
-			next = display.tracks.next;
+		var current = display.tracks.current;
 
 		current.volume = Math.max( current.volume - diff, 0 );
+
+		if ( --timer ) {
+
+			setTimeout( fadeOut, 1000 );
+
+		} else {
+
+			timer = config.audioFading;
+
+			fadeIn();
+		}
+	}
+
+	function fadeIn(){
+
+		var next = display.tracks.next;
+
 		if ( config.audio )	next.volume = audioVolume - timer * diff;
 
-		if ( timer-- ) {
+		if ( --timer ) {
 
-			setTimeout( crossFade, 1000 );
+			setTimeout( fadeIn, 1000 );
 
 		} else {
 
