@@ -236,7 +236,8 @@ canvas {
 .qr_code {
 	background-color: #fff;
 	padding: 10px;
-	position: relative;
+	position: absolute;
+	bottom: 10%;
 	width: 80%;
 	margin: 0 auto;
 }
