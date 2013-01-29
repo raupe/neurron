@@ -15,7 +15,7 @@
 				</div>\n\
 				<br/>\n\
                 <div id="contact_play_button" class="contact_play_button button"><p>play neurron</p></div>\
-				<div class="contacttext">impressum | Name | Straße | Berlin | Tel.: | Email: </div>\n\
+				<div class="contacttext">Impressum | Stefan Dühring | Choriner Str. 80 | 10119 Berlin | Email: stefan@rau.pe </div>\n\
 			</div>\
 		</div>';
 
