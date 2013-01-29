@@ -32,7 +32,8 @@
 
 	})();
 
-	var joined,
+	var music,
+		joined,
 		progressbar,
 		message,
 		animation,
@@ -123,13 +124,26 @@
 
 		setTimeout(function(){ progressbar.classList.add('fill'); }, 16.7);
 
-		var step = (15 * 1000 / 100) * 0.9, // css width .load_progressbar
+		var step = (15 * 1000 / 100) * 0.96, // css width .load_progressbar
 			counter = 0,
 			interval;
 
 		interval = setInterval(function(){
 
 			progressbar.textContent = ++counter + ' %';
+
+
+			if ( counter === 70 ) {
+
+				if ( !music ) {
+
+					music = display.getAsset('audio', 'game');
+					music.loop = true;
+				}
+
+				display.sound( music );
+			}
+
 
 			if ( counter === 100 ) clearInterval( interval );
 

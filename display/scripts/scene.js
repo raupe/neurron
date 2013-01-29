@@ -234,8 +234,6 @@
 			timer = config.audioFading;
 			fadeOut();
 
-			next.play();
-
 		} else { // init
 
 			current = tracks.current = el;
@@ -262,6 +260,8 @@
 
 			timer = config.audioFading;
 
+			display.tracks.next.play();
+
 			fadeIn();
 		}
 	}
@@ -270,7 +270,7 @@
 
 		var next = display.tracks.next;
 
-		if ( config.audio )	next.volume = audioVolume - timer * diff;
+		if ( config.audio )	next.volume = Math.max( audioVolume - timer * diff, 0 );
 
 		if ( --timer ) {
 
