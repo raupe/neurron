@@ -11,14 +11,14 @@ sv::Obstacle::Properties sv::Obstacle::GetProperties(uchar category)
 	case 1:
 		{
 			prop.m_Type = Obstacle::eObstacleType_EnergyDown;
-			prop.m_Value = 10;
+			prop.m_Value = 20;
 			prop.m_Size = 1;
 			prop.m_Velocity = 1;
 		} break;
 	case 2:
 		{
 			prop.m_Type = Obstacle::eObstacleType_EnergyUp;
-			prop.m_Value = 10;
+			prop.m_Value = 40;
 			prop.m_Size = 1;
 			prop.m_Velocity = 1;
 		} break;
