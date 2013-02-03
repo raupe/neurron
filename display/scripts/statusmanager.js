@@ -247,8 +247,6 @@
 		legends,
 		category;
 
-
-
 	StatusManager.prototype.showEnd = function ( points, share, competition ) {
 
 		if ( !teamname ) {
@@ -289,12 +287,16 @@
 
 			length = share.length,
 
+			sum = 0,
+
 			current,	// temp
 			i;			// iterator
 
 		for ( i = 0; i < length; i++ ) {
 
 			current = share[i];
+			if ( sum + current.perc > 100 ) current.perc--;
+			sum += current.perc;
 
 			stylesheet.insertRule( '.'+ colors[current.color] + '{\
 										width: ' + current.perc + '%;\
@@ -330,7 +332,7 @@
 						<tr>\
 							<td>0' + (i+1) + '</td>\
 							<td>' + current.name + '</td>\
-							<td>' + current.score + '</td>\
+							<td><span class="highscores">' + current.score + '</span></td>\
 						</tr>\
 					';
 				}
