@@ -1,5 +1,7 @@
 (function(){
 
+	window.onload = function(){	setTimeout(function(){ window.scrollTo(0,1); }, 16.7 );};
+
 	controller.Screen = (function(){
 
 		var cvs = document.createElement('canvas'),
@@ -29,11 +31,6 @@
 			window.addEventListener('orientationchange', scale );
 
 			document.getElementById('background').appendChild( cvs );
-
-			window.addEventListener('load', function(){
-
-				setTimeout(function(){ window.scrollTo( 0, 1 ); }, 16.7 );
-			});
 		};
 
 		var clear = function(){
