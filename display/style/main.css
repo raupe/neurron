@@ -256,6 +256,8 @@ canvas {
 	text-align: center;
 	font-size: 20px;
 	font-family: 'Fredoka One', cursive;
+	font-weight: bold;
+	cursor: default;
 	color: #0E499B;
 }
 
