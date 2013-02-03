@@ -210,11 +210,14 @@
 
 					if ( !currentPlayer.alive ) currentPlayer.revive();
 
-					currentPlayer.energy += healForEachPlayer;
+					if ( currentPlayer.energy !== 100 ) { // ignores on full HP
 
-					if ( currentPlayer.energy > 100 ) currentPlayer.energy = 100;
+						var lastEnergy = currentPlayer.energy;
 
-					currentPlayer.diffEnergy = currentPlayer.energy < 100 ? healForEachPlayer : 0;
+						currentPlayer.energy = Math.min(currentPlayer.energy+healForEachPlayer, 100);
+
+						currentPlayer.diffEnergy = currentPlayer.energy - lastEnergy;
+					}
 				}
 
 			} else { // points
