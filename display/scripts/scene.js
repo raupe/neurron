@@ -18,6 +18,8 @@
 
 		display.show( history.state );
 
+		triggered = false;
+
 		display.changeLink();
 	});
 
@@ -47,12 +49,7 @@
 
 		triggered = false;
 
-		prev = display.current;
-
-		text = site.innerText;
-
-		if ( text === 'play neurron' ) {	display.show('start'); }
-		else if ( display.logic[ text ] )	display.show( text );
+		display.show( site.textContent === 'contact' ? 'contact' : 'start' );
 
 		display.changeLink();
 	});
@@ -66,18 +63,19 @@
 		// in-out
 		if ( (triggered = !triggered) === false ) return;
 
-		if ( display.current !== 'contact' && ( !prev || prev === 'contact') ) {
-
-			site.innerText = 'contact';
-
-		} else {
-
-			site.innerText = ( display.current === 'contact' ) ? 'play neurron' : 'contact';
-			prev = 'contact';
-		}
+		site.textContent = ( site.textContent === 'contact' ) ? 'play neurron' : 'contact';
 
 		site.classList.add('fadeIn');
 	}
+
+
+
+
+
+
+
+
+
 
 
 	// visuals
@@ -185,13 +183,6 @@
 			setTimeout(function(){ if ( display.logic[ id ] ) display.logic[ id ](); }, 16.7 );
 		}
 	};
-
-
-
-
-
-
-
 
 
 
