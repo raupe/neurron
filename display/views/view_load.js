@@ -12,7 +12,9 @@
 						<source src="assets/views/load/controls.ogv" type="video/ogg" />\
 						The browser doesn\'t support any of the provided formats...\
 					</video>\
-					<div class="caption">Swipe an arc to move (clock or counter-clockwise)</div>\
+					<div class="caption">Swipe an arc to move <br/>\
+										(clock or counter-clockwise)\
+					</div>\
 				</div>\
 			</div>\
             <div class="load_hintbox round">\
