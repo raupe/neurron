@@ -20,3 +20,9 @@
 
 # single sprites
 /display/assets/sprites
+
+
+# temporary hide
+/demo
+/display/assets/views/game/ambient51_game.ogg
+/display/assets/views/start/ambient51_intro.ogg
