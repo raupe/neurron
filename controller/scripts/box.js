@@ -27,12 +27,12 @@
 
 		var templates = {
 
-			start: '<div id="start" class="button start">Start</div>',
+			start: '<div id="start" class="button start">Join</div>',
 
 			enterName: '\
 			<input id="input" type="name" class="whitebox input" autofocus placeholder=""/>\
 			<div class="ready">Everybody ready ?</div>\
-			<div id="okay" class="button okay">Okay</div>\
+			<div id="okay" class="button okay">Start</div>\
 			',
 
 			notFound: '<div class="whitebox warning">The Game does not exist !</div>',
