@@ -206,6 +206,12 @@
 	 */
 	Manager.prototype.teamname = function() {
 
+		if ( this.reset ) {
+
+			clearTimeout( this.reset );
+			this.reset = null;
+		}
+
 		display.show('load');
 	};
 
@@ -216,7 +222,6 @@
 	 */
 	Manager.prototype.cancel = function(){
 
-        $('.contact').fadeIn(1000);
 		display.show('start');
 
 		display.load_view.clearLoadScene();
@@ -365,6 +370,14 @@
 			this.playerList.length = 0;
 
 			this.statusManager.clear();
+
+			// return to start scene after 2 minutes
+			this.reset = setTimeout(function(){
+
+				this.cancel(); this.reset = null;
+
+			}.bind(this), 1000 * 60 * 2 );
+
 
         }.bind(this), 1000 );
 	};

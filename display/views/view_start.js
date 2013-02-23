@@ -75,6 +75,7 @@
 			$container = $('#container');
 			$containerRight = $('#container-right');
 			$qrCode = $('#qr_code > img');
+			$site = $('#site');
 
 
 
@@ -108,6 +109,7 @@
         // to display qr code when coming back from contact site
         // $('#qr_code').removeClass("fadeOut");
         // $('#qr_code').addClass("fadeIn");
+		$site.fadeIn(1000);
 	};
 
 
