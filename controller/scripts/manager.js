@@ -59,6 +59,8 @@
 		} else { // handling on error
 
 			box.warn( type );
+
+			if ( type === 2 ) startTimer();
 		}
 
 		input.setStyle( 0 );
